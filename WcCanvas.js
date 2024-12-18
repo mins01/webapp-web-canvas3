@@ -34,8 +34,7 @@ class WcCanvas extends WcLayer{
             this.drawLayer.width = activeLayer.width;
             this.drawLayer.height = activeLayer.height;
         }
-        
-
+        this.draw()
         return activeLayer??null;
     }
     add(wcLayer){
@@ -93,6 +92,8 @@ class WcCanvas extends WcLayer{
             this.ctxCommand('drawImage',wcLayer, wcLayer.x, wcLayer.y, wcLayer.width, wcLayer.height);
 
             if(index == this.activeIndex){
+                // this.ctx.globalCompositeOperation = 'source-over'
+                // this.ctx.globalAlpha = 1;
                 this.ctx.globalCompositeOperation = wcLayer.compositeOperation
                 this.ctx.globalAlpha = wcLayer.alpha
                 this.ctxCommand('drawImage',this.drawLayer, this.drawLayer.x, this.drawLayer.y, this.drawLayer.width, this.drawLayer.height);
