@@ -1,4 +1,4 @@
-export default class Brush{
+export default class Line{
     constructor(editor){
         this.name = 'line';
         this.editor = editor;

@@ -1,6 +1,6 @@
 import PointerEventHandler from "./PointerEventHandler.js";
 
-import Line from "./tool/Line.js";
+import Tools from "./tools/Tools.js";
 
 export default class Editor{
     constructor(target){
@@ -14,8 +14,11 @@ export default class Editor{
         this.peh.ondown = this.ondown;
         this.peh.onmove = this.onmove;
         this.peh.onup = this.onup;
-
-        this.tool = new Line(this)
+        
+        this.tool = null;
+        this.tools = new Tools(this);
+        this.tools.active('line');
+        // this.tool = new Line(this);
         this.active(0);
     }
     active(index=null){
