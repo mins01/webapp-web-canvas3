@@ -76,11 +76,7 @@ class WcCanvas extends WcLayer{
         return true;
     }
     sync(){
-        if(!this.syncing){ 
-            this.syncing = !this.syncing;
-            this.draw() 
-            this.syncing = !this.syncing;
-        }
+        this.draw();
     }
     apply(){
         // this.active().ctxCommand('drawImage',this.drawLayer,0,0,100,100);

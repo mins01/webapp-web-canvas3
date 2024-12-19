@@ -34,8 +34,8 @@ export default class Brush{
 
     draw(x,y){
         // console.log(x,y);
-        
-        const drawLayer = this.editor.active().drawLayer;
+        const wcCanvas = this.editor.active();
+        const drawLayer = wcCanvas.drawLayer;
         drawLayer.clear();
         const ctx = drawLayer.ctx;
         drawLayer.ctxCommand('beginPath')
@@ -43,7 +43,7 @@ export default class Brush{
         drawLayer.ctxCommand('lineTo',x,y)
         drawLayer.ctxCommand('stroke')
         drawLayer.ctxCommand('closePath')
-        drawLayer.flush()
+        wcCanvas.sync()
     }
 
 

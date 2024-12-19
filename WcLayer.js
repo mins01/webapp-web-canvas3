@@ -20,6 +20,7 @@ class WcLayer extends HTMLCanvasElement{
 
         this.width = w??400;
         this.height = h??300;
+
         if(bgColor) this.fill(bgColor)
     }
     setContext2D(options={"alpha":true,"antialias":true,"depth":true}){
@@ -35,13 +36,11 @@ class WcLayer extends HTMLCanvasElement{
         ctx.fillStyle = color;
         // ctx.fillRect(0,0,this.width,this.height);
         this.ctxCommand('fillRect',0,0,this.width,this.height);
-        this.flush();
-        this.ctxCommand('restore');
+        this.ctxCommand('restore');        
     }
     clear(color){
         this.ctxCommand('save');
         this.ctxCommand('clearRect',0,0,this.width,this.height);
-        this.flush();
         this.ctxCommand('restore');
     }
     ctxCommand(){
@@ -60,7 +59,7 @@ class WcLayer extends HTMLCanvasElement{
     flush(){
         this.ctxUpdatedAtTime = Date.now();
         // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        if(this.wcCanvas) this.wcCanvas.sync();
+        // if(this.wcCanvas) this.wcCanvas.sync();
     }
     
     get x(){ return this._x; }
