@@ -31,18 +31,18 @@ class WcLayer extends HTMLCanvasElement{
     }
     fill(color){
         const ctx = this.ctx;
-        ctx.save();
+        this.ctxCommand('save');
         ctx.fillStyle = color;
         // ctx.fillRect(0,0,this.width,this.height);
-        this.ctxCommand('fillRect',0,0,this.width,this.height)
-        ctx.restore();
+        this.ctxCommand('fillRect',0,0,this.width,this.height);
+        this.flush();
+        this.ctxCommand('restore');
     }
     clear(color){
-        const ctx = this.ctx;
-        ctx.save();
-        // ctx.clearRect(0,0,this.width,this.height);
-        this.ctxCommand('clearRect',0,0,this.width,this.height)
-        ctx.restore();
+        this.ctxCommand('save');
+        this.ctxCommand('clearRect',0,0,this.width,this.height);
+        this.flush();
+        this.ctxCommand('restore');
     }
     ctxCommand(){
         let inArgs = [...arguments];
@@ -51,10 +51,11 @@ class WcLayer extends HTMLCanvasElement{
         // console.log(method,args,this);
         if (typeof this.ctx[method] === "function") { 
             this.ctx[method].apply(this.ctx,args);
-            this.flush();
         }else{
             console.error('error: ctxCommand',inArgs);
         }
+        // console.log(method);
+        
     }
     flush(){
         this.ctxUpdatedAtTime = Date.now();

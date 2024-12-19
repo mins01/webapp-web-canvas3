@@ -1,5 +1,7 @@
 import PointerEventHandler from "./PointerEventHandler.js";
 
+import Line from "./tool/Line.js";
+
 export default class Editor{
     constructor(target){
         this.target = target;
@@ -13,7 +15,7 @@ export default class Editor{
         this.peh.onmove = this.onmove;
         this.peh.onup = this.onup;
 
-
+        this.tool = new Line(this)
         this.active(0);
     }
     active(index=null){
@@ -23,8 +25,12 @@ export default class Editor{
             this.activeIndex = index;
         }
         let activeCanvas = this.wcCanvases[index]??null;
+        
+        activeCanvas.drawLayer.ctx.strokeStyle = '#000000'
+
        return activeCanvas;
     }
+    
 
     addEventListener(){
         this.peh.addEventListener(this.target);
@@ -32,15 +38,28 @@ export default class Editor{
     removeEventListener(){
         this.peh.removeEventListener(this.target);
     }
-    ondown=(event)=>{
+    getXYFromEvent(event){
         let wc = this.active();
         let dl = wc.drawLayer;
         let x = event.x - wc.offsetLeft - dl.x + window.scrollX;
         let y = event.y - wc.offsetTop - dl.y + window.scrollY;
-        console.log('editor-ondown',this.active(),x,y);
+        return {x:x,y:y};
     }
-    // onmove=(event)=>{console.log('editor-onmove',this.active());}
-    // onup=(event)=>{console.log('editor-onup',this.active());}
+    ondown=(event)=>{
+        const p = this.getXYFromEvent(event)
+        this.tool.start();
+        this.tool.down(p.x,p.y);
+    }
+    onmove=(event)=>{
+        const p = this.getXYFromEvent(event)
+
+        this.tool.move(p.x,p.y);
+    }
+    onup=(event)=>{
+        const p = this.getXYFromEvent(event)
+        this.tool.up(p.x,p.y);
+        this.tool.end();        
+    }
 
 
 

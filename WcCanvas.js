@@ -22,18 +22,22 @@ class WcCanvas extends WcLayer{
         this.draw()
     }
     active(index=null){
-        if(index==null){
+        let activeLayer = null;
+        if(index===null){
             index = this.activeIndex;
+            activeLayer = this.wcLayers[index]??null;
         }else{
             this.activeIndex = index;
+            activeLayer = this.wcLayers[index]??null;
+            if(activeLayer){
+                this.drawLayer.x = activeLayer.x;
+                this.drawLayer.y = activeLayer.y;
+                this.drawLayer.width = activeLayer.width;
+                this.drawLayer.height = activeLayer.height;
+            }
         }
-        let activeLayer = this.wcLayers[index]??null;
-        if(activeLayer){
-            this.drawLayer.x = activeLayer.x;
-            this.drawLayer.y = activeLayer.y;
-            this.drawLayer.width = activeLayer.width;
-            this.drawLayer.height = activeLayer.height;
-        }
+        
+        
         this.draw()
         return activeLayer??null;
     }
@@ -48,7 +52,7 @@ class WcCanvas extends WcLayer{
             this.active(this.activeIndex+1)
         }
         wcLayer.wcCanvas = this;
-        this.draw()
+        this.sync()
         return true;
     }
     order(index){
@@ -58,7 +62,7 @@ class WcCanvas extends WcLayer{
         this.wcLayers[this.activeIndex] = this.wcLayers[index]
         this.wcLayers[index] = activeLayer;
         this.active(index)
-        this.draw()
+        this.sync()
         return true;
     }
     remove(){
@@ -68,7 +72,7 @@ class WcCanvas extends WcLayer{
         }
         this.wcLayers.splice(this.activeIndex,1);
         this.activeIndex = Math.max(this.activeIndex-1,0);
-        this.draw()
+        this.sync()
         return true;
     }
     sync(){
@@ -77,6 +81,13 @@ class WcCanvas extends WcLayer{
             this.draw() 
             this.syncing = !this.syncing;
         }
+    }
+    apply(){
+        // this.active().ctxCommand('drawImage',this.drawLayer,0,0,100,100);
+        this.active().ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);
+        // this.active().flush();
+        this.drawLayer.clear();
+        this.sync();        
     }
     // flush(){
     //     this.ctxUpdatedAtTime = Date.now();
