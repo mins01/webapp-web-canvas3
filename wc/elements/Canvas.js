@@ -63,10 +63,10 @@ export default class Canvas extends HTMLCanvasElement{
     flush(){
         this.ctxUpdatedAtTime = Date.now();
         // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        if(this.parent) this.parentSync();
+        // if(this.parent) this.parentSync();
     }
     parentSync(){
-        if(this.parent && this.parent.sync) this.parent.sync();
+        // if(this.parent && this.parent.sync) this.parent.sync();
     }
     
     get x(){ return this._x; }
