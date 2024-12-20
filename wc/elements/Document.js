@@ -1,4 +1,5 @@
 import NamedSelectableArray from "../libs/NamedSelectableArray.js";
+import SelectableArray from "../libs/SelectableArray.js";
 import Canvas from "./Canvas.js";
 
 export default class Document extends Canvas{
@@ -7,11 +8,12 @@ export default class Document extends Canvas{
     constructor(w=null,h=null){
         super(w,h);
         this.id =  'wc-document-'+(this.constructor.counter++);
-        this.layers = new NamedSelectableArray('layer');
+        this.layers = new SelectableArray();
         this.parent = null;
         this.syncing = false;
         this.drawLayer = new Canvas(w,h);
         this.drawLayer.parent = this;
+        this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,})
 
         this.init();
     }
@@ -21,6 +23,10 @@ export default class Document extends Canvas{
         // this.select(0);
         this.draw()
     }
+
+
+    get layer(){ return this.layers.selected; }
+
     select(index=null){
         const activeLayer = this.layers.select(index);
         if(index !== null && activeLayer){
@@ -41,7 +47,7 @@ export default class Document extends Canvas{
     }
     remove(){
         this.layers.remove();
-        this.syncDrawLayer(this.layers.layer);
+        this.syncDrawLayer(this.layer);
         this.draw();
         return true;
     }
@@ -63,10 +69,11 @@ export default class Document extends Canvas{
         this.parentSync();
     }
     apply(){
-        // console.log(this.layers.layer);
-        this.layers.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
+        // console.log(this.layer);
+        // this.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
+        this.layer.merge(this.drawLayer)
         this.drawLayer.clear();
-        // this.sync();
+        this.sync();
     }
     // flush(){
     //     this.ctxUpdatedAtTime = Date.now();

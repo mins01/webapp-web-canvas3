@@ -1,3 +1,5 @@
+// @deprecated 
+// dont use it, use SelectableArray instead
 import SelectableArray from './SelectableArray.js';
 
 /**

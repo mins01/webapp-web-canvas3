@@ -25,53 +25,7 @@ export default class Canvas extends HTMLCanvasElement{
 
         if(bgColor) this.fill(bgColor)
     }
-    setContext2D(options={"alpha":true,"antialias":true,"depth":true}){
-        this.ctx = this.getContext2D(options)
-        return this.ctx;
-    }
-    getContext2D(options={"alpha":true,"antialias":true,"depth":true}){
-        return this.getContext('2d',options)
-    }
-    fill(color){
-        const ctx = this.ctx;
-        this.ctxCommand('save');
-        ctx.fillStyle = color;
-        // ctx.fillRect(0,0,this.width,this.height);
-        this.ctxCommand('fillRect',0,0,this.width,this.height);
-        this.ctxCommand('restore');
-        this.flush(); 
-    }
-    clear(color){
-        this.ctxCommand('save');
-        this.ctxCommand('clearRect',0,0,this.width,this.height);
-        this.ctxCommand('restore');
-        this.flush();
-    }
-    ctxCommand(){
-        let inArgs = [...arguments];
-        const method = inArgs[0]??null;
-        const args = (inArgs??[]).slice(1);
-        // console.log(method,args,this);
-        if (typeof this.ctx[method] === "function") { 
-            this.ctx[method].apply(this.ctx,args);
-        }else{
-            console.error('error: ctxCommand',inArgs);
-        }
-        // console.log(method);
         
-    }
-    flush(){
-        this.ctxUpdatedAtTime = Date.now();
-        // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        // if(this.parent) this.parentSync();
-    }
-    sync(){
-        this.parentSync();
-    }
-    parentSync(){
-        if(this.parent && this.parent.sync) this.parent.sync();
-    }
-    
     get x(){ return this._x; }
     set x(x){ this._x = x; this.flush(); }
     get y(){ return this._y; }
@@ -110,4 +64,82 @@ export default class Canvas extends HTMLCanvasElement{
         this.flush(); 
     }
 
+    setContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){
+        this.ctx = this.getContext2D(options)
+        return this.ctx;
+    }
+    getContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){       
+        return this.getContext('2d',options)
+    }
+
+    ctxCommand(){
+        let inArgs = [...arguments];
+        const method = inArgs[0]??null;
+        const args = (inArgs??[]).slice(1);
+        // console.log(method,args,this);
+        if (typeof this.ctx[method] === "function") { 
+            this.ctx[method].apply(this.ctx,args);
+        }else{
+            console.error('error: ctxCommand',inArgs);
+        }
+        // console.log(method);
+        
+    }
+    flush(){
+        this.ctxUpdatedAtTime = Date.now();
+        // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
+        // if(this.parent) this.parentSync();
+    }
+    sync(){
+        this.parentSync();
+    }
+    parentSync(){
+        if(this.parent && this.parent.sync) this.parent.sync();
+    }
+
+    fill(color){
+        const ctx = this.ctx;
+        this.ctxCommand('save');
+        ctx.fillStyle = color;
+        // ctx.fillRect(0,0,this.width,this.height);
+        this.ctxCommand('fillRect',0,0,this.width,this.height);
+        this.ctxCommand('restore');
+        this.flush(); 
+    }
+    clear(color){
+        this.ctxCommand('save');
+        this.ctxCommand('clearRect',0,0,this.width,this.height);
+        this.ctxCommand('restore');
+        this.flush();
+    }
+
+    merge(canvas){
+        const xmin = Math.min(this.x,canvas.x)
+        const ymin = Math.min(this.y,canvas.y)
+        const xmax = Math.max(this.x+this.width,canvas.x+canvas.width)
+        const ymax = Math.max(this.y+this.height,canvas.y+canvas.height)
+        const w = xmax-xmin;
+        const h = ymax-ymin;
+
+        
+        const imageData = this.ctx.getImageData(0,0,this.width,this.height);
+        let dx = this.x-xmin;
+        let dy = this.y-ymin;
+        
+        this.x = xmin;
+        this.y = ymin;
+        this.width = w;
+        this.height = h;
+        // this.fill('#00ee0033');
+
+        this.ctx.putImageData(imageData,dx,dy);
+
+        dx = canvas.x-xmin;
+        dy = canvas.y-ymin;
+        this.ctxCommand('drawImage',canvas, dx, dy, canvas.width, canvas.height);        
+
+        this.ctx.putImageData
+
+        this.flush();        
+    }
 }

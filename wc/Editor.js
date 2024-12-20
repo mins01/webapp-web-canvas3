@@ -8,7 +8,7 @@ export default class Editor{
     constructor(target){
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
-        this.documents = new SelectableArray('document');
+        this.documents = new SelectableArray();
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
             this.documents.add(el)
         });
@@ -39,8 +39,10 @@ export default class Editor{
     getXYFromEvent(event){
         let doc = this.document;
         let dl = doc.drawLayer;
-        let x = event.x - doc.offsetLeft - dl.x + window.scrollX;
-        let y = event.y - doc.offsetTop - dl.y + window.scrollY;
+        // let x = event.x - doc.offsetLeft - dl.x + window.scrollX;
+        // let y = event.y - doc.offsetTop - dl.y + window.scrollY;
+        let x = event.x - doc.offsetLeft  + window.scrollX;
+        let y = event.y - doc.offsetTop  + window.scrollY;
         return {x:x,y:y};
     }
     ondown=(event)=>{
