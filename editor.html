@@ -44,12 +44,12 @@
     </style>
 
     <script type="module">
-        import WcLayer from "./WcLayer.js";
-        import WcCanvas from "./WcCanvas.js";        
+        import WcLayer from "./wc/WcLayer.js";
+        import Document from "./wc/Document.js";        
         globalThis.WcLayer = WcLayer;
         window.customElements.define('wc-layer', WcLayer,{ extends: "canvas" });
-        globalThis.WcCanvas = WcCanvas;
-        window.customElements.define('wc-canvas', WcCanvas,{ extends: "canvas" });
+        globalThis.Document = Document;
+        window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
         import Editor from "./Editor.js";
 
@@ -84,7 +84,7 @@
     <div class="container">
         <h2>Editor</h2>
         <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px;" class="d-flex justify-content-center align-items-center mx-auto">
-            <canvas id="wc-canvas" width="500" height="500" is="wc-canvas"></canvas>
+            <canvas id="wc-document" width="500" height="500" is="wc-document"></canvas>
         </div>
     </div>
     

@@ -1,3 +1,6 @@
+// @deprecated
+// instead of WcCanvas, use Document
+
 import WcLayer from "./WcLayer.js";
 
 class WcCanvas extends WcLayer{

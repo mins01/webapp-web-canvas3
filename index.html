@@ -45,16 +45,16 @@
 
     <script type="module">
         import WcLayer from "./WcLayer.js";
-        import WcCanvas from "./WcCanvas.js";        
+        import Document from "./Document.js";        
         globalThis.WcLayer = WcLayer;
         window.customElements.define('wc-layer', WcLayer,{ extends: "canvas" });
-        globalThis.WcCanvas = WcCanvas;
-        window.customElements.define('wc-canvas', WcCanvas,{ extends: "canvas" });
+        globalThis.Document = Document;
+        window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
         import Editor from "./Editor.js";
 
         window.addEventListener('load',(event)=>{
-            const wcc1 = globalThis.wcc1 = new WcCanvas();
+            const wcc1 = globalThis.wcc1 = new Document();
             wcc1.width = 400;
             wcc1.height = 200;
             document.querySelector('.bundle-box').append(wcc1)
@@ -112,6 +112,7 @@
                 let c = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 
                 target.fill(c)
+                target.document.sync()
             }
         }
     </script>
@@ -130,7 +131,7 @@
         </div>
         <h2>Editor</h2>
         <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px;" class="d-flex justify-content-center align-items-center mx-auto">
-            <canvas id="wc-canvas" width="500" height="500" is="wc-canvas"></canvas>
+            <canvas id="wc-document" width="500" height="500" is="wc-document"></canvas>
         </div>
     </div>
     

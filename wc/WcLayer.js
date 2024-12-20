@@ -16,7 +16,7 @@ class WcLayer extends HTMLCanvasElement{
         this.ctxUpdatedAtTime = Date.now();
         
         this.setContext2D();
-        this.wcCanvas = null
+        this.document = null
 
         this.width = w??400;
         this.height = h??300;
@@ -59,7 +59,7 @@ class WcLayer extends HTMLCanvasElement{
     flush(){
         this.ctxUpdatedAtTime = Date.now();
         // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        // if(this.wcCanvas) this.wcCanvas.sync();
+        // if(this.document) this.document.sync();
     }
     
     get x(){ return this._x; }

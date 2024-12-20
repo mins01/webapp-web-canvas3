@@ -1,12 +1,12 @@
 import PointerEventHandler from "./PointerEventHandler.js";
 
-import Tools from "./tools/Tools.js";
+import Tools from "./wc/tools/Tools.js";
 
 export default class Editor{
     constructor(target){
         this.target = target;
         this.wcCanvases = [];
-        this.target.querySelectorAll('canvas[is="wc-canvas"]').forEach(el => {
+        this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
             this.wcCanvases.push(el)
         });
         this.activeTool = null;
