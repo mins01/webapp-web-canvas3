@@ -1,5 +1,5 @@
 import SelectableArray from "./libs/SelectableArray.js";
-import PointerEventHandler from "./PointerEventHandler.js";
+import PointerEventHandler from "./libs/PointerEventHandler.js";
 
 import Tools from "./tools/Tools.js";
 
