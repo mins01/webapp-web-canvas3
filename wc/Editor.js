@@ -1,6 +1,6 @@
 import PointerEventHandler from "./PointerEventHandler.js";
 
-import Tools from "./wc/tools/Tools.js";
+import Tools from "./tools/Tools.js";
 
 export default class Editor{
     constructor(target){

@@ -51,7 +51,7 @@
         globalThis.Document = Document;
         window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
-        import Editor from "./Editor.js";
+        import Editor from "./wc/Editor.js";
 
         window.addEventListener('load',(event)=>{
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));

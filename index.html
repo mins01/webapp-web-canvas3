@@ -44,14 +44,14 @@
     </style>
 
     <script type="module">
-        import WcLayer from "./WcLayer.js";
-        import Document from "./Document.js";        
+        import WcLayer from "./wc/WcLayer.js";
+        import Document from "./wc/Document.js";        
         globalThis.WcLayer = WcLayer;
         window.customElements.define('wc-layer', WcLayer,{ extends: "canvas" });
         globalThis.Document = Document;
         window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
-        import Editor from "./Editor.js";
+        import Editor from "./wc/Editor.js";
 
         window.addEventListener('load',(event)=>{
             const wcc1 = globalThis.wcc1 = new Document();
