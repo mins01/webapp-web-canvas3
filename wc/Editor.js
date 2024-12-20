@@ -18,7 +18,8 @@ export default class Editor{
         
         this.tool = null;
         this.tools = new Tools(this);
-        this.tools.active('line');
+        this.tools.active('rectangle');
+        // this.tools.active('line');
         // this.tool = new Line(this);
 
         // this.documents.documentIndex = 0;
