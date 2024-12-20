@@ -1,28 +1,31 @@
-import Line from "./Line.js";
-import Rectangle from "./Rectangle.js";
+// import Line from "./Line.js";
+// import Rectangle from "./Rectangle.js";
+import SelectableMap from "../libs/SelectableMap.js";
 
-export default class Tools{
+export default class Tools extends SelectableMap{
     constructor(editor){
+        super();
         this.editor = editor;
         this.toolName = '';
-        this.tools = {}
-        this.active('rectangle');
+        // this.tools = new SelectableMap();
+        this.select('Line');
     }
-    active(toolName=null){
-        if(toolName===null){
-            toolName = this.toolName;
-        }
-        if(this.tools[toolName]??false){
-            
+    select(toolName){
+        if(!this.has(toolName)){
+            this.load(toolName).then(()=>{
+                console.log('loaded',toolName);
+                this.toolName = toolName;
+                super.select(toolName);
+            }).catch(e=>{console.error(e)});
         }else{
-            switch(toolName){
-                case 'line': this.tools[toolName] = new Line(this.editor); break;
-                case 'rectangle': this.tools[toolName] = new Rectangle(this.editor); break;
-                default: throw new Error(`[${toolName}]는 지원되지 않는 툴입니다.`); break;
-            }
+            super.select(toolName);
         }
-        let tool = this.tools[toolName]??null;
-        this.editor.tool = tool;
-        return tool;
+    }
+    async load(toolName){       
+        let module = await import(`./${toolName}.js`);
+        if(module && module.default){
+            console.log('loaded',toolName);
+            this.set(toolName, new module.default(this.editor));
+        }        
     }
 }

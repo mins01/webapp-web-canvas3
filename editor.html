@@ -60,12 +60,12 @@
             wcl4.fill('#ff000066')
             wcl4.x = 300;
             wcl4.y = 20
-            let l = editor.documents.document.layers.item(0)
+            let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
 
-            editor.documents.document.add(wcl4);
-            document.body.append(editor.documents.document.drawLayer)
-            editor.documents.document.layers.all().forEach((layer,index)=>{
+            editor.document.add(wcl4);
+            document.body.append(editor.document.drawLayer)
+            editor.document.layers.all().forEach((layer,index)=>{
                 document.body.append(layer)
                 layer.onclick = (event)=>{
                     layer.parent.select(index);

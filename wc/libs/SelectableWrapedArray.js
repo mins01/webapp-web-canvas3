@@ -1,13 +1,12 @@
 /**
  * A class representing an array with a selectable element.
  */
-export default class SelectableArray extends Array {
+export default class SelectableWrapedArray {
     /**
      * Creates an instance of SelectableArray.
      * @param {...*} elements - The elements to initialize the array with.
      */
     constructor(...elements) {
-        super(...elements);
         /**
          * @private
          * @type {number}
@@ -18,7 +17,7 @@ export default class SelectableArray extends Array {
          * @private
          * @type {Array}
          */
-        this._array = this;
+        this._array = elements;
         this._selectedIndex = elements.length > 0 ? 0 : -1;
     }
 
@@ -63,13 +62,13 @@ export default class SelectableArray extends Array {
         this._array[this.selectedIndex] = v;
     }
 
-    // /**
-    //  * Gets the length of the array.
-    //  * @returns {number} The length of the array.
-    //  */
-    // get length() {
-    //     return this._array.length;
-    // }
+    /**
+     * Gets the length of the array.
+     * @returns {number} The length of the array.
+     */
+    get length() {
+        return this._array.length;
+    }
 
     /**
      * Gets the element at the specified index.
@@ -175,7 +174,7 @@ export default class SelectableArray extends Array {
      * @param {string} separator - The separator to use between elements.
      * @returns {string} The joined string.
      */
-    // join(separator) {
-    //     return this._array.join(separator);
-    // }
+    join(separator) {
+        return this._array.join(separator);
+    }
 }
