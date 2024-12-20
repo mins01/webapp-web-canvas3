@@ -70,3 +70,5 @@ console.log(sa.selectedIndex,sa.selected,sa.join(','))
 sa.move(2);
 console.assert(sa.selectedIndex === 2 && sa.selected === 2);
 console.log(sa.selectedIndex,sa.selected,sa.join(','))
+var r = sa.item(1)
+console.assert(r === 1);

@@ -83,7 +83,7 @@
             wcl3.imageHeight = 30
             wcl3.fill('#ffff00')
            
-            wcc1.layers.forEach((canvas)=>{
+            wcc1.layers.all().forEach((canvas)=>{
                 document.querySelector('.layers-box').append(canvas)
             })
 
