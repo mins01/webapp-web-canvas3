@@ -44,10 +44,10 @@
     </style>
 
     <script type="module">
-        import WcLayer from "./wc/WcLayer.js";
-        import Document from "./wc/Document.js";        
-        globalThis.WcLayer = WcLayer;
-        window.customElements.define('wc-layer', WcLayer,{ extends: "canvas" });
+        import Canvas from "./wc/elements/Canvas.js";
+        import Document from "./wc/elements/Document.js";
+        globalThis.Canvas = Canvas;
+        window.customElements.define('wc-canvas', Canvas,{ extends: "canvas" });
         globalThis.Document = Document;
         window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
@@ -56,15 +56,15 @@
         window.addEventListener('load',(event)=>{
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
             editor.addEventListener();
-            const wcl4 = globalThis.wcl4 = new WcLayer(100,100);
+            const wcl4 = globalThis.wcl4 = new Canvas(100,100);
             wcl4.fill('#ff000066')
             wcl4.x = 300;
             wcl4.y = 20
 
             editor.active().add(wcl4);
             document.body.append(editor.active().drawLayer)
-            editor.active().wcLayers.forEach((wcLayer)=>{
-                document.body.append(wcLayer)
+            editor.active().layers.forEach((layer)=>{
+                document.body.append(layer)
             })
         })
     </script>

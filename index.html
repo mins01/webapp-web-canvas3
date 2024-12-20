@@ -44,10 +44,10 @@
     </style>
 
     <script type="module">
-        import WcLayer from "./wc/WcLayer.js";
-        import Document from "./wc/Document.js";        
-        globalThis.WcLayer = WcLayer;
-        window.customElements.define('wc-layer', WcLayer,{ extends: "canvas" });
+        import Canvas from "./wc/elements/Canvas.js";
+        import Document from "./wc/elements/Document.js";
+        globalThis.Canvas = Canvas;
+        window.customElements.define('wc-canvas', Canvas,{ extends: "canvas" });
         globalThis.Document = Document;
         window.customElements.define('wc-document', Document,{ extends: "canvas" });
 
@@ -59,21 +59,21 @@
             wcc1.height = 200;
             document.querySelector('.bundle-box').append(wcc1)
 
-            const wcl1 = globalThis.wcl1 = new WcLayer(200,100,'#0000ff');
+            const wcl1 = globalThis.wcl1 = new Canvas(200,100,'#0000ff');
             wcc1.add(wcl1)
             wcl1.x = 50;
             wcl1.y = 100;
             wcl1.alpha = 0.2
             
             
-            const wcl2 = globalThis.wcl2 = new WcLayer(100,100);
+            const wcl2 = globalThis.wcl2 = new Canvas(100,100);
             wcc1.add(wcl2)
             wcl2.fill('#ff000099')
             wcl2.x = 300;
             wcl2.y = 20
             wcl2.ctxCommand('에러나야하는 코멘트',1,2,3,4,5)
 
-            const wcl3 = globalThis.wcl3 = new WcLayer(300,300);
+            const wcl3 = globalThis.wcl3 = new Canvas(300,300);
             wcc1.add(wcl3)
             // wcl3.id = 'wcl3';
             wcl3.x = 30;
@@ -83,11 +83,11 @@
             wcl3.imageHeight = 30
             wcl3.fill('#ffff00')
            
-            wcc1.wcLayers.forEach((wcLayer)=>{
-                document.querySelector('.layers-box').append(wcLayer)
+            wcc1.layers.forEach((canvas)=>{
+                document.querySelector('.layers-box').append(canvas)
             })
 
-            let test_l = document.createElement('canvas',{is:'wc-layer'});
+            let test_l = document.createElement('canvas',{is:'wc-canvas'});
             test_l.width = 100;
             test_l.height = 100;
             test_l.fill('#0fc')
@@ -95,13 +95,13 @@
 
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
             editor.addEventListener();
-            const wcl4 = globalThis.wcl2 = new WcLayer(100,100);
+            const wcl4 = globalThis.wcl2 = new Canvas(100,100);
             wcc1.add(wcl4)
             wcl4.fill('#ff000099')
             wcl4.x = 300;
             wcl4.y = 20
 
-            editor.wcCanvases[0].add(wcl4);
+            editor.documents[0].add(wcl4);
         })
     </script>
     
@@ -127,7 +127,7 @@
         <hr>
         <h2>test</h2>
         <div class="test-box">
-            <canvas width="400" height="400" is="wc-layer"></canvas>
+            <canvas width="400" height="400" is="wc-canvas"></canvas>
         </div>
         <h2>Editor</h2>
         <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px;" class="d-flex justify-content-center align-items-center mx-auto">
