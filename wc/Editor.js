@@ -5,9 +5,9 @@ import Tools from "./tools/Tools.js";
 export default class Editor{
     constructor(target){
         this.target = target;
-        this.wcCanvases = [];
+        this.documents = [];
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
-            this.wcCanvases.push(el)
+            this.documents.push(el)
         });
         this.activeTool = null;
         this.peh = new PointerEventHandler(target);
@@ -27,7 +27,7 @@ export default class Editor{
         }else{
             this.activeIndex = index;
         }
-        let activeCanvas = this.wcCanvases[index]??null;
+        let activeCanvas = this.documents[index]??null;
         
         activeCanvas.drawLayer.ctx.strokeStyle = '#000000'
 
