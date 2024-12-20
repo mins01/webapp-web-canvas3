@@ -8,10 +8,10 @@ export default class Document extends Canvas{
         super(w,h);
         this.id =  'wc-document-'+(this.constructor.counter++);
         this.layers = new NamedSelectableArray('layer');
-        this.document = this;
+        this.parent = null;
         this.syncing = false;
         this.drawLayer = new Canvas(w,h);
-        this.drawLayer.document = this;
+        this.drawLayer.parent = this;
 
         this.init();
     }
@@ -33,21 +33,21 @@ export default class Document extends Canvas{
     //     return this.select(index);
     // }
     add(layer){
-        layer.document = this;
+        layer.parent = this;
         this.layers.add(layer);
         this.syncDrawLayer(layer);
-        this.sync()
+        this.draw();
         return true;
     }
     remove(){
         this.layers.remove();
         this.syncDrawLayer(this.layers.layer);
-        this.sync()
+        this.draw();
         return true;
     }
     move(index){
         this.layers.move(index);
-        this.sync()
+        this.draw();
         return true;
     }
 
@@ -58,13 +58,14 @@ export default class Document extends Canvas{
         this.drawLayer.height = layer.height;
     }
     sync(){
+        this.flush();
         this.draw();
     }
     apply(){
         // console.log(this.layers.layer);
         this.layers.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
         this.drawLayer.clear();
-        this.sync();        
+        // this.sync();
     }
     // flush(){
     //     this.ctxUpdatedAtTime = Date.now();
@@ -74,16 +75,16 @@ export default class Document extends Canvas{
     draw(){
         this.clear()
         this.ctx.save();
-        this.layers.all().forEach((wcLayer,index)=>{
-            this.ctx.globalCompositeOperation = wcLayer.compositeOperation
-            this.ctx.globalAlpha = wcLayer.alpha
-            this.ctxCommand('drawImage',wcLayer, wcLayer.x, wcLayer.y, wcLayer.width, wcLayer.height);
+        this.layers.all().forEach((layer,index)=>{
+            this.ctx.globalCompositeOperation = layer.compositeOperation
+            this.ctx.globalAlpha = layer.alpha
+            this.ctxCommand('drawImage',layer, layer.x, layer.y, layer.width, layer.height);
 
             if(index == this.layers.selectedIndex){
                 // this.ctx.globalCompositeOperation = 'source-over'
                 // this.ctx.globalAlpha = 1;
-                this.ctx.globalCompositeOperation = wcLayer.compositeOperation
-                this.ctx.globalAlpha = wcLayer.alpha
+                this.ctx.globalCompositeOperation = layer.compositeOperation
+                this.ctx.globalAlpha = layer.alpha
                 this.ctxCommand('drawImage',this.drawLayer, this.drawLayer.x, this.drawLayer.y, this.drawLayer.width, this.drawLayer.height);
             }
         })

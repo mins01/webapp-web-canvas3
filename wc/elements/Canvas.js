@@ -18,7 +18,7 @@ export default class Canvas extends HTMLCanvasElement{
         this.ctxUpdatedAtTime = Date.now();
         
         this.setContext2D();
-        this.document = null
+        this.parent = null
 
         this.width = w??400;
         this.height = h??300;
@@ -38,12 +38,14 @@ export default class Canvas extends HTMLCanvasElement{
         ctx.fillStyle = color;
         // ctx.fillRect(0,0,this.width,this.height);
         this.ctxCommand('fillRect',0,0,this.width,this.height);
-        this.ctxCommand('restore');        
+        this.ctxCommand('restore');
+        this.flush(); 
     }
     clear(color){
         this.ctxCommand('save');
         this.ctxCommand('clearRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
+        this.flush();
     }
     ctxCommand(){
         let inArgs = [...arguments];
@@ -61,7 +63,10 @@ export default class Canvas extends HTMLCanvasElement{
     flush(){
         this.ctxUpdatedAtTime = Date.now();
         // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        // if(this.document) this.document.sync();
+        if(this.parent) this.parentSync();
+    }
+    parentSync(){
+        if(this.parent && this.parent.sync) this.parent.sync();
     }
     
     get x(){ return this._x; }

@@ -101,7 +101,7 @@
             wcl4.x = 300;
             wcl4.y = 20
 
-            editor.documents.selected.add(wcl4);
+            editor.documents.document.add(wcl4);
         })
     </script>
     
@@ -112,7 +112,7 @@
                 let c = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 
                 target.fill(c)
-                target.document.sync()
+                // target.document.sync()
             }
         }
     </script>

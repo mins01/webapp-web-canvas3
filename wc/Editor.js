@@ -21,7 +21,7 @@ export default class Editor{
         this.tools.active('line');
         // this.tool = new Line(this);
 
-        // this.documents.selectedIndex = 0;
+        // this.documents.documentIndex = 0;
     }    
 
     addEventListener(){

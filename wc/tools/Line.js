@@ -29,13 +29,13 @@ export default class Line{
     }
     end(){
         // console.log('end');
-        this.editor.documents.selected.apply();
+        this.editor.documents.document.apply();
     }
 
     draw(x,y){
         // console.log(x,y);
-        const wcCanvas = this.editor.documents.selected;
-        const drawLayer = wcCanvas.drawLayer;
+        const document = this.editor.documents.document;
+        const drawLayer = document.drawLayer;
         drawLayer.clear();
         const ctx = drawLayer.ctx;
         drawLayer.ctxCommand('beginPath')
@@ -43,7 +43,7 @@ export default class Line{
         drawLayer.ctxCommand('lineTo',x,y)
         drawLayer.ctxCommand('stroke')
         drawLayer.ctxCommand('closePath')
-        wcCanvas.sync()
+        document.sync()
     }
 
 

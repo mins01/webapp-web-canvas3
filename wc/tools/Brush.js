@@ -4,8 +4,8 @@ class Brush{
     }
 
 
-    conf(wcLayer){
-        this.wcLayer = wcLayer;
+    conf(layer){
+        this.layer = layer;
     }
 
     start(){
