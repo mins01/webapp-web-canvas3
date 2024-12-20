@@ -68,7 +68,7 @@
             editor.documents.document.layers.all().forEach((layer,index)=>{
                 document.body.append(layer)
                 layer.onclick = (event)=>{
-                    layer.document.select(index);
+                    layer.parent.select(index);
                 }
             })
         })
