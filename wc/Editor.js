@@ -1,3 +1,4 @@
+import SelectableArray from "./libs/SelectableArray.js";
 import PointerEventHandler from "./PointerEventHandler.js";
 
 import Tools from "./tools/Tools.js";
@@ -5,9 +6,9 @@ import Tools from "./tools/Tools.js";
 export default class Editor{
     constructor(target){
         this.target = target;
-        this.documents = [];
+        this.documents = new SelectableArray();
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
-            this.documents.push(el)
+            this.documents.add(el)
         });
         this.activeTool = null;
         this.peh = new PointerEventHandler(target);
@@ -19,21 +20,9 @@ export default class Editor{
         this.tools = new Tools(this);
         this.tools.active('line');
         // this.tool = new Line(this);
-        this.active(0);
-    }
-    active(index=null){
-        if(index==null){
-            index = this.activeIndex;
-        }else{
-            this.activeIndex = index;
-        }
-        let activeCanvas = this.documents[index]??null;
-        
-        activeCanvas.drawLayer.ctx.strokeStyle = '#000000'
 
-       return activeCanvas;
-    }
-    
+        // this.documents.selectedIndex = 0;
+    }    
 
     addEventListener(){
         this.peh.addEventListener(this.target);
@@ -42,7 +31,7 @@ export default class Editor{
         this.peh.removeEventListener(this.target);
     }
     getXYFromEvent(event){
-        let wc = this.active();
+        let wc = this.documents.selected;
         let dl = wc.drawLayer;
         let x = event.x - wc.offsetLeft - dl.x + window.scrollX;
         let y = event.y - wc.offsetTop - dl.y + window.scrollY;

@@ -29,12 +29,12 @@ export default class Line{
     }
     end(){
         // console.log('end');
-        this.editor.active().apply();
+        this.editor.documents.selected.apply();
     }
 
     draw(x,y){
         // console.log(x,y);
-        const wcCanvas = this.editor.active();
+        const wcCanvas = this.editor.documents.selected;
         const drawLayer = wcCanvas.drawLayer;
         drawLayer.clear();
         const ctx = drawLayer.ctx;

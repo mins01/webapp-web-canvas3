@@ -61,9 +61,9 @@
             wcl4.x = 300;
             wcl4.y = 20
 
-            editor.active().add(wcl4);
-            document.body.append(editor.active().drawLayer)
-            editor.active().layers.forEach((layer)=>{
+            editor.documents.selected.add(wcl4);
+            document.body.append(editor.documents.selected.drawLayer)
+            editor.documents.selected.layers.forEach((layer)=>{
                 document.body.append(layer)
             })
         })
