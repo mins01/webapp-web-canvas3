@@ -1,9 +1,15 @@
-import SelectableArray from "../../wc/libs/SelectableArray.js";
+import NamedSelectableArray from "../../wc/libs/NamedSelectableArray.js";
 
-let sa = new SelectableArray(0,1,2,3,4);
+
+let sa = new NamedSelectableArray('target');
+console.assert(sa.length === 0 );
+console.assert(sa.target === null );
+console.log('target',sa.target)
+sa = new NamedSelectableArray('target',0,1,2,3,4);
 console.assert(sa.selectedIndex === 0 && sa.selected === 0);
 console.assert(sa.join(',')==='0,1,2,3,4');
 console.log(sa.selectedIndex,sa.selected,sa.join(','))
+console.log('target',sa.selectedIndex,sa.target,sa.join(','))
 sa.selectedIndex = 1;
 console.assert(sa.selectedIndex === 1 && sa.selected === 1);
 console.log(sa.selectedIndex,sa.selected,sa.join(','))

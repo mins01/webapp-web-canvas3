@@ -1,4 +1,4 @@
-import SelectableArray from "../libs/SelectableArray.js";
+import NamedSelectableArray from "../libs/NamedSelectableArray.js";
 import Canvas from "./Canvas.js";
 
 export default class Document extends Canvas{
@@ -7,7 +7,7 @@ export default class Document extends Canvas{
     constructor(w=null,h=null){
         super(w,h);
         this.id =  'wc-document-'+(this.constructor.counter++);
-        this.layers = new SelectableArray();
+        this.layers = new NamedSelectableArray('layer');
         this.document = this;
         this.syncing = false;
         this.drawLayer = new Canvas(w,h);
@@ -27,7 +27,6 @@ export default class Document extends Canvas{
             this.syncDrawLayer(activeLayer);
         }
         return activeLayer;
-
     }
     // active(index=null){
     //     alert('active');
@@ -42,7 +41,7 @@ export default class Document extends Canvas{
     }
     remove(){
         this.layers.remove();
-        this.syncDrawLayer(this.layers.selected);
+        this.syncDrawLayer(this.layers.layer);
         this.sync()
         return true;
     }
@@ -62,8 +61,8 @@ export default class Document extends Canvas{
         this.draw();
     }
     apply(){
-        // console.log(this.layers.selected);
-        this.layers.selected.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
+        // console.log(this.layers.layer);
+        this.layers.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
         this.drawLayer.clear();
         this.sync();        
     }

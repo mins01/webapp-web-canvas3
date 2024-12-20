@@ -66,8 +66,11 @@
 
             editor.documents.selected.add(wcl4);
             document.body.append(editor.documents.selected.drawLayer)
-            editor.documents.selected.layers.all().forEach((layer)=>{
+            editor.documents.selected.layers.all().forEach((layer,index)=>{
                 document.body.append(layer)
+                layer.onclick = (event)=>{
+                    layer.document.select(index);
+                }
             })
         })
     </script>

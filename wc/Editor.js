@@ -1,4 +1,4 @@
-import SelectableArray from "./libs/SelectableArray.js";
+import NamedSelectableArray from "./libs/NamedSelectableArray.js";
 import PointerEventHandler from "./libs/PointerEventHandler.js";
 
 import Tools from "./tools/Tools.js";
@@ -6,7 +6,7 @@ import Tools from "./tools/Tools.js";
 export default class Editor{
     constructor(target){
         this.target = target;
-        this.documents = new SelectableArray();
+        this.documents = new NamedSelectableArray('document');
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
             this.documents.add(el)
         });
@@ -31,10 +31,10 @@ export default class Editor{
         this.peh.removeEventListener(this.target);
     }
     getXYFromEvent(event){
-        let wc = this.documents.selected;
-        let dl = wc.drawLayer;
-        let x = event.x - wc.offsetLeft - dl.x + window.scrollX;
-        let y = event.y - wc.offsetTop - dl.y + window.scrollY;
+        let doc = this.documents.document;
+        let dl = doc.drawLayer;
+        let x = event.x - doc.offsetLeft - dl.x + window.scrollX;
+        let y = event.y - doc.offsetTop - dl.y + window.scrollY;
         return {x:x,y:y};
     }
     ondown=(event)=>{
