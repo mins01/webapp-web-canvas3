@@ -60,6 +60,7 @@ export default class Document extends Canvas{
     sync(){
         this.flush();
         this.draw();
+        this.parentSync();
     }
     apply(){
         // console.log(this.layers.layer);
