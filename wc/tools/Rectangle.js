@@ -42,6 +42,11 @@ export default class Rectangle extends BaseTool{
         // let fromCenter = true
         const document = this.editor.document;
         const drawLayer = document.drawLayer;
+        const ctx = drawLayer.ctx;
+        ctx.lineWidth = 26;
+        ctx.strokeStyle = "orange";
+
+        let margin = ctx.lineWidth;
 
         let xs = -1,ys = -1,xe = -1,ye = -1;
         let xmin = -1,ymin = -1,xmax = -1,ymax = -1;
@@ -61,19 +66,28 @@ export default class Rectangle extends BaseTool{
         
 
         if(w<=0 || h<=0){ return; }
-        drawLayer.x = xmin;
-        drawLayer.y = ymin;
-        drawLayer.width = w;
-        drawLayer.height = h;
+        drawLayer.x = xmin-margin;
+        drawLayer.y = ymin-margin;
+        drawLayer.width = w+margin*2;
+        drawLayer.height = h+margin*2;
 
-        const ctx = drawLayer.ctx;
-        if(ctx.fillAfterStroke??true){
-            drawLayer.ctxCommand('fillRect',0, 0,w, h);
-            drawLayer.ctxCommand('strokeRect',0, 0,w, h);
+        // if(ctx.fillAfterStroke??true){
+        //     drawLayer.ctxCommand('fillRect',0, 0,w, h);
+        //     drawLayer.ctxCommand('strokeRect',0, 0,w, h);
+        // }else{
+        //     drawLayer.ctxCommand('strokeRect',0, 0,w, h);
+        //     drawLayer.ctxCommand('fillRect',0, 0,w, h);
+        // }
+        ctx.beginPath();
+        ctx.rect(0+margin, 0+margin, w,h);        
+        if(ctx.fillAfterStroke??true){           
+            ctx.fill();
+            ctx.stroke();
         }else{
-            drawLayer.ctxCommand('strokeRect',0, 0,w, h);
-            drawLayer.ctxCommand('fillRect',0, 0,w, h);
+            ctx.stroke();
+            ctx.fill();
         }
+        ctx.closePath();
         document.sync()
     }
 
