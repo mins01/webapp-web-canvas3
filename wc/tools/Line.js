@@ -15,16 +15,16 @@ export default class Line{
     start(){
 
     }
-    down(x,y){
+    down(x,y,event){
         this.x0 = x;
         this.y0 = y;
 
-        this.draw(x,y);
+        this.draw(x,y,event);
     }
-    move(x,y){
-        this.draw(x,y);
+    move(x,y,event){
+        this.draw(x,y,event);
     }
-    up(x,y){
+    up(x,y,event){
         // this.draw(x,y);
     }
     end(){
@@ -32,7 +32,7 @@ export default class Line{
         this.editor.document.apply();
     }
 
-    draw(x,y){
+    draw(x,y,event){
         const document = this.editor.document;
         const drawLayer = document.drawLayer;
 
