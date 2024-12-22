@@ -79,7 +79,7 @@ export default class Document extends Canvas{
     //     this.sync();
     // }
     draw(){
-        this.clear()
+        this.clear()       
         this.ctx.save();
         this.layers.all().forEach((layer,index)=>{
             this.ctx.globalCompositeOperation = layer.compositeOperation

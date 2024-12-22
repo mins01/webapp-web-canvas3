@@ -47,7 +47,9 @@ export default class Canvas extends HTMLCanvasElement{
      */
     set width(v){
         const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'width');
+        let conf = this.getContextConf();
         desc.set.apply(this,[v]); 
+        this.setContextConf(conf);
         this.flush(); 
     }
 
@@ -60,7 +62,9 @@ export default class Canvas extends HTMLCanvasElement{
      */
     set height(v){
         const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'height');
+        let conf = this.getContextConf();
         desc.set.apply(this,[v]); 
+        this.setContextConf(conf);
         this.flush(); 
     }
 
@@ -70,6 +74,23 @@ export default class Canvas extends HTMLCanvasElement{
     }
     getContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){       
         return this.getContext('2d',options)
+    }
+
+    getContextConf(){
+        let keys = Object.keys(Object.getPrototypeOf(this.ctx));
+        let conf = {};
+        keys.forEach(key => {
+            if(key==='canvas'){return;}
+            conf[key] = this.ctx[key];
+        });
+        return conf
+    }
+    setContextConf(conf){
+        let keys = Object.keys(Object.getPrototypeOf(this.ctx));
+        keys.forEach(key => {
+            if(key==='canvas'){return;}
+            this.ctx[key] = conf[key];
+        });
     }
 
     ctxCommand(){
