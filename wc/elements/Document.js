@@ -57,7 +57,9 @@ export default class Document extends Canvas{
         return true;
     }
 
-    syncDrawLayer(layer){
+    syncDrawLayer(layer=null){
+        if(!layer) layer = this.layer
+        if(!layer) return;
         this.drawLayer.x = layer.x;
         this.drawLayer.y = layer.y;
         this.drawLayer.width = layer.width;
@@ -72,6 +74,7 @@ export default class Document extends Canvas{
         // console.log(this.layer);
         // this.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
         this.sync();
+        this.syncDrawLayer();
     }
     // flush(){
     //     this.ctxUpdatedAtTime = Date.now();

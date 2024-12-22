@@ -17,28 +17,33 @@ export default class Move extends BaseTool{
         this.layerX0 = this.layer.x;
         this.layerY0 = this.layer.y;
     }
-    down(x,y,event){
-        super.down(x,y,event);
-        this.x0 = x;
-        this.y0 = y;
-        this.draw(x,y,event);
+    down(event){
+        super.down(event);
+        const [x,y] = this.getXYForDocument(event);
+        this.x0 = x; this.y0 = y; this.x = x; this.y = y;
+        this.draw(x,y,x,y);
     }
-    move(x,y,event){
-        super.move(x,y,event);
-        this.draw(x,y,event);
+    move(event){
+        super.move(event);
+        const [x,y] = this.getXYForDocument(event);
+        this.x = x; this.y = y;
+        this.draw(this.x0,this.y0,x,y);
     }
-    up(x,y,event){
-        super.up(x,y,event);
+    up(event){
+        super.up(event);
+        // const [x,y] = this.getXYForDocument(event);
+        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
         this.document.apply();
     }
 
-    draw(x,y,event){
-        super.draw(x,y,event);
-        const dx = x - this.x0;
-        const dy = y - this.y0;
+    draw(x0,y0,x,y){
+        super.draw(...arguments);
+        
+        const dx = x - x0;
+        const dy = y - y0;
 
         this.layer.x = this.layerX0 + dx;
         this.layer.y = this.layerY0 + dy;

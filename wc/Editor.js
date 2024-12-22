@@ -38,26 +38,29 @@ export default class Editor{
     }
     getXYFromEvent(event){
         let doc = this.document;
-        let dl = doc.drawLayer;
+        let layer = this.document.layer;
+        // let dl = doc.drawLayer;
         // let x = event.x - doc.offsetLeft - dl.x + window.scrollX;
         // let y = event.y - doc.offsetTop - dl.y + window.scrollY;
-        let x = event.x - doc.offsetLeft  + window.scrollX;
-        let y = event.y - doc.offsetTop  + window.scrollY;
+        // let x = event.x - doc.offsetLeft  + window.scrollX;
+        // let y = event.y - doc.offsetTop  + window.scrollY;
+        let x = event.x - doc.offsetLeft - layer.x + window.scrollX;
+        let y = event.y - doc.offsetTop - layer.y + window.scrollY;
         return {x:x,y:y};
     }
     ondown=(event)=>{
         const p = this.getXYFromEvent(event)
         this.tool.start();
-        this.tool.down(p.x,p.y);
+        this.tool.down(event);
     }
     onmove=(event)=>{
         const p = this.getXYFromEvent(event)
 
-        this.tool.move(p.x,p.y);
+        this.tool.move(event);
     }
     onup=(event)=>{
         const p = this.getXYFromEvent(event)
-        this.tool.up(p.x,p.y);
+        this.tool.up(event);
         this.tool.end();        
     }
 

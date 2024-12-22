@@ -18,60 +18,53 @@ export default class Rectangle extends BaseTool{
     start(){
         super.start();
     }
-    down(x,y,event){
-        super.down(x,y,event);
-        this.x0 = x;
-        this.y0 = y;
-        this.draw(x,y,event);
+    down(event){
+        super.down(event);
+        const [x,y] = this.getXYForLayer(event);
+        this.x0 = x; this.y0 = y; this.x = x; this.y = y;
+        this.draw(x,y,x,y);
     }
-    move(x,y,event){
-        super.move(x,y,event);
-        this.draw(x,y,event);
+    move(event){
+        super.move(event);
+        const [x,y] = this.getXYForLayer(event);
+        this.x = x; this.y = y;
+        this.draw(this.x0,this.y0,x,y);
     }
-    up(x,y,event){
-        super.up(x,y,event);
+    up(event){
+        super.up(event);
+        // const [x,y] = this.getXYForLayer(event);
+        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
-        this.drawLayer.clear();
-        this.document.apply();
+        this.apply();
     }
 
-    draw(x,y,event){
-        const document = this.editor.document;
-        const drawLayer = document.drawLayer;
+    sync(){
+        super.sync();
+        this.draw(this.x0,this.y0,this.x,this.y);
+    }
+
+    draw(x0,y0,x,y){
+        super.draw(...arguments);
+        const document = this.document;
+        const layer = this.layer;
+        const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
 
-        let margin = ctx.lineWidth;
+        // for testing
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "orange";
 
-        let xs = -1,ys = -1,xe = -1,ye = -1;
-        let xmin = -1,ymin = -1,xmax = -1,ymax = -1;
-        if(this.x0 < x){ xs = 0; xe = x - this.x0; xmin = this.x0; xmax = x;  } else{ xs = this.x0 - x; xe = 0; xmax = this.x0; xmin = x; }          
-        if(this.y0 < y){ ys = 0; ye = y - this.y0; ymin = this.y0; ymax = y; } else{ ys = this.y0 - y; ye = 0; ymax = this.y0; ymin = y; }
-        let w = xmax-xmin;
-        let h = ymax-ymin;
+        let w = x - x0;
+        let h = y - y0;
+        let r =  Math.sqrt(w * w + h * h);       
 
-        let r = Math.max(w,h);
-        
-        
-
-        if(w<=0 || h<=0){ return; }
-        drawLayer.x = xmin-r-margin;
-        drawLayer.y = ymin-r-margin;
-        drawLayer.width = r*2+margin*2;
-        drawLayer.height = r*2+margin*2;
-
+        drawLayer.clear();
         
         ctx.beginPath();
-        ctx.arc(r+margin, r+margin, r, 0, 2 * Math.PI);        
-        if(ctx.fillAfterStroke??true){           
-            ctx.fill();
-            ctx.stroke();
-        }else{
-            ctx.stroke();
-            ctx.fill();
-        }
+        ctx.arc(x0, y0, r, 0, 2 * Math.PI);        
+        if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
         document.sync()
     }

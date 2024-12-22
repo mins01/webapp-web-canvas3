@@ -11,82 +11,55 @@ export default class Rectangle extends BaseTool{
     }
 
 
-    conf(){
-        
-    }
-
     start(){
         super.start();
     }
-    down(x,y,event){
-        super.down(x,y,event);
-        this.x0 = x;
-        this.y0 = y;
-        this.draw(x,y,event);
+    down(event){
+        super.down(event);
+        const [x,y] = this.getXYForLayer(event);
+        this.x0 = x; this.y0 = y; this.x = x; this.y = y;
+        this.draw(x,y,x,y);
     }
-    move(x,y,event){
-        super.move(x,y,event);
-        this.draw(x,y,event);
+    move(event){
+        super.move(event);
+        const [x,y] = this.getXYForLayer(event);
+        this.x = x; this.y = y;
+        this.draw(this.x0,this.y0,x,y);
     }
-    up(x,y,event){
-        super.up(x,y,event);
+    up(event){
+        super.up(event);
+        // const [x,y] = this.getXYForLayer(event);
+        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
-        this.drawLayer.clear();
-        this.document.apply();
+        this.apply();
     }
 
-    draw(x,y,event){
-        // let fromCenter = true
-        const document = this.editor.document;
-        const drawLayer = document.drawLayer;
+    sync(){
+        super.sync();
+        this.draw(this.x0,this.y0,this.x,this.y);
+    }
+    
+    draw(x0,y0,x,y){
+        super.draw(...arguments);
+        const document = this.document;
+        const layer = this.layer;
+        const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
-        ctx.lineWidth = 26;
+
+        // for testing
+        ctx.lineWidth = 4;
         ctx.strokeStyle = "orange";
 
-        let margin = ctx.lineWidth;
-
-        let xs = -1,ys = -1,xe = -1,ye = -1;
-        let xmin = -1,ymin = -1,xmax = -1,ymax = -1;
-        if(this.x0 < x){ xs = 0; xe = x - this.x0; xmin = this.x0; xmax = x;  } else{ xs = this.x0 - x; xe = 0; xmax = this.x0; xmin = x; }          
-        if(this.y0 < y){ ys = 0; ye = y - this.y0; ymin = this.y0; ymax = y; } else{ ys = this.y0 - y; ye = 0; ymax = this.y0; ymin = y; }
-        let w = xmax-xmin;
-        let h = ymax-ymin;
-
-        // 중앙에서 그려질 경우
-        // if(fromCenter){
-        //     xmin = xmin - w/2;
-        //     ymin = ymin - h/2;
-        //     w *= 1.5;
-        //     h *= 1.5;
-        // }
-
+        let w = x - x0;
+        let h = y - y0;      
         
+        drawLayer.clear();
 
-        if(w<=0 || h<=0){ return; }
-        drawLayer.x = xmin-margin;
-        drawLayer.y = ymin-margin;
-        drawLayer.width = w+margin*2;
-        drawLayer.height = h+margin*2;
-
-        // if(ctx.fillAfterStroke??true){
-        //     drawLayer.ctxCommand('fillRect',0, 0,w, h);
-        //     drawLayer.ctxCommand('strokeRect',0, 0,w, h);
-        // }else{
-        //     drawLayer.ctxCommand('strokeRect',0, 0,w, h);
-        //     drawLayer.ctxCommand('fillRect',0, 0,w, h);
-        // }
         ctx.beginPath();
-        ctx.rect(0+margin, 0+margin, w,h);        
-        if(ctx.fillAfterStroke??true){           
-            ctx.fill();
-            ctx.stroke();
-        }else{
-            ctx.stroke();
-            ctx.fill();
-        }
+        ctx.rect(x0, y0, w,h);        
+        if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
         document.sync()
     }
