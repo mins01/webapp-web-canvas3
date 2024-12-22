@@ -39,6 +39,7 @@ export default class Rectangle extends BaseTool{
     }
 
     draw(x,y,event){
+        // let fromCenter = true
         const document = this.editor.document;
         const drawLayer = document.drawLayer;
 
@@ -47,7 +48,17 @@ export default class Rectangle extends BaseTool{
         if(this.x0 < x){ xs = 0; xe = x - this.x0; xmin = this.x0; xmax = x;  } else{ xs = this.x0 - x; xe = 0; xmax = this.x0; xmin = x; }          
         if(this.y0 < y){ ys = 0; ye = y - this.y0; ymin = this.y0; ymax = y; } else{ ys = this.y0 - y; ye = 0; ymax = this.y0; ymin = y; }
         let w = xmax-xmin;
-        let h = ymax-ymin
+        let h = ymax-ymin;
+
+        // 중앙에서 그려질 경우
+        // if(fromCenter){
+        //     xmin = xmin - w/2;
+        //     ymin = ymin - h/2;
+        //     w *= 1.5;
+        //     h *= 1.5;
+        // }
+
+        
 
         if(w<=0 || h<=0){ return; }
         drawLayer.x = xmin;
@@ -57,11 +68,11 @@ export default class Rectangle extends BaseTool{
 
         const ctx = drawLayer.ctx;
         if(ctx.fillAfterStroke??true){
-            drawLayer.ctxCommand('fillRect',xs, ys,xe - xs, ye - ys);
-            drawLayer.ctxCommand('strokeRect',xs, ys,xe - xs, ye - ys);
+            drawLayer.ctxCommand('fillRect',0, 0,w, h);
+            drawLayer.ctxCommand('strokeRect',0, 0,w, h);
         }else{
-            drawLayer.ctxCommand('strokeRect',xs, ys,xe - xs, ye - ys);
-            drawLayer.ctxCommand('fillRect',xs, ys,xe - xs, ye - ys);
+            drawLayer.ctxCommand('strokeRect',0, 0,w, h);
+            drawLayer.ctxCommand('fillRect',0, 0,w, h);
         }
         document.sync()
     }
