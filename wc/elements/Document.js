@@ -71,8 +71,6 @@ export default class Document extends Canvas{
     apply(){
         // console.log(this.layer);
         // this.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
-        this.layer.merge(this.drawLayer)
-        this.drawLayer.clear();
         this.sync();
     }
     // flush(){

@@ -1,5 +1,8 @@
-export default class Rectangle{
+import BaseTool from './BaseTool.js';
+
+export default class Rectangle extends BaseTool{
     constructor(editor){
+        super(editor);
         this.name = 'rectangle';
         this.editor = editor;
 
@@ -13,23 +16,26 @@ export default class Rectangle{
     }
 
     start(){
-
+        super.start();
     }
     down(x,y,event){
+        super.down(x,y,event);
         this.x0 = x;
         this.y0 = y;
-
         this.draw(x,y,event);
     }
     move(x,y,event){
-        this.draw(x,y);
+        super.move(x,y,event);
+        this.draw(x,y,event);
     }
     up(x,y,event){
-        // this.draw(x,y);
+        super.up(x,y,event);
     }
     end(){
-        // console.log('end');
-        this.editor.document.apply();
+        super.end();
+        this.layer.merge(this.drawLayer)
+        this.drawLayer.clear();
+        this.document.apply();
     }
 
     draw(x,y,event){

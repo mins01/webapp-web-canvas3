@@ -1,40 +1,39 @@
-export default class Line{
+import BaseTool from './BaseTool.js';
+
+export default class Line extends BaseTool{
     constructor(editor){
-        this.name = 'line';
-        this.editor = editor;
-
-        this.x0 = null;
-        this.y0 = null;
-    }
-
-
-    conf(){
-        
+        super(editor);
+        // this.x0 = null;
+        // this.y0 = null;
+        this.name = 'Line';
     }
 
     start(){
-
+        super.start();
     }
     down(x,y,event){
+        super.down(x,y,event);
         this.x0 = x;
         this.y0 = y;
-
         this.draw(x,y,event);
     }
     move(x,y,event){
+        super.move(x,y,event);
         this.draw(x,y,event);
     }
     up(x,y,event){
-        // this.draw(x,y);
+        super.up(x,y,event);
     }
     end(){
-        // console.log('end');
-        this.editor.document.apply();
+        super.end();
+        this.layer.merge(this.drawLayer)
+        this.drawLayer.clear();
+        this.document.apply();
     }
 
     draw(x,y,event){
-        const document = this.editor.document;
-        const drawLayer = document.drawLayer;
+        const document = this.document;
+        const drawLayer = this.drawLayer;
 
         let xs = -1,ys = -1,xe = -1,ye = -1;
         let xmin = -1,ymin = -1,xmax = -1,ymax = -1;
