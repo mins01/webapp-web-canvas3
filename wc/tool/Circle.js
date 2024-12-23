@@ -1,4 +1,6 @@
 import BaseTool from './BaseTool.js';
+import DrawCircle from '../draw/DrawCircle.js';
+
 
 export default class Rectangle extends BaseTool{
     constructor(editor){
@@ -61,11 +63,7 @@ export default class Rectangle extends BaseTool{
         let r =  Math.sqrt(w * w + h * h);       
 
         drawLayer.clear();
-        
-        ctx.beginPath();
-        ctx.arc(x0, y0, r, 0, 2 * Math.PI);        
-        if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
-        ctx.closePath();
+        DrawCircle.draw(ctx,x0,y0,r);
         document.sync()
     }
 
