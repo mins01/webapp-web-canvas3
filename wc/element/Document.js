@@ -71,8 +71,7 @@ export default class Document extends Layer{
     }
     ready(){
         this.syncDrawLayer();
-        this.draw();
-        this.parentSync();
+        this.sync();
     }
     sync(){
         this.flush();
