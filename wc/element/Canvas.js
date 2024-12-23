@@ -7,13 +7,13 @@ export default class Canvas extends HTMLCanvasElement{
         this.id =  'wc-canvas-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
-        this._x = 0;
-        this._y = 0;
-        this._compositeOperation = 'source-over';
-        this._alpha = 1;
+        // this._x = 0;
+        // this._y = 0;
+        // this._compositeOperation = 'source-over';
+        // this._alpha = 1;
         
-        this.compositeOperation = 'source-over';
-        this.alpha = 1;
+        // this.compositeOperation = 'source-over';
+        // this.alpha = 1;
 
         this.ctxUpdatedAtTime = Date.now();
         
@@ -25,18 +25,23 @@ export default class Canvas extends HTMLCanvasElement{
 
         if(bgColor) this.fill(bgColor)
     }
-        
-    get x(){ return this._x; }
-    set x(x){ this._x = x; this.flush(); }
-    get y(){ return this._y; }
-    set y(y){ this._y = y; this.flush(); }
+    
+    static defineCustomElements(name='wc-canvas'){
+        if(!globalThis.window){return;}
+        window.customElements.define(name, this,{ extends: "canvas" });
+    }
 
-    get compositeOperation(){ return this._compositeOperation; }
-    set compositeOperation(compositeOperation){ this._compositeOperation = compositeOperation; this.flush(); }
+    // get x(){ return this._x; }
+    // set x(x){ this._x = x; this.flush(); }
+    // get y(){ return this._y; }
+    // set y(y){ this._y = y; this.flush(); }
+
+    // get compositeOperation(){ return this._compositeOperation; }
+    // set compositeOperation(compositeOperation){ this._compositeOperation = compositeOperation; this.flush(); }
     // get opacity(){ return this._opacity; }
     // set opacity(opacity){ this._opacity = opacity; this.flush(); }
-    get alpha(){ return this._alpha; }
-    set alpha(alpha){ this._alpha = alpha; this.flush(); }
+    // get alpha(){ return this._alpha; }
+    // set alpha(alpha){ this._alpha = alpha; this.flush(); }
 
     get width(){       
         const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'width');

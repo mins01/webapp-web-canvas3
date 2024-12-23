@@ -1,8 +1,9 @@
 import NamedSelectableArray from "../lib/NamedSelectableArray.js";
 import SelectableArray from "../lib/SelectableArray.js";
 import Canvas from "./Canvas.js";
+import Layer from "./Layer.js";
 
-export default class Document extends Canvas{
+export default class Document extends Layer{
     static counter = 0;
 
     constructor(w=null,h=null){
@@ -11,15 +12,18 @@ export default class Document extends Canvas{
         this.layers = new SelectableArray();
         this.parent = null;
         this.syncing = false;
-        this.drawLayer = new Canvas(w,h);
+        this.drawLayer = new Layer(w,h);
         this.drawLayer.parent = this;
         this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,})
 
         this.init();
     }
+    static defineCustomElements(name='wc-document'){
+        super.defineCustomElements(name);
+    }
 
     init(){
-        this.add(new Canvas(this.width,this.height));
+        this.add(new Layer(this.width,this.height));
         // this.select(0);
         this.draw()
     }
