@@ -1,4 +1,5 @@
 import BaseTool from './BaseTool.js';
+import DrawLine from '../draw/DrawLine.js';
 
 export default class Line extends BaseTool{
     constructor(editor){
@@ -50,11 +51,7 @@ export default class Line extends BaseTool{
         ctx.lineWidth = 26;
 
         drawLayer.clear();
-        drawLayer.ctxCommand('beginPath')
-        drawLayer.ctxCommand('moveTo',x0,y0 )
-        drawLayer.ctxCommand('lineTo',x,y)
-        drawLayer.ctxCommand('stroke')
-        drawLayer.ctxCommand('closePath')
+        DrawLine.draw(ctx,x0,y0,x,y);
         document.sync()
     }
 

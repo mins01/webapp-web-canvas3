@@ -63,10 +63,11 @@
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
 
+            let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
-            document.body.append(editor.document.drawLayer)
+            divForDebug.append(editor.document.drawLayer)
             editor.document.layers.all().forEach((layer,index)=>{
-                document.body.append(layer)
+                divForDebug.append(layer)
                 layer.onclick = (event)=>{
                     layer.parent.select(index);
                 }
@@ -86,20 +87,30 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Editor</h2>
-        <hr>
-        <button type="button" class="btn btn-info" onclick="editor.tools.select('Line')">tool:Line</button>
-        <button type="button" class="btn btn-info" onclick="editor.tools.select('Move')">tool:Move</button>
-        <button type="button" class="btn btn-info" onclick="editor.tools.select('Rectangle')">tool:Rectangle</button>
-        <button type="button" class="btn btn-info" onclick="editor.tools.select('Circle')">tool:Circle</button>
-        <button type="button" class="btn btn-info" onclick="editor.tools.select('Text')">tool:Text</button>
-        <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
-        <hr>
-        <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px;" class="d-flex justify-content-center align-items-center mx-auto">
-            <canvas id="wc-document" width="500" height="500" is="wc-document"></canvas>
+    <div class="position-fixed w-100 h-100 d-flex flex-column" style="top:0;left:0;bottom:0;margin:0; overflow: auto;touch-action: none;">
+        <div class="container">
+            <h2>Editor</h2>
+            <div>
+                <button type="button" class="btn btn-info" onclick="editor.tools.select('Line')">tool:Line</button>
+                <button type="button" class="btn btn-info" onclick="editor.tools.select('Move')">tool:Move</button>
+                <button type="button" class="btn btn-info" onclick="editor.tools.select('Rectangle')">tool:Rectangle</button>
+                <button type="button" class="btn btn-info" onclick="editor.tools.select('Circle')">tool:Circle</button>
+                <button type="button" class="btn btn-info" onclick="editor.tools.select('Text')">tool:Text</button>
+                <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
+            </div>
+            <hr>
         </div>
-    </div>
+        <div class="flex-fill">
+            <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px;" class="d-flex justify-content-center align-items-center mx-auto">
+                <canvas id="wc-document" width="500" height="500" is="wc-document"></canvas>
+            </div>
+        </div>
+        <div class="container">
+            <hr>
+            <div id="div-for-debug">
     
+            </div>
+        </div>
+    </div>    
 </body>
 </html>
