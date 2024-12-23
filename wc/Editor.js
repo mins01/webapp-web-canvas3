@@ -36,6 +36,7 @@ export default class Editor{
     removeEventListener(){
         this.peh.removeEventListener(this.target);
     }
+    // @deprecated
     getXYFromEvent(event){
         let doc = this.document;
         let layer = this.document.layer;
@@ -49,17 +50,13 @@ export default class Editor{
         return {x:x,y:y};
     }
     ondown=(event)=>{
-        const p = this.getXYFromEvent(event)
         this.tool.start();
         this.tool.down(event);
     }
     onmove=(event)=>{
-        const p = this.getXYFromEvent(event)
-
         this.tool.move(event);
     }
     onup=(event)=>{
-        const p = this.getXYFromEvent(event)
         this.tool.up(event);
         this.tool.end();        
     }
