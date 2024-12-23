@@ -11,13 +11,13 @@ class Brush{
     start(){
 
     }
-    down(){
+    onpointerdown(){
 
     }
-    move(){
+    onpointermove){
 
     }
-    up(){
+    onpointerup(){
 
     }
     end(){

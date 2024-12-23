@@ -28,15 +28,15 @@ export default class BaseTool {
 		this.init();
 	}
 
-	down(event){
+	onpointerdown(event){
 	
 	}
 
-	move(event){
+	onpointermove(event){
 	
 	}
 
-	up(event){
+	onpointerup(event){
 	
 	}
 

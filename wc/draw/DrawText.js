@@ -41,7 +41,7 @@ export default class DrawText{
         let x1 = x;
         let y1 = y+lineHeight;
         lines.forEach((line) => {
-            console.log(line,x1,y1);
+            // console.log(line,x1,y1);
             ctx.fillText(line, x1, y1);
             y1+=lineHeight
         });

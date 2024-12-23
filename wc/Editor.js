@@ -14,9 +14,9 @@ export default class Editor{
         });
         this.activeTool = null;
         this.peh = new PointerEventHandler(target);
-        this.peh.ondown = this.ondown;
-        this.peh.onmove = this.onmove;
-        this.peh.onup = this.onup;
+        this.peh.onpointerdown = this.onpointerdown;
+        this.peh.onpointermove = this.onpointermove;
+        this.peh.onpointerup = this.onpointerup;
         
         // this.tool = null;
         this.tools = new Tools(this);
@@ -49,15 +49,15 @@ export default class Editor{
         let y = event.y - doc.offsetTop - layer.y + window.scrollY;
         return {x:x,y:y};
     }
-    ondown=(event)=>{
+    onpointerdown=(event)=>{
         this.tool.start();
-        this.tool.down(event);
+        this.tool.onpointerdown(event);
     }
-    onmove=(event)=>{
-        this.tool.move(event);
+    onpointermove=(event)=>{
+        this.tool.onpointermove(event);
     }
-    onup=(event)=>{
-        this.tool.up(event);
+    onpointerup=(event)=>{
+        this.tool.onpointerup(event);
         this.tool.end();        
     }
 

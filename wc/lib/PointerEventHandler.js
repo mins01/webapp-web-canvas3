@@ -3,41 +3,41 @@ export default class PointerEventHandler{
         
     }
     addEventListener(target){
-        target.addEventListener('pointerdown',this.down);
+        target.addEventListener('pointerdown',this.pointerdown);
     }
     removeEventListener(target){
-        target.removeEventListener('pointerdown',this.down);
-        document.removeEventListener('pointermove',this.move)
-        document.removeEventListener('pointerup',this.up)
-        document.removeEventListener('pointerleave',this.up)
-        document.removeEventListener('pointercancel',this.up)
+        target.removeEventListener('pointerdown',this.pointerdown);
+        document.removeEventListener('pointermove',this.pointermove)
+        document.removeEventListener('pointerup',this.pointerup)
+        document.removeEventListener('pointerleave',this.pointerup)
+        document.removeEventListener('pointercancel',this.pointerup)
     }
-    down = (event)=>{
-        if(this.ondown){this.ondown(event)}
-        document.addEventListener('pointermove',this.move)
-        document.addEventListener('pointerup',this.up,{once:true})
-        document.addEventListener('pointerleave',this.up,{once:true})
-        document.addEventListener('pointercancel',this.up,{once:true})
+    pointerdown = (event)=>{
+        if(this.onpointerdown){this.onpointerdown(event)}
+        document.addEventListener('pointermove',this.pointermove)
+        document.addEventListener('pointerup',this.pointerup,{once:true})
+        document.addEventListener('pointerleave',this.pointerup,{once:true})
+        document.addEventListener('pointercancel',this.pointerup,{once:true})
     }
-    move = (event)=>{
-        if(this.onmove){this.onmove(event)}
+    pointermove = (event)=>{
+        if(this.onpointermove){this.onpointermove(event)}
     }
-    up = (event)=>{
-        if(this.onup){this.onup(event)}
-        document.removeEventListener('pointermove',this.move)
-        document.removeEventListener('pointerup',this.up)
-        document.removeEventListener('pointerleave',this.up)
-        document.removeEventListener('pointercancel',this.up)
+    pointerup = (event)=>{
+        if(this.onpointerup){this.onpointerup(event)}
+        document.removeEventListener('pointermove',this.pointermove)
+        document.removeEventListener('pointerup',this.pointerup)
+        document.removeEventListener('pointerleave',this.pointerup)
+        document.removeEventListener('pointercancel',this.pointerup)
     }
 
-    ondown(event){
-        console.log('ondown');
+    onpointerdown(event){
+        console.log('onpointerdown');
     };
-    onmove(event){
-        console.log('onmove');
+    onpointermove(event){
+        console.log('onpointermove');
     };
-    onup(event){
-        console.log('onup');
+    onpointerup(event){
+        console.log('onpointerup');
     };
 }
 
