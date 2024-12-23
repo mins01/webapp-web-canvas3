@@ -1,4 +1,4 @@
-// WcLayer를 wc/elements/Canvas로 변경
+// WcLayer를 wc/element/Canvas로 변경
 
 export default class Canvas extends HTMLCanvasElement{
     static counter = 0;

@@ -44,8 +44,8 @@
     </style>
 
     <script type="module">
-        import Canvas from "./wc/elements/Canvas.js";
-        import Document from "./wc/elements/Document.js";
+        import Canvas from "./wc/element/Canvas.js";
+        import Document from "./wc/element/Document.js";
         globalThis.Canvas = Canvas;
         window.customElements.define('wc-canvas', Canvas,{ extends: "canvas" });
         globalThis.Document = Document;

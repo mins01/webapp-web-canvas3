@@ -1,8 +1,8 @@
-// import NamedSelectableArray from "./libs/NamedSelectableArray.js";
-import SelectableArray from "./libs/SelectableArray.js";
-import PointerEventHandler from "./libs/PointerEventHandler.js";
+// import NamedSelectableArray from "./lib/NamedSelectableArray.js";
+import SelectableArray from "./lib/SelectableArray.js";
+import PointerEventHandler from "./lib/PointerEventHandler.js";
 
-import Tools from "./tools/Tools.js";
+import Tools from "./tool/Tools.js";
 
 export default class Editor{
     constructor(target){

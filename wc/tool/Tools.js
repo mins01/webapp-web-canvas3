@@ -1,6 +1,6 @@
 // import Line from "./Line.js";
 // import Rectangle from "./Rectangle.js";
-import SelectableMap from "../libs/SelectableMap.js";
+import SelectableMap from "../lib/SelectableMap.js";
 
 export default class Tools extends SelectableMap{
     constructor(editor){

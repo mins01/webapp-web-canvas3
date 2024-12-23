@@ -1,4 +1,4 @@
-import SelectableMap from "../../wc/libs/SelectableMap.js";
+import SelectableMap from "../../wc/lib/SelectableMap.js";
 
 let sm = new SelectableMap();
 console.assert(sm.selectedKey===null,sm.selected===null);

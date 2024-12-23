@@ -1,5 +1,5 @@
-import NamedSelectableArray from "../libs/NamedSelectableArray.js";
-import SelectableArray from "../libs/SelectableArray.js";
+import NamedSelectableArray from "../lib/NamedSelectableArray.js";
+import SelectableArray from "../lib/SelectableArray.js";
 import Canvas from "./Canvas.js";
 
 export default class Document extends Canvas{
