@@ -20,6 +20,7 @@ export default class Tools extends SelectableMap{
         }else{
             super.select(toolName);
         }
+        if(this.selected) this.selected.init();
     }
     async load(toolName){       
         let module = await import(`./${toolName}.js`);

@@ -69,6 +69,11 @@ export default class Document extends Layer{
         this.drawLayer.width = layer.width;
         this.drawLayer.height = layer.height;
     }
+    ready(){
+        this.syncDrawLayer();
+        this.draw();
+        this.parentSync();
+    }
     sync(){
         this.flush();
         this.draw();

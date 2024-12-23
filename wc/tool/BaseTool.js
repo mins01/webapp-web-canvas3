@@ -17,6 +17,8 @@ export default class BaseTool {
 		this.document = this.editor.document??null;
 		this.layer = this.document.layer??null;
 		this.drawLayer = this.document.drawLayer??null;
+		if(this.document) this.document.ready()
+
 		this.x0 = null;
 		this.y0 = null;
 		this.x = null;
