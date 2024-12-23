@@ -13,7 +13,7 @@ export default class Tools extends SelectableMap{
     select(toolName){
         if(!this.has(toolName)){
             this.load(toolName).then(()=>{
-                console.log('loaded',toolName);
+                console.log('selected tool: '+toolName);
                 this.toolName = toolName;
                 super.select(toolName);
             }).catch(e=>{console.error(e)});
@@ -24,7 +24,7 @@ export default class Tools extends SelectableMap{
     async load(toolName){       
         let module = await import(`./${toolName}.js`);
         if(module && module.default){
-            console.log('loaded',toolName);
+            console.log('loaded tool: '+toolName);
             this.set(toolName, new module.default(this.editor));
         }        
     }
