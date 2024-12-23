@@ -1,4 +1,6 @@
 import BaseTool from './BaseTool.js';
+import DrawRectangle from '../draw/DrawRectangle.js';
+
 
 export default class Rectangle extends BaseTool{
     constructor(editor){
@@ -52,15 +54,12 @@ export default class Rectangle extends BaseTool{
         ctx.lineWidth = 4;
         ctx.strokeStyle = "orange";
 
+
         let w = x - x0;
-        let h = y - y0;      
+        let h = y - y0;
         
         drawLayer.clear();
-
-        ctx.beginPath();
-        ctx.rect(x0, y0, w,h);        
-        if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
-        ctx.closePath();
+        DrawRectangle.draw(ctx,x0,y0,w,h);
         document.sync()
     }
 

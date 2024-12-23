@@ -68,7 +68,6 @@ export default class BaseTool {
 	}
 	getXYForDocument(event){
 		let doc = this.document;
-		let layer = this.document.layer;
 		let x = event.x - doc.offsetLeft + window.scrollX;
 		let y = event.y - doc.offsetTop + window.scrollY;
 		return [x,y];
