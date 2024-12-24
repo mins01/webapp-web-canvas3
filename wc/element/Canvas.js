@@ -20,8 +20,8 @@ export default class Canvas extends HTMLCanvasElement{
         this.setContext2D();
         this.parent = null
 
-        this.width = w??this.width??400;
-        this.height = h??this.height??300;
+        if(w) this.width = w;
+        if(h) this.height = h;
 
         if(bgColor) this.fill(bgColor)
     }
