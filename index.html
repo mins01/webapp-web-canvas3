@@ -45,11 +45,12 @@
 
     <script type="module">
         import Canvas from "./wc/element/Canvas.js";
+        import Layer from "./wc/element/Layer.js";
         import Document from "./wc/element/Document.js";
-        globalThis.Canvas = Canvas;
-        window.customElements.define('wc-canvas', Canvas,{ extends: "canvas" });
-        globalThis.Document = Document;
-        window.customElements.define('wc-document', Document,{ extends: "canvas" });
+        
+        Canvas.defineCustomElements();
+        Layer.defineCustomElements();
+        Document.defineCustomElements();
 
         import Editor from "./wc/Editor.js";
 
@@ -59,21 +60,21 @@
             wcc1.height = 200;
             document.querySelector('.bundle-box').append(wcc1)
 
-            const wcl1 = globalThis.wcl1 = new Canvas(200,100,'#0000ff');
+            const wcl1 = globalThis.wcl1 = new Layer(200,100,'#0000ff');
             wcc1.add(wcl1)
             wcl1.x = 50;
             wcl1.y = 100;
             wcl1.alpha = 0.2
             
             
-            const wcl2 = globalThis.wcl2 = new Canvas(100,100);
+            const wcl2 = globalThis.wcl2 = new Layer(100,100);
             wcc1.add(wcl2)
             wcl2.fill('#ff000099')
             wcl2.x = 300;
             wcl2.y = 20
             wcl2.ctxCommand('에러나야하는 코멘트',1,2,3,4,5)
 
-            const wcl3 = globalThis.wcl3 = new Canvas(300,300);
+            const wcl3 = globalThis.wcl3 = new Layer(300,300);
             wcc1.add(wcl3)
             // wcl3.id = 'wcl3';
             wcl3.x = 30;
@@ -95,8 +96,8 @@
 
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
             editor.addEventListener();
-            const wcl4 = globalThis.wcl4 = new Canvas(100,100);
-            wcc1.add(wcl4)
+            const wcl4 = globalThis.wcl4 = new Layer(100,100);
+            // wcc1.add(wcl4)
             wcl4.fill('#ff000099')
             wcl4.x = 130;
             wcl4.y = 10
