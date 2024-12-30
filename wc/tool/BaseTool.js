@@ -2,11 +2,11 @@ export default class BaseTool {
 	constructor(editor){
 		this.name = 'BaseTool';
 		this.editor = editor;
-		
+
 		this.document = null;
 		this.layer = null;
 		this.drawLayer = null;
-		
+
 		this.x0 = null;
 		this.y0 = null;
 		this.x = null;
@@ -22,26 +22,29 @@ export default class BaseTool {
 		this.x0 = null;
 		this.y0 = null;
 		this.x = null;
-		this.y = null;		
+		this.y = null;
+
+		if(this.layer){ Object.assign(this.layer.ctx,this.editor.contextConf);}
+		if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.contextConf);}
 	}
 	start(){
 		this.init();
 	}
 
 	onpointerdown(event){
-	
+
 	}
 
 	onpointermove(event){
-	
+
 	}
 
 	onpointerup(event){
-	
+
 	}
 
 	end(){
-		
+
 	}
 
 	input(){
@@ -58,7 +61,7 @@ export default class BaseTool {
 
 	}
 	draw(){
-		
+
 	}
 
 	getXYForLayer(event){

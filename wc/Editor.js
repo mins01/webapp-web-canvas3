@@ -2,6 +2,7 @@
 import SelectableArray from "./lib/SelectableArray.js";
 import PointerEventHandler from "./lib/PointerEventHandler.js";
 
+// import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
 
 export default class Editor{
@@ -17,7 +18,7 @@ export default class Editor{
         this.peh.onpointerdown = this.onpointerdown;
         this.peh.onpointermove = this.onpointermove;
         this.peh.onpointerup = this.onpointerup;
-        
+
         // this.tool = null;
         this.tools = new Tools(this);
         // this.tools.select('Rectangle');
@@ -25,10 +26,25 @@ export default class Editor{
         // this.tool = new Line(this);
 
         // this.documents.documentIndex = 0;
+
+        this.contextConf = {
+            strokeStyle:'#000000',
+            fillStyle:'#ffffff',
+            lineWidth:3,
+        }
+
+
     }
 
     get tool(){ return this.tools.selected; }
     get document(){ return this.documents.selected; }
+
+    // get contextConf(){
+    //     return {
+    //         strokeStyle:this.strokeStyleColor.toHex(),
+    //         fillStyle :this.fillStyleColor.toHex(),
+    //     }
+    // }
 
     addEventListener(){
         this.peh.addEventListener(this.target);

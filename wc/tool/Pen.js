@@ -52,8 +52,8 @@ export default class Pen extends BaseTool{
         const ctx = drawLayer.ctx;
         
         // for testing
-        ctx.strokeStyle = "blue";
-        ctx.lineWidth = 4;
+        // ctx.strokeStyle = "blue";
+        // ctx.lineWidth = 4;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 

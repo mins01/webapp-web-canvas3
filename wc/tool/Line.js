@@ -47,8 +47,8 @@ export default class Line extends BaseTool{
         const ctx = drawLayer.ctx;
         
         // for testing
-        ctx.strokeStyle = "orange";
-        ctx.lineWidth = 26;
+        // ctx.strokeStyle = "orange";
+        // ctx.lineWidth = 26;
 
         drawLayer.clear();
         DrawLine.draw(ctx,x0,y0,x,y);
