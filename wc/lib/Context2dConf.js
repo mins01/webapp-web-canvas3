@@ -18,6 +18,7 @@ export default class Context2DProp{
         this.miterLimit = 10;
         this.lineDashOffset = 0;
         // this.font = "10px sans-serif";
+        this.fontStyle = "";
         this.fontFamily = "sans-serif";
         this.fontSize = "10px";
         this.textAlign = "start";
@@ -31,10 +32,13 @@ export default class Context2DProp{
         this.wordSpacing = "0px";
     }
     get font(){
-        return `${this.fontSize} ${this.fontFamily}`;
+        return `${this.fontStyle} ${this.fontSize} ${this.fontFamily}`;
     }
     set font(v){
-
+        const r = this.constructor.parseFont(v);
+        if((r?.fontStyle??null) != null){this.fontStyle = r.fontStyle;}
+        if((r?.fontSize??null) != null){this.fontSize = r.fontSize;}
+        if((r?.fontFamily??null) != null){this.fontFamily = r.fontFamily;}
     }
 
     static parseFont(v){
