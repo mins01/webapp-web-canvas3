@@ -2,6 +2,9 @@
 import SelectableArray from "./lib/SelectableArray.js";
 import PointerEventHandler from "./lib/PointerEventHandler.js";
 
+
+import Context2dConf from "./lib/Context2dConf.js";
+
 // import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
 
@@ -27,13 +30,7 @@ export default class Editor{
 
         // this.documents.documentIndex = 0;
 
-        this.contextConf = {
-            strokeStyle:'#000000',
-            fillStyle:'#ffffff',
-            lineWidth:3,
-        }
-
-
+        this.ctxConf = new Context2dConf();
     }
 
     get tool(){ return this.tools.selected; }
