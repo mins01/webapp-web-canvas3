@@ -54,10 +54,10 @@ export default class Eraser extends BaseTool{
         
         ctx.save();
         // for testing
-        ctx.strokeStyle = "blue";
-        ctx.lineWidth = 4;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
+        // ctx.strokeStyle = "blue";
+        // ctx.lineWidth = 4;
+        // ctx.lineCap = "round";
+        // ctx.lineJoin = "round";
         ctx.globalCompositeOperation = 'destination-out';
 
         drawLayer.clear();

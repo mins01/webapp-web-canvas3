@@ -15,8 +15,10 @@ export default class Context2dConf{
         this.shadowBlur = 0;
         this.shadowColor = "rgba(0, 0, 0, 0)";
         this.lineWidth = 1;
-        this.lineCap = "butt";
-        this.lineJoin = "miter";
+        // this.lineCap = "butt";
+        // this.lineJoin = "miter";
+        this.lineCap = "round";
+        this.lineJoin = "round";
         this.miterLimit = 10;
         this.lineDashOffset = 0;
         // this.font = "10px sans-serif";

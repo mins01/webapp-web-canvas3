@@ -47,27 +47,34 @@
         import Canvas from "./wc/element/Canvas.js";
         import Layer from "./wc/element/Layer.js";
         import Document from "./wc/element/Document.js";
+        import TextLayer from "./wc/element/TextLayer.js";
         
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
         Document.defineCustomElements();
+        TextLayer.defineCustomElements();
 
         globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         globalThis.Wc.Layer = Layer;
         globalThis.Wc.Document = Document;
+        globalThis.Wc.TextLayer = TextLayer;
 
         import Editor from "./wc/Editor.js";
 
         window.addEventListener('load',(event)=>{
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
             editor.addEventListener();
-            const wcl4 = globalThis.wcl4 = new Canvas(100,100);
+            const wcl4 = globalThis.wcl4 = new Layer(100,100);
             wcl4.fill('#ff000066')
             wcl4.x = 300;
             wcl4.y = 20
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
+
+            const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
+            wcl5.text='하늘하늘 \n 그렇구나';
+            editor.document.add(wcl5);
 
             let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
@@ -109,9 +116,9 @@
             </div>
             <hr>
             <div>
-                전경색:<input type="color" oninput="editor.contextConf.strokeStyle=this.value">
-                배경색:<input type="color" oninput="editor.contextConf.fillStyle=this.value" value="#ffffff">
-                <input type="range" name="" id="" oninput="editor.contextConf.lineWidth=this.value" value="3">
+                전경색:<input type="color" oninput="editor.ctxConf.strokeStyle=this.value">
+                배경색:<input type="color" oninput="editor.ctxConf.fillStyle=this.value" value="#ffffff">
+                <input type="range" name="" id="" oninput="editor.ctxConf.lineWidth=this.value" value="3">
             </div>
             <hr>
         </div>
