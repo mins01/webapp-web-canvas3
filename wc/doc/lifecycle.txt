@@ -1,0 +1,9 @@
+Editor
+-- Document
+----- TextLayer
+----- Layer
+-------- Canvas
+
+
+Canvas
+sync -> draw() -> flush() -> parentSync();

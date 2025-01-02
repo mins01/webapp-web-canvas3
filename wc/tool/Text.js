@@ -3,10 +3,10 @@ import DrawText from '../draw/DrawText.js';
 
 
 
-export default class Rectangle extends BaseTool{
+export default class Text extends BaseTool{
     constructor(editor){
         super(editor);
-        this.name = 'rectangle';
+        this.name = 'text';
         this.editor = editor;
 
         // this.x0 = null;

@@ -84,15 +84,17 @@ export default class Document extends Layer{
         this.sync();
         this.syncDrawLayer();
     }
-    // flush(){
-    //     this.ctxUpdatedAtTime = Date.now();
-    //     // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-    //     this.sync();
-    // }
+    flush(){
+        if(this.layers){
+            this.ctxUpdatedAtTime = Math.max(... this.layers.map((layer)=>{ return layer.ctxUpdatedAtTime; }))
+        }else{
+            this.ctxUpdatedAtTime = Date.now();
+        }
+    }
     draw(){
         this.clear()       
         this.ctx.save();
-        this.layers.all().forEach((layer,index)=>{
+        this.layers.forEach((layer,index)=>{
             this.ctx.globalCompositeOperation = layer.compositeOperation
             this.ctx.globalAlpha = layer.alpha
             this.ctxCommand('drawImage',layer, layer.x, layer.y, layer.width, layer.height);

@@ -111,14 +111,16 @@ export default class Canvas extends HTMLCanvasElement{
         // console.log(method);
         
     }
+    draw(){ // 따로 그리기 동작이 있을 경우.
+
+    }
     flush(){
         this.ctxUpdatedAtTime = Date.now();
-        // console.log('ctxUpdatedAtTime',this.ctxUpdatedAtTime);
-        // if(this.parent) this.parentSync();
     }
     sync(){
         this.parentSync();
     }
+    
     parentSync(){
         if(this.parent && this.parent.sync) this.parent.sync();
     }

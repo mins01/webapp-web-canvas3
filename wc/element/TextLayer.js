@@ -24,6 +24,12 @@ export default class TextLayer extends Layer{
     static defineCustomElements(name='wc-textlayer'){
         super.defineCustomElements(name);
     }
+
+    setText(text){
+        this.text = text;
+        this.draw();
+        this.sync();
+    }
     
 
     draw(){
