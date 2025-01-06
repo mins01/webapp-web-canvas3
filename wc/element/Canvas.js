@@ -31,21 +31,26 @@ export default class Canvas extends HTMLCanvasElement{
         window.customElements.define(name, this,{ extends: "canvas" });
     }
 
-    // get x(){ return this._x; }
-    // set x(x){ this._x = x; this.flush(); }
-    // get y(){ return this._y; }
-    // set y(y){ this._y = y; this.flush(); }
+    static get observedAttributes() { return ['width', 'height']; }
 
-    // get compositeOperation(){ return this._compositeOperation; }
-    // set compositeOperation(compositeOperation){ this._compositeOperation = compositeOperation; this.flush(); }
-    // get opacity(){ return this._opacity; }
-    // set opacity(opacity){ this._opacity = opacity; this.flush(); }
-    // get alpha(){ return this._alpha; }
-    // set alpha(alpha){ this._alpha = alpha; this.flush(); }
+    connectedCallback(){
+        
+    }
+    disconnectedCallback(){
+
+    }
+    adoptedCallback(){
+
+    }
+    attributeChangedCallback(name, oldValue, newValue){
+        // console.log(...arguments);
+        this.flush()
+    }
+
 
     get width(){       
         const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'width');
-        return desc.get.apply(this); 
+        return desc.get.apply(this);
     }
     /**
      * @param {number} v
@@ -55,7 +60,7 @@ export default class Canvas extends HTMLCanvasElement{
         let conf = this.getContextConf();
         desc.set.apply(this,[v]); 
         this.setContextConf(conf);
-        this.flush(); 
+        // this.flush(); 
     }
 
     get height(){       
@@ -70,7 +75,7 @@ export default class Canvas extends HTMLCanvasElement{
         let conf = this.getContextConf();
         desc.set.apply(this,[v]); 
         this.setContextConf(conf);
-        this.flush(); 
+        // this.flush(); 
     }
 
     setContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){
@@ -116,6 +121,8 @@ export default class Canvas extends HTMLCanvasElement{
     }
     flush(){
         this.ctxUpdatedAtTime = Date.now();
+        console.log('flush',this,this.ctxUpdatedAtTime);
+        
     }
     sync(){
         this.parentSync();
