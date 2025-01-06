@@ -6,21 +6,14 @@ import DrawText from '../draw/DrawText.js';
 
 export default class TextLayer extends Layer{
     static counter = 0;
+    text = null;
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
         this.id =  'wc-textlayer-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
-        
-        this.compositeOperation = 'source-over';
-        this.alpha = 1;
-
-
-
-        this.lineHeightPx
 
         this.text = '';
-        this.lineHeightPx = 20;
     }
     static defineCustomElements(name='wc-textlayer'){
         super.defineCustomElements(name);
@@ -47,9 +40,12 @@ export default class TextLayer extends Layer{
 
         // ctx.fillStyle = '#ff0000';
         // ctx.font = "20px";
-        Object.assign(this.ctx,this.parent.editor.ctxConf.toObject());
-
-        DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx);
+        if(this.parent){
+            Object.assign(this.ctx,this.parent.editor.ctxConf.toObject());
+        }
+        if(this.text){
+            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx);
+        }
         
         ctx.restore();
     }
