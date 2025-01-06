@@ -59,7 +59,7 @@ export default class Pen extends BaseTool{
 
         drawLayer.clear();
         DrawLine.drawByCoordinates(ctx,this.coordinates);
-        document.sync()
+        drawLayer.flush()
     }
 
 

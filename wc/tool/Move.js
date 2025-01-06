@@ -48,7 +48,7 @@ export default class Move extends BaseTool{
         this.layer.x = this.layerX0 + dx;
         this.layer.y = this.layerY0 + dy;
 
-        this.document.sync()
+        this.document.flush()
     }
 
 

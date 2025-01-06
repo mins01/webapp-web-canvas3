@@ -60,7 +60,7 @@ export default class Rectangle extends BaseTool{
         
         drawLayer.clear();
         DrawRectangle.draw(ctx,x0,y0,w,h);
-        document.sync()
+        drawLayer.flush()
     }
 
 

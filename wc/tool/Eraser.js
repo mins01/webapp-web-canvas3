@@ -63,7 +63,7 @@ export default class Eraser extends BaseTool{
         drawLayer.clear();
         DrawLine.drawByCoordinates(ctx,this.coordinates);
         ctx.restore();
-        document.sync()
+        drawLayer.flush()
     }
 
 

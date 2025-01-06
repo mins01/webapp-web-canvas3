@@ -52,7 +52,7 @@ export default class Line extends BaseTool{
 
         drawLayer.clear();
         DrawLine.draw(ctx,x0,y0,x,y);
-        document.sync()
+        drawLayer.flush()
     }
 
 

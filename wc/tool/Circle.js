@@ -64,7 +64,7 @@ export default class Rectangle extends BaseTool{
 
         drawLayer.clear();
         DrawCircle.draw(ctx,x0,y0,r);
-        document.sync()
+        drawLayer.flush()
     }
 
 

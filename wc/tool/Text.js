@@ -91,7 +91,7 @@ export default class Text extends BaseTool{
         
         ctx.restore();
 
-        document.sync()
+        drawLayer.flush()
     }
 
     // textToLines(text,w,h){

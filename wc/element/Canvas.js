@@ -140,13 +140,13 @@ export default class Canvas extends HTMLCanvasElement{
         // ctx.fillRect(0,0,this.width,this.height);
         this.ctxCommand('fillRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
-        this.flush();
+        // this.flush();
     }
     clear(){
         this.ctxCommand('save');
         this.ctxCommand('clearRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
-        this.flush();
+        // this.flush();
     }
 
     merge(canvas){
@@ -174,6 +174,6 @@ export default class Canvas extends HTMLCanvasElement{
         dy = canvas.y-ymin;
         this.ctxCommand('drawImage',canvas, dx, dy, canvas.width, canvas.height);        
 
-        this.flush();
+        // this.flush();
     }
 }
