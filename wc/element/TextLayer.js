@@ -27,16 +27,14 @@ export default class TextLayer extends Layer{
 
     setText(text){
         this.text = text;
-        this.draw();
-        this.sync();
+        this.flush();
     }
     
 
     draw(){
         const ctx = this.ctx;
-        this.clear();
-
         ctx.save();
+        this.ctxCommand('clearRect',0,0,this.width,this.height);
         ctx.strokeStyle = '#ccbbaa';
         ctx.fillStyle = '#aabbcc';
         ctx.beginPath();

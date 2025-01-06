@@ -44,7 +44,7 @@ export default class Canvas extends HTMLCanvasElement{
     }
     attributeChangedCallback(name, oldValue, newValue){
         // console.log(...arguments);
-        this.flush()
+        // this.flush()
     }
 
 
@@ -120,16 +120,17 @@ export default class Canvas extends HTMLCanvasElement{
 
     }
     flush(){
+        this.draw();
         this.ctxUpdatedAtTime = Date.now();
+        this.sync();
         console.log('flush',this,this.ctxUpdatedAtTime);
-        
     }
     sync(){
-        this.parentSync();
+        this.parentFlush();
     }
     
-    parentSync(){
-        if(this.parent && this.parent.sync) this.parent.sync();
+    parentFlush(){
+        if(this.parent && this.parent.flush) this.parent.flush();
     }
 
     fill(color){
@@ -139,9 +140,9 @@ export default class Canvas extends HTMLCanvasElement{
         // ctx.fillRect(0,0,this.width,this.height);
         this.ctxCommand('fillRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
-        this.flush(); 
+        this.flush();
     }
-    clear(color){
+    clear(){
         this.ctxCommand('save');
         this.ctxCommand('clearRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
@@ -173,8 +174,6 @@ export default class Canvas extends HTMLCanvasElement{
         dy = canvas.y-ymin;
         this.ctxCommand('drawImage',canvas, dx, dy, canvas.width, canvas.height);        
 
-        this.ctx.putImageData
-
-        this.flush();        
+        this.flush();
     }
 }

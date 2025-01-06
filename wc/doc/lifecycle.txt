@@ -6,4 +6,4 @@ Editor
 
 
 Canvas
-sync -> draw() -> flush() -> parentSync();
+flush() => { draw() -> sync ->  parentFlush(); }

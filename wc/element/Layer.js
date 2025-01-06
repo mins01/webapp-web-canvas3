@@ -22,14 +22,14 @@ export default class Layer extends Canvas{
     }
         
     get x(){ return this._x; }
-    set x(x){ this._x = x; this.flush(); }
+    set x(x){ this._x = x; }
     get y(){ return this._y; }
-    set y(y){ this._y = y; this.flush(); }
+    set y(y){ this._y = y; }
 
     get compositeOperation(){ return this._compositeOperation; }
-    set compositeOperation(compositeOperation){ this._compositeOperation = compositeOperation; this.flush(); }
+    set compositeOperation(compositeOperation){ this._compositeOperation = compositeOperation; }
     // get opacity(){ return this._opacity; }
     // set opacity(opacity){ this._opacity = opacity; this.flush(); }
     get alpha(){ return this._alpha; }
-    set alpha(alpha){ this._alpha = alpha; this.flush(); }
+    set alpha(alpha){ this._alpha = alpha; }
 }

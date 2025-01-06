@@ -25,7 +25,7 @@ export default class Document extends Layer{
     init(){
         this.add(new Layer(this.width,this.height));
         // this.select(0);
-        this.draw()
+        this.flush()
     }
 
 
@@ -46,18 +46,18 @@ export default class Document extends Layer{
         layer.parent = this;
         this.layers.add(layer);
         this.syncDrawLayer(layer);
-        this.draw();
+        this.flush();
         return true;
     }
     remove(){
         this.layers.remove();
         this.syncDrawLayer(this.layer);
-        this.draw();
+        this.flush();
         return true;
     }
     move(index){
         this.layers.move(index);
-        this.draw();
+        this.flush();
         return true;
     }
 
@@ -73,27 +73,23 @@ export default class Document extends Layer{
         this.syncDrawLayer();
         this.sync();
     }
-    sync(){
-        this.flush();
-        this.draw();
-        this.parentSync();
-    }
+
     apply(){
         // console.log(this.layer);
         // this.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
         this.sync();
         this.syncDrawLayer();
     }
-    flush(){
-        if(this.layers){
-            this.ctxUpdatedAtTime = Math.max(... this.layers.map((layer)=>{ return layer.ctxUpdatedAtTime; }))
-        }else{
-            this.ctxUpdatedAtTime = Date.now();
-        }
-    }
+    // flush(){
+    //     if(this.layers){
+    //         this.ctxUpdatedAtTime = Math.max(... this.layers.map((layer)=>{ return layer.ctxUpdatedAtTime; }))
+    //     }else{
+    //         this.ctxUpdatedAtTime = Date.now();
+    //     }
+    // }
     draw(){
-        this.clear()       
         this.ctx.save();
+        this.ctxCommand('clearRect',0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
             this.ctx.globalCompositeOperation = layer.compositeOperation
             this.ctx.globalAlpha = layer.alpha
