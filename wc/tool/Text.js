@@ -57,6 +57,8 @@ export default class Text extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
 
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+
         ctx.save();
         // // for testing
         // ctx.lineWidth = 4;

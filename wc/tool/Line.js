@@ -45,6 +45,8 @@ export default class Line extends BaseTool{
         const layer = this.layer;
         const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
+
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
         
         // for testing
         // ctx.strokeStyle = "orange";

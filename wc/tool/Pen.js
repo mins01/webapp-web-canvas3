@@ -51,6 +51,8 @@ export default class Pen extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
         
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+
         // for testing
         // ctx.strokeStyle = "blue";
         // ctx.lineWidth = 4;

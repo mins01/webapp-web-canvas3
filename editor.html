@@ -125,7 +125,7 @@
                 </div>
                 <div>
                     text
-                    <textarea name="" class="forn-control" id="" oninput="if(editor.document.layer.setText){editor.document.layer.setText(this.value);}"></textarea>
+                    <textarea name="" class="forn-control" id="" oninput="if(editor.document.layer.setText){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
                 </div>
             </form>
             <hr>

@@ -24,8 +24,8 @@ export default class BaseTool {
 		this.x = null;
 		this.y = null;
 
-		if(this.layer){ Object.assign(this.layer.ctx,this.editor.ctxConf);}
-		if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.ctxConf);}
+		if(this.layer){ Object.assign(this.layer.ctx,this.editor.ctxConf.toObject());}
+		if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.ctxConf.toObject());}
 	}
 	start(){
 		this.init();

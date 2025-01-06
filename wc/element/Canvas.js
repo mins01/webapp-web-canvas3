@@ -4,6 +4,7 @@ export default class Canvas extends HTMLCanvasElement{
     static counter = 0;
     constructor(w=null,h=null,bgColor=null,label=null){
         super();
+        this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
         this.id =  'wc-canvas-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
@@ -15,6 +16,7 @@ export default class Canvas extends HTMLCanvasElement{
         // this.compositeOperation = 'source-over';
         // this.alpha = 1;
 
+        
         this.ctxUpdatedAtTime = Date.now();
         
         this.setContext2D();

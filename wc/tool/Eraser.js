@@ -52,6 +52,8 @@ export default class Eraser extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = layer.ctx;
         
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+
         ctx.save();
         // for testing
         // ctx.strokeStyle = "blue";
