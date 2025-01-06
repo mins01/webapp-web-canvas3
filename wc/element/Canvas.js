@@ -123,7 +123,7 @@ export default class Canvas extends HTMLCanvasElement{
         this.draw();
         this.ctxUpdatedAtTime = Date.now();
         this.sync();
-        console.log('flush',this,this.ctxUpdatedAtTime);
+        // console.log('flush',this,this.ctxUpdatedAtTime);
     }
     sync(){
         this.parentFlush();

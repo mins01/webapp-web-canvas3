@@ -14,6 +14,7 @@ export default class Editor{
         // this.documents = new NamedSelectableArray('document');
         this.documents = new SelectableArray();
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
+            el.editor = this;
             this.documents.add(el)
         });
         this.activeTool = null;

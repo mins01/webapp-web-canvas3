@@ -6,5 +6,5 @@ Editor
 
 
 Canvas
-flush() => { draw() -> sync ->  parentFlush(); }
-모든 동작 후 flush()를 호출해야 다시 그리면서 부모도 다시 그린다.
+flush() => { draw() -> sync() ->  parentFlush(); }
+모든 동작 후 flush()를 호출해야 다시 그린 후 부모도 다시 그린다.

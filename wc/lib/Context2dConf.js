@@ -1,4 +1,4 @@
-export default class Context2dConf{
+class Context2dConf{
     constructor(ctx=null){
         // this.canvas = "[object HTMLCanvasElement]";
         this.fillAfterStroke = true,
@@ -51,6 +51,14 @@ export default class Context2dConf{
     }
     get lineHeightPx(){
         return parseInt(this.constructor.parseLineHeight(this.lineHeight,this.fontSize));
+    }
+
+    toObject(){
+        const robj = {}
+        for(let k in this){
+            robj[k] = this[k];
+        }
+        return robj;
     }
 
     static parseFont(v){
@@ -113,3 +121,11 @@ export default class Context2dConf{
         
     }
 }
+
+// enumerable. 열거가능처리.
+['font','lineHeightPx'].forEach((v)=>{
+	const d = Object.getOwnPropertyDescriptor(Context2dConf.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConf.prototype,v,d);   
+})
+
+
+export default Context2dConf;

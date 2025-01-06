@@ -16,6 +16,8 @@ export default class Document extends Layer{
         this.drawLayer.parent = this;
         this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,})
 
+        this.editor = null;
+
         this.init();
     }
     static defineCustomElements(name='wc-document'){
@@ -46,7 +48,8 @@ export default class Document extends Layer{
         layer.parent = this;
         this.layers.add(layer);
         this.syncDrawLayer(layer);
-        this.flush();
+        layer.flush();
+        // this.flush();
         return true;
     }
     remove(){

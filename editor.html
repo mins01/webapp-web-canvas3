@@ -115,11 +115,19 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
-            <div>
-                전경색:<input type="color" oninput="editor.ctxConf.strokeStyle=this.value">
-                배경색:<input type="color" oninput="editor.ctxConf.fillStyle=this.value" value="#ffffff">
-                <input type="range" name="" id="" oninput="editor.ctxConf.lineWidth=this.value" value="3">
-            </div>
+            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
+                <div>
+                    전경색:<input type="color" oninput="editor.ctxConf.strokeStyle=this.value">
+                    배경색:<input type="color" oninput="editor.ctxConf.fillStyle=this.value" value="#ffffff">
+                    lineWidth:<input type="range" name="" id="" oninput="editor.ctxConf.lineWidth=this.value" value="3">
+                    fontSize:<input type="range" name="" id="" oninput="editor.ctxConf.fontSize=this.value+'px'" value="16">
+                    lineHeight:<input type="range" name="" id="" oninput="editor.ctxConf.lineHeight=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
+                </div>
+                <div>
+                    text
+                    <textarea name="" class="forn-control" id="" oninput="if(editor.document.layer.setText){editor.document.layer.setText(this.value);}"></textarea>
+                </div>
+            </form>
             <hr>
         </div>
         <div class="flex-fill">

@@ -27,7 +27,6 @@ export default class TextLayer extends Layer{
 
     setText(text){
         this.text = text;
-        this.flush();
     }
     
 
@@ -35,17 +34,21 @@ export default class TextLayer extends Layer{
         const ctx = this.ctx;
         ctx.save();
         this.ctxCommand('clearRect',0,0,this.width,this.height);
-        ctx.strokeStyle = '#ccbbaa';
-        ctx.fillStyle = '#aabbcc';
+
+        
+
+        ctx.strokeStyle = '#ccbbaa80';
+        ctx.fillStyle = '#aabbcc80';
         ctx.beginPath();
         ctx.rect(0, 0, this.width,this.height);        
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
 
-        ctx.fillStyle = '#ff0000';
-        ctx.font = "20px";
+        // ctx.fillStyle = '#ff0000';
+        // ctx.font = "20px";
+        Object.assign(this.ctx,this.parent.editor.ctxConf.toObject());
 
-        DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,this.lineHeightPx);
+        DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx);
         
         ctx.restore();
     }
