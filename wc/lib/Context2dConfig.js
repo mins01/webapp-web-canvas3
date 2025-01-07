@@ -1,3 +1,5 @@
+import Util from "./Util.js";
+
 class Context2dConfig{
     fillAfterStroke = true;
 
@@ -22,6 +24,7 @@ class Context2dConfig{
     fontStyle = "";
     fontFamily = "sans-serif";
     fontSize = "10px"; //px 만 지원하자. 우선은...
+    textPadding = "0px";
     textAlign = "start";
     lineHeight = "1.5em";
     textBaseline = "alphabetic";
@@ -47,10 +50,17 @@ class Context2dConfig{
         if((r?.lineHeight??null) != null){this.lineHeight = r.lineHeight;}
     }
     get fontSizePx(){
-        return parseInt(this.fontSize);
+        return Util.cssSizeConvertToPx(this.fontSize);
     }
     get lineHeightPx(){
-        return parseInt(this.constructor.parseLineHeight(this.lineHeight,this.fontSize));
+        const r = Util.cssSizeBasedOnFontSize(this.lineHeight,this.fontSize);
+        if(r === null){ return null; }
+        return Util.cssSizeConvertToPx(r);
+    }
+    get textPaddingPx(){
+        const r = Util.cssSizeBasedOnFontSize(this.textPadding,this.fontSize);
+        if(r === null){ return null; }
+        return Util.cssSizeConvertToPx(r);
     }
 
     toObject(){
@@ -86,6 +96,7 @@ class Context2dConfig{
         this.fontStyle = "";
         this.fontFamily = "sans-serif";
         this.fontSize = "10px"; //px 만 지원하자. 우선은...
+        this.textPadding = "0px";
         this.textAlign = "start";
         this.lineHeight = "1.5em"
         this.textBaseline = "alphabetic";
@@ -125,34 +136,34 @@ class Context2dConfig{
         return {
             fontStyle:fontStyles.join(' '),
             fontSize,
-            // lineHeight:this.parseLineHeight(lineHeight,fontSize),
+            // lineHeight:this.caluateByFontSize(lineHeight,fontSize),
             lineHeight:lineHeight,
             fontFamily:fontFamilies.join(', '),
         }
     }
-    static parseLineHeight(lineHeight,fontSize){
+    static caluateByFontSize(value,fontSize){
         
-        const lhr = lineHeight.matchAll(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/g);
-        const lhrs = [...lhr]; if(!lhrs || !lhrs[0]){ return null}
-        const lineHeightNumber = parseFloat(lhrs[0][1]);
-        const lineHeightUnit = (lhrs[0][2]??null);
+        const vhr = value.matchAll(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/g);
+        const vhrs = [...vhr]; if(!vhrs || !vhrs[0]){ return null}
+        const valueNumber = parseFloat(vhrs[0][1]);
+        const valueUnit = (vhrs[0][2]??null);
         const fsr = fontSize.matchAll(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/g);
         const fsrs = [...fsr]; if(!fsrs || !fsrs[0]){ return null}
         const fontSizeNumber = parseFloat(fsrs[0][1]);
         const fontSizeUnit = (fsrs[0][2]??null);
 
-        // console.log(lhrs,fsrs);
+        // console.log(vhrs,fsrs);
 
         // const fsrr = fsr[0]??null;
         let r = '';
-        if(!lineHeightUnit){
-            r = (lineHeightNumber*fontSizeNumber)+fontSizeUnit;
-        }else if(lineHeightUnit=='em'){
-            r = (lineHeightNumber*fontSizeNumber)+fontSizeUnit;
-        }else if(lineHeightUnit=='%'){
-            r = (lineHeightNumber*fontSizeNumber/100)+fontSizeUnit;
+        if(!valueUnit){
+            r = (valueNumber*fontSizeNumber)+fontSizeUnit;
+        }else if(valueUnit=='em'){
+            r = (valueNumber*fontSizeNumber)+fontSizeUnit;
+        }else if(valueUnit=='%'){
+            r = (valueNumber*fontSizeNumber/100)+fontSizeUnit;
         }else{
-            r = lineHeight;
+            r = value;
         }
         return r;
         
@@ -160,7 +171,7 @@ class Context2dConfig{
 }
 
 // enumerable. 열거가능처리.
-['font','lineHeightPx'].forEach((v)=>{
+['font','lineHeightPx','textPaddingPx'].forEach((v)=>{
 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 

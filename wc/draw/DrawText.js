@@ -1,9 +1,9 @@
 export default class DrawText{
 
-    static draw(ctx,text,w,h,x,y,lineHeight=null){
+    static draw(ctx,text,w,h,x,y,lineHeight=null,padding=0){
         if(lineHeight===null){ lineHeight = ctx.lineHeight??parseInt(ctx.font,10)??8; }
-        let textLines = this.textToLines(ctx,text,w,h,lineHeight);
-        this.drawTextLines(ctx,textLines,x,y,lineHeight);
+        let textLines = this.textToLines(ctx,text,w-(padding*2),h-(padding*2),lineHeight);
+        this.drawTextLines(ctx,textLines,x+padding,y+padding,lineHeight);
     }
 
     static textToLines(ctx,text,w,h,lineHeight=null){

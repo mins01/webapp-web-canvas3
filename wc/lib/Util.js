@@ -17,39 +17,63 @@ export default class Util{
     }
 
 
+    /**
+     * 99.99px 를 99.99 와 px로 나눔
+     *
+     * @static
+     * @param {String} value 99.99px 99.99em 99.99% 99.99
+     * @returns {{ number: {number|null}; unit: {String|null}; }} 
+     */
     static parseCssSize(value){
-        const vhr = value.match(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/);
-        const number = vhr?.[1]??null;
+        const vhr = (value??"").match(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/);
+        let number = vhr?.[1]??null;
+        if(number !== null) number = parseFloat(number);
         const unit = vhr?.[2]??null;
         return { number , unit };
     }
-    static calculateSizeBasedOnFontSize(value,fontSize){
+    static cssSizeBasedOnFontSize(value,fontSize){
+        const vr = this.parseCssSize(value);
+        if(vr?.number === null){return null;}
+        if([null,'%','em'].includes((vr?.unit??null))){ //상대적 크기
+            const fsr = this.parseCssSize(fontSize);
+            if((fsr?.number??null) === null){return null;}
+            let r = null;
 
-        // this.parseCssSize(value)
-
-        const vhr = value.matchAll(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/g);
-        const vhrs = [...vhr]; if(!vhrs || !vhrs[0]){ return null}
-        const valueNumber = parseFloat(vhrs[0][1]);
-        const valueUnit = (vhrs[0][2]??null);
-        const fsr = fontSize.matchAll(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/g);
-        const fsrs = [...fsr]; if(!fsrs || !fsrs[0]){ return null}
-        const fontSizeNumber = parseFloat(fsrs[0][1]);
-        const fontSizeUnit = (fsrs[0][2]??null);
-
-        let r = '';
-        if(!valueUnit){
-            r = (valueNumber*fontSizeNumber)+fontSizeUnit;
-        }else if(valueUnit=='em'){
-            r = (valueNumber*fontSizeNumber)+fontSizeUnit;
-        }else if(valueUnit=='%'){
-            r = (valueNumber*fontSizeNumber/100)+fontSizeUnit;
-        }else{
-            r = value;
+            if((vr?.unit??null)===null){
+                r = (vr.number * fsr.number) + (fsr.unit??'');
+            }else if(vr.unit === 'em'){
+                r = (vr.number * fsr.number) + (fsr.unit??'');
+            }else if(vr.unit === '%'){
+                r = (vr.number/100 * fsr.number) + (fsr.unit??'');
+            }else{
+                return null;
+            }
+            return r;
+        }else{ //그외 값을 절대 값으로 본다.
+            return value;
         }
-        return r;
     }
 
-    static convertToPx(v){
+    static cssSizeConvertToPx(value){
+        let vr = this.parseCssSize(value)
+        if(vr.number === null){return null;}
+        if(vr.unit === null){return null;}
 
+        if(vr.unit == 'cm'){
+            return vr.number * 37.795275591; //96 DPI
+        }else if(vr.unit == 'mm'){
+            return vr.number * 3.7795275591; //96 DPI
+        }else if(vr.unit == 'Q'){
+            return vr.number * 0.09375; //96 DPI
+        }else if(vr.unit == 'in'){
+            return vr.number * 96; //96 DPI
+        }else if(vr.unit == 'pc'){
+            return vr.number * 16.0;
+        }else if(vr.unit == 'pt'){
+            return vr.number * 1.3333;
+        }else if(vr.unit == 'px'){
+            return vr.number;
+        }
+        return null;
     }
 }

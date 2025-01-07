@@ -21,7 +21,6 @@ export default class TextLayer extends Layer{
 
     setContextConfig(conf){
         super.setContextConfig(conf);
-        console.log(conf.foreColor);
         
         this.ctx.fillStyle = conf.foreColor;
         this.ctx.StrokeStyle = conf.backColor;
@@ -58,7 +57,7 @@ export default class TextLayer extends Layer{
         // }
         
         if(this.text){
-            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx);
+            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx,ctx.textPaddingPx);
         }
         
         ctx.restore();
