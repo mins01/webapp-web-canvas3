@@ -1,4 +1,5 @@
 import Util from "./Util.js";
+import CssSizeUtil from "./CssSizeUtil.js";
 
 class Context2dConfig{
     fillAfterStroke = true;
@@ -50,17 +51,17 @@ class Context2dConfig{
         if((r?.lineHeight??null) != null){this.lineHeight = r.lineHeight;}
     }
     get fontSizePx(){
-        return Util.cssSizeConvertToPx(this.fontSize);
+        return CssSizeUtil.convertToPx(this.fontSize);
     }
     get lineHeightPx(){
-        const r = Util.cssSizeBasedOnFontSize(this.lineHeight,this.fontSize);
+        const r = CssSizeUtil.sizeBasedOnFontSize(this.lineHeight,this.fontSize);
         if(r === null){ return null; }
-        return Util.cssSizeConvertToPx(r);
+        return CssSizeUtil.convertToPx(r);
     }
     get textPaddingPx(){
-        const r = Util.cssSizeBasedOnFontSize(this.textPadding,this.fontSize);
+        const r = CssSizeUtil.sizeBasedOnFontSize(this.textPadding,this.fontSize);
         if(r === null){ return null; }
-        return Util.cssSizeConvertToPx(r);
+        return CssSizeUtil.convertToPx(r);
     }
 
     toObject(){
