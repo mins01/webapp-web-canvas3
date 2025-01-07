@@ -38,9 +38,11 @@ class Context2dConfig{
     fontKerning = "auto";
     fontStretch = "normal";
     fontVariantCaps = "normal";
-    letterSpacing = "0px";
-    textRendering = "auto"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
-    wordSpacing = "0px";
+    // letterSpacing = "0px";
+    letterSpacingNumber = "0";
+    letterSpacingUnit = "px";
+    textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
+    wordSpacing = "0px"; //20250107. 사파리에서 지원 안됨.
 
     constructor(ctx=null){
         this.reset();
@@ -78,6 +80,13 @@ class Context2dConfig{
     set textPadding(v){ 
         const r = CssLengthUtil.parse(v); this.textPaddingNumber = r.number; this.textPaddingUnit = r.unit; 
     }
+    get letterSpacing(){
+        return this.letterSpacingNumber+this.letterSpacingUnit;
+    }
+    set letterSpacing(v){ 
+        const r = CssLengthUtil.parse(v); this.letterSpacingNumber = r.number; this.letterSpacingUnit = r.unit; 
+    }
+    
     get lineHeightPx(){
         const r = CssLengthUtil.sizeBasedOnFontSize(this.lineHeight,this.fontSize);
         if(r === null){ return null; }
@@ -137,7 +146,9 @@ class Context2dConfig{
         this.fontStretch = "normal";
         this.fontVariantCaps = "normal";
         this.letterSpacing = "0px";
-        this.textRendering = "auto"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
+        // this.letterSpacingNumber = "0";
+        // this.letterSpacingUnit = "px";
+        this.textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
     }
 
@@ -176,7 +187,7 @@ class Context2dConfig{
 }
 
 // enumerable. 열거가능처리.
-['font','fontSize','lineHeight','textPadding','lineHeightPx','textPaddingPx'].forEach((v)=>{
+['font','fontSize','lineHeight','textPadding','lineHeightPx','textPaddingPx','letterSpacing'].forEach((v)=>{
 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 
