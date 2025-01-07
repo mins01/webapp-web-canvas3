@@ -93,16 +93,13 @@ export default class Canvas extends HTMLCanvasElement{
         let conf = {};
         keys.forEach(key => {
             if(key==='canvas'){return;}
+            if (typeof this.ctx[key] === 'function') {return;}
             conf[key] = this.ctx[key];
         });
         return conf
     }
     setContextConf(conf){
-        let keys = Object.keys(Object.getPrototypeOf(this.ctx));
-        keys.forEach(key => {
-            if(key==='canvas'){return;}
-            this.ctx[key] = conf[key];
-        });
+        Object.assign(this.ctx,conf)
     }
 
     ctxCommand(){

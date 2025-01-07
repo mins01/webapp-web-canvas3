@@ -44,6 +44,12 @@ export default class Editor{
     //     }
     // }
 
+
+    setContextConf(conf){
+        Object.assign(this.ctxConf,conf);
+        this.document?.setContextConf(this.ctxConf.toObject());
+    }
+
     addEventListener(){
         this.peh.addEventListener(this.target);
     }

@@ -42,7 +42,11 @@
             outline: 1px dashed #aabbcc99;
         }
     </style>
-
+    <script type="module">
+        import Util from "./wc/lib/Util.js";
+        if(!globalThis.Wc) globalThis.Wc = {}
+        globalThis.Wc.Util = Util;
+    </script>
     <script type="module">
         import Canvas from "./wc/element/Canvas.js";
         import Layer from "./wc/element/Layer.js";
@@ -54,7 +58,7 @@
         Document.defineCustomElements();
         TextLayer.defineCustomElements();
 
-        globalThis.Wc = {}
+        if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         globalThis.Wc.Layer = Layer;
         globalThis.Wc.Document = Document;
@@ -115,14 +119,16 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
-            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
+            <form action="" onsubmit="return false;" oninput="editor.setContextConf(Wc.Util.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}">
                 <div>
-                    전경색:<input type="color" oninput="editor.ctxConf.strokeStyle=this.value">
-                    배경색:<input type="color" oninput="editor.ctxConf.fillStyle=this.value" value="#ffffff">
+                    전경색:<input type="color" name="foreColor">
+                    배경색:<input type="color" name="backColor">
                     lineWidth:<input type="range" name="" id="" oninput="editor.ctxConf.lineWidth=this.value" value="3">
                     fontSize:<input type="range" name="" id="" oninput="editor.ctxConf.fontSize=this.value+'px'" value="16">
                     lineHeight:<input type="range" name="" id="" oninput="editor.ctxConf.lineHeight=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
                 </div>
+            </form>
+            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
                 <div>
                     text
                     <textarea name="" class="forn-control" id="" oninput="if(editor.document.layer.setText){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
