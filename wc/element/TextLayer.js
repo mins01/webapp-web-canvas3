@@ -39,7 +39,9 @@ export default class TextLayer extends Layer{
         this.ctxCommand('clearRect',0,0,this.width,this.height);
 
         
+        //== for debug
         ctx.save();
+        ctx.lineWidth = ctx.textPaddingPx*2;       
         ctx.strokeStyle = '#ccbbaa80';
         ctx.fillStyle = '#aabbcc80';
         
@@ -48,6 +50,8 @@ export default class TextLayer extends Layer{
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
         ctx.restore();
+        //== for debug
+
 
         ctx.save();
         // ctx.fillStyle = '#ff0000';
@@ -56,7 +60,7 @@ export default class TextLayer extends Layer{
         //     Object.assign(this.ctx,this.parent.editor.contextConfig.toObject());
         // }
         
-        if(this.text?.length){
+        if(this.text?.length){            
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx,ctx.textPaddingPx);
         }
         

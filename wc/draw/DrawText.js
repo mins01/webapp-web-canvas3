@@ -43,7 +43,7 @@ export default class DrawText{
         let y1 = y+lineHeight;
         
         if(ctx.textAlign=='center'){
-            x1 =((x+w) / 2);
+            x1 = x+(w / 2);
         }else if(ctx.textAlign=='left'){
             x1 = x;
         }else if(ctx.textAlign=='right'){
