@@ -62,10 +62,11 @@ export default class Eraser extends BaseTool{
         // ctx.lineJoin = "round";
         ctx.globalCompositeOperation = 'destination-out';
 
-        drawLayer.clear();
+        // drawLayer.clear();
         DrawLine.drawByCoordinates(ctx,this.coordinates);
         ctx.restore();
-        drawLayer.flush()
+        layer.flush()
+        // drawLayer.flush()
     }
 
 
