@@ -5,14 +5,14 @@ let v,v1, r;
 
 
 v = null;
-r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === null , JSON.stringify(v)+"=>"+JSON.stringify(r));
+r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === '' , JSON.stringify(v)+"=>"+JSON.stringify(r));
 v = "";
-r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === null , JSON.stringify(v)+"=>"+JSON.stringify(r));
+r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === '' , JSON.stringify(v)+"=>"+JSON.stringify(r));
 
 v = "999.99";
-r = CssLengthUtil.parse(v); console.assert(r?.number == 999.99 && r?.unit === null , JSON.stringify(v)+"=>"+JSON.stringify(r));
+r = CssLengthUtil.parse(v); console.assert(r?.number == 999.99 && r?.unit === '' , JSON.stringify(v)+"=>"+JSON.stringify(r));
 v = "px";
-r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === null , JSON.stringify(v)+"=>"+JSON.stringify(r));
+r = CssLengthUtil.parse(v); console.assert(r?.number === null && r?.unit === '' , JSON.stringify(v)+"=>"+JSON.stringify(r));
 v = "999.99px";
 r = CssLengthUtil.parse(v); console.assert(r?.number == 999.99 && r?.unit === 'px' , JSON.stringify(v)+"=>"+JSON.stringify(r));
 v = "999.99em";

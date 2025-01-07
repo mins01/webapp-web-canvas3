@@ -13,18 +13,18 @@ export default class CssLengthUtil{
         const vhr = (value??"").match(/([-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)([^\d]+)?/);
         let number = vhr?.[1]??null;
         if(number !== null) number = parseFloat(number);
-        const unit = vhr?.[2]??null;
+        const unit = vhr?.[2]??'';
         return { number , unit };
     }
     static sizeBasedOnFontSize(str,fontSize){
         const vr = this.parse(str);
         if(vr?.number === null){return null;}
-        if([null,'%','em'].includes((vr?.unit??null))){ //상대적 크기
+        if([null,'','%','em'].includes((vr?.unit??null))){ //상대적 크기
             const fsr = this.parse(fontSize);
             if((fsr?.number??null) === null){return null;}
             let r = null;
 
-            if((vr?.unit??null)===null){
+            if(vr?.unit ===''){                
                 r = (vr.number * fsr.number) + (fsr.unit??'');
             }else if(vr.unit === 'em'){
                 r = (vr.number * fsr.number) + fsr.unit;
