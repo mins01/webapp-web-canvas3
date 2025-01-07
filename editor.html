@@ -77,7 +77,7 @@
             l.fill('#00ff0066');
 
             const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
-            wcl5.text='하늘하늘 \n 그렇구나';
+            wcl5.text='하늘하늘! \n 그렇구나';
             editor.document.add(wcl5);
 
             let divForDebug = document.querySelector('#div-for-debug');
@@ -123,7 +123,7 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
-            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}">
+            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}" onchange="this.oninput(event)">
                 <div>
                     전경색:<input type="color" name="foreColor">
                     배경색:<input type="color" name="backColor">
@@ -132,6 +132,21 @@
                     lineHeight:<input type="range" name="" id="" oninput="editor.contextConfig.lineHeight=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
                     textPadding:<input type="range" name="" id="" oninput="editor.contextConfig.textPadding=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
                     letterSpacing:<input type="range" name="" id="" oninput="editor.contextConfig.letterSpacing=this.value+'em'" value="0" step="0.1" min="-2" max="2">
+
+                    <select name="" class="form-select" id="" onchange="editor.contextConfig.textAlign=this.value" style="width: 6em;">
+                        <option value="left">left</option>
+                        <option value="right">right</option>
+                        <option value="center">center</option>
+                        <option value="start">start</option>
+                        <option value="end">end</option>
+                    </select>
+                    <select name="" class="form-select" id="" onchange="editor.contextConfig.direction=this.value" style="width: 6em;">
+                        <option value="ltr">ltr</option>
+                        <option value="rtl">rtl</option>
+                        <option value="inherit">inherit</option>
+                    </select>
+                    
+                    
                 </div>
             </form>
             <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">

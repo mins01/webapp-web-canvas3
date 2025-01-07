@@ -36,13 +36,13 @@ export default class TextLayer extends Layer{
 
     draw(){
         const ctx = this.ctx;
-        
         this.ctxCommand('clearRect',0,0,this.width,this.height);
 
         
         ctx.save();
         ctx.strokeStyle = '#ccbbaa80';
         ctx.fillStyle = '#aabbcc80';
+        
         ctx.beginPath();
         ctx.rect(0, 0, this.width,this.height);        
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }

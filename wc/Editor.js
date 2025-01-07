@@ -46,6 +46,7 @@ export default class Editor{
 
 
     setContextConfig(conf){
+        // this.contextConfig.reset();
         Object.assign(this.contextConfig,conf);
         this.document?.setContextConfig(this.contextConfig.toObject());
     }
