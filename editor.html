@@ -129,8 +129,18 @@
                     배경색:<input type="color" name="backColor">
                     lineWidth:<input type="range" name="" id="" oninput="editor.contextConfig.lineWidth=this.value" value="3">
                     fontSize:<input type="range" name="" id="" oninput="editor.contextConfig.fontSize=this.value+'px'" value="16">
-                    lineHeight:<input type="range" name="" id="" oninput="editor.contextConfig.lineHeight=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
-                    textPadding:<input type="range" name="" id="" oninput="editor.contextConfig.textPadding=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5">
+                    lineHeightNumber:<input type="range" name="lineHeightNumber" id="" value="1.5" step="0.1" min="0" max="100">
+                    lineHeightUnit: <select name="lineHeightUnit" class="form-select" id="" onchange="editor.contextConfig.textAlign=this.value" style="width: 6em;">
+                        <option value="em">em</option>
+                        <option value="px">px</option>
+                    </select>
+                    textPaddingNumber:<input type="range" name="textPaddingNumber" id="" value="0" step="0.1" min="0" max="100">
+                    textPaddingUnit: <select name="textPaddingUnit" class="form-select" id="" onchange="editor.contextConfig.textAlign=this.value" style="width: 6em;">
+                        <option value="px">px</option>
+                        <option value="em">em</option>
+                    </select>
+
+                    <!-- textPadding:<input type="range" name="" id="" oninput="editor.contextConfig.textPadding=this.value+'em'" value="1.5" step="0.1" min="0.1" max="5"> -->
                     letterSpacing:<input type="range" name="" id="" oninput="editor.contextConfig.letterSpacing=this.value+'em'" value="0" step="0.1" min="-2" max="2">
 
                     <select name="" class="form-select" id="" onchange="editor.contextConfig.textAlign=this.value" style="width: 6em;">

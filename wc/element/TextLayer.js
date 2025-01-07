@@ -2,7 +2,7 @@
 
 import Layer from "./Layer.js"
 import DrawText from '../draw/DrawText.js';
-
+import CssLengthUtil from "../lib/CssLengthUtil.js";
 
 export default class TextLayer extends Layer{
     static counter = 0;
@@ -56,7 +56,7 @@ export default class TextLayer extends Layer{
         //     Object.assign(this.ctx,this.parent.editor.contextConfig.toObject());
         // }
         
-        if(this.text){
+        if(this.text?.length){
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx,ctx.textPaddingPx);
         }
         

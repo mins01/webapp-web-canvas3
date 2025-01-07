@@ -24,9 +24,13 @@ class Context2dConfig{
     fontStyle = "";
     fontFamily = "sans-serif";
     fontSize = "10px"; //px 만 지원하자. 우선은...
-    textPadding = "0px";
+    // textPadding = "0px";
+    textPaddingNumber = "0";
+    textPaddingUnit = "px";
     textAlign = "start";
-    lineHeight = "1.5em";
+    // lineHeight = "1.5em";
+    lineHeightNumber = "1.5";
+    lineHeightUnit = "em";
     textBaseline = "alphabetic";
     direction = "ltr";
     fontKerning = "auto";
@@ -51,6 +55,18 @@ class Context2dConfig{
     }
     get fontSizePx(){
         return CssLengthUtil.convertToPx(this.fontSize);
+    }
+    get lineHeight(){
+        return this.lineHeightNumber+this.lineHeightUnit;
+    }
+    set lineHeight(v){ 
+        const r = CssLengthUtil.parse(v); this.lineHeightNumber = r.number; this.lineHeightUnit = r.unit;
+    }
+    get textPadding(){
+        return this.textPaddingNumber+this.textPaddingUnit;
+    }
+    set textPadding(v){ 
+        const r = CssLengthUtil.parse(v); this.textPaddingNumber = r.number; this.textPaddingUnit = r.unit; 
     }
     get lineHeightPx(){
         const r = CssLengthUtil.sizeBasedOnFontSize(this.lineHeight,this.fontSize);
@@ -97,8 +113,12 @@ class Context2dConfig{
         this.fontFamily = "sans-serif";
         this.fontSize = "10px"; //px 만 지원하자. 우선은...
         this.textPadding = "0px";
+        // this.textPaddingNumber = "0";
+        // this.textPaddingUnit = "px";
         this.textAlign = "start";
         this.lineHeight = "1.5em"
+        // this.lineHeightNumber = "1.5";
+        // this.lineHeightUnit = "em";
         this.textBaseline = "alphabetic";
         this.direction = "ltr";
         this.fontKerning = "auto";
@@ -171,7 +191,7 @@ class Context2dConfig{
 }
 
 // enumerable. 열거가능처리.
-['font','lineHeightPx','textPaddingPx'].forEach((v)=>{
+['font','lineHeight','textPadding','lineHeightPx','textPaddingPx'].forEach((v)=>{
 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 
