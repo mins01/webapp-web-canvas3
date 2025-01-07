@@ -1,4 +1,5 @@
-export default class CssSizeUtil{
+// https://developer.mozilla.org/ko/docs/Web/CSS/length
+export default class CssLengthUtil{
     /**
      * 99.99px 를 99.99 와 px로 나눔
      *
@@ -26,9 +27,9 @@ export default class CssSizeUtil{
             if((vr?.unit??null)===null){
                 r = (vr.number * fsr.number) + (fsr.unit??'');
             }else if(vr.unit === 'em'){
-                r = (vr.number * fsr.number) + (fsr.unit??'');
+                r = (vr.number * fsr.number) + fsr.unit;
             }else if(vr.unit === '%'){
-                r = (vr.number/100 * fsr.number) + (fsr.unit??'');
+                r = (vr.number/100 * fsr.number) + fsr.unit;
             }else{
                 return null;
             }
