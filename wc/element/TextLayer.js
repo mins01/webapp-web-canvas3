@@ -19,8 +19,8 @@ export default class TextLayer extends Layer{
         super.defineCustomElements(name);
     }
 
-    setContextConf(conf){
-        super.setContextConf(conf);
+    setContextConfig(conf){
+        super.setContextConfig(conf);
         console.log(conf.foreColor);
         
         this.ctx.fillStyle = conf.foreColor;
@@ -54,7 +54,7 @@ export default class TextLayer extends Layer{
         // ctx.fillStyle = '#ff0000';
         // ctx.font = "20px";
         // if(this.parent){
-        //     Object.assign(this.ctx,this.parent.editor.ctxConf.toObject());
+        //     Object.assign(this.ctx,this.parent.editor.contextConfig.toObject());
         // }
         
         if(this.text){

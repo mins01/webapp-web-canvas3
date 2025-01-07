@@ -3,7 +3,7 @@ import SelectableArray from "./lib/SelectableArray.js";
 import PointerEventHandler from "./lib/PointerEventHandler.js";
 
 
-import Context2dConf from "./lib/Context2dConf.js";
+import Context2dConfig from "./lib/Context2dConfig.js";
 
 // import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
@@ -31,7 +31,7 @@ export default class Editor{
 
         // this.documents.documentIndex = 0;
 
-        this.ctxConf = new Context2dConf();
+        this.contextConfig = new Context2dConfig();
     }
 
     get tool(){ return this.tools.selected; }
@@ -45,9 +45,9 @@ export default class Editor{
     // }
 
 
-    setContextConf(conf){
-        Object.assign(this.ctxConf,conf);
-        this.document?.setContextConf(this.ctxConf.toObject());
+    setContextConfig(conf){
+        Object.assign(this.contextConfig,conf);
+        this.document?.setContextConfig(this.contextConfig.toObject());
     }
 
     addEventListener(){

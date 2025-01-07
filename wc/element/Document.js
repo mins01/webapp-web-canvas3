@@ -64,9 +64,9 @@ export default class Document extends Layer{
         return true;
     }
 
-    setContextConf(conf){
-        this.layer?.setContextConf(conf);
-        this.drawLayer?.setContextConf(conf);
+    setContextConfig(conf){
+        this.layer?.setContextConfig(conf);
+        this.drawLayer?.setContextConfig(conf);
     }
 
     syncDrawLayer(layer=null){

@@ -64,8 +64,8 @@ export default class Text extends BaseTool{
         // ctx.lineWidth = 4;
         // ctx.strokeStyle = "orange";
         // ctx.fillStyle = "rgba(255,255,255,0.5)";
-        // if(this.layer){ Object.assign(this.layer.ctx,this.editor.ctxConf);}
-		// if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.ctxConf);}
+        // if(this.layer){ Object.assign(this.layer.ctx,this.editor.contextConfig);}
+		// if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.contextConfig);}
 
 
         let w = x - x0;
@@ -78,10 +78,10 @@ export default class Text extends BaseTool{
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
 
-        ctx.fillStyle = this.editor.ctxConf.strokeStyle;
-        ctx.font = this.editor.ctxConf.font;
+        ctx.fillStyle = this.editor.contextConfig.strokeStyle;
+        ctx.font = this.editor.contextConfig.font;
 
-        // console.log(ctx.font,this.editor.ctxConf.lineHeightPx);
+        // console.log(ctx.font,this.editor.contextConfig.lineHeightPx);
         
 
         let text = 'text text 한글 \n 자동 줄바꿈을 어떻게 하지.자동 줄바꿈을 어떻게 하지. 자동 줄바꿈을 어떻게 하지. 자동 줄바꿈을 어떻게 하지. \n줄바꿈 후줄바꿈 후줄바꿈 후줄바꿈 후줄바꿈 후';
@@ -89,7 +89,7 @@ export default class Text extends BaseTool{
         let xs = Math.min(x0,x);
         let ys = Math.min(y0,y);
 
-        DrawText.draw(ctx,text,Math.abs(w),Math.abs(h),xs,ys,this.editor.ctxConf.lineHeightPx);
+        DrawText.draw(ctx,text,Math.abs(w),Math.abs(h),xs,ys,this.editor.contextConfig.lineHeightPx);
         
         ctx.restore();
 

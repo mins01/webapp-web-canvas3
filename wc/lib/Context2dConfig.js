@@ -1,7 +1,68 @@
-class Context2dConf{
+class Context2dConfig{
+    fillAfterStroke = true;
+
+    globalAlpha = 1;
+    globalCompositeOperation = "source-over";
+    filter = "none";
+    imageSmoothingEnabled = "true";
+    imageSmoothingQuality = "low";
+    strokeStyle = "#000000";
+    fillStyle = "#ffffff";
+    shadowOffsetX = 0;
+    shadowOffsetY = 0;
+    shadowBlur = 0;
+    shadowColor = "rgba(0, 0, 0, 0)";
+    lineWidth = 1;
+
+    lineCap = "round";
+    lineJoin = "round";
+    miterLimit = 10;
+    lineDashOffset = 0;
+    //font
+    fontStyle = "";
+    fontFamily = "sans-serif";
+    fontSize = "10px"; //px 만 지원하자. 우선은...
+    textAlign = "start";
+    lineHeight = "1.5em";
+    textBaseline = "alphabetic";
+    direction = "ltr";
+    fontKerning = "auto";
+    fontStretch = "normal";
+    fontVariantCaps = "normal";
+    letterSpacing = "0px";
+    textRendering = "auto"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
+    wordSpacing = "0px";
+
     constructor(ctx=null){
-        // this.canvas = "[object HTMLCanvasElement]";
-        this.fillAfterStroke = true,
+        this.reset();
+    }
+    get font(){
+        return `${this.fontStyle} ${this.fontSize} ${this.fontFamily}`.trim();
+    }
+    set font(v){
+        const r = this.constructor.parseFont(v);
+        if((r?.fontStyle??null) != null){this.fontStyle = r.fontStyle;}
+        if((r?.fontSize??null) != null){this.fontSize = r.fontSize;}
+        if((r?.fontFamily??null) != null){this.fontFamily = r.fontFamily;}
+        if((r?.lineHeight??null) != null){this.lineHeight = r.lineHeight;}
+    }
+    get fontSizePx(){
+        return parseInt(this.fontSize);
+    }
+    get lineHeightPx(){
+        return parseInt(this.constructor.parseLineHeight(this.lineHeight,this.fontSize));
+    }
+
+    toObject(){
+        const robj = {}
+        for(let k in this){
+            robj[k] = this[k];
+        }
+        return robj;
+    }
+
+    reset(){
+        this.fillAfterStroke = true;
 
         this.globalAlpha = 1;
         this.globalCompositeOperation = "source-over";
@@ -35,30 +96,6 @@ class Context2dConf{
         this.letterSpacing = "0px";
         this.textRendering = "auto"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
-    }
-    get font(){
-        return `${this.fontStyle} ${this.fontSize} ${this.fontFamily}`.trim();
-    }
-    set font(v){
-        const r = this.constructor.parseFont(v);
-        if((r?.fontStyle??null) != null){this.fontStyle = r.fontStyle;}
-        if((r?.fontSize??null) != null){this.fontSize = r.fontSize;}
-        if((r?.fontFamily??null) != null){this.fontFamily = r.fontFamily;}
-        if((r?.lineHeight??null) != null){this.lineHeight = r.lineHeight;}
-    }
-    get fontSizePx(){
-        return parseInt(this.fontSize);
-    }
-    get lineHeightPx(){
-        return parseInt(this.constructor.parseLineHeight(this.lineHeight,this.fontSize));
-    }
-
-    toObject(){
-        const robj = {}
-        for(let k in this){
-            robj[k] = this[k];
-        }
-        return robj;
     }
 
     static parseFont(v){
@@ -124,8 +161,8 @@ class Context2dConf{
 
 // enumerable. 열거가능처리.
 ['font','lineHeightPx'].forEach((v)=>{
-	const d = Object.getOwnPropertyDescriptor(Context2dConf.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConf.prototype,v,d);   
+	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 
 
-export default Context2dConf;
+export default Context2dConfig;

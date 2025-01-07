@@ -1,22 +1,22 @@
 
-import Context2dConf from "../../wc/lib/Context2dConf.js"
+import Context2dConfig from "../../wc/lib/Context2dConfig.js"
 
 
 let v,r;
-let ctxConf = new Context2dConf();
+let contextConfig = new Context2dConfig();
 v = "small-caps bold 24px/1.5 sans-serif";
-r = Context2dConf.parseFont(v); console.log(r)
+r = Context2dConfig.parseFont(v); console.log(r)
 
-ctxConf.font = v;
-console.log(ctxConf.font);
-console.log(ctxConf.lineHeight);
-console.log(ctxConf.fontSize);
-console.log(ctxConf.lineHeightPx);
-console.log(ctxConf.fontSizePx);
+contextConfig.font = v;
+console.log(contextConfig.font);
+console.log(contextConfig.lineHeight);
+console.log(contextConfig.fontSize);
+console.log(contextConfig.lineHeightPx);
+console.log(contextConfig.fontSizePx);
 
-ctxConf.fontSize = '30px';
-console.log(ctxConf.font);
-console.log(ctxConf.lineHeight);
-console.log(ctxConf.fontSize);
-console.log(ctxConf.lineHeightPx);
-console.log(ctxConf.fontSizePx);
+contextConfig.fontSize = '30px';
+console.log(contextConfig.font);
+console.log(contextConfig.lineHeight);
+console.log(contextConfig.fontSize);
+console.log(contextConfig.lineHeightPx);
+console.log(contextConfig.fontSizePx);
