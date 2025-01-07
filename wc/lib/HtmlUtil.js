@@ -1,4 +1,4 @@
-export default class Util{
+export default class HtmlUtil{
     static formToObject(f){
         const fd = new FormData(f);
         return this.formDataToObject(fd);

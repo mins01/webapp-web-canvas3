@@ -43,9 +43,9 @@
         }
     </style>
     <script type="module">
-        import Util from "./wc/lib/Util.js";
+        import HtmlUtil from "./wc/lib/HtmlUtil.js";
         if(!globalThis.Wc) globalThis.Wc = {}
-        globalThis.Wc.Util = Util;
+        globalThis.Wc.HtmlUtil = HtmlUtil;
     </script>
     <script type="module">
         import Canvas from "./wc/element/Canvas.js";
@@ -123,7 +123,7 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
-            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.Util.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}">
+            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}">
                 <div>
                     전경색:<input type="color" name="foreColor">
                     배경색:<input type="color" name="backColor">

@@ -1,4 +1,3 @@
-import Util from "./Util.js";
 import CssLengthUtil from "./CssLengthUtil.js";
 
 class Context2dConfig{
