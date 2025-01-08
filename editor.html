@@ -53,12 +53,14 @@
         import Document from "./wc/element/Document.js";
         import TextLayer from "./wc/element/TextLayer.js";
         import RectangleLayer from "./wc/element/RectangleLayer.js";
+        import EllipseLayer from "./wc/element/EllipseLayer.js";
         
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
         Document.defineCustomElements();
         TextLayer.defineCustomElements();
         RectangleLayer.defineCustomElements();
+        EllipseLayer.defineCustomElements();
 
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
@@ -66,6 +68,7 @@
         globalThis.Wc.Document = Document;
         globalThis.Wc.TextLayer = TextLayer;
         globalThis.Wc.RectangleLayer = RectangleLayer;
+        globalThis.Wc.EllipseLayer = EllipseLayer;
 
         import Editor from "./wc/Editor.js";
 
@@ -93,12 +96,24 @@
             wcl6.ctx.strokeStyle="#ccbbaa"
             wcl6.flush();
 
+            const wcl7 = globalThis.wcl7 = new EllipseLayer(editor.document.width,editor.document.height);
+            editor.document.add(wcl7);
+            wcl7.x=150;
+            wcl7.y=50;
+            wcl7.width=100;
+            wcl7.height=50;
+            wcl7.ctx.fillStyle="#aabbcc"
+            wcl7.ctx.strokeStyle="#ccbbaa"
+            wcl7.flush();
+
+            
+
 
 
             let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
 
-            editor.document.layers.select(2)
+            editor.document.layers.select(3)
 
 
             divForDebug.append(editor.document.drawLayer)
