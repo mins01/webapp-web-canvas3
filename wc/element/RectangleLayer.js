@@ -4,18 +4,18 @@ import Layer from "./Layer.js"
 import DrawRectangle from '../draw/DrawRectangle.js';
 
 
-export default class RectLayer extends Layer{
+export default class RectangleLayer extends Layer{
     static counter = 0;
     text = '';
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
-        this.id =  'wc-rectlayer-'+(this.constructor.counter++);
+        this.id =  'wc-rectanglelayer-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
         this.text = '';
     }
-    static defineCustomElements(name='wc-rectlayer'){
+    static defineCustomElements(name='wc-rectanglelayer'){
         super.defineCustomElements(name);
     }
 

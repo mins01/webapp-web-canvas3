@@ -52,20 +52,20 @@
         import Layer from "./wc/element/Layer.js";
         import Document from "./wc/element/Document.js";
         import TextLayer from "./wc/element/TextLayer.js";
-        import RectLayer from "./wc/element/RectLayer.js";
+        import RectangleLayer from "./wc/element/RectangleLayer.js";
         
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
         Document.defineCustomElements();
         TextLayer.defineCustomElements();
-        RectLayer.defineCustomElements();
+        RectangleLayer.defineCustomElements();
 
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         globalThis.Wc.Layer = Layer;
         globalThis.Wc.Document = Document;
         globalThis.Wc.TextLayer = TextLayer;
-        globalThis.Wc.RectLayer = RectLayer;
+        globalThis.Wc.RectangleLayer = RectangleLayer;
 
         import Editor from "./wc/Editor.js";
 
@@ -83,7 +83,7 @@
             wcl5.text='하늘하늘! \n 그렇구나';
             editor.document.add(wcl5);
 
-            const wcl6 = globalThis.wcl6 = new RectLayer(editor.document.width,editor.document.height);
+            const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
             editor.document.add(wcl6);
             wcl6.x=50;
             wcl6.y=75;
