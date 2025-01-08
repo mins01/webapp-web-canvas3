@@ -1,7 +1,7 @@
 import CssLengthUtil from "./CssLengthUtil.js";
 
 class Context2dConfig{
-    fillAfterStroke = true;
+    // fillAfterStroke = true;
 
     globalAlpha = 1;
     globalCompositeOperation = "source-over";
@@ -43,6 +43,16 @@ class Context2dConfig{
     letterSpacingUnit = "px";
     textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
     wordSpacing = "0px"; //20250107. 사파리에서 지원 안됨.
+
+    // fillAfterStroke = true;
+    // disableStroke = false;
+    // disableFill = false;
+    #fillAfterStroke = true;
+    #disableStroke = false;
+    #disableFill = false;
+
+    strokeLocation = 'inside';
+
 
     constructor(ctx=null){
         this.reset();
@@ -98,6 +108,35 @@ class Context2dConfig{
         return CssLengthUtil.convertToPx(r);
     }
 
+    get fillAfterStroke(){
+        return this.#fillAfterStroke;
+    }
+    set fillAfterStroke(v){ 
+        if(v==='true') this.#fillAfterStroke = true;
+        else if(v==='false') this.#fillAfterStroke = false;
+        else this.#fillAfterStroke = !!v;
+    }
+    get disableStroke(){
+        return this.#disableStroke;
+    }
+    set disableStroke(v){ 
+        if(v==='true') this.#disableStroke = true;
+        else if(v==='false') this.#disableStroke = false;
+        else this.#disableStroke = !!v;
+    }
+    get disableFill(){
+        return this.#disableFill;
+    }
+    set disableFill(v){ 
+        if(v==='true') this.#disableFill = true;
+        else if(v==='false') this.#disableFill = false;
+        else this.#disableFill = !!v;
+    }
+
+
+
+
+
     toObject(){
         const robj = {}
         for(let k in this){
@@ -150,6 +189,12 @@ class Context2dConfig{
         // this.letterSpacingUnit = "px";
         this.textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
+
+        this.fillAfterStroke = true;
+        this.disableStroke = false;
+        this.disableFill = false;
+
+        this.strokeLocation = 'inside';// inside 로 고정
     }
 
     static parseFont(v){
@@ -186,8 +231,9 @@ class Context2dConfig{
 
 }
 
+
 // enumerable. 열거가능처리.
-['font','fontSize','lineHeight','textPadding','lineHeightPx','textPaddingPx','letterSpacing'].forEach((v)=>{
+['font','fontSize','lineHeight','textPadding','lineHeightPx','textPaddingPx','letterSpacing','fillAfterStroke','disableStroke','disableFill'].forEach((v)=>{
 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 

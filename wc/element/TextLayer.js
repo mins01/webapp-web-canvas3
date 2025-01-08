@@ -21,10 +21,8 @@ export default class TextLayer extends Layer{
 
     setContextConfig(conf){
         super.setContextConfig(conf);
-        
         this.ctx.fillStyle = conf.foreColor;
         this.ctx.StrokeStyle = conf.backColor;
-        this.draw();
     }
 
     setText(text){

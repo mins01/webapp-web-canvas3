@@ -100,6 +100,8 @@ export default class Canvas extends HTMLCanvasElement{
     }
     setContextConfig(conf){
         Object.assign(this.ctx,conf)
+        this.ctx.fillStyle = conf.backColor;
+        this.ctx.strokeStyle = conf.foreColor;
     }
 
     ctxCommand(){

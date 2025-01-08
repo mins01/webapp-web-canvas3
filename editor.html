@@ -52,17 +52,20 @@
         import Layer from "./wc/element/Layer.js";
         import Document from "./wc/element/Document.js";
         import TextLayer from "./wc/element/TextLayer.js";
+        import RectLayer from "./wc/element/RectLayer.js";
         
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
         Document.defineCustomElements();
         TextLayer.defineCustomElements();
+        RectLayer.defineCustomElements();
 
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         globalThis.Wc.Layer = Layer;
         globalThis.Wc.Document = Document;
         globalThis.Wc.TextLayer = TextLayer;
+        globalThis.Wc.RectLayer = RectLayer;
 
         import Editor from "./wc/Editor.js";
 
@@ -80,10 +83,22 @@
             wcl5.text='하늘하늘! \n 그렇구나';
             editor.document.add(wcl5);
 
+            const wcl6 = globalThis.wcl6 = new RectLayer(editor.document.width,editor.document.height);
+            editor.document.add(wcl6);
+            wcl6.x=50;
+            wcl6.y=75;
+            wcl6.width=100;
+            wcl6.height=100;
+            wcl6.ctx.fillStyle="#aabbcc"
+            wcl6.ctx.strokeStyle="#ccbbaa"
+            wcl6.flush();
+
+
+
             let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
 
-            editor.document.layers.select(1)
+            editor.document.layers.select(2)
 
 
             divForDebug.append(editor.document.drawLayer)
@@ -123,11 +138,30 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
-            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); if(editor.document.layer){editor.document.layer.flush()}" onchange="this.oninput(event)">
+            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
                 <div>
-                    전경색:<input type="color" name="foreColor">
-                    배경색:<input type="color" name="backColor">
-                    lineWidth:<input type="range" name="lineWidth" value="3">
+                    전경색:<input type="color" name="foreColor" value="#ff0000">
+                    배경색:<input type="color" name="backColor" value="#00ff00">
+                    fillAfterStroke:
+                    <label><input type="radio" value="true" name="fillAfterStroke" checked> fill-stroke</label> 
+                    <label><input type="radio" value="false" name="fillAfterStroke"> stroke-fill</label>
+                    disableFill:
+                    <label><input type="radio" value="false" name="disableFill" checked> enabled</label>
+                    <label><input type="radio" value="true" name="disableFill"> disabled</label>
+                    disableStroke:
+                    <label><input type="radio" value="false" name="disableStroke" checked> enabled</label>
+                    <label><input type="radio" value="true" name="disableStroke"> disabled</label>
+
+
+                    <!-- 
+                    우선 inside 로 고정
+                    strokeLocation<select name="strokeLocation" class="form-select" style="width: 6em;">
+                        <option value="inside">inside</option>
+                        <option value="center">center</option>
+                        <option value="outside">outside</option>
+                    </select> -->
+
+                    lineWidth:<input type="range" name="lineWidth" value="3" min="0" max="180" step="1">
                     <!-- fontSize:<input type="range" name="" oninput="editor.contextConfig.fontSize=this.value+'px'" value="16"> -->
                     fontSizeNumber:<input type="range" name="fontSizeNumber" value="10" step="1" min="0" max="100">
                     fontSizeUnit: <select name="fontSizeUnit" class="form-select" style="width: 6em;">
@@ -180,8 +214,8 @@
             <hr>
         </div>
         <div class="flex-fill">
-            <div id="wc-editor" style="outline: dashed 1px #f00; width: 600px; height: 600px; touch-action: none;" class="d-flex justify-content-center align-items-center mx-auto">
-                <canvas id="wc-document" width="500" height="500" is="wc-document"></canvas>
+            <div id="wc-editor" style="outline: dashed 1px #f00; max-width: 600px; height: 600px; touch-action: none;" class="d-flex justify-content-center align-items-center mx-auto">
+                <canvas id="wc-document" width="300" height="300" is="wc-document"></canvas>
             </div>
         </div>
         <div class="container">
