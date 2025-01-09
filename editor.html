@@ -153,6 +153,20 @@
                 <button type="button" class="btn btn-info" onclick="editor.tool.apply()">tool:Text - apply</button>
             </div>
             <hr>
+            <form action="" onsubmit="editor?.document?.layer?.resize(this.width.value,this.height.value);editor?.document?.layer?.flush(); return false">
+                <div class="d-flex">
+                    <div>
+                        <input class="form-control" type="number" name="width">
+                    </div>
+                    <div>
+                        <input class="form-control" type="number" name="height">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">변경</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
             <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
                 <div>
                     전경색:<input type="color" name="foreColor" value="#ff0000">
