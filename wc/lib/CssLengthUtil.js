@@ -16,6 +16,29 @@ export default class CssLengthUtil{
         const unit = vhr?.[2]??'';
         return { number , unit };
     }
+    static convertToPx(str){
+        let vr = this.parse(str)
+        if(vr.number === null){return null;}
+        if(vr.unit === null){return null;}
+
+        if(vr.unit == 'cm'){
+            return vr.number * 37.795275591; //96 DPI
+        }else if(vr.unit == 'mm'){
+            return vr.number * 3.7795275591; //96 DPI
+        }else if(vr.unit == 'Q'){
+            return vr.number * 0.09375; //96 DPI
+        }else if(vr.unit == 'in'){
+            return vr.number * 96; //96 DPI
+        }else if(vr.unit == 'pc'){
+            return vr.number * 16.0;
+        }else if(vr.unit == 'pt'){
+            return vr.number * 1.3333;
+        }else if(vr.unit == 'px'){
+            return vr.number;
+        }
+        return null;
+    }
+
     static sizeBasedOnFontSize(str,fontSize){
         const vr = this.parse(str);
         if(vr?.number === null){return null;}
@@ -39,26 +62,9 @@ export default class CssLengthUtil{
         }
     }
 
-    static convertToPx(str){
-        let vr = this.parse(str)
-        if(vr.number === null){return null;}
-        if(vr.unit === null){return null;}
-
-        if(vr.unit == 'cm'){
-            return vr.number * 37.795275591; //96 DPI
-        }else if(vr.unit == 'mm'){
-            return vr.number * 3.7795275591; //96 DPI
-        }else if(vr.unit == 'Q'){
-            return vr.number * 0.09375; //96 DPI
-        }else if(vr.unit == 'in'){
-            return vr.number * 96; //96 DPI
-        }else if(vr.unit == 'pc'){
-            return vr.number * 16.0;
-        }else if(vr.unit == 'pt'){
-            return vr.number * 1.3333;
-        }else if(vr.unit == 'px'){
-            return vr.number;
-        }
-        return null;
+    static pxBasedOnFontSize(str,fontSize){
+        const r = this.sizeBasedOnFontSize(str,fontSize);
+        if(r === null){ return null; }
+        return this.convertToPx(r);
     }
 }
