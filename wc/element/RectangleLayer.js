@@ -9,19 +9,9 @@ export default class RectangleLayer extends Layer{
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
-        this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
-
-        this.text = '';
     }
     static defineCustomElements(name='wc-rectanglelayer'){
         super.defineCustomElements(name);
-    }
-
-    setContextConfig(conf){
-        super.setContextConfig(conf);
-        
-        // this.ctx.fillStyle = conf.foreColor;
-        // this.ctx.StrokeStyle = conf.backColor;
     }
 
     setText(text){
@@ -34,6 +24,7 @@ export default class RectangleLayer extends Layer{
         this.ctxCommand('clearRect',0,0,this.width,this.height);       
 
         ctx.save();
+
         // ctx.globalAlpha = 0.3
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";

@@ -5,7 +5,6 @@ import Canvas from "./Canvas.js"
 export default class Layer extends Canvas{
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
-        this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
         // this._x = 0;
         // this._y = 0;

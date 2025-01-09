@@ -2,6 +2,7 @@
 
 class Canvas extends HTMLCanvasElement{
     ctx = null;
+    drawable = true;
     constructor(w=null,h=null,bgColor=null,label=null){
         super();
 
@@ -130,7 +131,7 @@ class Canvas extends HTMLCanvasElement{
     }
     
     parentFlush(){
-        if(this.parent && this.parent.flush) this.parent.flush();
+        this?.parent?.flush();
     }
 
     fill(color){
@@ -187,7 +188,7 @@ class Canvas extends HTMLCanvasElement{
     }
     resize(width,height){
         const cloned = this.clone();
-        this.width = width; 
+        this.width = width;
         this.height = height;
         this.ctx.drawImage(cloned, 0, 0, width, height);
     }
