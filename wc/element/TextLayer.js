@@ -5,12 +5,10 @@ import DrawText from '../draw/DrawText.js';
 import CssLengthUtil from "../lib/CssLengthUtil.js";
 
 export default class TextLayer extends Layer{
-    static counter = 0;
     text = '';
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
-        this.id =  'wc-textlayer-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
         this.text = '';

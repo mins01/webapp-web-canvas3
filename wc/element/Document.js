@@ -4,11 +4,9 @@ import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
 
 export default class Document extends Layer{
-    static counter = 0;
 
     constructor(w=null,h=null){
         super(w,h);
-        this.id =  'wc-document-'+(this.constructor.counter++);
         this.layers = new SelectableArray();
         this.parent = null;
         this.syncing = false;

@@ -2,11 +2,9 @@ import Layer from "./Layer.js";
 import DrawCircle from "../draw/DrawCircle.js"
 
 export default class Brush extends Layer{
-    static counter = 0;
 
     constructor(w=null,h=null){
         super(w,h);
-        this.id =  'wc-brush-'+(this.constructor.counter++);
         this.parent = null;
         
         // 브러시 모양: Brush Tip Shape

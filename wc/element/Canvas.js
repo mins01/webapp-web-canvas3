@@ -1,12 +1,12 @@
 // WcLayer를 wc/element/Canvas로 변경
 
 class Canvas extends HTMLCanvasElement{
-    static counter = 0;
     ctx = null;
     constructor(w=null,h=null,bgColor=null,label=null){
         super();
+
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
-        this.id =  'wc-canvas-'+(this.constructor.counter++);
+        this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
         Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
@@ -23,6 +23,10 @@ class Canvas extends HTMLCanvasElement{
         if(bgColor) this.fill(bgColor)
     }
     
+    static getIdCounter(){
+        if(Canvas._idCounter === undefined){ Canvas._idCounter = 0;}
+        return ++ Canvas._idCounter;
+    }
     static defineCustomElements(name='wc-canvas'){
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
