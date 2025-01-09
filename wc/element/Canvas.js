@@ -146,7 +146,6 @@ class Canvas extends HTMLCanvasElement{
         this.ctxCommand('save');
         this.ctxCommand('clearRect',0,0,this.width,this.height);
         this.ctxCommand('restore');
-        // this.flush();
     }
 
     merge(canvas){

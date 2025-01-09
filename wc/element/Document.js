@@ -12,7 +12,7 @@ export default class Document extends Layer{
         this.syncing = false;
         this.drawLayer = new Layer(w,h);
         this.drawLayer.parent = this;
-        this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,})
+        this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,})
 
         this.editor = null;
 
@@ -91,13 +91,10 @@ export default class Document extends Layer{
         this.sync();
         this.syncDrawLayer();
     }
-    // flush(){
-    //     if(this.layers){
-    //         this.ctxUpdatedAtTime = Math.max(... this.layers.map((layer)=>{ return layer.ctxUpdatedAtTime; }))
-    //     }else{
-    //         this.ctxUpdatedAtTime = Date.now();
-    //     }
-    // }
+    flush(){
+        this.editor.onchangeDocument(this);
+        super.flush();
+    }
     draw(){
         this.ctx.save();
         this.ctxCommand('clearRect',0,0,this.width,this.height);

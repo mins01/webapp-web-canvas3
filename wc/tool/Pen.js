@@ -53,9 +53,7 @@ export default class Pen extends BaseTool{
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
-        // for testing
-        // ctx.strokeStyle = "blue";
-        // ctx.lineWidth = 4;
+        
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 

@@ -144,6 +144,9 @@ class Context2dConfig{
         }
         return robj;
     }
+    toJSON(){
+        return this.toObject();
+    }
 
     reset(){
         this.fillAfterStroke = true;

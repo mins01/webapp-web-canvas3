@@ -86,5 +86,11 @@ export default class Editor{
 
 
 
+    // document가 변경되면 불러야한다.
+    onchangeDocument(document){
+        console.log('onchangeDocument',document.id,document.layer.id)
+    }
+
+
     
 }
