@@ -35,6 +35,7 @@ export default class Document extends Layer{
         const activeLayer = this.layers.select(index);
         if(index !== null && activeLayer){
             this.syncDrawLayer(activeLayer);
+            this?.editor?.onselectLayer(this.layer);
         }
         return activeLayer;
     }
@@ -48,6 +49,7 @@ export default class Document extends Layer{
         this.syncDrawLayer(layer);
         layer.flush();
         // this.flush();
+        this?.editor?.onselectLayer(this.layer);
         return true;
     }
     remove(){
@@ -59,6 +61,7 @@ export default class Document extends Layer{
     move(index){
         this.layers.move(index);
         this.flush();
+        this?.editor?.onselectLayer(this.layer);
         return true;
     }
 
@@ -92,7 +95,7 @@ export default class Document extends Layer{
         this.syncDrawLayer();
     }
     flush(){
-        this.editor.onchangeDocument(this);
+        this?.editor?.onchangeDocument(this);
         super.flush();
     }
     draw(){
