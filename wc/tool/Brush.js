@@ -14,7 +14,7 @@ class Brush{
     onpointerdown(){
 
     }
-    onpointermove){
+    onpointermove(){
 
     }
     onpointerup(){

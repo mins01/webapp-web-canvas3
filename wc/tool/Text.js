@@ -1,7 +1,7 @@
 import BaseTool from './BaseTool.js';
 import DrawText from '../draw/DrawText.js';
 
-
+import CssLengthUtil from '../lib/CssLengthUtil.js';
 
 export default class Text extends BaseTool{
     constructor(editor){
@@ -78,8 +78,8 @@ export default class Text extends BaseTool{
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
 
-        ctx.fillStyle = this.editor.contextConfig.strokeStyle;
-        ctx.font = this.editor.contextConfig.font;
+        ctx.canvas.contextConfig.assign(ctx,true);
+
 
         // console.log(ctx.font,this.editor.contextConfig.lineHeightPx);
         

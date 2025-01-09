@@ -49,14 +49,14 @@ export default class TextLayer extends Layer{
 
 
         ctx.save();
-        
+        this.contextConfig.assign(ctx,true);
+
         if(this.text?.length){            
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
             CssLengthUtil.pxBasedOnFontSize(ctx.lineHeight,ctx.fontSize),
             CssLengthUtil.pxBasedOnFontSize(ctx.textPadding,ctx.fontSize)
             );
-        }
-        
+        }        
         ctx.restore();
     }
 }

@@ -200,6 +200,21 @@ class Context2dConfig{
         this.strokeLocation = 'inside';// inside 로 고정
     }
 
+    assign(context,foreColorToFillStyle=false){
+        for(let k in this){
+            if(context[k] !== undefined){
+                context[k] = this[k];                
+            }
+        }
+        if(!foreColorToFillStyle){
+            context.strokeStyle = this.foreColor;
+            context.fillStyle = this.backColor;
+        }else{
+            context.strokeStyle = this.backColor;
+            context.fillStyle = this.foreColor;
+        }
+    }
+
     static parseFont(v){
         const parts = v.split(/\s+/);
         // console.log(parts);

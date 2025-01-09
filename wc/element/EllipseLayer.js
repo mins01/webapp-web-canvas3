@@ -33,6 +33,7 @@ export default class EllipseLayer extends Layer{
         this.ctxCommand('clearRect',0,0,this.width,this.height);       
 
         ctx.save();
+        this.contextConfig.assign(ctx);
         // ctx.globalAlpha = 0.3
         // ctx.lineCap = "butt";
         // ctx.lineJoin = "miter";

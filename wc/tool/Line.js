@@ -45,15 +45,19 @@ export default class Line extends BaseTool{
         const layer = this.layer;
         const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
-
+        
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
         
         // for testing
         // ctx.strokeStyle = "orange";
         // ctx.lineWidth = 26;
-
+        ctx.save();
+        ctx.canvas.contextConfig.assign(ctx);
+        console.log(ctx.canvas.contextConfig.lineWidth,ctx.lineWidth);
+        
         drawLayer.clear();
         DrawLine.draw(ctx,x0,y0,x,y);
+        ctx.restore();
         drawLayer.flush()
     }
 

@@ -56,9 +56,8 @@ export default class Rectangle extends BaseTool{
 
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
-        // for testing
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "orange";
+
+        ctx.canvas.contextConfig.assign(ctx);
 
         let w = x - x0;
         let h = y - y0;

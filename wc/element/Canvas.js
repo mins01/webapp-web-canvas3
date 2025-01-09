@@ -93,20 +93,9 @@ class Canvas extends HTMLCanvasElement{
 
     getContextConfig(){
         return this.contextConfig.toObject();
-        // let keys = Object.keys(Object.getPrototypeOf(this.ctx));
-        // let conf = {};
-        // keys.forEach(key => {
-        //     if(key==='canvas'){return;}
-        //     if (typeof this.ctx[key] === 'function') {return;}
-        //     conf[key] = this.ctx[key];
-        // });
-        // return conf
     }
     setContextConfig(conf){
         Object.assign(this.contextConfig,conf)
-        Object.assign(this.ctx,conf)
-        if(conf.backColor) this.ctx.fillStyle = conf.backColor;
-        if(conf.foreColor) this.ctx.strokeStyle = conf.foreColor;
     }
 
     ctxCommand(){
@@ -123,7 +112,7 @@ class Canvas extends HTMLCanvasElement{
         
     }
     draw(){ // 따로 그리기 동작이 있을 경우.
-
+        // this.contextConfig.assign(ctx,true);
     }
     flush(){
         this.draw();
