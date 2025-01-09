@@ -36,7 +36,7 @@ export default class TextLayer extends Layer{
         
         //== for debug
         ctx.save();
-        ctx.lineWidth = ctx.textPaddingPx*2;       
+        ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)*2;       
         ctx.strokeStyle = '#ccbbaa80';
         ctx.fillStyle = '#aabbcc80';
         
@@ -53,8 +53,8 @@ export default class TextLayer extends Layer{
 
         if(this.text?.length){            
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
-            CssLengthUtil.pxBasedOnFontSize(ctx.lineHeight,ctx.fontSize),
-            CssLengthUtil.pxBasedOnFontSize(ctx.textPadding,ctx.fontSize)
+            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.lineHeight,this.contextConfig.fontSize),
+            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)
             );
         }        
         ctx.restore();
