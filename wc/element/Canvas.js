@@ -1,20 +1,15 @@
 // WcLayer를 wc/element/Canvas로 변경
 
-export default class Canvas extends HTMLCanvasElement{
+class Canvas extends HTMLCanvasElement{
     static counter = 0;
+    ctx = null;
     constructor(w=null,h=null,bgColor=null,label=null){
         super();
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
         this.id =  'wc-canvas-'+(this.constructor.counter++);
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
 
-        // this._x = 0;
-        // this._y = 0;
-        // this._compositeOperation = 'source-over';
-        // this._alpha = 1;
-        
-        // this.compositeOperation = 'source-over';
-        // this.alpha = 1;
+        Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
 
         
         this.ctxUpdatedAtTime = Date.now();
@@ -100,8 +95,8 @@ export default class Canvas extends HTMLCanvasElement{
     }
     setContextConfig(conf){
         Object.assign(this.ctx,conf)
-        this.ctx.fillStyle = conf.backColor;
-        this.ctx.strokeStyle = conf.foreColor;
+        if(conf.backColor) this.ctx.fillStyle = conf.backColor;
+        if(conf.foreColor) this.ctx.strokeStyle = conf.foreColor;
     }
 
     ctxCommand(){
@@ -177,4 +172,29 @@ export default class Canvas extends HTMLCanvasElement{
 
         // this.flush();
     }
+    clone(){
+        const newCanvas = new this.constructor(this.width,this.height);
+        Object.assign(newCanvas,this);
+        newCanvas.label +=' cloned'
+        // newCanvas.setContextConfig(this.getContextConfig());
+        this.ctx.save();
+        newCanvas.ctx.putImageData(this.ctx.getImageData(0,0,this.width,this.height),0,0);
+        this.ctx.restore();
+        return newCanvas;
+    }
+    resize(width,height){
+        const cloned = this.clone();
+        this.width = width; 
+        this.height = height;
+        this.ctx.drawImage(cloned, 0, 0, width, height);
+    }
 }
+
+// ['width','height'].forEach((v)=>{
+// 	const d = Object.getOwnPropertyDescriptor(Canvas.prototype,v); d.enumerable=true; Object.defineProperty(Canvas.prototype,v,d);
+// })
+
+
+
+
+export default Canvas;
