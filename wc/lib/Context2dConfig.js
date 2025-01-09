@@ -61,7 +61,7 @@ class Context2dConfig{
         return `${this.fontStyle} ${this.fontSize} ${this.fontFamily}`.trim();
     }
     set font(v){
-        console.log(v);
+        // console.log(v);
         
         const r = this.constructor.parseFont(v);
         if((r?.fontStyle??null) != null){this.fontStyle = r.fontStyle;}
@@ -202,7 +202,7 @@ class Context2dConfig{
 
     static parseFont(v){
         const parts = v.split(/\s+/);
-        console.log(parts);
+        // console.log(parts);
         let fontStyles = [];
         let fontSize = null;
         let lineHeight = null;
@@ -236,7 +236,9 @@ class Context2dConfig{
 
 
 // enumerable. 열거가능처리.
-['font','fontSize','lineHeight','textPadding','lineHeightPx','textPaddingPx','letterSpacing','fillAfterStroke','disableStroke','disableFill'].forEach((v)=>{
+['font','fontSize','lineHeight','textPadding',
+    // 'lineHeightPx','textPaddingPx',
+    'letterSpacing','fillAfterStroke','disableStroke','disableFill'].forEach((v)=>{
 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   
 })
 

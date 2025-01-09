@@ -1,4 +1,5 @@
-// WcLayer를 wc/element/Canvas로 변경
+import Context2dConfig from "../lib/Context2dConfig.js";
+
 
 class Canvas extends HTMLCanvasElement{
     ctx = null;
@@ -9,7 +10,8 @@ class Canvas extends HTMLCanvasElement{
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
         this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
         this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
-
+        this.contextConfig = new Context2dConfig();
+        
         Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
 
         
@@ -18,10 +20,11 @@ class Canvas extends HTMLCanvasElement{
         this.setContext2D();
         this.parent = null
 
-        if(w) this.width = w;
-        if(h) this.height = h;
+        if(w && w != this.width) this.width = w;
+        if(h && h != this.height) this.height = h;
 
         if(bgColor) this.fill(bgColor)
+        
     }
     
     static getIdCounter(){
@@ -89,16 +92,18 @@ class Canvas extends HTMLCanvasElement{
     }
 
     getContextConfig(){
-        let keys = Object.keys(Object.getPrototypeOf(this.ctx));
-        let conf = {};
-        keys.forEach(key => {
-            if(key==='canvas'){return;}
-            if (typeof this.ctx[key] === 'function') {return;}
-            conf[key] = this.ctx[key];
-        });
-        return conf
+        return this.contextConfig.toObject();
+        // let keys = Object.keys(Object.getPrototypeOf(this.ctx));
+        // let conf = {};
+        // keys.forEach(key => {
+        //     if(key==='canvas'){return;}
+        //     if (typeof this.ctx[key] === 'function') {return;}
+        //     conf[key] = this.ctx[key];
+        // });
+        // return conf
     }
     setContextConfig(conf){
+        Object.assign(this.contextConfig,conf)
         Object.assign(this.ctx,conf)
         if(conf.backColor) this.ctx.fillStyle = conf.backColor;
         if(conf.foreColor) this.ctx.strokeStyle = conf.foreColor;

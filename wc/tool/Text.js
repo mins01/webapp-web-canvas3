@@ -89,7 +89,9 @@ export default class Text extends BaseTool{
         let xs = Math.min(x0,x);
         let ys = Math.min(y0,y);
 
-        DrawText.draw(ctx,text,Math.abs(w),Math.abs(h),xs,ys,this.editor.contextConfig.lineHeightPx);
+        DrawText.draw(ctx,text,Math.abs(w),Math.abs(h),xs,ys,
+            CssLengthUtil.pxBasedOnFontSize(ctx.lineHeight,ctx.fontSize),
+        );
         
         ctx.restore();
 

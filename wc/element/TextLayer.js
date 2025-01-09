@@ -49,14 +49,12 @@ export default class TextLayer extends Layer{
 
 
         ctx.save();
-        // ctx.fillStyle = '#ff0000';
-        // ctx.font = "20px";
-        // if(this.parent){
-        //     Object.assign(this.ctx,this.parent.editor.contextConfig.toObject());
-        // }
         
         if(this.text?.length){            
-            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,ctx.lineHeightPx,ctx.textPaddingPx);
+            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
+            CssLengthUtil.pxBasedOnFontSize(ctx.lineHeight,ctx.fontSize),
+            CssLengthUtil.pxBasedOnFontSize(ctx.textPadding,ctx.fontSize)
+            );
         }
         
         ctx.restore();
