@@ -97,11 +97,13 @@ class Context2dConfig{
         const r = CssLengthUtil.parse(v); this.letterSpacingNumber = r.number; this.letterSpacingUnit = r.unit; 
     }
     
+    // @deprecated
     get lineHeightPx(){
         const r = CssLengthUtil.sizeBasedOnFontSize(this.lineHeight,this.fontSize);
         if(r === null){ return null; }
         return CssLengthUtil.convertToPx(r);
     }
+    // @deprecated
     get textPaddingPx(){
         const r = CssLengthUtil.sizeBasedOnFontSize(this.textPadding,this.fontSize);
         if(r === null){ return null; }

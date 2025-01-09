@@ -92,8 +92,9 @@
             wcl6.y=75;
             wcl6.width=100;
             wcl6.height=100;
-            wcl6.ctx.fillStyle="#aabbcc"
-            wcl6.ctx.strokeStyle="#ccbbaa"
+            wcl6.contextConfig.fillStyle="#cc0000"
+            wcl6.contextConfig.strokeStyle="#00cc00"
+            wcl6.contextConfig.lineWidth=5;
             wcl6.flush();
 
             const wcl7 = globalThis.wcl7 = new EllipseLayer(editor.document.width,editor.document.height);
@@ -102,8 +103,9 @@
             wcl7.y=50;
             wcl7.width=100;
             wcl7.height=50;
-            wcl7.ctx.fillStyle="#aabbcc"
-            wcl7.ctx.strokeStyle="#ccbbaa"
+            wcl7.contextConfig.fillStyle="#0000cc"
+            wcl7.contextConfig.strokeStyle="#cc00cc"
+            wcl7.contextConfig.lineWidth=3;
             wcl7.flush();
 
             
