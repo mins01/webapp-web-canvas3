@@ -34,6 +34,17 @@ export default class CssFontUtil{
             fontFamily:'',
         }
         let fontWork = font;
+
+        const regexpFontSize = /((?:[-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)(?:cap|ch|em|ex|ic|lh|rem|rlh|vh|vw|vi|vb|vmin|vmax|px|cm|mm|Q|in|pc|pt|%)|xx-small|x-small|small|medium|large|x-large|xx-large|xxx-large|smaller|larger)(?![^\/\s])(?:\/((?:[-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)(?:cap|ch|em|ex|ic|lh|rem|rlh|vh|vw|vi|vb|vmin|vmax|px|cm|mm|Q|in|pc|pt|%)?|normal))?(?:\s+)?(.*)?$/
+        const match1 = fontWork.match(regexpFontSize);
+        if(!match1){ return null;}
+        rs.fontSize = match1[1]??'';
+        rs.lineHeight = match1[2]??'';
+        rs.fontFamily = match1[3]??'';
+        if(rs.fontSize=='' ||rs.fontFamily==''){ return null;} //필수값
+
+        fontWork = fontWork.substring(0,rs.index)
+
         const regexpFontStyle = /(italic|oblique(?:\s+\d+deg))/;
         let match2 = fontWork.match(regexpFontStyle);
         if(match2) rs.fontStyle = match2[1]??'';
@@ -54,13 +65,7 @@ export default class CssFontUtil{
         if(match2) rs.fontWeight = match2[1]??'';
         if(rs.fontWeight.length){ fontWork = fontWork.replace(rs.fontWeight,'') } 
 
-        const regexpFontSize = /((?:[-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)(?:[a-z]{2,3}|%)|xx-small|x-small|small|medium|large|x-large|xx-large|xxx-large|smaller|larger)(?:\/((?:[-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?)(?:[a-z]{2,3}|%)?|normal))?(?:\s+)?(.*)?$/
-        const match1 = fontWork.match(regexpFontSize);
-        if(!match1){ return null;}
-        rs.fontSize = match1[1]??'';
-        rs.lineHeight = match1[2]??'';
-        rs.fontFamily = match1[3]??'';
-        if(rs.fontSize=='' ||rs.fontFamily==''){ return null;} //필수값
+
 
         return rs;
     }
