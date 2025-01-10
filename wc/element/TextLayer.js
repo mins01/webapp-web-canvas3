@@ -48,7 +48,7 @@ export default class TextLayer extends Layer{
         //== for debug
 
 
-        ctx.save();
+        // ctx.save();
         this.contextConfig.assign(ctx,true);
 
         if(this.text?.length){            
@@ -57,6 +57,6 @@ export default class TextLayer extends Layer{
             CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)
             );
         }        
-        ctx.restore();
+        // ctx.restore();
     }
 }

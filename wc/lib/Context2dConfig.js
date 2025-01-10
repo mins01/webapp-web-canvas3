@@ -24,7 +24,7 @@ class Context2dConfig{
     
     //-- font
     fontStyle = "";
-    fontVariant = "";
+    fontVariant = ""; // 사용하지 말자 fontVariantCaps 이걸 대신 사용하라
     // fontStretch = ""; // 기본 값에서 관리하고있음
     fontWeight = "";
     // fontSize = "10px"; //px 만 지원하자. 우선은...
@@ -44,7 +44,7 @@ class Context2dConfig{
     direction = "ltr";
     fontKerning = "auto";
     fontStretch = "normal";
-    fontVariantCaps = "normal"; //fontVariant 와 거의 같지만 브라우저에서 font 지정시 이쪽으로 값이 싱크 될 수도 있고 안될 수도 있다.
+    fontVariantCaps = "normal"; //fontVariant 가 small-caps 라면 small-caps 가 저장됨. 그외는 따로 저장.
     // letterSpacing = "0px";
     letterSpacingNumber = "0";
     letterSpacingUnit = "px";
@@ -66,21 +66,21 @@ class Context2dConfig{
     }
     get font(){
         const r = [];
-        if(this.fontStyle.length) r.push(this.fontStyle);
-        if(this.fontVariant.length&& this.fontStretch !='normal') r.push(this.fontVariant); // 따로 관리됨 fontVariantCaps
-        if(this.fontStretch.length && this.fontStretch !='normal') r.push(this.fontStretch); // 따로 관리됨 fontStretch
-        if(this.fontWeight.length&& this.fontStretch !='normal') r.push(this.fontWeight);
-        // if(this.fontSize.length) r.push(this.fontSize);
-        if(this.lineHeight.length){ r.push(this.fontSize+'/'+this.lineHeight); } 
+        
+        if(this.fontStyle != ''){ r.push(this.fontStyle);} 
+        if(this.fontVariant != '' && this.fontVariant !='normal'){ r.push(this.fontVariant); } // 따로 관리됨 fontVariantCaps
+        if(this.fontStretch != '' && this.fontStretch !='normal'){ r.push(this.fontStretch); } // 따로 관리됨 fontStretch
+        if(this.fontWeight != '' && this.fontWeight !='normal'){ r.push(this.fontWeight); }
+        // if(this.fontSize != '') r.push(this.fontSize);
+        if(this.lineHeight != ''){ r.push(this.fontSize+'/'+this.lineHeight); } 
         else{ r.push(this.fontSize); } 
-        if(this.fontFamily.length) r.push(this.fontFamily);
+        if(this.fontFamily != ''){ r.push(this.fontFamily); }
+        else{ r.push('sans-serif'); }
         return r.join(' ');
     }
     set font(v){
-        console.log(v);
-        
         const r = CssFontUtil.parse(v);
-        if(r===null){ throw new Error("This format is not allowed."); }
+        if(r===null){ throw new Error("This format is not allowed. "+v); }
 
         this.fontStyle = r.fontStyle;
         this.fontVariant = r.fontVariant;
@@ -89,6 +89,8 @@ class Context2dConfig{
         this.fontSize = r.fontSize;
         if(r.lineHeight.length) this.lineHeight = r.lineHeight;
         this.fontFamily = r.fontFamily;
+
+        if(r.fontFamily==''){ r.fontFamily = 'sans-serif'; }
 
     }
     get fontSize(){
