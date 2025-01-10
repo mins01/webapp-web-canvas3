@@ -52,9 +52,7 @@ export default class Line extends BaseTool{
         // ctx.strokeStyle = "orange";
         // ctx.lineWidth = 26;
         ctx.save();
-        ctx.canvas.contextConfig.assign(ctx);
-        console.log(ctx.canvas.contextConfig.lineWidth,ctx.lineWidth);
-        
+        ctx.canvas.contextConfig.assign(ctx);       
         drawLayer.clear();
         DrawLine.draw(ctx,x0,y0,x,y);
         ctx.restore();
