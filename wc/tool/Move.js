@@ -1,21 +1,23 @@
 import BaseTool from './BaseTool.js';
 
 export default class Move extends BaseTool{
+    layerLeft0 = null;
+    layerTop0 = null;
     constructor(editor){
         super(editor);
         // this.x0 = null;
         // this.y0 = null;
         this.name = 'Move';
 
-        this.layerX0 = null;
-        this.layerY0 = null;
+        this.layerLeft0 = null;
+        this.layerTop0 = null;
     }
 
     start(){
         super.start();
         
-        this.layerX0 = this.layer.x;
-        this.layerY0 = this.layer.y;
+        this.layerLeft0 = this.layer.left;
+        this.layerTop0 = this.layer.top;
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -45,8 +47,8 @@ export default class Move extends BaseTool{
         const dx = x - x0;
         const dy = y - y0;
 
-        this.layer.x = this.layerX0 + dx;
-        this.layer.y = this.layerY0 + dy;
+        this.layer.left = this.layerLeft0 + dx;
+        this.layer.top = this.layerTop0 + dy;
 
         this.document.flush()
     }

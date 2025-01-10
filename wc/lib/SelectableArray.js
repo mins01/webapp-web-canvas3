@@ -180,18 +180,18 @@ export default class SelectableArray extends Array {
     // }
 
 
-    merge(canvas){
-        let xmin = Math.min(this.x,canvas.x)
-        let ymin = Math.min(this.y,canvas.y)
-        let xmax = Math.max(this.x+this.width,canvas.x+canvas.width)
-        let ymax = Math.max(this.y+this.height,canvas.y,canvas.height)
-        let w = xmax-xmin;
-        let h = ymax-ymin;
-        this.x = xmin;
-        this.y = ymin;
-        this.width = w;
-        this.height = h;
-        this.fill('#ff000099');
+    // merge(canvas){
+    //     let xmin = Math.min(this.x,canvas.x)
+    //     let ymin = Math.min(this.y,canvas.y)
+    //     let xmax = Math.max(this.x+this.width,canvas.x+canvas.width)
+    //     let ymax = Math.max(this.y+this.height,canvas.y,canvas.height)
+    //     let w = xmax-xmin;
+    //     let h = ymax-ymin;
+    //     this.x = xmin;
+    //     this.y = ymin;
+    //     this.width = w;
+    //     this.height = h;
+    //     this.fill('#ff000099');
         
-    }
+    // }
 }

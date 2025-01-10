@@ -70,8 +70,8 @@ export default class Editor{
         // let y = event.y - doc.offsetTop - dl.y + window.scrollY;
         // let x = event.x - doc.offsetLeft  + window.scrollX;
         // let y = event.y - doc.offsetTop  + window.scrollY;
-        let x = event.x - doc.offsetLeft - layer.x + window.scrollX;
-        let y = event.y - doc.offsetTop - layer.y + window.scrollY;
+        let x = event.x - doc.offsetLeft - layer.left + window.scrollX;
+        let y = event.y - doc.offsetTop - layer.top + window.scrollY;
         return {x:x,y:y};
     }
     onpointerdown=(event)=>{

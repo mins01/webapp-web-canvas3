@@ -18,7 +18,7 @@
     <!-- jquery 관련 -->
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> -->
 
-    <!-- 부트스트랩 5.3.x -->
+    <!-- 부트스트랩 5.3.left -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
 
@@ -89,8 +89,8 @@
             editor.addEventListener();
             const wcl4 = globalThis.wcl4 = new Layer(100,100);
             wcl4.fill('#ff000066')
-            wcl4.x = 300;
-            wcl4.y = 20
+            wcl4.left = 300;
+            wcl4.top = 20
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
 
@@ -100,8 +100,8 @@
 
             const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
             editor.document.add(wcl6);
-            wcl6.x=50;
-            wcl6.y=75;
+            wcl6.left=50;
+            wcl6.top=75;
             wcl6.width=100;
             wcl6.height=100;
             wcl6.contextConfig.fillStyle="#cc0000"
@@ -111,8 +111,8 @@
 
             const wcl7 = globalThis.wcl7 = new EllipseLayer(editor.document.width,editor.document.height);
             editor.document.add(wcl7);
-            wcl7.x=150;
-            wcl7.y=50;
+            wcl7.left=150;
+            wcl7.top=50;
             wcl7.width=100;
             wcl7.height=50;
             wcl7.contextConfig.fillStyle="#0000cc"
@@ -185,7 +185,7 @@
                                 <input type="color" class="form-control form-control-color"  name="foreColor" value="#ff0000">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text" >전경색</span>
+                                <span class="input-group-text" >배경색</span>
                                 <input type="color" class="form-control form-control-color"  name="backColor" value="#00ff00">
                             </div>
                         </div>
@@ -349,14 +349,14 @@
                         </form>
                         <form action="" onsubmit="return false">
                             <div class="input-group" style="width:300px;">
-                                <input class="form-control" type="number" name="x" placeholder="x"
-                                    onfocus="if(editor?.document?.layer){ this.form.x.value = editor?.document?.layer.x; this.form.y.value = editor?.document?.layer.y;}" 
-                                    oninput="if(editor?.document?.layer){ editor.document.layer.x = this.value; editor.document.layer.flush()}" 
+                                <input class="form-control" type="number" name="left" placeholder="left"
+                                    onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}" 
+                                    oninput="if(editor?.document?.layer){ editor.document.layer.left = this.value; editor.document.layer.flush()}" 
                                     >
                                 <span class="input-group-text" >X</span>
-                                <input class="form-control" type="number" name="y" placeholder="y"
-                                    onfocus="if(editor?.document?.layer){ this.form.x.value = editor?.document?.layer.x; this.form.y.value = editor?.document?.layer.y;}" 
-                                    oninput="if(editor?.document?.layer){ editor.document.layer.y = parseFloat(this.value);  editor.document.layer.flush()}" 
+                                <input class="form-control" type="number" name="top" placeholder="top"
+                                    onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}" 
+                                    oninput="if(editor?.document?.layer){ editor.document.layer.top = parseFloat(this.value);  editor.document.layer.flush()}" 
                                     >
                             </div>
                         </form>

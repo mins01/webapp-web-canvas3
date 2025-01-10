@@ -78,8 +78,8 @@ export default class Document extends Layer{
     syncDrawLayer(layer=null){
         if(!layer) layer = this.layer
         if(!layer) return;
-        this.drawLayer.x = layer.x;
-        this.drawLayer.y = layer.y;
+        this.drawLayer.left = layer.left;
+        this.drawLayer.top = layer.top;
         this.drawLayer.width = layer.width;
         this.drawLayer.height = layer.height;
     }
@@ -104,14 +104,14 @@ export default class Document extends Layer{
         this.layers.forEach((layer,index)=>{
             this.ctx.globalCompositeOperation = layer.compositeOperation
             this.ctx.globalAlpha = layer.alpha
-            this.ctxCommand('drawImage',layer, layer.x, layer.y, layer.width, layer.height);
+            this.ctxCommand('drawImage',layer, layer.left, layer.top, layer.width, layer.height);
 
             if(index == this.layers.selectedIndex){
                 // this.ctx.globalCompositeOperation = 'source-over'
                 // this.ctx.globalAlpha = 1;
                 this.ctx.globalCompositeOperation = layer.compositeOperation
                 this.ctx.globalAlpha = layer.alpha
-                this.ctxCommand('drawImage',this.drawLayer, this.drawLayer.x, this.drawLayer.y, this.drawLayer.width, this.drawLayer.height);
+                this.ctxCommand('drawImage',this.drawLayer, this.drawLayer.left, this.drawLayer.top, this.drawLayer.width, this.drawLayer.height);
             }
         })
         this.ctx.restore()

@@ -144,28 +144,28 @@ class Canvas extends HTMLCanvasElement{
     }
 
     merge(canvas){
-        const xmin = Math.min(this.x,canvas.x)
-        const ymin = Math.min(this.y,canvas.y)
-        const xmax = Math.max(this.x+this.width,canvas.x+canvas.width)
-        const ymax = Math.max(this.y+this.height,canvas.y+canvas.height)
+        const xmin = Math.min(this.left,canvas.left)
+        const ymin = Math.min(this.top,canvas.top)
+        const xmax = Math.max(this.left+this.width,canvas.left+canvas.width)
+        const ymax = Math.max(this.top+this.height,canvas.top+canvas.height)
         const w = xmax-xmin;
         const h = ymax-ymin;
 
         
         const imageData = this.ctx.getImageData(0,0,this.width,this.height);
-        let dx = this.x-xmin;
-        let dy = this.y-ymin;
+        let dx = this.left-xmin;
+        let dy = this.top-ymin;
         
-        this.x = xmin;
-        this.y = ymin;
+        this.left = xmin;
+        this.top = ymin;
         this.width = w;
         this.height = h;
         // this.fill('#00ee0033');
 
         this.ctx.putImageData(imageData,dx,dy);
 
-        dx = canvas.x-xmin;
-        dy = canvas.y-ymin;
+        dx = canvas.left-xmin;
+        dy = canvas.top-ymin;
         this.ctxCommand('drawImage',canvas, dx, dy, canvas.width, canvas.height);        
 
         // this.flush();
