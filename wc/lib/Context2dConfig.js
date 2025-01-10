@@ -1,4 +1,5 @@
 import CssLengthUtil from "./CssLengthUtil.js";
+import CssFontUtil from "./CssFontUtil.js";
 
 class Context2dConfig{
     // fillAfterStroke = true;
@@ -20,24 +21,30 @@ class Context2dConfig{
     lineJoin = "round";
     miterLimit = 10;
     lineDashOffset = 0;
-    //font
+    
+    //-- font
     fontStyle = "";
-    fontFamily = "sans-serif";
+    fontVariant = "";
+    // fontStretch = ""; // 기본 값에서 관리하고있음
+    fontWeight = "";
     // fontSize = "10px"; //px 만 지원하자. 우선은...
     fontSizeNumber = "10"; //px 만 지원하자. 우선은...
     fontSizeUnit = "px"  //px 만 사용해라. pt로 해도 px로 자동 변환된다.
+    // lineHeight = "1.5em";
+    lineHeightNumber = "1.5";
+    lineHeightUnit = "em";
+    fontFamily = "";
+    //-- font
+
     // textPadding = "0px";
     textPaddingNumber = "0";
     textPaddingUnit = "px";
     textAlign = "start";
-    // lineHeight = "1.5em";
-    lineHeightNumber = "1.5";
-    lineHeightUnit = "em";
     textBaseline = "alphabetic";
     direction = "ltr";
     fontKerning = "auto";
     fontStretch = "normal";
-    fontVariantCaps = "normal";
+    fontVariantCaps = "normal"; //fontVariant 와 거의 같지만 브라우저에서 font 지정시 이쪽으로 값이 싱크 될 수도 있고 안될 수도 있다.
     // letterSpacing = "0px";
     letterSpacingNumber = "0";
     letterSpacingUnit = "px";
@@ -58,16 +65,31 @@ class Context2dConfig{
         this.reset();
     }
     get font(){
-        return `${this.fontStyle} ${this.fontSize} ${this.fontFamily}`.trim();
+        const r = [];
+        if(this.fontStyle.length) r.push(this.fontStyle);
+        if(this.fontVariant.length&& this.fontStretch !='normal') r.push(this.fontVariant); // 따로 관리됨 fontVariantCaps
+        if(this.fontStretch.length && this.fontStretch !='normal') r.push(this.fontStretch); // 따로 관리됨 fontStretch
+        if(this.fontWeight.length&& this.fontStretch !='normal') r.push(this.fontWeight);
+        // if(this.fontSize.length) r.push(this.fontSize);
+        if(this.lineHeight.length){ r.push(this.fontSize+'/'+this.lineHeight); } 
+        else{ r.push(this.fontSize); } 
+        if(this.fontFamily.length) r.push(this.fontFamily);
+        return r.join(' ');
     }
     set font(v){
-        // console.log(v);
+        console.log(v);
         
-        const r = this.constructor.parseFont(v);
-        if((r?.fontStyle??null) != null){this.fontStyle = r.fontStyle;}
-        if((r?.fontSize??null) != null){this.fontSize = r.fontSize;}
-        if((r?.fontFamily??null) != null){this.fontFamily = r.fontFamily;}
-        if((r?.lineHeight??null) != null){this.lineHeight = r.lineHeight;}
+        const r = CssFontUtil.parse(v);
+        if(r===null){ throw new Error("This format is not allowed."); }
+
+        this.fontStyle = r.fontStyle;
+        this.fontVariant = r.fontVariant;
+        this.fontStretch = r.fontStretch;
+        this.fontWeight = r.fontWeight;
+        this.fontSize = r.fontSize;
+        if(r.lineHeight.length) this.lineHeight = r.lineHeight;
+        this.fontFamily = r.fontFamily;
+
     }
     get fontSize(){
         return this.fontSizeNumber+this.fontSizeUnit;
