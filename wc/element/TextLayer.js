@@ -3,6 +3,7 @@
 import Layer from "./Layer.js"
 import DrawText from '../draw/DrawText.js';
 import CssLengthUtil from "../lib/CssLengthUtil.js";
+import CssFontUtil from "../lib/CssFontUtil.js";
 
 export default class TextLayer extends Layer{
     text = '';
@@ -51,10 +52,12 @@ export default class TextLayer extends Layer{
         // ctx.save();
         this.contextConfig.assign(ctx,true);
 
+        let {fontSize} = CssFontUtil.parse(ctx.font);        
+
         if(this.text?.length){            
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
-            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.lineHeight,this.contextConfig.fontSize),
-            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)
+            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.lineHeight,fontSize),
+            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,fontSize)
             );
         }        
         // ctx.restore();
