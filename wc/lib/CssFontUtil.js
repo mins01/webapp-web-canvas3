@@ -22,7 +22,7 @@ export default class CssFontUtil{
      * @param {string} font 
      * @returns {*} 
      */
-    static parseFont(font){
+    static parse(font){
         if(font===null|| font===undefined|| !font?.length){return null;}
         const rs = {
             fontStyle:'',
@@ -45,7 +45,7 @@ export default class CssFontUtil{
 
         fontWork = fontWork.substring(0,rs.index)
 
-        const regexpFontStyle = /(italic|oblique(?:\s+\d+deg))/;
+        const regexpFontStyle = /(italic|oblique(?:\s+\d+(?:deg|grad|rad|turn))?)/;
         let match2 = fontWork.match(regexpFontStyle);
         if(match2) rs.fontStyle = match2[1]??'';
         if(rs.fontStyle.length){ fontWork = fontWork.replace(rs.fontStyle,'') } 
