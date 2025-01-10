@@ -43,7 +43,7 @@ export default class CssFontUtil{
         rs.fontFamily = match1[3]??'';
         if(rs.fontSize=='' ||rs.fontFamily==''){ return null;} //필수값
 
-        fontWork = fontWork.substring(0,rs.index)
+        fontWork = fontWork.substring(0,match1.index)        
 
         const regexpFontStyle = /(italic|oblique(?:\s+\d+(?:deg|grad|rad|turn))?)/;
         let match2 = fontWork.match(regexpFontStyle);

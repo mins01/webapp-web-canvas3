@@ -48,3 +48,10 @@ v = ' x,y,y';
 r = CssFontUtil.parse(v); 
 console.log('v:',v);
 console.log('r:',JSON.stringify(r));
+
+v = '10px sans-serif';
+r = CssFontUtil.parse(v); 
+console.log('v:',v);
+console.log('r:',JSON.stringify(r));
+
+
