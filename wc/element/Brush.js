@@ -3,6 +3,8 @@ import DrawCircle from "../draw/DrawCircle.js"
 
 import DrawEllipse from "../draw/DrawEllipse.js";
 
+import jsColor from "../lib/jsColor.js";
+
 export default class Brush extends Layer{
 
     constructor(w=null,h=null){
@@ -104,11 +106,12 @@ export default class Brush extends Layer{
     createRadialGradient(ctx,x0, y0, r0, x1, y1, r1){
         // const ctx = this.ctx;
         const gradient = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-
+        const c = jsColor.Color.from(ctx.fillStyle);
+        c.a = 0;
         gradient.addColorStop(0, ctx.fillStyle);
-        if(this.hardness !== 1){
-            gradient.addColorStop(this.hardness, '#00000000');
-            gradient.addColorStop(1, '#00000000');
+        if(this.hardness < 1){
+            gradient.addColorStop(this.hardness, ctx.fillStyle);
+            gradient.addColorStop(1, c.toHexa());
         }else{
             gradient.addColorStop(1, ctx.fillStyle);
         }
@@ -127,7 +130,7 @@ export default class Brush extends Layer{
         this.contextConfig.assign(ctx,true);
 
 
-        const gradient = this.createRadialGradient(ctx,w/2, h/2, 0, w/2, h/2, w/2);
+        const gradient = this.createRadialGradient(ctx,w/2, this.height/2, 0, w/2, this.height/2, w/2);
         ctx.save();
         ctx.fillStyle = gradient;
         DrawEllipse.draw(this.ctx,x,y,w,h,rotation,this.contextConfig)
