@@ -80,6 +80,10 @@
         window.addEventListener('load',(event)=>{
             const b1 = globalThis.b1 = document.querySelector('.b1');
             b1.contextConfig.foreColor="#cc00cc";
+            b1.size = 200;
+            b1.roundness = 0.4
+            b1.angle = -0.25;
+            b1.hardness = 1;
             b1.flush();
         })
     </script>
@@ -145,8 +149,8 @@
                 <div class="card my-1">
                     <div class="card-header">LAYER VALUE</div>
                     <div class="card-body">
-                        <div class="d-flex flex-wrap gap-1">
-                            <form action="" onsubmit="b1.flush(); return false" >
+                        <form action="" onsubmit="b1.flush(); return false" >
+                            <div class="d-flex flex-wrap gap-1 property-wrap">
                                 <div class="input-group">
                                     <span class="input-group-text" >size</span>
                                     <input class="form-control" type="number" name="size" placeholder="size"
@@ -175,9 +179,8 @@
                                         oninput="b1[this.name] = this.value;"
                                         >
                                 </div>
-                                
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div> 
             </div>

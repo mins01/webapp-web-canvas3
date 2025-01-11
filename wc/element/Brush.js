@@ -4,6 +4,7 @@ import DrawCircle from "../draw/DrawCircle.js"
 import DrawEllipse from "../draw/DrawEllipse.js";
 
 import jsColor from "../lib/jsColor.js";
+import Canvas from "./Canvas.js";
 
 export default class Brush extends Layer{
 
@@ -36,6 +37,7 @@ export default class Brush extends Layer{
         this._flowJitter = 0
         this._flowControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
 
+        this.shapeCanvas = new Canvas();
         this.init();
 
         this.draw();
@@ -117,23 +119,53 @@ export default class Brush extends Layer{
         }
         return gradient;
     }
+
+    applyShapeCanvas(){
+        const shape = this.shapeCanvas;
+        const ctx = shape.ctx;
+
+        shape.width = this.size;
+        shape.height = this.size;
+        const r = shape.width/2;
+        const x = r;
+        const y = r;
+
+        this.contextConfig.assign(ctx,true);
+        // console.log(ctx.fillStyle);
+
+        const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+        ctx.save();
+        ctx.fillStyle = gradient;
+        DrawCircle.draw(ctx,x,y,r,this.contextConfig);
+        ctx.restore();
+    }
+
     draw(){
+        const shape = this.shapeCanvas;
+
+        const ctx = this.ctx;
         this.width = this.size;
         this.height = this.size;
-        const ctx = this.ctx;
-        const w = this.width
-        const h = this.size* this.roundness;
-        const x = 0, y = (w-h)/2;
-        const rotation = this.angle * Math.PI;
+        
         
         this.contextConfig.disableStroke = true;
         this.contextConfig.assign(ctx,true);
 
+        this.applyShapeCanvas()
 
-        const gradient = this.createRadialGradient(ctx,w/2, this.height/2, 0, w/2, this.height/2, w/2);
+
+        const dw = this.width;
+        const dh = this.height * this.roundness;
+        const dx = 0;
+        const dy = (this.height-dh)/2;
+
         ctx.save();
-        ctx.fillStyle = gradient;
-        DrawEllipse.draw(this.ctx,x,y,w,h,rotation,this.contextConfig)
+        // ctx.filter = 'hue-rotate(180deg)';
+        ctx.imageSmoothingEnabled = true;
+        ctx.translate(this.width/2, this.height/2); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
+        ctx.rotate(Math.PI * this.angle); // 45도 회전 (Math.PI / 4 라디안)
+        ctx.translate(this.width/-2, this.height/-2); // 중심을 원래 위치로 되돌림
+        ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
         ctx.restore();
     }
 

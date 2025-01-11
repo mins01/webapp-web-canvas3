@@ -7,8 +7,8 @@ class Context2dConfig{
     globalAlpha = 1;
     globalCompositeOperation = "source-over";
     filter = "none";
-    imageSmoothingEnabled = "true";
-    imageSmoothingQuality = "low";
+    imageSmoothingEnabled = true;
+    imageSmoothingQuality = "high"; // default: low
     strokeStyle = "#000000";
     fillStyle = "#ffffff";
     shadowOffsetX = 0;
