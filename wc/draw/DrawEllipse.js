@@ -1,10 +1,10 @@
-export default class DrawRectangle{
-    static draw(ctx,x,y,w,h,option={}){
+export default class DrawEllipse{
+    static draw(ctx,x,y,w,h,rotation,option={}){
         option = Object.assign({ 
-            'fillAfterStroke':(ctx.fillAfterStroke??true), 
-            'disableFill':(ctx.disableFill??false), 
-            'disableStroke':(ctx.disableStroke??false), 
-            'strokeLocation':(ctx.strokeLocation??'inside'), // inside, outside, center 
+            'fillAfterStroke':(option.fillAfterStroke??ctx.fillAfterStroke??true), 
+            'disableFill':(option.disableFill??ctx.disableFill??false), 
+            'disableStroke':(option.disableStroke??ctx.disableStroke??false), 
+            'strokeLocation':(option.strokeLocation??ctx.strokeLocation??'inside'), // inside, outside, center 
         },option)
         
         const lw = ctx.lineWidth;
@@ -19,27 +19,27 @@ export default class DrawRectangle{
         if(option.fillAfterStroke??true){ 
             if(!option.disableFill){
                 ctx.beginPath();
-                ctx.ellipse(fx, fy, fw/2, fh/2, 0, 0, 2 * Math.PI);
+                ctx.ellipse(fx, fy, fw/2, fh/2, rotation , 0, 2 * Math.PI);
                 ctx.fill(); 
                 ctx.closePath();
             }
                 
             if(!option.disableStroke){
                 ctx.beginPath();
-                ctx.ellipse(sx, sy, sw/2, sh/2, 0, 0, 2 * Math.PI);
+                ctx.ellipse(sx, sy, sw/2, sh/2, rotation , 0, 2 * Math.PI);
                 ctx.stroke(); 
                 ctx.closePath();
             }
         }else{ 
             if(!option.disableStroke){
                 ctx.beginPath();
-                ctx.ellipse(sx, sy, sw/2, sh/2, 0, 0, 2 * Math.PI);
+                ctx.ellipse(sx, sy, sw/2, sh/2, rotation , 0, 2 * Math.PI);
                 ctx.stroke(); 
                 ctx.closePath();
             }
             if(!option.disableFill){
                 ctx.beginPath();
-                ctx.ellipse(fx, fy, fw/2, fh/2, 0, 0, 2 * Math.PI);
+                ctx.ellipse(fx, fy, fw/2, fh/2, rotation , 0, 2 * Math.PI);
                 ctx.fill(); 
                 ctx.closePath();
             }

@@ -42,7 +42,7 @@ export default class EllipseLayer extends Layer{
         const y = 0;
         const w = Math.max(1,ctx.canvas.width);
         const h = Math.max(1,ctx.canvas.height);
-        DrawEllipse.draw(ctx,x,y,w,h);
+        DrawEllipse.draw(ctx,x,y,w,h,0);
         
         ctx.restore();
     }

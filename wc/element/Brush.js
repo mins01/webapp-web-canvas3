@@ -1,6 +1,8 @@
 import Layer from "./Layer.js";
 import DrawCircle from "../draw/DrawCircle.js"
 
+import DrawEllipse from "../draw/DrawEllipse.js";
+
 export default class Brush extends Layer{
 
     constructor(w=null,h=null){
@@ -8,7 +10,7 @@ export default class Brush extends Layer{
         this.parent = null;
         
         // 브러시 모양: Brush Tip Shape
-        this._size = 50; //크기 px
+        this._size = 50; //크기 px . diameter
         this._angle = 0; //각도 deg 
         this._roundness = 1; // 원형율
         this._flipX = false; //x 뒤집기. 사용안할 예정
@@ -99,9 +101,9 @@ export default class Brush extends Layer{
     set flowControl(v){ this._flowControl = v; this.draw(); }
 
 
-    createRadialGradient(ctx,r){
+    createRadialGradient(ctx,x0, y0, r0, x1, y1, r1){
         // const ctx = this.ctx;
-        const gradient = ctx.createRadialGradient(r, r, 0, r, r, r*2);
+        const gradient = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
 
         gradient.addColorStop(0, ctx.fillStyle);
         if(this.hardness !== 1){
@@ -116,15 +118,19 @@ export default class Brush extends Layer{
         this.width = this.size;
         this.height = this.size;
         const ctx = this.ctx;
-        const r = this.size/2
-        const x = r, y = r;
+        const w = this.width
+        const h = this.size* this.roundness;
+        const x = 0, y = (w-h)/2;
+        const rotation = this.angle * Math.PI;
         
-        ctx.fillStyle ='#ffcc9999';
+        this.contextConfig.disableStroke = true;
+        this.contextConfig.assign(ctx,true);
 
-        const gradient = this.createRadialGradient(ctx,r);
+
+        const gradient = this.createRadialGradient(ctx,w/2, h/2, 0, w/2, h/2, w/2);
         ctx.save();
         ctx.fillStyle = gradient;
-        DrawCircle.draw(this.ctx,x,y,r,{disableStroke:true})
+        DrawEllipse.draw(this.ctx,x,y,w,h,rotation,this.contextConfig)
         ctx.restore();
     }
 
