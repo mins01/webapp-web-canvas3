@@ -17,6 +17,7 @@ export default class Brush extends BaseTool{
         super.onpointerdown(event);
         const [x,y] = this.getXYForLayer(event);
         this.x0 = x; this.y0 = y; this.x = x; this.y = y;
+        this.remainInterval = 0;
         this.draw(x,y,x,y);
     }
     onpointermove(event){

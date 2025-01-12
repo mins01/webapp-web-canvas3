@@ -54,6 +54,9 @@ export default class Editor{
         // console.log(this.contextConfig.toObject());
         
         this.document?.setContextConfig(this.contextConfig.toObject());
+        this.brush.contextConfig.foreColor =this.contextConfig.foreColor;
+        this.brush.contextConfig.backColor =this.contextConfig.backColor;
+        this.brush.flush();
     }
 
     addEventListener(){
