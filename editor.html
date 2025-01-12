@@ -66,6 +66,7 @@
         import TextLayer from "./wc/element/TextLayer.js";
         import RectangleLayer from "./wc/element/RectangleLayer.js";
         import EllipseLayer from "./wc/element/EllipseLayer.js";
+        import Brush from "./wc/element/Brush.js";
 
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
@@ -73,6 +74,7 @@
         TextLayer.defineCustomElements();
         RectangleLayer.defineCustomElements();
         EllipseLayer.defineCustomElements();
+        Brush.defineCustomElements();
 
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
@@ -85,7 +87,13 @@
         import Editor from "./wc/Editor.js";
 
         window.addEventListener('load',(event)=>{
+            const brush1 = globalThis.brush1 = document.querySelector('#brush1');
+            brush1.contextConfig.foreColor="#f00"
+            brush1.size = 10
+            brush1.flush();
+
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
+            editor.brush = brush1
             editor.addEventListener();
             const wcl4 = globalThis.wcl4 = new Layer(100,100);
             wcl4.fill('#ff000066')
@@ -164,6 +172,7 @@
                 <form action="">
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-outline-info pe-none" >tool:Line</button></label>
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-outline-info pe-none">tool:Pen</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-outline-info pe-none">tool:Brush</button></label>
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-outline-info pe-none">tool:Eraser</button></label>
     
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-outline-info pe-none">tool:Move</button></label>
@@ -379,6 +388,11 @@
             <hr>
             <div id="div-for-debug">
 
+            </div>
+            <hr>
+            BRUSH
+            <div>
+                <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
             </div>
         </div>
     </div>

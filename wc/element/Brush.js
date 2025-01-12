@@ -176,7 +176,7 @@ export default class Brush extends Layer{
     }
 
 
-    drawOnLine(ctx,x0, y0, x1, y1) {
+    drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0) {
         const image = this
         const interval = this.size * Math.max(0.001,this.spacing);
         // 선의 길이를 계산
@@ -184,19 +184,35 @@ export default class Brush extends Layer{
         let dx = x1 - x0;
         let dy = y1 - y0;
         let distance = Math.sqrt(dx * dx + dy * dy);
+        if(distance < interval){
+            if(interval<=remainInterval){
+                let x = x0 + 0 * dx;
+                let y = y0 + 0 * dy;   
+                // 이미지 그리기
+                ctx.drawImage(image, x - r, y - r);
+                return remainInterval-interval;
+            }else{
+                return remainInterval+distance;
+            }
+            
+        }else{
+            // 선의 길이에 맞춰 이미지가 반복되도록 반복문을 돌린다
+            let steps = Math.floor(distance / interval);
+    
+            for (let i = 0; i < steps; i++) {
+                // 선 상의 각 점 계산
+                let t = i / steps;
+                let x = x0 + t * dx;
+                let y = y0 + t * dy;   
+                // 이미지 그리기
+                ctx.drawImage(image, x - r, y - r);
+            }
 
-        // 선의 길이에 맞춰 이미지가 반복되도록 반복문을 돌린다
-        let steps = Math.floor(distance / interval);
-
-        for (let i = 0; i < steps; i++) {
-            // 선 상의 각 점 계산
-            let t = i / steps;
-            let x = x0 + t * dx;
-            let y = y0 + t * dy;
-
-            // 이미지 그리기
-            ctx.drawImage(image, x - r, y - r);
+            remainInterval = distance % interval
+            return remainInterval;
+            
         }
+
     }
 
 }

@@ -9,6 +9,7 @@ import Context2dConfig from "./lib/Context2dConfig.js";
 import Tools from "./tool/Tools.js";
 
 export default class Editor{
+    brush = null;
     constructor(target){
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
