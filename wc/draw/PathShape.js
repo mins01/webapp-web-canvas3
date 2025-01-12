@@ -46,7 +46,6 @@ export default class PathShape{
   }
   
   static star(ctx, x, y, radius, innerRadius , points=5 , startAngle = 0) {
-    // const points = 5;  // 오망성은 5개의 점을 가짐
     const angle = Math.PI / points;  // 각 꼭짓점 사이의 각도 (360도/5 = 72도)
     
     // 첫 번째 꼭짓점 (오각형의 꼭짓점)

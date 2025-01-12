@@ -3,6 +3,7 @@ import DrawCircle from "../draw/DrawCircle.js"
 
 import DrawEllipse from "../draw/DrawEllipse.js";
 
+import PathShape from "../draw/PathShape.js";
 import jsColor from "../lib/jsColor.js";
 import Canvas from "./Canvas.js";
 
@@ -30,7 +31,7 @@ export default class Brush extends Layer{
         this._roundnessControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this._mininumRoundness = 0.25; //최소 크기
         // transfer
-        this._opacity = 1; // 전체적 투명도
+        this._opacity = 1; // 전체적 불투명도
         this._opacityJitter = 0
         this._opacityControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this._flow = 1; // 하나의 투명도
@@ -135,8 +136,12 @@ export default class Brush extends Layer{
 
         const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
         ctx.save();
+        ctx.globalAlpha = parseFloat(this.flow)
         ctx.fillStyle = gradient;
-        DrawCircle.draw(ctx,x,y,r,this.contextConfig);
+        ctx.beginPath();
+        PathShape.circle(ctx,x,y,r)
+        ctx.closePath();
+        ctx.fill()
         ctx.restore();
     }
 
@@ -162,11 +167,36 @@ export default class Brush extends Layer{
         ctx.save();
         // ctx.filter = 'hue-rotate(180deg)';
         ctx.imageSmoothingEnabled = true;
+        ctx.globalAlpha = parseFloat(this.opacity)        
         ctx.translate(this.width/2, this.height/2); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
         ctx.rotate(Math.PI * this.angle); // 45도 회전 (Math.PI / 4 라디안)
         ctx.translate(this.width/-2, this.height/-2); // 중심을 원래 위치로 되돌림
         ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
         ctx.restore();
+    }
+
+
+    drawOnLine(ctx,x0, y0, x1, y1) {
+        const image = this
+        const interval = this.size * Math.max(0.001,this.spacing);
+        // 선의 길이를 계산
+        let r = this.size / 2;
+        let dx = x1 - x0;
+        let dy = y1 - y0;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        // 선의 길이에 맞춰 이미지가 반복되도록 반복문을 돌린다
+        let steps = Math.floor(distance / interval);
+
+        for (let i = 0; i < steps; i++) {
+            // 선 상의 각 점 계산
+            let t = i / steps;
+            let x = x0 + t * dx;
+            let y = y0 + t * dy;
+
+            // 이미지 그리기
+            ctx.drawImage(image, x - r, y - r);
+        }
     }
 
 }
