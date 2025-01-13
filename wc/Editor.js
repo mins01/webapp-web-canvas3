@@ -4,6 +4,7 @@ import PointerEventHandler from "./lib/PointerEventHandler.js";
 
 
 import Context2dConfig from "./lib/Context2dConfig.js";
+import Context2dTextConfig from "./lib/Context2dTextConfig.js";
 
 // import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
@@ -33,6 +34,7 @@ export default class Editor{
         // this.documents.documentIndex = 0;
 
         this.contextConfig = new Context2dConfig();
+        this.textConfig = new Context2dTextConfig();
     }
 
     get tool(){ return this.tools.selected; }
@@ -47,16 +49,15 @@ export default class Editor{
 
 
     setContextConfig(conf){
-        // console.log(conf);
-        
-        // this.contextConfig.reset();
         Object.assign(this.contextConfig,conf);
-        // console.log(this.contextConfig.toObject());
-        
         this.document?.setContextConfig(this.contextConfig.toObject());
         this.brush.contextConfig.foreColor =this.contextConfig.foreColor;
         this.brush.contextConfig.backColor =this.contextConfig.backColor;
         this.brush.flush();
+    }
+    setTextConfig(conf){
+        Object.assign(this.textConfig,conf);        
+        this.document?.setTextConfig(this.textConfig.toObject());
     }
 
     addEventListener(){

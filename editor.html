@@ -234,8 +234,14 @@
                             </div> -->
                         </div>
                         <hr class="my-1">
+                    </form>
+                    <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
                         <h3 class="fs-5">TEXT</h3>
                         <div class="d-flex flex-wrap gap-1 property-wrap">
+                            <div class="input-group">
+                                <span class="input-group-text" >글자색</span>
+                                <input type="color" class="form-control form-control-color"  name="textColor" value="#00ff00">
+                            </div>
                             <div class="input-group">
                                 <span class="input-group-text" >글자크기</span>
                                 <label class="form-control" role="button">

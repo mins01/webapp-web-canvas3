@@ -4,13 +4,16 @@ import Layer from "./Layer.js"
 import DrawText from '../draw/DrawText.js';
 import CssLengthUtil from "../lib/CssLengthUtil.js";
 import CssFontUtil from "../lib/CssFontUtil.js";
+import Context2dTextConfig from "../lib/Context2dTextConfig.js";
 
 export default class TextLayer extends Layer{
+    textConfig = null;
     text = '';
     constructor(w=null,h=null,bgColor=null,label=null){
         super(w,h,bgColor,label);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
 
+        this.textConfig = new Context2dTextConfig();
         this.text = '';
     }
     static defineCustomElements(name='wc-textlayer'){
@@ -21,6 +24,11 @@ export default class TextLayer extends Layer{
         super.setContextConfig(conf);
         this.ctx.fillStyle = conf.foreColor;
         this.ctx.StrokeStyle = conf.backColor;
+    }
+    setTextConfig(conf){
+        // console.log('xxxx',conf)
+        Object.assign(this.textConfig,conf)
+        this.ctx.fillStyle = this.textConfig.textColor;
     }
 
     setText(text){
@@ -51,13 +59,15 @@ export default class TextLayer extends Layer{
 
         // ctx.save();
         this.contextConfig.assign(ctx,true);
+        this.textConfig.assign(ctx);
+
 
         let {fontSize} = CssFontUtil.parse(ctx.font);        
 
         if(this.text?.length){            
             DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
-            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.lineHeight,fontSize),
-            CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,fontSize)
+                CssLengthUtil.pxBasedOnFontSize(this.textConfig.lineHeight,fontSize),
+                CssLengthUtil.pxBasedOnFontSize(this.textConfig.textPadding,fontSize)
             );
         }        
         // ctx.restore();

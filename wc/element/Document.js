@@ -74,6 +74,19 @@ export default class Document extends Layer{
         // this.drawLayer?.flush();
         this.flush();
     }
+    setTextConfig(conf){
+        if(this?.layer?.textConfig){
+            this.layer?.setTextConfig(conf);
+            // this.layer?.flush();
+            this.layer?.draw();
+        }
+        if(this?.drawLayer?.textConfig){
+            this.drawLayer?.setTextConfig(conf);
+            // this.drawLayer?.flush();
+            this.drawLayer?.draw();
+        }
+        this.flush();
+    }
 
     syncDrawLayer(layer=null){
         if(!layer) layer = this.layer
