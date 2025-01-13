@@ -59,6 +59,11 @@ export default class Editor{
         Object.assign(this.textConfig,conf);        
         this.document?.setTextConfig(this.textConfig.toObject());
     }
+    setBrushConfig(conf){
+        // Object.assign(this.brushConfig,conf);        
+        // this.brush?.setBrushConfig(this.brushConfig.toObject());
+        this.brush?.setBrushConfig(conf);
+    }
 
     addEventListener(){
         this.peh.addEventListener(this.target);
