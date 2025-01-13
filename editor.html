@@ -91,10 +91,15 @@
             brush1.contextConfig.foreColor="#f00"
             brush1.size = 10
             brush1.flush();
+            
 
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
-            editor.brush = brush1
+            globalThis.b1 = editor.brush = brush1
+            // editor.tools.select('Brush');
             editor.addEventListener();
+
+
+
             const wcl4 = globalThis.wcl4 = new Layer(100,100);
             wcl4.fill('#ff000066')
             wcl4.left = 300;
@@ -131,11 +136,14 @@
 
 
 
+            document.formBrushConfig.oninput(event)
+            document.querySelector('.checkbox-tool[value="Brush"]').click();
+
 
             let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
 
-            editor.document.layers.select(3)
+            editor.document.layers.select(0)
 
 
             divForDebug.append(editor.document.drawLayer)
@@ -170,16 +178,16 @@
             <h2>Editor</h2>
             <div>
                 <form action="">
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-outline-info pe-none" >tool:Line</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-outline-info pe-none">tool:Pen</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-outline-info pe-none">tool:Brush</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-outline-info pe-none">tool:Eraser</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-outline-info pe-none" >tool:Line</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-outline-info pe-none">tool:Pen</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-outline-info pe-none">tool:Brush</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-outline-info pe-none">tool:Eraser</button></label>
     
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-outline-info pe-none">tool:Move</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-outline-info pe-none">tool:Rectangle</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-outline-info pe-none">tool:Circle</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-outline-info pe-none">tool:Text</button></label>
-                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute" type="radio" name="tool"onclick="editor.tool.apply()"><button type="button" class="btn btn-outline-info pe-none" >tool:Text - apply</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-outline-info pe-none">tool:Move</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-outline-info pe-none">tool:Rectangle</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-outline-info pe-none">tool:Circle</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-outline-info pe-none">tool:Text</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.apply()"><button type="button" class="btn btn-outline-info pe-none" >tool:Text - apply</button></label>
                 </form>
             </div>
             <hr>
@@ -235,6 +243,7 @@
                         </div>
                         <hr class="my-1">
                     </form>
+                    
                     <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
                         <h3 class="fs-5">TEXT</h3>
                         <div class="d-flex flex-wrap gap-1 property-wrap">
@@ -346,6 +355,59 @@
                     </form>
                 </div>
             </div>
+            <div class="card my-1">
+                <div class="card-header">BRUSH PROPERTY</div>
+                <div class="card-body">
+                    <form name="formBrushConfig" action="" oninput="b1.setBrushConfig(Wc.HtmlUtil.formToObject(this));b1.flush();  return false" >
+                        <div class="d-flex flex-wrap gap-1 property-wrap">
+                            <div class="input-group">
+                                <span class="input-group-text" >size</span>
+                                <input class="form-control" type="number" name="size" placeholder="size"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                    value="5"
+                                    >
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >roundness(원형율)</span>
+                                <input class="form-control" type="number" name="roundness" placeholder="roundness" step="0.05" min="0" max="1"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                    value="1"
+                                    >
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >angle(각도)</span>
+                                <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                    value="0"
+                                    >
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >hardness(경도)</span>
+                                <input class="form-control" type="number" name="hardness" placeholder="hardness" step="0.05" min="0" max="1"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                    value="1"
+                                    >
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >opacity(불투명도)</span>
+                                <input class="form-control" type="number" name="opacity" placeholder="opacity" step="0.05" min="0" max="1"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                    value="1"
+                                    >
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >spacing(간격)</span>
+                                <input class="form-control" type="number" name="spacing" placeholder="spacing" step="0.005" min="0.005" max="2"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                    value="0.25"
+                                    >
+                            </div>
+                            
+                        </div>
+                    </form>
+
+                </div>
+            </div> 
             <div class="card my-1">
                 <div class="card-header">LAYER VALUE</div>
                 <div class="card-body">
