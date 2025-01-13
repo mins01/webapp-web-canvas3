@@ -11,7 +11,7 @@ import BrushConfig from "../lib/BrushConfig.js";
 
 export default class Brush extends Layer{
 
-    margin = 2;
+    margin = 4;
     constructor(w=null,h=null){
         super(w,h);
         this.parent = null;
@@ -193,7 +193,12 @@ export default class Brush extends Layer{
         ctx.restore();
     }
 
+    dot(ctx,x,y){
+        const image = this
 
+        ctx.drawImage(image, x - image.width/2, y - image.height/2 );
+
+    }
     drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0) {
         const image = this
         const brushConfig = this.brushConfig;
@@ -203,22 +208,25 @@ export default class Brush extends Layer{
         let dx = x1 - x0;
         let dy = y1 - y0;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        if(distance < interval){
+        let distance2 = distance+remainInterval
+        
+        if(distance2 < interval){
             if(interval<=remainInterval){
                 let x = x0 + 0 * dx;
                 let y = y0 + 0 * dy;   
                 // 이미지 그리기
                 // ctx.imageSmoothingEnabled = false;
 
-                ctx.drawImage(image, x - r, y - r);
-                return remainInterval-interval;
+                // ctx.drawImage(image, x - r, y - r);
+                this.dot(ctx,x,y);
+                return distance2-interval;
             }else{
-                return remainInterval+distance;
+                return distance2;
             }
             
         }else{
             // 선의 길이에 맞춰 이미지가 반복되도록 반복문을 돌린다
-            let steps = Math.floor(distance / interval);
+            let steps = Math.floor(distance2 / interval);
     
             for (let i = 0; i < steps; i++) {
                 // 선 상의 각 점 계산
@@ -228,10 +236,11 @@ export default class Brush extends Layer{
                 // 이미지 그리기
                 // ctx.imageSmoothingEnabled = false;
 
-                ctx.drawImage(image, x - r, y - r);
+                // ctx.drawImage(image, x - r, y - r);
+                this.dot(ctx,x,y);
             }
 
-            remainInterval = distance % interval
+            remainInterval = distance2 % interval
             return remainInterval;
             
         }

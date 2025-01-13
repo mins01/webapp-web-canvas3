@@ -18,7 +18,8 @@ export default class Brush extends BaseTool{
         const [x,y] = this.getXYForLayer(event);
         this.x0 = x; this.y0 = y; this.x = x; this.y = y;
         this.remainInterval = 0;
-        this.draw(x,y,x,y);
+        // this.draw(x,y,x,y);
+        this.drawForDown(x,y)
     }
     onpointermove(event){
         super.onpointermove(event);
@@ -54,9 +55,26 @@ export default class Brush extends BaseTool{
         
         const brush = this.editor.brush;      
         ctx.save();
-        console.log(x0,y0,x,y);
-        
+
         this.remainInterval = brush.drawOnLine(ctx,x0,y0,x,y,this.remainInterval)
+        ctx.restore();
+        layer.flush();
+
+    }
+
+    drawForDown(x0,y0){
+        super.draw(...arguments);
+        const document = this.document;
+        const layer = this.layer;
+        const drawLayer = this.drawLayer;
+        const ctx = layer.ctx;
+        
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        
+        const brush = this.editor.brush;      
+        ctx.save();
+                
+        brush.dot(ctx,x0,y0);
         ctx.restore();
         layer.flush();
 
