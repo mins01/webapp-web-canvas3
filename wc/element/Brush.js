@@ -148,7 +148,7 @@ export default class Brush extends Layer{
         const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
         ctx.save();
         ctx.globalAlpha = parseFloat(this.flow)
-        ctx.imageSmoothingEnabled = false;
+        // ctx.imageSmoothingEnabled = false;
         ctx.fillStyle = gradient;
         ctx.beginPath();
         PathShape.circle(ctx,x,y,r)
@@ -184,13 +184,12 @@ export default class Brush extends Layer{
 
         ctx.save();
         // ctx.filter = 'hue-rotate(180deg)';
-        ctx.imageSmoothingEnabled = false;
+        // ctx.imageSmoothingEnabled = false;
         ctx.globalAlpha = parseFloat(brushConfig.opacity)        
         ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
         ctx.rotate(Math.PI * brushConfig.angle); // 45도 회전 (Math.PI / 4 라디안)
         ctx.translate(this.width/-2, this.height/-2); // 중심을 원래 위치로 되돌림
         ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
-        document.body.append(shape)
         ctx.restore();
     }
 
@@ -209,7 +208,7 @@ export default class Brush extends Layer{
                 let x = x0 + 0 * dx;
                 let y = y0 + 0 * dy;   
                 // 이미지 그리기
-                ctx.imageSmoothingEnabled = false;
+                // ctx.imageSmoothingEnabled = false;
 
                 ctx.drawImage(image, x - r, y - r);
                 return remainInterval-interval;
@@ -227,7 +226,7 @@ export default class Brush extends Layer{
                 let x = x0 + t * dx;
                 let y = y0 + t * dy;   
                 // 이미지 그리기
-                ctx.imageSmoothingEnabled = false;
+                // ctx.imageSmoothingEnabled = false;
 
                 ctx.drawImage(image, x - r, y - r);
             }
