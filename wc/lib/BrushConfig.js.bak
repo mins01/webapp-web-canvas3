@@ -1,10 +1,7 @@
 import CssLengthUtil from "./CssLengthUtil.js";
 import CssFontUtil from "./CssFontUtil.js";
 
-
-import ProxyConfig from "./ProxyConfig.js"
-
-class BrushConfig extends ProxyConfig{
+class BrushConfig{
     // 브러시 모양: Brush Tip Shape
     size = 50; //크기 px . diameter
     angle = 0; //각도 deg 
@@ -35,14 +32,41 @@ class BrushConfig extends ProxyConfig{
     
 
     constructor(){
-        const proxyConfig = {
-            number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',],
-            boolean:['flipX','flipY','solidColor',]
-        }
-        return super(proxyConfig);
-        
+        const proxy = new Proxy(this,{
+            set(target, prop, value){
+                if(['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',].includes(prop)){
+                    // 숫자만
+                    value = parseFloat(value);                    
+                }else if(['flipX','flipY','solidColor',].includes(prop)){
+                    // bool
+                    if(value==='true'){ value = true;}else{ value = !!value; }
+                }
+                target[prop] = value;
+                return true;
+            }
+        })
+        // proxy.reset();
+        return proxy;
     }
     
+    toObject(){
+        const robj = {}
+        for(let k in this){
+            robj[k] = this[k];
+        }
+        return robj;
+    }
+    toJSON(){
+        return this.toObject();
+    }
+    assign(context){
+        for(let k in this){
+            if(context[k] !== undefined){
+                context[k] = this[k];                
+            }
+        }
+    }
+
     reset(){
         // 브러시 모양: Brush Tip Shape
         this.size = 50; //크기 px . diameter
