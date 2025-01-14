@@ -14,7 +14,7 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Brush extends Layer{
 
-    margin = 4;
+    margin = 2;
     constructor(w=null,h=null){
         super(w,h);
         this.parent = null;
@@ -123,7 +123,8 @@ export default class Brush extends Layer{
 
         if(brushConfig.solidColor){
             const c = jsColor.Color.from(ctx.fillStyle);
-            Context2dUtil.solidColor(ctx,c.r,c.g,c.b)
+            const o = Math.round(brushConfig.opacity*255);
+            Context2dUtil.solidColor(ctx,c.r,c.g,c.b,o,o/2)
         }
     }
 
@@ -138,7 +139,7 @@ export default class Brush extends Layer{
         const brushConfig = this.brushConfig;
         const size = Math.max(1,parseFloat(brushConfig.size));
 
-        const interval = size * Math.max(0.001,brushConfig.spacing);
+        const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
         // 선의 길이를 계산
         let r = size / 2;
         let dx = x1 - x0;
