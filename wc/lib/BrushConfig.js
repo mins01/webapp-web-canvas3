@@ -35,7 +35,9 @@ class BrushConfig extends BaseConfig{
             number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',],
             boolean:['flipX','flipY','solidColor',],
         }
-        return super(proxyConfig);
+        const proxy = super(proxyConfig);
+        this.reset();
+        return proxy;
     }
     
     reset(){
