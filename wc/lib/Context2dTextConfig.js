@@ -41,14 +41,14 @@ class Context2dTextConfig{
     get font(){
         const r = [];
         
-        if(this.fontStyle != ''){ r.push(this.fontStyle);} 
-        if(this.fontVariant != '' && this.fontVariant !='normal'){ r.push(this.fontVariant); } // 따로 관리됨 fontVariantCaps
-        if(this.fontStretch != '' && this.fontStretch !='normal'){ r.push(this.fontStretch); } // 따로 관리됨 fontStretch
-        if(this.fontWeight != '' && this.fontWeight !='normal'){ r.push(this.fontWeight); }
+        if(this.fontStyle != 'normal'){ r.push(this.fontStyle);} 
+        if(this.fontVariant != 'normal'){ r.push(this.fontVariant); } // 따로 관리됨 fontVariantCaps
+        if(this.fontStretch != 'normal'){ r.push(this.fontStretch); } // 따로 관리됨 fontStretch
+        if(this.fontWeight != 'normal'){ r.push(this.fontWeight); }
         // if(this.fontSize != '') r.push(this.fontSize);
-        if(this.lineHeight != ''){ r.push(this.fontSize+'/'+this.lineHeight); } 
+        if(this.lineHeight !== null){ r.push(this.fontSize+'/'+this.lineHeight); } 
         else{ r.push(this.fontSize); } 
-        if(this.fontFamily != ''){ r.push(this.fontFamily); }
+        if(this.fontFamily != '' && this.fontFamily !== null){ r.push(this.fontFamily); }
         else{ r.push('sans-serif'); }
         return r.join(' ');
     }
@@ -56,15 +56,15 @@ class Context2dTextConfig{
         const r = CssFontUtil.parse(v);
         if(r===null){ throw new Error("This format is not allowed. "+v); }
 
-        this.fontStyle = r.fontStyle;
-        this.fontVariant = r.fontVariant;
-        this.fontStretch = r.fontStretch;
-        this.fontWeight = r.fontWeight;
-        this.fontSize = r.fontSize;
-        if(r.lineHeight.length) this.lineHeight = r.lineHeight;
-        this.fontFamily = r.fontFamily;
+        this.fontStyle = r.fontStyle??'normal';
+        this.fontVariant = r.fontVariant??'normal';
+        this.fontStretch = r.fontStretch??'normal';
+        this.fontWeight = r.fontWeight??'normal';
+        this.fontSize = r.fontSize??null;
+        if(r.lineHeight !== null) this.lineHeight = r.lineHeight??null;
+        this.fontFamily = r.fontFamily??null;
 
-        if(r.fontFamily==''){ r.fontFamily = 'sans-serif'; }
+        if(r.fontFamily === null){ r.fontFamily = 'sans-serif'; } //이전에 에러나야함
 
     }
     get fontSize(){
