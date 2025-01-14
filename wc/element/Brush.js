@@ -9,6 +9,9 @@ import Canvas from "./Canvas.js";
 
 import BrushConfig from "../lib/BrushConfig.js";
 
+import Context2dUtil from "../lib/Context2dUtil.js";
+
+
 export default class Brush extends Layer{
 
     margin = 4;
@@ -45,7 +48,7 @@ export default class Brush extends Layer{
         gradient.addColorStop(0, ctx.fillStyle);
         if(brushConfig.hardness < 1){
             gradient.addColorStop(brushConfig.hardness, ctx.fillStyle);
-            gradient.addColorStop(1, c.toHexa());
+            gradient.addColorStop(1, c.toRgba());
         }else{
             gradient.addColorStop(1, ctx.fillStyle);
         }
@@ -117,6 +120,11 @@ export default class Brush extends Layer{
         ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
         ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
         ctx.restore();
+
+        if(brushConfig.solidColor){
+            const c = jsColor.Color.from(ctx.fillStyle);
+            Context2dUtil.solidColor(ctx,c.r,c.g,c.b)
+        }
     }
 
     dot(ctx,x,y){

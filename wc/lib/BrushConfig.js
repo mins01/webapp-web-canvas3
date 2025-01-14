@@ -26,6 +26,9 @@ class BrushConfig{
     flow = 1; // 하나의 투명도
     flowJitter = 0
     flowControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+
+    // 기타
+    solidColor = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
     
 
     constructor(){
