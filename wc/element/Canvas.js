@@ -95,7 +95,11 @@ class Canvas extends HTMLCanvasElement{
         return this.contextConfig.toObject();
     }
     setContextConfig(conf){
-        Object.assign(this.contextConfig,conf)
+        // Object.assign(this.contextConfig,conf)
+        // console.log(conf);
+        
+        this.contextConfig.assignFrom(conf);
+
     }
 
     ctxCommand(){

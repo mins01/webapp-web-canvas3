@@ -57,17 +57,25 @@ export default class BaseConfig{
     toJSON(){
         return this.toObject();
     }
-    assign(context){
-        // for(let k in this){
-        //     if(context?.[k] !== undefined){
-        //         context[k] = this[k];                
-        //     }
-        // }
-    }
+    // assign(context){
+    //     // for(let k in this){
+    //     //     if(context?.[k] !== undefined){
+    //     //         context[k] = this[k];                
+    //     //     }
+    //     // }
+    // }
     assignTo(context){
         for(let k in this){
             if(context?.[k] !== undefined){
                 context[k] = this[k];                
+            }
+        }
+    }
+
+    assignFrom(context){
+        for(let k in context){
+            if(this?.[k] !== undefined){
+                this[k] = context[k];
             }
         }
     }

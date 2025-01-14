@@ -1,6 +1,10 @@
 import BaseConfig from "./BaseConfig.js"
 
 class Context2dConfig extends BaseConfig{
+
+    foreColor = '#000000';
+    backColor = '#ffffff';
+
     globalAlpha = 1;
     globalCompositeOperation = "source-over";
     filter = "none";

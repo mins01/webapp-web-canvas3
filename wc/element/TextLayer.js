@@ -27,7 +27,8 @@ export default class TextLayer extends Layer{
     }
     setTextConfig(conf){
         // console.log('xxxx',conf)
-        Object.assign(this.textConfig,conf)
+        // Object.assign(this.textConfig,conf)
+        this.textConfig.assignFrom(conf);
         this.ctx.fillStyle = this.textConfig.textColor;
     }
 

@@ -109,6 +109,8 @@
 
             const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
             wcl5.text='하늘하늘! \n 그렇구나';
+            wcl5.textConfig.textColor="#0000cc"
+
             editor.document.add(wcl5);
 
             const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
@@ -117,8 +119,8 @@
             wcl6.top=75;
             wcl6.width=100;
             wcl6.height=100;
-            wcl6.contextConfig.fillStyle="#cc0000"
-            wcl6.contextConfig.strokeStyle="#00cc00"
+            wcl6.contextConfig.backColor="#cc0000"
+            wcl6.contextConfig.foreColor="#00cc00"
             wcl6.contextConfig.lineWidth=5;
             wcl6.flush();
 
@@ -128,8 +130,8 @@
             wcl7.top=50;
             wcl7.width=100;
             wcl7.height=50;
-            wcl7.contextConfig.fillStyle="#0000cc"
-            wcl7.contextConfig.strokeStyle="#cc00cc"
+            wcl7.contextConfig.backColor="#0000cc"
+            wcl7.contextConfig.foreColor="#cc00cc"
             wcl7.contextConfig.lineWidth=3;
             wcl7.flush();
 

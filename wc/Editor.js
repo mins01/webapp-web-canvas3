@@ -49,14 +49,16 @@ export default class Editor{
 
 
     setContextConfig(conf){
-        Object.assign(this.contextConfig,conf);
+        // Object.assign(this.contextConfig,conf);
+        this.contextConfig.assignFrom(conf);
         this.document?.setContextConfig(this.contextConfig.toObject());
         this.brush.contextConfig.foreColor =this.contextConfig.foreColor;
         this.brush.contextConfig.backColor =this.contextConfig.backColor;
         this.brush.flush();
     }
     setTextConfig(conf){
-        Object.assign(this.textConfig,conf);        
+        // Object.assign(this.textConfig,conf);        
+        this.textConfig.assignFrom(conf);
         this.document?.setTextConfig(this.textConfig.toObject());
     }
     setBrushConfig(conf){
