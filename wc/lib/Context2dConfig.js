@@ -63,8 +63,8 @@ class Context2dConfig extends BaseConfig{
         this.strokeLocation = 'inside';// inside 로 고정
     }
 
-    assign(context,foreColorToFillStyle=false){
-        super.assign(context);
+    assignTo(context,foreColorToFillStyle=false){
+        super.assignTo(context);
         if(!foreColorToFillStyle){
             context.strokeStyle = this.foreColor;
             context.fillStyle = this.backColor;

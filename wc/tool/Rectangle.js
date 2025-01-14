@@ -53,7 +53,7 @@ export default class Rectangle extends BaseTool{
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
 
-        ctx.canvas.contextConfig.assign(ctx);
+        ctx.canvas.contextConfig.assignTo(ctx);
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
         

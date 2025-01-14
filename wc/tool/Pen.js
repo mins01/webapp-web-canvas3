@@ -53,7 +53,7 @@ export default class Pen extends BaseTool{
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
-        ctx.canvas.contextConfig.assign(ctx);
+        ctx.canvas.contextConfig.assignTo(ctx);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 

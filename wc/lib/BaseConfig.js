@@ -58,6 +58,13 @@ export default class BaseConfig{
         return this.toObject();
     }
     assign(context){
+        // for(let k in this){
+        //     if(context?.[k] !== undefined){
+        //         context[k] = this[k];                
+        //     }
+        // }
+    }
+    assignTo(context){
         for(let k in this){
             if(context?.[k] !== undefined){
                 context[k] = this[k];                

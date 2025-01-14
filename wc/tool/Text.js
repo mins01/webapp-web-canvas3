@@ -78,7 +78,7 @@ export default class Text extends BaseTool{
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
 
-        ctx.canvas.contextConfig.assign(ctx,true);
+        ctx.canvas.contextConfig.assignTo(ctx,true);
 
 
         // console.log(ctx.font,this.editor.contextConfig.lineHeightPx);

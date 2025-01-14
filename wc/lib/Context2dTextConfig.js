@@ -131,8 +131,8 @@ class Context2dTextConfig extends BaseConfig{
         this.wordSpacing = "0px";
     }
 
-    assign(context,foreColorToFillStyle=false){
-        super.assign(context);
+    assignTo(context){
+        super.assignTo(context);
         context.fillStyle = this.textColor;
     }
 

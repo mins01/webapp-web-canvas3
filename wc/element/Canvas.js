@@ -112,7 +112,7 @@ class Canvas extends HTMLCanvasElement{
         
     }
     draw(){ // 따로 그리기 동작이 있을 경우.
-        // this.contextConfig.assign(ctx,true);
+        // this.contextConfig.assignTo(ctx,true);
     }
     flush(){
         this.draw();

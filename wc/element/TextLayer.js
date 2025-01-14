@@ -58,8 +58,8 @@ export default class TextLayer extends Layer{
 
 
         // ctx.save();
-        this.contextConfig.assign(ctx,true);
-        this.textConfig.assign(ctx);
+        this.contextConfig.assignTo(ctx,true);
+        this.textConfig.assignTo(ctx);
 
 
         let {fontSize} = CssFontUtil.parse(ctx.font);        

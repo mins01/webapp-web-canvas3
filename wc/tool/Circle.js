@@ -57,7 +57,7 @@ export default class Rectangle extends BaseTool{
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
 
-        ctx.canvas.contextConfig.assign(ctx);
+        ctx.canvas.contextConfig.assignTo(ctx);
 
         let w = x - x0;
         let h = y - y0;

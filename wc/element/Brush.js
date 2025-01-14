@@ -67,7 +67,7 @@ export default class Brush extends Layer{
         const x = shape.width/2;
         const y = x;
 
-        this.contextConfig.assign(ctx,true);
+        this.contextConfig.assignTo(ctx,true);
         // console.log(ctx.fillStyle);
 
         const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
@@ -94,7 +94,7 @@ export default class Brush extends Layer{
         
         
         this.contextConfig.disableStroke = true;
-        this.contextConfig.assign(ctx,true);
+        this.contextConfig.assignTo(ctx,true);
 
         this.applyShapeCanvas()
 
