@@ -1,8 +1,8 @@
 import CssLengthUtil from "./CssLengthUtil.js";
 import CssFontUtil from "./CssFontUtil.js";
-import ProxyConfig from "./ProxyConfig.js"
+import BaseConfig from "./BaseConfig.js"
 
-class Context2dTextConfig extends ProxyConfig{
+class Context2dTextConfig extends BaseConfig{
     // fillAfterStroke = true;
 
     //-- font

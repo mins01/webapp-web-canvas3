@@ -1,6 +1,6 @@
-import ProxyConfig from "./ProxyConfig.js"
+import BaseConfig from "./BaseConfig.js"
 
-class BrushConfig extends ProxyConfig{
+class BrushConfig extends BaseConfig{
     // 브러시 모양: Brush Tip Shape
     size = 50; //크기 px . diameter
     angle = 0; //각도 deg 

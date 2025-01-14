@@ -1,18 +1,24 @@
-export default class ProxyConfig{
-    constructor(config){
-        return this.constructor.from(this,config);
+export default class BaseConfig{
+    constructor(config=null){
+        if (new.target === BaseConfig) {
+            throw new Error("BaseClass cannot be instantiated directly.");
+          }
+        if(config){
+            return this.constructor.proxy(this,config);
+        }
     }
     /**
      * Description placeholder
      *
      * @static
      * @param {*} target 
-     * @param {{ number: {}|null; boolean: {}|null;; keys: {}|null;; }} [config={number:[],boolean:[],keys:[]}] 
+     * @param {{ number: []|null; boolean: []|null; keys: []|null; }} [config={number:null,boolean:null,keys:null}] 
      * @returns {*} 
      */
-    static from(target,config={number:null,boolean:null,keys:null}){
-        const proxy = new Proxy(target,{
-            set(target, prop, value){
+    static proxy(target,config={number:null,boolean:null,keys:null}){
+        let handler = {};
+        if(config?.number || config?.boolean){
+            handler.set = function(target, prop, value){
                 if( config?.number && (config.number??[]) .includes(prop)){ // 숫자?
                     value = parseFloat(value);
                     if(Number.isNaN(value)){
@@ -25,18 +31,19 @@ export default class ProxyConfig{
                 }
                 target[prop] = value;
                 return true;
-            },
-            has(target, prop){
-                if( config?.keys && (config.keys??[]) .includes(prop)){ return true; }
-                return prop in target
-            },
-            ownKeys(target){
-                if( config?.keys ){ return config?.keys; }
-                return Reflect.ownKeys(target);
             }
-
-        })
-        // proxy.reset();
+        }
+        if(config?.keys){
+            handler.has = function(target, prop){
+                if( config.keys.includes(prop)){ return true; }
+                return prop in target
+            }
+            handler.ownKeys = function(target){
+                return config.keys;
+                // return Reflect.ownKeys(target);
+            }
+        }
+        const proxy = new Proxy(target,handler);
         return proxy;
     }
 
