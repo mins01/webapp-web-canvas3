@@ -2,22 +2,39 @@ export default class ProxyConfig{
     constructor(config){
         return this.constructor.from(this,config);
     }
-    static from(target,config={number:[],boolean:[]}){
+    /**
+     * Description placeholder
+     *
+     * @static
+     * @param {*} target 
+     * @param {{ number: {}|null; boolean: {}|null;; keys: {}|null;; }} [config={number:[],boolean:[],keys:[]}] 
+     * @returns {*} 
+     */
+    static from(target,config={number:null,boolean:null,keys:null}){
         const proxy = new Proxy(target,{
             set(target, prop, value){
-                if( (config?.number??[]) .includes(prop)){ // 숫자?
+                if( config?.number && (config.number??[]) .includes(prop)){ // 숫자?
                     value = parseFloat(value);
                     if(Number.isNaN(value)){
                         return false;
                     }
-                }else if((config?.boolean??[]).includes(prop)){ // boolean
+                }else if( config?.boolean && (config.boolean??[]).includes(prop)){ // boolean
                     if(value==='true'){ value = true;}
                     else if(value==='false'){ value = false;}
                     else{ value = !!value; }
                 }
                 target[prop] = value;
                 return true;
+            },
+            has(target, prop){
+                if( config?.keys && (config.keys??[]) .includes(prop)){ return true; }
+                return prop in target
+            },
+            ownKeys(target){
+                if( config?.keys ){ return config?.keys; }
+                return Reflect.ownKeys(target);
             }
+
         })
         // proxy.reset();
         return proxy;

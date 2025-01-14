@@ -1,7 +1,3 @@
-import CssLengthUtil from "./CssLengthUtil.js";
-import CssFontUtil from "./CssFontUtil.js";
-
-
 import ProxyConfig from "./ProxyConfig.js"
 
 class BrushConfig extends ProxyConfig{
@@ -37,10 +33,9 @@ class BrushConfig extends ProxyConfig{
     constructor(){
         const proxyConfig = {
             number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',],
-            boolean:['flipX','flipY','solidColor',]
+            boolean:['flipX','flipY','solidColor',],
         }
         return super(proxyConfig);
-        
     }
     
     reset(){
