@@ -83,11 +83,11 @@ class Canvas extends HTMLCanvasElement{
         // this.flush(); 
     }
 
-    setContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){
+    setContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,}){
         this.ctx = this.getContext2D(options)
         return this.ctx;
     }
-    getContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": true,}){       
+    getContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,}){       
         return this.getContext('2d',options)
     }
 

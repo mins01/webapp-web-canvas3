@@ -97,7 +97,8 @@
     </script>
     <script>
         function redraw(){
-            c1.clear();b1.drawOnLine(c1.ctx,0,0,300,300)
+            c1.clear();
+            b1.drawOnLine(c1.ctx,0,50,300,200)
         }
     </script>
     
@@ -128,22 +129,22 @@
                             <div class="input-group">
                                 <span class="input-group-text" >size</span>
                                 <input class="form-control" type="number" name="size" placeholder="size"
-                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
                                     value="77"
+                                    onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
                                     >
                             </div>
                             <div class="input-group">
                                 <span class="input-group-text" >roundness(원형율)</span>
                                 <input class="form-control" type="number" name="roundness" placeholder="roundness" step="0.05" min="0" max="1"
+                                    value="0.5"
                                     onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
-                                    value="1"
                                     >
                             </div>
                             <div class="input-group">
                                 <span class="input-group-text" >angle(각도)</span>
                                 <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1"
+                                    value="-0.25"
                                     onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
-                                    value="0"
                                     >
                             </div>
                             <div class="input-group">
@@ -167,6 +168,74 @@
                                     value="0.05"
                                     >
                             </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >hueJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="hueJitter" placeholder="hueJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >saturationJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="saturationJitter" placeholder="saturationJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >brightnessJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="brightnessJitter" placeholder="brightnessJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >sizeJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="sizeJitter" placeholder="sizeJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >mininumDiameter(최소 크기)</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="mininumDiameter" placeholder="mininumDiameter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-text" >opacityJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="opacityJitter" placeholder="opacityJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text" >angleJitter</span>
+                                <div class="form-control">
+                                    <input class="form-range d-block" type="range" name="angleJitter" placeholder="angleJitter" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
+                                        value="0"
+                                        >
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
                             <div class="input-group">
                                 <span class="input-group-text" >solidColor(단색)</span>
                                 <select class="form-select " name="solidColor" id="" onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"  >

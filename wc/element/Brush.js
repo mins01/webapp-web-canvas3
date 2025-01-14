@@ -128,10 +128,47 @@ export default class Brush extends Layer{
         }
     }
 
+    /**
+     * Description placeholder
+     *
+     * @param {CanvasRenderingContext2D } ctx 
+     * @param {number} x 
+     * @param {number} y 
+     */
     dot(ctx,x,y){
         const image = this
+        const brushConfig = this.brushConfig;
 
-        ctx.drawImage(image, x - image.width/2, y - image.height/2 );
+        let gx = image.width/2;
+        let gy = image.height/2;
+
+        ctx.save();
+        // 중앙으로 이동
+        // ctx.translate(x + gx, y + gy);
+        ctx.translate(x, y);
+        //색상 랜덤
+        const filters = [];
+        if(brushConfig.hueJitter>0){ const v = (Math.floor(Math.random()*361)-180)*brushConfig.hueJitter; filters.push(`hue-rotate(${v}deg)`); }
+        if(brushConfig.saturationJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.saturationJitter; filters.push(`saturate(${v}%)`); }
+        if(brushConfig.brightnessJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.brightnessJitter; filters.push(`brightness(${v}%)`); }
+        if(brushConfig.opacityJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.opacityJitter; filters.push(`opacity(${v}%)`); }
+
+        if(filters.length){ ctx.filter = filters.join(' '); }
+        if(brushConfig.sizeJitter > 0 && brushConfig.mininumDiameter < 1){
+            const v = Math.max(1 - Math.random()*brushConfig.sizeJitter, brushConfig.mininumDiameter); ctx.scale(v,v)
+        }
+        if(brushConfig.angleJitter > 0){ 
+            
+            const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
+            ctx.rotate(Math.PI * v); // 45도 회전 (Math.PI / 4 라디안)
+        }
+
+        
+        
+        ctx.drawImage(image, -gx,-gy,image.width,image.height );
+
+
+        ctx.restore();
 
     }
     drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0) {

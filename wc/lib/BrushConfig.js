@@ -3,7 +3,7 @@ import BaseConfig from "./BaseConfig.js"
 class BrushConfig extends BaseConfig{
     // 브러시 모양: Brush Tip Shape
     size = 50; //크기 px . diameter
-    angle = 0; //각도 deg 
+    angle = 0; //각도 0~1
     roundness = 1; // 원형율
     flipX = false; //x 뒤집기. 사용안할 예정
     flipY = false; //y 뒤집기. 사용안할 예정
@@ -15,16 +15,21 @@ class BrushConfig extends BaseConfig{
     mininumDiameter = 0.25; //최소 크기
     angleJitter = 0; //각도 지터
     angleControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    roundnessJitter = 0;
+    roundnessJitter = 0; // 이거 구현 힘드네..  나중에 하자.
     roundnessControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
     mininumRoundness = 0.25; //최소 크기
     // transfer
     opacity = 1; // 전체적 불투명도
     opacityJitter = 0
     opacityControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    flow = 1; // 하나의 투명도
+    flow = 1; // 하나의 투명도 // 이거 어떻게 할지 모르겠다. 나중에 다시보자.
     flowJitter = 0
     flowControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+
+    //color
+    hueJitter = 0;
+    saturationJitter = 0;
+    brightnessJitter = 0;
 
     // 기타
     solidColor = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
@@ -32,7 +37,7 @@ class BrushConfig extends BaseConfig{
 
     constructor(){
         const proxyConfig = {
-            number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',],
+            number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter'],
             boolean:['flipX','flipY','solidColor',],
         }
         const proxy = super(proxyConfig);
@@ -65,6 +70,11 @@ class BrushConfig extends BaseConfig{
         this.flow = 1; // 하나의 투명도
         this.flowJitter = 0
         this.flowControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+
+        // color
+        this.hueJitter = 0;
+        this.saturationJitter = 0;
+        this.brightnessJitter = 0;
     }
 
 
