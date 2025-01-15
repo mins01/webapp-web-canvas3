@@ -2,6 +2,8 @@
  * A class representing an array with a selectable element.
  */
 export default class SelectableArray extends Array {
+    #selectedIndex;
+    #array;
     /**
      * Creates an instance of SelectableArray.
      * @param {...*} elements - The elements to initialize the array with.
@@ -12,14 +14,14 @@ export default class SelectableArray extends Array {
          * @private
          * @type {number}
          */
-        this._selectedIndex = -1;
+        this.#selectedIndex = -1;
 
         /**
          * @private
          * @type {Array}
          */
-        this._array = this;
-        this._selectedIndex = elements.length > 0 ? 0 : -1;
+        // this = this;
+        this.#selectedIndex = elements.length > 0 ? 0 : -1;
     }
 
     /**
@@ -29,7 +31,7 @@ export default class SelectableArray extends Array {
      */
     set selectedIndex(selectedIndex) {
         if (selectedIndex >= 0 && selectedIndex < this.length) {
-            this._selectedIndex = selectedIndex;
+            this.#selectedIndex = selectedIndex;
         } else {
             throw new Error('Index out of bounds: ' + selectedIndex);
         }
@@ -40,7 +42,7 @@ export default class SelectableArray extends Array {
      * @returns {number} The selected index.
      */
     get selectedIndex() {
-        return this._selectedIndex;
+        return this.#selectedIndex;
     }
 
     /**
@@ -48,7 +50,7 @@ export default class SelectableArray extends Array {
      * @returns {*} The selected element, or null if the array is empty.
      */
     get selected() {
-        return this._array[this.selectedIndex] ?? null;
+        return this[this.selectedIndex] ?? null;
     }
 
     /**
@@ -60,7 +62,7 @@ export default class SelectableArray extends Array {
         if (this.selectedIndex < 0) {
             throw new Error('Cannot set selected on an empty array');
         }
-        this._array[this.selectedIndex] = v;
+        this[this.selectedIndex] = v;
     }
 
     // /**
@@ -68,7 +70,7 @@ export default class SelectableArray extends Array {
     //  * @returns {number} The length of the array.
     //  */
     // get length() {
-    //     return this._array.length;
+    //     return this.length;
     // }
 
     /**
@@ -77,7 +79,7 @@ export default class SelectableArray extends Array {
      * @returns {*} The element at the specified index.
      */
     item(index) {
-        return this._array[index];
+        return this[index];
     }
 
     /**
@@ -99,10 +101,10 @@ export default class SelectableArray extends Array {
      */
     add(element) {
         if (this.selectedIndex < 0) {
-            this._array.push(element);
+            this.push(element);
             this.selectedIndex = 0;
         } else {
-            this._array.splice(this.selectedIndex + 1, 0, element);
+            this.splice(this.selectedIndex + 1, 0, element);
             this.selectedIndex++;
         }
         return this.selectedIndex;
@@ -117,10 +119,10 @@ export default class SelectableArray extends Array {
         if (this.length <= 0) {
             throw new Error('Cannot remove from an empty array');
         }
-        this._array.splice(this.selectedIndex, 1);
+        this.splice(this.selectedIndex, 1);
 
         if (this.length <= 0) {
-            this._selectedIndex = -1;
+            this.#selectedIndex = -1;
         } else {
             this.selectedIndex = Math.min(this.length - 1, this.selectedIndex);
         }
@@ -137,10 +139,10 @@ export default class SelectableArray extends Array {
         if (fromIndex < 0 || fromIndex >= this.length || toIndex < 0 || toIndex >= this.length) {
             throw new Error('Index out of bounds: ' + fromIndex + ', ' + toIndex);
         }
-        const fromElement = this._array[fromIndex];
-        const toElement = this._array[toIndex];
-        this._array.splice(toIndex, 1, fromElement);
-        this._array.splice(fromIndex, 1, toElement);
+        const fromElement = this[fromIndex];
+        const toElement = this[toIndex];
+        this.splice(toIndex, 1, fromElement);
+        this.splice(fromIndex, 1, toElement);
     }
 
     /**
@@ -167,31 +169,7 @@ export default class SelectableArray extends Array {
      * @returns {Array} The array of elements.
      */
     all() {
-        return this._array;
+        return this;
     }
 
-    /**
-     * Joins all elements of the array into a string.
-     * @param {string} separator - The separator to use between elements.
-     * @returns {string} The joined string.
-     */
-    // join(separator) {
-    //     return this._array.join(separator);
-    // }
-
-
-    // merge(canvas){
-    //     let xmin = Math.min(this.x,canvas.x)
-    //     let ymin = Math.min(this.y,canvas.y)
-    //     let xmax = Math.max(this.x+this.width,canvas.x+canvas.width)
-    //     let ymax = Math.max(this.y+this.height,canvas.y,canvas.height)
-    //     let w = xmax-xmin;
-    //     let h = ymax-ymin;
-    //     this.x = xmin;
-    //     this.y = ymin;
-    //     this.width = w;
-    //     this.height = h;
-    //     this.fill('#ff000099');
-        
-    // }
 }
