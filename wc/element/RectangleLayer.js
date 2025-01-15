@@ -5,7 +5,7 @@ import DrawRectangle from '../draw/DrawRectangle.js';
 
 
 export default class RectangleLayer extends Layer{
-    text = '';
+
     constructor(w=null,h=null){
         super(w,h);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
@@ -14,9 +14,7 @@ export default class RectangleLayer extends Layer{
         super.defineCustomElements(name);
     }
 
-    setText(text){
-        this.text = text;
-    }
+
 
 
     draw(){

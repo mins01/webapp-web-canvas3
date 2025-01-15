@@ -4,15 +4,21 @@ import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
 
 export default class Document extends Layer{
+    static get keys(){
+        return super.keys.concat(['layers'])
+    }
 
+    layers = null;
+    drawLayer = null;
+    editor = null;
     constructor(w=null,h=null){
         super(w,h);
         this.layers = new SelectableArray();
         this.parent = null;
-        this.syncing = false;
+        // this.syncing = false;
         this.drawLayer = new Layer(w,h);
         this.drawLayer.parent = this;
-        this.drawLayer.setContext2d({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,})
+        // this.drawLayer.setContext2d()
 
         this.editor = null;
 

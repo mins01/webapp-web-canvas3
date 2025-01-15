@@ -79,4 +79,8 @@ export default class BaseConfig{
             }
         }
     }
+    
+    import(conf){
+        this.assignFrom(conf);
+    }
 }

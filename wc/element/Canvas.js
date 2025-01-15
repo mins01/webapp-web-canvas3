@@ -1,10 +1,11 @@
+import BaseConfig from "../lib/BaseConfig.js";
 import Context2dConfig from "../lib/Context2dConfig.js";
-
+import Context2dUtil from "../lib/Context2dUtil.js";
 
 class Canvas extends HTMLCanvasElement{
     static context2dOptions = {"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,};
-    static exportKeys(){
-        return ['drawable', 'label', 'contextConfig', 'updatedAt', 'left', 'top', 'compositeOperation', 'alpha', 'width', 'height'];
+    static get keys(){
+        return ['width', 'height', 'drawable', 'label', 'contextConfig', 'createdAt','updatedAt',];
     }
 
     ctx = null;
@@ -21,15 +22,12 @@ class Canvas extends HTMLCanvasElement{
         Object.defineProperty(this, 'parent', { enumerable: false, configurable: true, writable: true, value: null, })
         // this.parent = null
 
+        this.createdAt = Date.now();
         this.updatedAt = Date.now();
         this.setContext2d();
 
         if(w && w != this.width) this.width = w;
         if(h && h != this.height) this.height = h;        
-    }
-
-    get keys(){
-        return ['drawable', 'label', 'contextConfig', 'updatedAt', 'left', 'top', 'compositeOperation', 'alpha']
     }
     
     static getIdCounter(){
@@ -193,6 +191,56 @@ class Canvas extends HTMLCanvasElement{
         this.width = width;
         this.height = height;
         this.ctx.drawImage(cloned, 0, 0, width, height);
+    }
+
+
+
+
+
+
+    toObject(){
+        const r = {}
+        this.constructor.keys.forEach((k)=>{
+            r[k] = this[k];
+        })
+        return r;
+    }
+    toJSON(){
+        return this.toObject();
+    }
+    export(){
+        const r = this.toObject();
+        r.exportVersion = '20250115';
+        r.__class__ = this.constructor.name;
+        r.dataUrl = this.toDataURL('image/png')
+        return r;
+    }
+    import(conf){
+        this.constructor.keys.forEach((k)=>{
+            if(conf?.[k] === undefined){return;}
+            if(this?.[k] === undefined){return;}
+            if(this[k]?.import !== undefined){
+                this[k].import(conf[k]);return;
+            }
+            this[k] = conf[k];
+        })
+
+        if(conf.dataUrl !== undefined){
+            Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
+                    console.log(img)
+                    this.ctx.drawImage(img,0,0);
+                    this.flush();
+                }).catch((event)=>{
+                    console.log(event)
+                })
+        }
+
+    }
+
+    static from(conf){
+        const c = new this()
+        c.import(conf)
+        return c;
     }
 }
 

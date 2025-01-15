@@ -3,6 +3,11 @@
 import Canvas from "./Canvas.js"
 
 export default class Layer extends Canvas{
+
+    static get keys(){
+        return super.keys.concat(['left', 'top','compositeOperation','alpha'])
+    }
+
     // x = null;
     // y = null;
     left = null;
@@ -11,14 +16,7 @@ export default class Layer extends Canvas{
     alpha = null;
     constructor(w=null,h=null){
         super(w,h);
-
-        // this._x = 0;
-        // this._y = 0;
-        // this._compositeOperation = 'source-over';
-        // this._alpha = 1;
         
-        // this.x = 0;
-        // this.y = 0;
         this.left = 0;
         this.top = 0;
         this.compositeOperation = 'source-over';

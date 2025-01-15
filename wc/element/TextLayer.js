@@ -7,6 +7,10 @@ import CssFontUtil from "../lib/CssFontUtil.js";
 import Context2dTextConfig from "../lib/Context2dTextConfig.js";
 
 export default class TextLayer extends Layer{
+    static get keys(){
+        return super.keys.concat(['textConfig', 'text'])
+    }
+
     textConfig = null;
     text = '';
     constructor(w=null,h=null){

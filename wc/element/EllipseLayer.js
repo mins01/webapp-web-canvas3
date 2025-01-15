@@ -5,12 +5,9 @@ import DrawEllipse from '../draw/DrawEllipse.js';
 
 
 export default class EllipseLayer extends Layer{
-    text = '';
     constructor(w=null,h=null){
         super(w,h);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
-
-        this.text = '';
     }
     static defineCustomElements(name='wc-ellipselayer'){
         super.defineCustomElements(name);
@@ -23,9 +20,7 @@ export default class EllipseLayer extends Layer{
         // this.ctx.StrokeStyle = conf.backColor;
     }
 
-    setText(text){
-        this.text = text;
-    }
+
 
 
     draw(){
