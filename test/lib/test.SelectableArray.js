@@ -1,6 +1,10 @@
 import SelectableArray from "../../wc/lib/SelectableArray.js";
 
 let sa = new SelectableArray(0,1,2,3,4);
+sa.clear();
+console.assert(sa.selectedIndex === -1 && sa.selected === null && sa.length === 0);
+console.log(sa.selectedIndex,sa.selected,sa.join(','))
+sa = new SelectableArray(0,1,2,3,4);
 console.assert(sa.selectedIndex === 0 && sa.selected === 0);
 console.assert(sa.join(',')==='0,1,2,3,4');
 console.log(sa.selectedIndex,sa.selected,sa.join(','))

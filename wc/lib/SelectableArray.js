@@ -144,6 +144,11 @@ export default class SelectableArray extends Array {
         this.splice(fromIndex, 1, toElement);
     }
 
+    clear(){
+        this.#selectedIndex = -1;
+        this.length = 0;
+    }
+
     /**
      * Moves the selected element to the specified index.
      * @param {number} toIndex - The index to move the selected element to.
