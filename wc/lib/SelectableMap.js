@@ -4,6 +4,7 @@
  * @extends Map
  */
 export default class SelectableMap extends Map {
+    #selectedKey;
     /**
      * Creates an instance of SelectableMap.
      */
@@ -13,7 +14,7 @@ export default class SelectableMap extends Map {
          * @private
          * @type {any}
          */
-        this._selectedKey = null;
+        this.#selectedKey = null;
     }
 
     /**
@@ -22,7 +23,7 @@ export default class SelectableMap extends Map {
      * @returns {any} The value associated with the selected key, or null if no key is selected.
      */
     get selected() {
-        return this.get(this._selectedKey) ?? null;
+        return this.get(this.#selectedKey) ?? null;
     }
 
     /**
@@ -45,7 +46,7 @@ export default class SelectableMap extends Map {
      * @returns {any} The currently selected key.
      */
     get selectedKey() {
-        return this._selectedKey;
+        return this.#selectedKey;
     }
 
     /**
@@ -56,7 +57,7 @@ export default class SelectableMap extends Map {
      */
     set selectedKey(key) {
         if (key === null || this.has(key)) {
-            this._selectedKey = key;
+            this.#selectedKey = key;
         } else {
             throw new Error('Key does not exist: ' + key);
         }
