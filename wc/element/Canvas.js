@@ -55,37 +55,6 @@ class Canvas extends HTMLCanvasElement{
         // this.flush()
     }
 
-
-    get width(){       
-        const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'width');
-        return desc.get.apply(this);
-    }
-    /**
-     * @param {number} v
-     */
-    set width(v){
-        const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'width');
-        let conf = this.getContextConfig();
-        desc.set.apply(this,[v]); 
-        this.setContextConfig(conf);
-        // this.flush(); 
-    }
-
-    get height(){       
-        const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'height');
-        return desc.get.apply(this); 
-    }
-    /**
-     * @param {number} v
-     */
-    set height(v){
-        const desc = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype,'height');
-        let conf = this.getContextConfig();
-        desc.set.apply(this,[v]); 
-        this.setContextConfig(conf);
-        // this.flush(); 
-    }
-
     setContext2d(options=Canvas.context2dOptions){
         this.ctx = this.getContext2d(options)
         return this.ctx;
@@ -117,6 +86,7 @@ class Canvas extends HTMLCanvasElement{
         // console.log(method);
         
     }
+
     draw(){ // 따로 그리기 동작이 있을 경우.
         // this.contextConfig.assignTo(ctx,true);
     }
@@ -206,35 +176,39 @@ class Canvas extends HTMLCanvasElement{
         return r;
     }
     toJSON(){
-        return this.toObject();
+        return this.export();
     }
-    export(){
-        const r = this.toObject();
+    static export(obj){
+        const r = obj.toObject();
         r.exportVersion = '20250115';
-        r.__class__ = this.constructor.name;
-        r.dataUrl = this.toDataURL('image/png')
+        r.__class__ = obj.constructor.name;
+        r.dataUrl = obj.toDataURL('image/png')
         return r;
     }
-    import(conf){
-        this.constructor.keys.forEach((k)=>{
+    export(){
+        return this.constructor.export(this);
+    }
+    static import(obj,conf){
+        obj.constructor.keys.forEach((k)=>{
             if(conf?.[k] === undefined){return;}
-            if(this?.[k] === undefined){return;}
-            if(this[k]?.import !== undefined){
-                this[k].import(conf[k]);return;
+            if(obj?.[k] === undefined){return;}
+            if(obj[k]?.import !== undefined){
+                obj[k].import(conf[k]);return;
             }
-            this[k] = conf[k];
+            obj[k] = conf[k];
         })
 
-        if(conf.dataUrl !== undefined){
+        if(conf?.dataUrl !== undefined){
             Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
-                    console.log(img)
-                    this.ctx.drawImage(img,0,0);
-                    this.flush();
-                }).catch((event)=>{
-                    console.log(event)
-                })
+                obj.ctx.drawImage(img,0,0);
+                obj.flush();
+            }).catch((event)=>{
+                console.log(event)
+            })
         }
-
+    }
+    import(conf){
+        return this.constructor.import(this,conf);
     }
 
     static from(conf){
