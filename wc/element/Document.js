@@ -3,6 +3,7 @@ import NamedSelectableArray from "../lib/NamedSelectableArray.js";
 import Layers from "./Document/Layers.js";
 import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
+import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Document extends Layer{
     static get keys(){
@@ -53,25 +54,16 @@ export default class Document extends Layer{
     //     return this.select(index);
     // }
     add(layer){
-        layer.parent = this;
-        this.layers.add(layer);
-        this.syncDrawLayer(layer);
-        layer.flush();
-        // this.flush();
-        this?.editor?.onselectLayer(this.layer);
-        return true;
+        return this.layers.add(layer);
     }
     remove(){
-        this.layers.remove();
-        this.syncDrawLayer(this.layer);
-        this.flush();
-        return true;
+        return this.layers.remove();
     }
     move(index){
-        this.layers.move(index);
-        this.flush();
-        this?.editor?.onselectLayer(this.layer);
-        return true;
+        return this.layers.move(index);
+        // this.flush();
+        // this?.editor?.onselectLayer(this.layer);
+        // return true;
     }
 
     setContextConfig(conf){

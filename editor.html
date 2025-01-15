@@ -194,6 +194,26 @@
             </div>
             <hr>
             <div class="card my-1">
+                <div class="card-header">FILE MENU</div>
+                <div class="card-body">
+                    <div class="d-flex gap-1">
+                        <div>
+                            <button type="button" class="btn btn-primary" onclick="editor.saveDocument()">SAVE</button>
+                        </div>
+                        <form action="" onsubmit="return false;">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" name="loadfile" accept=".wc3.json">
+                                <button type="button" class="btn btn-primary" onclick="if(this.form.loadfile.files.length){ editor.loadDocument(this.form.loadfile.files[0]) }else{ alert('Select a file(*.wc3.json)')}">load</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+            <hr>
+            <div class="card my-1">
                 <div class="card-header">PROPERTY</div>
                 <div class="card-body">
                     <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">

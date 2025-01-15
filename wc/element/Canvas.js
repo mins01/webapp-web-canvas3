@@ -14,7 +14,7 @@ class Canvas extends HTMLCanvasElement{
         super();
 
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
-        if(this.id==undefined) this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
+        if(this.id === undefined || this.id === '') this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
         this.label = "created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
         this.contextConfig = new Context2dConfig();
         

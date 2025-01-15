@@ -15,4 +15,28 @@ export default class HtmlUtil{
         });
         return obj;
     }
+
+    static saveAsFile(content, filename , type='text/plain') {
+        const blob = new Blob([content], { type: type });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.position="absolute";
+        a.style.top=0;
+        a.style.left=0;
+        a.style.opacity=0;
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    static asyncLoadFile(file){
+        return new Promise((resolve,reject)=>{
+            const reader = new FileReader();
+            reader.onload = (event) => { resolve(event.target.result); }
+            reader.onerror = (event) => { reject(event); }
+            reader.readAsText(file);
+        })
+    }
 }

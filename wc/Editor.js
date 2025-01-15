@@ -8,6 +8,9 @@ import Context2dTextConfig from "./lib/Context2dTextConfig.js";
 
 // import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
+import HtmlUtil from "./lib/HtmlUtil.js";
+
+import Document from "./element/Document.js";
 
 export default class Editor{
     brush = null;
@@ -107,6 +110,33 @@ export default class Editor{
     // 레이어가 선택되면 불려야한다. (순서 변경 때도)
     onselectLayer(layer){
         console.log('onselectLayer',layer.id)
+    }
+
+
+
+
+    saveDocument(filename=null){
+        if(!this.document){return false;}
+        const ep = this.document.export();
+        // console.log(ep);
+        if(filename===null){
+            filename = Date.now()+'.wc3.json';
+        }
+        const type = 'application/json';
+        HtmlUtil.saveAsFile(JSON.stringify(ep,null,4), filename , type)
+    }
+    loadDocument(file){
+        HtmlUtil.asyncLoadFile(file).then((text)=>{
+            // console.log(file,text);
+            const conf = JSON.parse(text);
+            // console.log(conf);
+            const document = Document.from(conf)
+            // console.log(document.layers);
+            this.documents.add(document);
+            window.document.querySelector('#wc-editor').append(document);
+            
+            
+        })
     }
 
 
