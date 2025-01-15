@@ -1,5 +1,6 @@
 import NamedSelectableArray from "../lib/NamedSelectableArray.js";
-import SelectableArray from "../lib/SelectableArray.js";
+// import SelectableArray from "../lib/SelectableArray.js";
+import Layers from "./Document/Layers.js";
 import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
 
@@ -13,7 +14,9 @@ export default class Document extends Layer{
     editor = null;
     constructor(w=null,h=null){
         super(w,h);
-        this.layers = new SelectableArray();
+        // this.layers = new SelectableArray();
+        this.layers = new Layers()
+        this.layers.document = this;
         this.parent = null;
         // this.syncing = false;
         this.drawLayer = new Layer(w,h);
@@ -136,4 +139,28 @@ export default class Document extends Layer{
         this.ctx.restore()
     }
 
+
+
+    static import(obj,conf){
+        obj.constructor.keys.forEach((k)=>{
+            if(conf?.[k] === undefined){return;}
+            if(obj?.[k] === undefined){return;}
+            if(obj[k]?.import !== undefined){
+                obj[k].import(conf[k]);return;
+            }
+            // if(k==='layers'){
+            //     obj.importLayers(conf[k]);return;
+            // }
+            obj[k] = conf[k];
+        })
+
+        if(conf?.dataUrl !== undefined){
+            Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
+                obj.ctx.drawImage(img,0,0);
+                obj.flush();
+            }).catch((event)=>{
+                console.log(event)
+            })
+        }
+    }
 }

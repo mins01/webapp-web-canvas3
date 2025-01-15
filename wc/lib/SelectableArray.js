@@ -99,7 +99,7 @@ export default class SelectableArray extends Array {
      * @returns {number} The new selected index.
      */
     add(element) {
-        if (this.selectedIndex < 0) {
+        if (this.selectedIndex < 0 || this.length === 0) {
             this.push(element);
             this.selectedIndex = 0;
         } else {
