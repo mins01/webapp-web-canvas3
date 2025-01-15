@@ -9,8 +9,8 @@ export default class Layer extends Canvas{
     top = null;
     compositeOperation = null;
     alpha = null;
-    constructor(w=null,h=null,bgColor=null,label=null){
-        super(w,h,bgColor,label);
+    constructor(w=null,h=null){
+        super(w,h);
 
         // this._x = 0;
         // this._y = 0;

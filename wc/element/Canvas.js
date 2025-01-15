@@ -2,29 +2,34 @@ import Context2dConfig from "../lib/Context2dConfig.js";
 
 
 class Canvas extends HTMLCanvasElement{
+    static context2dOptions = {"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,};
+    static exportKeys(){
+        return ['drawable', 'label', 'contextConfig', 'updatedAt', 'left', 'top', 'compositeOperation', 'alpha', 'width', 'height'];
+    }
+
     ctx = null;
     drawable = true;
-    constructor(w=null,h=null,bgColor=null,label=null){
+    constructor(w=null,h=null){
         super();
 
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
         if(this.id==undefined) this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
-        this.label = label??"created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
+        this.label = "created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
         this.contextConfig = new Context2dConfig();
         
         Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
+        Object.defineProperty(this, 'parent', { enumerable: false, configurable: true, writable: true, value: null, })
+        // this.parent = null
 
-        
-        this.ctxUpdatedAtTime = Date.now();
-        
-        this.setContext2D();
-        this.parent = null
+        this.updatedAt = Date.now();
+        this.setContext2d();
 
         if(w && w != this.width) this.width = w;
-        if(h && h != this.height) this.height = h;
+        if(h && h != this.height) this.height = h;        
+    }
 
-        if(bgColor) this.fill(bgColor)
-        
+    get keys(){
+        return ['drawable', 'label', 'contextConfig', 'updatedAt', 'left', 'top', 'compositeOperation', 'alpha']
     }
     
     static getIdCounter(){
@@ -83,11 +88,11 @@ class Canvas extends HTMLCanvasElement{
         // this.flush(); 
     }
 
-    setContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,}){
-        this.ctx = this.getContext2D(options)
+    setContext2d(options=Canvas.context2dOptions){
+        this.ctx = this.getContext2d(options)
         return this.ctx;
     }
-    getContext2D(options={"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,}){       
+    getContext2d(options=Canvas.context2dOptions){       
         return this.getContext('2d',options)
     }
 
@@ -95,13 +100,12 @@ class Canvas extends HTMLCanvasElement{
         return this.contextConfig.toObject();
     }
     setContextConfig(conf){
-        // Object.assign(this.contextConfig,conf)
-        // console.log(conf);
-        
         this.contextConfig.assignFrom(conf);
-
     }
 
+    /**
+     * @deprecated 
+     */
     ctxCommand(){
         let inArgs = [...arguments];
         const method = inArgs[0]??null;
@@ -120,9 +124,9 @@ class Canvas extends HTMLCanvasElement{
     }
     flush(){
         this.draw();
-        this.ctxUpdatedAtTime = Date.now();
+        this.updatedAt = Date.now();
         this.sync();
-        // console.log('flush',this,this.ctxUpdatedAtTime);
+        // console.log('flush',this,this.updatedAt);
     }
     sync(){
         this.parentFlush();
@@ -134,17 +138,17 @@ class Canvas extends HTMLCanvasElement{
 
     fill(color){
         const ctx = this.ctx;
-        this.ctxCommand('save');
+        this.ctx.save();
         ctx.fillStyle = color;
         // ctx.fillRect(0,0,this.width,this.height);
-        this.ctxCommand('fillRect',0,0,this.width,this.height);
-        this.ctxCommand('restore');
+        this.ctx.fillRect(0,0,this.width,this.height);
+        this.ctx.restore();
         // this.flush();
     }
     clear(){
-        this.ctxCommand('save');
-        this.ctxCommand('clearRect',0,0,this.width,this.height);
-        this.ctxCommand('restore');
+        this.ctx.save();
+        this.ctx.clearRect(0,0,this.width,this.height);
+        this.ctx.restore();
     }
 
     merge(canvas){
@@ -170,7 +174,7 @@ class Canvas extends HTMLCanvasElement{
 
         dx = canvas.left-xmin;
         dy = canvas.top-ymin;
-        this.ctxCommand('drawImage',canvas, dx, dy, canvas.width, canvas.height);        
+        this.ctx.drawImage(canvas, dx, dy, canvas.width, canvas.height);        
 
         // this.flush();
     }

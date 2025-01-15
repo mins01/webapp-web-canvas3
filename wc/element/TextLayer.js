@@ -9,8 +9,8 @@ import Context2dTextConfig from "../lib/Context2dTextConfig.js";
 export default class TextLayer extends Layer{
     textConfig = null;
     text = '';
-    constructor(w=null,h=null,bgColor=null,label=null){
-        super(w,h,bgColor,label);
+    constructor(w=null,h=null){
+        super(w,h);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
 
         this.textConfig = new Context2dTextConfig();
@@ -41,7 +41,7 @@ export default class TextLayer extends Layer{
 
     draw(){
         const ctx = this.ctx;
-        this.ctxCommand('clearRect',0,0,this.width,this.height);
+        this.ctx.clearRect(0,0,this.width,this.height);
 
         
         //== for debug

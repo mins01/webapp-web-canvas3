@@ -12,7 +12,7 @@ export default class Document extends Layer{
         this.syncing = false;
         this.drawLayer = new Layer(w,h);
         this.drawLayer.parent = this;
-        this.drawLayer.setContext2D({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,})
+        this.drawLayer.setContext2d({"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,})
 
         this.editor = null;
 
@@ -103,7 +103,7 @@ export default class Document extends Layer{
 
     apply(){
         // console.log(this.layer);
-        // this.layer.ctxCommand('drawImage',this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
+        // this.layer.ctx.drawImage(this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
         this.sync();
         this.syncDrawLayer();
     }
@@ -113,18 +113,18 @@ export default class Document extends Layer{
     }
     draw(){
         this.ctx.save();
-        this.ctxCommand('clearRect',0,0,this.width,this.height);
+        this.ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
             this.ctx.globalCompositeOperation = layer.compositeOperation
             this.ctx.globalAlpha = layer.alpha
-            this.ctxCommand('drawImage',layer, layer.left, layer.top, layer.width, layer.height);
+            this.ctx.drawImage(layer, layer.left, layer.top, layer.width, layer.height);
 
             if(index == this.layers.selectedIndex){
                 // this.ctx.globalCompositeOperation = 'source-over'
                 // this.ctx.globalAlpha = 1;
                 this.ctx.globalCompositeOperation = layer.compositeOperation
                 this.ctx.globalAlpha = layer.alpha
-                this.ctxCommand('drawImage',this.drawLayer, this.drawLayer.left, this.drawLayer.top, this.drawLayer.width, this.drawLayer.height);
+                this.ctx.drawImage(this.drawLayer, this.drawLayer.left, this.drawLayer.top, this.drawLayer.width, this.drawLayer.height);
             }
         })
         this.ctx.restore()

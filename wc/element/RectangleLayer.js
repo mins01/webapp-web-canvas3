@@ -6,8 +6,8 @@ import DrawRectangle from '../draw/DrawRectangle.js';
 
 export default class RectangleLayer extends Layer{
     text = '';
-    constructor(w=null,h=null,bgColor=null,label=null){
-        super(w,h,bgColor,label);
+    constructor(w=null,h=null){
+        super(w,h);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
     }
     static defineCustomElements(name='wc-rectanglelayer'){
@@ -21,7 +21,7 @@ export default class RectangleLayer extends Layer{
 
     draw(){
         const ctx = this.ctx;
-        this.ctxCommand('clearRect',0,0,this.width,this.height);       
+        this.ctx.clearRect(0,0,this.width,this.height);       
 
         ctx.save();
         this.contextConfig.assignTo(ctx);
