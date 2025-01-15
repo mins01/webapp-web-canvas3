@@ -72,3 +72,7 @@ console.assert(sa.selectedIndex === 2 && sa.selected === 2);
 console.log(sa.selectedIndex,sa.selected,sa.join(','))
 var r = sa.item(1)
 console.assert(r === 1);
+
+console.log('---------------------------------------');
+console.log(JSON.stringify(sa));
+console.log(sa.valueOf());

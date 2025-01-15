@@ -3,7 +3,6 @@
  */
 export default class SelectableArray extends Array {
     #selectedIndex;
-    #array;
     /**
      * Creates an instance of SelectableArray.
      * @param {...*} elements - The elements to initialize the array with.
@@ -170,6 +169,14 @@ export default class SelectableArray extends Array {
      */
     all() {
         return this;
+    }
+
+    toJSON(){
+        return {
+            __class__:this.constructor.name,
+            selectedIndex:this.selectedIndex,
+            data:Array.from(this),
+        }
     }
 
 }
