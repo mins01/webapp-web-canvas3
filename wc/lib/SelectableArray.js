@@ -173,9 +173,8 @@ export default class SelectableArray extends Array {
 
     toJSON(){
         return {
-            __class__:this.constructor.name,
             selectedIndex:this.selectedIndex,
-            data:Array.from(this),
+            elements:Array.from(this),
         }
     }
 
