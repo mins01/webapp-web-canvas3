@@ -42,4 +42,21 @@ export default class Context2dUtil{
         }
         ctx.putImageData(imageData,0,0);
     }
+
+    
+    /**
+     * Description placeholder
+     *
+     * @static
+     * @param {string} url url or dataUrl
+     * @returns {*} 
+     */
+    static imageFromUrl(url){
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload=function(event){ resolve(this); }
+            img.onerror=function(event){ reject(event); }
+            img.src = url;
+        });
+    }
 }
