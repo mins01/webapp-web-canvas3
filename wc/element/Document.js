@@ -99,6 +99,8 @@ export default class Document extends Layer{
         this.drawLayer.top = layer.top;
         this.drawLayer.width = layer.width;
         this.drawLayer.height = layer.height;
+        this.drawLayer.zoom = layer.zoom;
+        this.drawLayer.angle = layer.angle;
     }
     ready(){
         this.syncDrawLayer();
@@ -116,28 +118,35 @@ export default class Document extends Layer{
         super.flush();
     }
     draw(){
-        this.ctx.save();
-        this.ctx.clearRect(0,0,this.width,this.height);
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
-            this.ctx.save();
-            this.ctx.globalCompositeOperation = layer.compositeOperation
-            this.ctx.globalAlpha = layer.alpha
-            this.ctx.translate(layer.left, layer.top)
-            this.ctx.translate(layer.width/2, layer.height/2)
-            if(layer.zoom !== 1){ this.ctx.scale(layer.zoom,layer.zoom); }
-            if(layer.angle !== 0){ this.ctx.rotate(layer.angle * Math.PI); }
-            
-            this.ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
-            this.ctx.restore()
+            ctx.save();
+            ctx.globalCompositeOperation = layer.compositeOperation
+            ctx.globalAlpha = layer.alpha
+            ctx.translate(layer.left, layer.top)
+            ctx.translate(layer.width/2, layer.height/2)
+            if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
+            if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
+            ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+            ctx.restore()
+
             if(index == this.layers.selectedIndex){
-                this.ctx.save();
-                this.ctx.globalCompositeOperation = layer.compositeOperation
-                this.ctx.globalAlpha = layer.alpha            
-                this.ctx.drawImage(this.drawLayer, this.drawLayer.left, this.drawLayer.top, this.drawLayer.width, this.drawLayer.height);
-                this.ctx.restore()
+                ctx.save();
+                ctx.globalCompositeOperation = layer.compositeOperation
+                ctx.globalAlpha = layer.alpha
+                if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); } // 그리는건 zoom 적용하지 말자. 계산 못하겠다.
+                ctx.translate(layer.left, layer.top)
+                ctx.translate(layer.width/2, layer.height/2)
+                if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); } // 그리는건 angle 적용하지 말자. 계산 못하겠다.
+                ctx.drawImage(this.drawLayer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+                ctx.restore()
             }
         })
-        this.ctx.restore()
+        ctx.restore()
+
+        this.style.transform = `scale(${this.zoom})`
     }
 
 }
