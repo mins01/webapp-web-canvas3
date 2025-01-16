@@ -185,6 +185,20 @@ class Canvas extends HTMLCanvasElement{
         r.dataUrl = obj.toDataURL('image/png')
         return r;
     }
+    snapshot(){
+        return this.constructor.snapshot(this);
+    }
+    static snapshot(obj){
+        const ctx = obj.ctx;
+        const r = obj.toObject();
+        for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다.
+            if(r[k]?.toObject){r[k] = r[k].toObject()}
+        }
+        r.snapshotVersion = '20250115';
+        r.__class__ = obj.constructor.name;
+        r.imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+        return r;
+    }
     export(){
         return this.constructor.export(this);
     }
@@ -198,13 +212,18 @@ class Canvas extends HTMLCanvasElement{
             obj[k] = conf[k];
         })
 
-        if(conf?.dataUrl !== undefined){
+        if(conf?.imageData !== undefined){
+            obj.ctx.putImageData(conf?.imageData, 0, 0);
+            obj.flush();
+        }else if(conf?.dataUrl !== undefined){
             Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
                 obj.ctx.drawImage(img,0,0);
                 obj.flush();
             }).catch((event)=>{
                 console.log(event)
             })
+        }else{
+            obj.flush();
         }
     }
     import(conf){
