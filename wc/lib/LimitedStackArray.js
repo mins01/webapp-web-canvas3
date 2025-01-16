@@ -10,13 +10,13 @@ export default class LimitedStackArray extends Array {
         // if (this.length >= this.maxLength) {
         //   this.shift();
         // }
-        this.limit()
         Array.prototype.push.call(this,element);
+        this.limit()
     }
 
     limit(){
         if (this.length >= this.maxLength) {
-            let v = this.length - this.maxLength + 1;
+            let v = this.length - this.maxLength;
             if(v===1){
                 this.shift();
             }else{
