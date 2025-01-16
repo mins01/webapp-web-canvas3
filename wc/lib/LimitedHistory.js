@@ -1,9 +1,9 @@
-import LimitedStackArray from "./LimitedStackArray.js";
+import LimitedQueueArray from "./LimitedQueueArray.js";
 
 export default class LimitedHistory{
     history = null;
     constructor(maxLength){
-        this.history = new LimitedStackArray(maxLength)
+        this.history = new LimitedQueueArray(maxLength)
         this.currentIndex = -1;
     }
     save(state){
