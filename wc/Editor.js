@@ -130,7 +130,7 @@ export default class Editor{
             // console.log(file,text);
             const conf = JSON.parse(text);
             // console.log(conf);
-            const document = Document.from(conf)
+            const document = Document.importFrom(conf)
             // console.log(document.layers);
             this.documents.add(document);
             window.document.querySelector('#wc-editor').append(document);

@@ -194,7 +194,7 @@ class Canvas extends HTMLCanvasElement{
         for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다.
             if(r[k]?.toObject){r[k] = r[k].toObject()}
         }
-        r.snapshotVersion = '20250115';
+        r.snapshotVersion = '20250116';
         r.__class__ = obj.constructor.name;
         r.imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
         return r;
@@ -230,7 +230,7 @@ class Canvas extends HTMLCanvasElement{
         return this.constructor.import(this,conf);
     }
 
-    static from(conf){
+    static importFrom(conf){
         const c = new this()
         c.import(conf)
         return c;

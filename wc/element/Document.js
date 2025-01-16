@@ -131,28 +131,4 @@ export default class Document extends Layer{
         this.ctx.restore()
     }
 
-
-
-    static import(obj,conf){
-        obj.constructor.keys.forEach((k)=>{
-            if(conf?.[k] === undefined){return;}
-            if(obj?.[k] === undefined){return;}
-            if(obj[k]?.import !== undefined){
-                obj[k].import(conf[k]);return;
-            }
-            // if(k==='layers'){
-            //     obj.importLayers(conf[k]);return;
-            // }
-            obj[k] = conf[k];
-        })
-
-        if(conf?.dataUrl !== undefined){
-            Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
-                obj.ctx.drawImage(img,0,0);
-                obj.flush();
-            }).catch((event)=>{
-                console.log(event)
-            })
-        }
-    }
 }
