@@ -10,4 +10,6 @@ r = lsa.pop();console.assert(lsa.join(',')==='1,2' && r === 3, JSON.stringify(ls
 r = lsa.pop();console.assert(lsa.join(',')==='1' && r === 2, JSON.stringify(lsa))
 r = lsa.pop();console.assert(lsa.join(',')==='' && r === 1, JSON.stringify(lsa))
 r = lsa.pop();console.assert(lsa.join(',')==='' && r === undefined, JSON.stringify(lsa))
+
+lsa.push(4,5,6,7,8,9);console.assert(lsa.join(',')==='7,8,9', JSON.stringify(lsa))
 console.log(lsa.join(','))

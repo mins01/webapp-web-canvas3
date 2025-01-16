@@ -6,12 +6,13 @@ export default class LimitedStackArray extends Array {
         this.maxLength = maxLength;
     }
 
-    push(element) {
+    push(...args) {
         // if (this.length >= this.maxLength) {
         //   this.shift();
         // }
-        Array.prototype.push.call(this,element);
+        Array.prototype.push.apply(this,args);
         this.limit()
+        return this.length;
     }
 
     limit(){
