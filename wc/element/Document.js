@@ -1,6 +1,7 @@
 import NamedSelectableArray from "../lib/NamedSelectableArray.js";
 // import SelectableArray from "../lib/SelectableArray.js";
 import Layers from "./Document/Layers.js";
+import History from "./Document/History.js";
 import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
@@ -11,12 +12,14 @@ export default class Document extends Layer{
     }
 
     layers = null;
+    history = null;
     drawLayer = null;
     editor = null;
     constructor(w=null,h=null){
         super(w,h);
         // this.layers = new SelectableArray();
         this.layers = new Layers()
+        this.history = new History(this,5);
         this.layers.document = this;
         this.parent = null;
         // this.syncing = false;
