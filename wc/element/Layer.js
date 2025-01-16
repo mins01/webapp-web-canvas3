@@ -5,7 +5,7 @@ import Canvas from "./Canvas.js"
 export default class Layer extends Canvas{
 
     static get keys(){
-        return super.keys.concat(['left', 'top','compositeOperation','alpha'])
+        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom'])
     }
 
     // x = null;
@@ -14,6 +14,8 @@ export default class Layer extends Canvas{
     top = null;
     compositeOperation = null;
     alpha = null;
+    zoom = null;
+    angle = null;
     constructor(w=null,h=null){
         super(w,h);
         
@@ -21,6 +23,8 @@ export default class Layer extends Canvas{
         this.top = 0;
         this.compositeOperation = 'source-over';
         this.alpha = 1;
+        this.zoom = 1;
+        this.angle = 0;
     }
     static defineCustomElements(name='wc-layer'){
         super.defineCustomElements(name);

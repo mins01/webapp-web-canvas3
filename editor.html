@@ -464,6 +464,27 @@
                                 <button class="btn btn-primary">변경</button>
                             </div>
                         </form>
+                        <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
+                            <div class="input-group" style="width:300px;">
+                                <span class="input-group-text">ZOOM</span>
+                                <input class="form-control" type="number" name="zoom" placeholder="zoom"
+                                    step="0.05" min="0" max="3"
+                                    onfocus="if(editor?.document?.layer){ this.form.zoom.value = editor?.document?.layer.zoom;}" 
+                                    >
+                                <button class="btn btn-primary">변경</button>
+                            </div>
+                        </form>
+                        <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
+                            <div class="input-group" style="width:300px;">
+                                <span class="input-group-text">ANGLE</span>
+                                <input class="form-control" type="number" name="angle" placeholder="angle"
+                                    step="0.05" min="-1" max="1"
+                                    onfocus="if(editor?.document?.layer){ this.form.angle.value = editor?.document?.layer.angle;}" 
+                                    >
+                                <button class="btn btn-primary">변경</button>
+                            </div>
+                        </form>
+                        
                         <form action="" onsubmit="return false">
                             <div class="input-group" style="width:300px;">
                                 <input class="form-control" type="number" name="left" placeholder="left"

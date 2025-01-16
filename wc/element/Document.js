@@ -119,16 +119,22 @@ export default class Document extends Layer{
         this.ctx.save();
         this.ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
+            this.ctx.save();
             this.ctx.globalCompositeOperation = layer.compositeOperation
             this.ctx.globalAlpha = layer.alpha
-            this.ctx.drawImage(layer, layer.left, layer.top, layer.width, layer.height);
-
+            this.ctx.translate(layer.left, layer.top)
+            this.ctx.translate(layer.width/2, layer.height/2)
+            if(layer.zoom !== 1){ this.ctx.scale(layer.zoom,layer.zoom); }
+            if(layer.angle !== 0){ this.ctx.rotate(layer.angle * Math.PI); }
+            
+            this.ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+            this.ctx.restore()
             if(index == this.layers.selectedIndex){
-                // this.ctx.globalCompositeOperation = 'source-over'
-                // this.ctx.globalAlpha = 1;
+                this.ctx.save();
                 this.ctx.globalCompositeOperation = layer.compositeOperation
-                this.ctx.globalAlpha = layer.alpha
+                this.ctx.globalAlpha = layer.alpha            
                 this.ctx.drawImage(this.drawLayer, this.drawLayer.left, this.drawLayer.top, this.drawLayer.width, this.drawLayer.height);
+                this.ctx.restore()
             }
         })
         this.ctx.restore()
