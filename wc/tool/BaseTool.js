@@ -65,20 +65,29 @@ export default class BaseTool {
 	getXYForLayer(event){
 		const doc = this.document;
 		const layer = this.document.layer;
-		const zoom = parseFloat(doc.zoom);
+		const docZoom = parseFloat(doc.zoom);
 
 		let x = event.x - doc.offsetLeft - layer.left + window.scrollX;
 		let y = event.y - doc.offsetTop - layer.top + window.scrollY;
 
-		if(zoom!==1){
-			const gLeft = doc.width/2*(zoom-1)
-			const gTop = doc.height/2*(zoom-1)
+		if(docZoom!==1){
+			const gLeft = doc.width/2*(docZoom-1)
+			const gTop = doc.height/2*(docZoom-1)
 			x += gLeft;
 			y += gTop;
-			x = x/zoom;
-			y = y/zoom;
+			x = x/docZoom;
+			y = y/docZoom;
 		}
+		const layerZoom = parseFloat(layer.zoom);
 
+		if(layerZoom!==1){
+			const gLeft = layer.width/2*(layerZoom-1)
+			const gTop = layer.height/2*(layerZoom-1)
+			x += gLeft;
+			y += gTop;
+			x = x/layerZoom;
+			y = y/layerZoom;
+		}
 		return [x,y];
 	}
 	getXYForDocument(event){
