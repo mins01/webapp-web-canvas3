@@ -122,11 +122,13 @@ export default class Document extends Layer{
         ctx.save();
         ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
+            // const ctx = layer.ctx;
+
             ctx.save();
             ctx.globalCompositeOperation = layer.compositeOperation
             ctx.globalAlpha = layer.alpha
-            ctx.translate(layer.left, layer.top)
             ctx.translate(layer.width/2, layer.height/2)
+            ctx.translate(layer.left, layer.top)
             if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
             if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
             ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
@@ -136,17 +138,17 @@ export default class Document extends Layer{
                 ctx.save();
                 ctx.globalCompositeOperation = layer.compositeOperation
                 ctx.globalAlpha = layer.alpha
-                if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); } // 그리는건 zoom 적용하지 말자. 계산 못하겠다.
-                ctx.translate(layer.left, layer.top)
                 ctx.translate(layer.width/2, layer.height/2)
-                if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); } // 그리는건 angle 적용하지 말자. 계산 못하겠다.
+                ctx.translate(layer.left, layer.top)
+                if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
+                if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
                 ctx.drawImage(this.drawLayer, -layer.width/2, -layer.height/2, layer.width, layer.height);
                 ctx.restore()
             }
         })
         ctx.restore()
 
-        this.style.transform = `scale(${this.zoom})`
+        this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
     }
 
 }
