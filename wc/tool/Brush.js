@@ -56,7 +56,8 @@ export default class Brush extends BaseTool{
 
         const brush = this.editor.brush;      
         ctx.save();
-        // this.applyLayerAngle(ctx);
+        this.applyLayerAngle(ctx);
+        // console.log(lx0,ly0,lx1,ly1);
         this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,this.remainInterval)
         ctx.restore();
         layer.flush();
@@ -77,7 +78,8 @@ export default class Brush extends BaseTool{
         
         const brush = this.editor.brush;      
         ctx.save();
-        // this.applyLayerAngle(ctx);
+        this.applyLayerAngle(ctx);
+        // console.log(lx0,ly0);
         brush.dot(ctx,lx0,ly0);
         ctx.restore();
         layer.flush();

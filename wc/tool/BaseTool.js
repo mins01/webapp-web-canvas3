@@ -167,22 +167,26 @@ export default class BaseTool {
 	applyLayerAngle(ctx){
 		const doc = this.document;
 		const layer = this.document.layer;	
-		// doc.angle 적용
-		if(doc.angle !== 1){
-			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
-			ctx.rotate(-doc.angle*Math.PI);
-			ctx.fillStyle='#00ff0010'
-			ctx.fillRect(-5,-5,10,10)
-			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
-		}
+
+
 		// layer.angle 적용
-		if(layer.angle !== 1){
+		if(layer.angle !== 0){
 			ctx.translate(layer.width / 2,layer.height / 2);
 			ctx.rotate(-layer.angle*Math.PI);
-			ctx.fillStyle='#ff000010'
-			ctx.fillRect(-2,-2,4,4)
+			ctx.fillStyle='#66000010'
+			ctx.fillRect(-10,-3,20,6)
 			ctx.translate(-layer.width / 2,-layer.height / 2);
 		}
+
+		// doc.angle 적용
+		if(doc.angle !== 0){
+			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
+			ctx.rotate(-doc.angle*Math.PI);
+			ctx.fillStyle='#00660010'
+			ctx.fillRect(-20,-5,40,10)
+			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
+		}
+
 
 	}
 }

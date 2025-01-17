@@ -52,6 +52,7 @@ export default class Line extends BaseTool{
         ctx.save();
         ctx.canvas.contextConfig.assignTo(ctx);       
         drawLayer.clear();
+        this.applyLayerAngle(ctx);
         DrawLine.draw(ctx,lx0,ly0,lx1,ly1);
         ctx.restore();
         drawLayer.flush()
