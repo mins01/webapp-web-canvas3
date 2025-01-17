@@ -173,8 +173,8 @@ export default class BaseTool {
 		if(layer.angle !== 0){
 			ctx.translate(layer.width / 2,layer.height / 2);
 			ctx.rotate(-layer.angle*Math.PI);
-			ctx.fillStyle='#66000010'
-			ctx.fillRect(-10,-3,20,6)
+			// ctx.fillStyle='#66000010'
+			// ctx.fillRect(-10,-3,20,6)
 			ctx.translate(-layer.width / 2,-layer.height / 2);
 		}
 
@@ -182,10 +182,12 @@ export default class BaseTool {
 		if(doc.angle !== 0){
 			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
 			ctx.rotate(-doc.angle*Math.PI);
-			ctx.fillStyle='#00660010'
-			ctx.fillRect(-20,-5,40,10)
+			// ctx.fillStyle='#00660010'
+			// ctx.fillRect(-20,-5,40,10)
 			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
 		}
+		// ctx.translate(layer.left ,layer.top);
+
 
 
 	}
