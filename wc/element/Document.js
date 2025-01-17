@@ -109,7 +109,7 @@ export default class Document extends Layer{
 
     apply(){
         // console.log(this.layer);
-        // this.layer.ctx.drawImage(this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);        
+        // this.layer.ctx.drawImage(this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);
         this.sync();
         this.syncDrawLayer();
     }
@@ -127,24 +127,32 @@ export default class Document extends Layer{
             ctx.save();
             ctx.globalCompositeOperation = layer.compositeOperation
             ctx.globalAlpha = layer.alpha
-            ctx.translate(layer.width/2, layer.height/2)
             ctx.translate(layer.left, layer.top)
             if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
+            ctx.translate(layer.width/2, layer.height/2)
             if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
+            ctx.translate(-layer.width/2, -layer.height/2)
             if(layer.visible){
-                ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
-            }
+                // ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+                ctx.drawImage(layer, 0, 0, layer.width, layer.height);
+            }            
+            ctx.translate(-layer.left, -layer.top)
+            
+            
             ctx.restore()
 
             if(index == this.layers.selectedIndex){
                 ctx.save();
                 ctx.globalCompositeOperation = layer.compositeOperation
                 ctx.globalAlpha = layer.alpha
-                ctx.translate(layer.width/2, layer.height/2)
                 ctx.translate(layer.left, layer.top)
+                ctx.translate(layer.width/2, layer.height/2)
+                // ctx.translate(layer.left, layer.top)
                 if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
                 if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
-                ctx.drawImage(this.drawLayer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+                ctx.drawImage(this.drawLayer, -layer.width/2, -layer.height/2, layer.width, layer.height);                
+                ctx.translate(-layer.width/2, -layer.height/2)
+
                 ctx.restore()
             }
         })

@@ -63,7 +63,7 @@ export default class Rectangle extends BaseTool{
         
         drawLayer.clear();
         ctx.save();
-        this.applyLayerAngle(ctx);
+        this.prepareLayer(ctx);
         DrawRectangle.draw(ctx,lx0,ly0,w,h);
         ctx.restore();
         drawLayer.flush()

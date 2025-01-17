@@ -98,18 +98,21 @@ export default class BaseTool {
 		}
 		return [x,y];
 	}
+
 	getXyInLayer(inX,inY){
-		const layer = this.layer;
-		let x = inX - layer.left;
-		let y = inY - layer.top;
-		const zoom = layer.zoom;
-		if(zoom!==1){
-			x += layer.width/2*(zoom-1);
-			y += layer.height/2*(zoom-1);
-			x = x/zoom;
-			y = y/zoom;
-		}
-		return [x,y];
+		return [inX,inY]
+		// 추가 처리 안한다. prepareLayer 로 자동 처리 된다.
+		// const layer = this.layer;
+		// let x = inX - layer.left;
+		// let y = inY - layer.top;
+		// const zoom = layer.zoom;
+		// if(zoom!==1){
+		// 	x += layer.width/2*(zoom-1);
+		// 	y += layer.height/2*(zoom-1);
+		// 	x = x/zoom;
+		// 	y = y/zoom;
+		// }
+		// return [x,y];
 	}
 
 	
@@ -145,26 +148,8 @@ export default class BaseTool {
 		}
 		return [x,y];
 	}
-	// getXYForDocument(event){
-	// 	const doc = this.document;
-	// 	const zoom = parseFloat(doc.zoom);
-	// 	let x = event.x - doc.offsetLeft + window.scrollX;
-	// 	let y = event.y - doc.offsetTop + window.scrollY;
-	// 	if(zoom!==1){
-	// 		const gLeft = doc.width/2*(zoom-1)
-	// 		const gTop = doc.height/2*(zoom-1)
-	// 		x += gLeft;
-	// 		y += gTop;
-	// 		x = x/zoom;
-	// 		y = y/zoom;
-	// 	}
-		
-	// 	return [x,y];
-	// }
 
-	//TODO 아직 사용하지 말라.
-	// angle은 나중에
-	applyLayerAngle(ctx){
+	prepareLayer(ctx){		
 		const doc = this.document;
 		const layer = this.document.layer;	
 
@@ -173,22 +158,20 @@ export default class BaseTool {
 		if(layer.angle !== 0){
 			ctx.translate(layer.width / 2,layer.height / 2);
 			ctx.rotate(-layer.angle*Math.PI);
-			// ctx.fillStyle='#66000010'
-			// ctx.fillRect(-10,-3,20,6)
 			ctx.translate(-layer.width / 2,-layer.height / 2);
 		}
+		// layer 적용 크기 변경
+		ctx.scale(1/layer.zoom,1/layer.zoom)
 
-		// doc.angle 적용
+		// // doc.angle 적용
 		if(doc.angle !== 0){
 			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
 			ctx.rotate(-doc.angle*Math.PI);
-			// ctx.fillStyle='#00660010'
-			// ctx.fillRect(-20,-5,40,10)
 			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
 		}
-		// ctx.translate(layer.left ,layer.top);
 
-
+		// 좌표 오차 변경		
+		ctx.translate(-layer.left,-layer.top);
 
 	}
 }
