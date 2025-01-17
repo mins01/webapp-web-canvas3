@@ -17,10 +17,11 @@ export default class Layer extends Canvas{
     // top = null;
     compositeOperation = null;
     alpha = null;
-    zoom = null;
+    // zoom = null;
     angle = null;
     #left;
     #top;
+    #zoom;
     constructor(w=null,h=null){
         super(w,h);
         
@@ -33,9 +34,11 @@ export default class Layer extends Canvas{
     }
 
     get left(){ return this.#left; }
-    get top(){ return this.#top; }
     set left(v){ this.#left = parseFloat(v); this.setAttribute('left',this.#left) }
+    get top(){ return this.#top; }
     set top(v){ this.#top = parseFloat(v); this.setAttribute('top',this.#top) }
+    get zoom(){ return this.#zoom; }
+    set zoom(v){ this.#zoom = parseFloat(v); this.setAttribute('zoom',this.#zoom) }
 
     merge(canvas){
         const xmin = Math.min(this.left,canvas.left)
