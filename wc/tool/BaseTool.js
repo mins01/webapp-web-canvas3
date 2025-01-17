@@ -95,6 +95,14 @@ export default class BaseTool {
 		return [x,y];
 	}
 
+	
+	/**
+	 * Description placeholder
+	 *
+	 * @param {*} event 
+	 * @returns {{}} 
+	 * @deprecated
+	 */
 	getXYForLayer(event){
 		const doc = this.document;
 		const layer = this.document.layer;

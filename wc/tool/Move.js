@@ -21,31 +21,33 @@ export default class Move extends BaseTool{
     }
     onpointerdown(event){
         super.onpointerdown(event);
-        const [x,y] = this.getXYForDocument(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x = x; this.y = y;
         this.draw(x,y,x,y);
     }
     onpointermove(event){
         super.onpointermove(event);
-        const [x,y] = this.getXYForDocument(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.x = x; this.y = y;
         this.draw(this.x0,this.y0,x,y);
     }
     onpointerup(event){
         super.onpointerup(event);
-        // const [x,y] = this.getXYForDocument(event);
-        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
-        this.document.apply();
+        this.apply();
     }
 
-    draw(x0,y0,x,y){
+    draw(x0,y0,x1,y1){
         super.draw(...arguments);
         
-        const dx = x - x0;
-        const dy = y - y0;
+        // 레이어 기준으로 좌표 재계산
+        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
+
+        const dx = lx1 - lx0;
+        const dy = ly1 - ly0;
 
         this.layer.left = this.layerLeft0 + dx;
         this.layer.top = this.layerTop0 + dy;

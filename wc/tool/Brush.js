@@ -43,7 +43,7 @@ export default class Brush extends BaseTool{
         this.draw(this.x0,this.y0,this.x,this.y);
     }
 
-    draw(x0,y0,x,y){
+    draw(x0,y0,x1,y1){
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
@@ -54,7 +54,7 @@ export default class Brush extends BaseTool{
 
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
-        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x,y));
+        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
 
         const brush = this.editor.brush;      
         ctx.save();

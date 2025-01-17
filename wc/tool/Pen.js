@@ -17,49 +17,58 @@ export default class Pen extends BaseTool{
     }
     onpointerdown(event){
         super.onpointerdown(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.coordinates.push(x);
         this.coordinates.push(y);
         this.draw();
     }
     onpointermove(event){
         super.onpointermove(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.coordinates.push(x);
         this.coordinates.push(y);
         this.draw();
     }
     onpointerup(event){
         super.onpointerup(event);
-        // const [x,y] = this.getXYForLayer(event);
-        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
-        this.apply();
+        // this.apply();
+        this.document.apply();
     }
 
     sync(){
         super.sync();
-        this.draw(this.x0,this.y0,this.x,this.y);
     }
-
+    
     draw(){
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
         const drawLayer = this.drawLayer;
-        const ctx = drawLayer.ctx;
+        const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
+        ctx.save();
         ctx.canvas.contextConfig.assignTo(ctx);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 
-        drawLayer.clear();
-        DrawLine.drawByCoordinates(ctx,this.coordinates);
-        drawLayer.flush()
+        // drawLayer.clear();
+        const lCoordinates = [];
+        for(let i =0,m=this.coordinates.length;i<m;i+=2){
+            const x =this.coordinates[i];
+            const y =this.coordinates[i+1];
+            const [lx,ly] = this.getXyInLayer(...this.getXyInDocument(x,y));
+            lCoordinates.push(lx,ly);
+        }        
+        // DrawLine.drawByCoordinates(ctx,this.coordinates);
+        DrawLine.drawByCoordinates(ctx,lCoordinates);
+        ctx.restore();
+        layer.flush()
+        // drawLayer.flush()
     }
 
 

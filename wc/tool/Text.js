@@ -20,18 +20,14 @@ export default class Text extends BaseTool{
     }
     onpointerdown(event){
         super.onpointerdown(event);
-        const [x,y] = this.getXYForLayer(event);
-        this.x0 = x;
-        this.y0 = y;
-        this.x = x;
-        this.y = y;
+        const [x,y] = this.getXyFromEvent(event);
+        this.x0 = x; this.y0 = y; this.x = x; this.y = y;
         this.draw(x,y,x,y);
     }
     onpointermove(event){
         super.onpointermove(event);
-        const [x,y] = this.getXYForLayer(event);
-        this.x = x;
-        this.y = y;
+        const [x,y] = this.getXyFromEvent(event);
+        this.x = x; this.y = y;
         this.draw(this.x0,this.y0,x,y);
     }
     onpointerup(event){
@@ -50,7 +46,7 @@ export default class Text extends BaseTool{
 
     
 
-    draw(x0,y0,x,y){
+    draw(x0,y0,x1,y1){
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
@@ -60,21 +56,18 @@ export default class Text extends BaseTool{
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
         ctx.save();
-        // // for testing
-        // ctx.lineWidth = 4;
-        // ctx.strokeStyle = "orange";
-        // ctx.fillStyle = "rgba(255,255,255,0.5)";
-        // if(this.layer){ Object.assign(this.layer.ctx,this.editor.contextConfig);}
-		// if(this.drawLayer){ Object.assign(this.drawLayer.ctx,this.editor.contextConfig);}
 
+        // 레이어 기준으로 좌표 재계산
+        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
 
-        let w = x - x0;
-        let h = y - y0;      
+        let w = lx1 - lx0;
+        let h = ly1 - ly0;      
         
         drawLayer.clear();
 
         ctx.beginPath();
-        ctx.rect(x0, y0, w,h);        
+        ctx.rect(lx0, ly0, w,h);        
         if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
         ctx.closePath();
 
@@ -86,8 +79,8 @@ export default class Text extends BaseTool{
 
         let text = 'text text 한글 \n 자동 줄바꿈을 어떻게 하지.자동 줄바꿈을 어떻게 하지. 자동 줄바꿈을 어떻게 하지. 자동 줄바꿈을 어떻게 하지. \n줄바꿈 후줄바꿈 후줄바꿈 후줄바꿈 후줄바꿈 후';
 
-        let xs = Math.min(x0,x);
-        let ys = Math.min(y0,y);
+        let xs = Math.min(lx0,lx1);
+        let ys = Math.min(ly0,ly1);
 
         DrawText.draw(ctx,text,Math.abs(w),Math.abs(h),xs,ys,
             CssLengthUtil.pxBasedOnFontSize(ctx.lineHeight,ctx.fontSize),

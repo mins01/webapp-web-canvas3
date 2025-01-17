@@ -17,22 +17,20 @@ export default class Eraser extends BaseTool{
     }
     onpointerdown(event){
         super.onpointerdown(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.coordinates.push(x);
         this.coordinates.push(y);
         this.draw();
     }
     onpointermove(event){
         super.onpointermove(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.coordinates.push(x);
         this.coordinates.push(y);
         this.draw();
     }
     onpointerup(event){
         super.onpointerup(event);
-        // const [x,y] = this.getXYForLayer(event);
-        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
@@ -42,7 +40,6 @@ export default class Eraser extends BaseTool{
 
     sync(){
         super.sync();
-        this.draw(this.x0,this.y0,this.x,this.y);
     }
 
     draw(){
@@ -56,15 +53,18 @@ export default class Eraser extends BaseTool{
 
         ctx.save();
         ctx.canvas.contextConfig.assignTo(ctx);
-        // for testing
-        // ctx.strokeStyle = "blue";
-        // ctx.lineWidth = 4;
-        // ctx.lineCap = "round";
-        // ctx.lineJoin = "round";
         ctx.globalCompositeOperation = 'destination-out';
 
         // drawLayer.clear();
-        DrawLine.drawByCoordinates(ctx,this.coordinates);
+        const lCoordinates = [];
+        for(let i =0,m=this.coordinates.length;i<m;i+=2){
+            const x =this.coordinates[i];
+            const y =this.coordinates[i+1];
+            const [lx,ly] = this.getXyInLayer(...this.getXyInDocument(x,y));
+            lCoordinates.push(lx,ly);
+        }        
+        // DrawLine.drawByCoordinates(ctx,this.coordinates);
+        DrawLine.drawByCoordinates(ctx,lCoordinates);
         ctx.restore();
         layer.flush()
         // drawLayer.flush()
