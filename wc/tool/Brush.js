@@ -15,7 +15,8 @@ export default class Brush extends BaseTool{
     }
     onpointerdown(event){
         super.onpointerdown(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
+        
         this.x0 = x; this.y0 = y; this.x = x; this.y = y;
         this.remainInterval = 0;
         // this.draw(x,y,x,y);
@@ -23,7 +24,7 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         super.onpointermove(event);
-        const [x,y] = this.getXYForLayer(event);
+        const [x,y] = this.getXyFromEvent(event);
         this.x = x; this.y = y;
         this.draw(this.x0,this.y0,x,y);
         this.x0 = x; this.y0 = y;
@@ -31,8 +32,6 @@ export default class Brush extends BaseTool{
     }
     onpointerup(event){
         super.onpointerup(event);
-        // const [x,y] = this.getXYForLayer(event);
-        // this.draw(this.x0,this.y0,x,y);
     }
     end(){
         super.end();
@@ -52,11 +51,16 @@ export default class Brush extends BaseTool{
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
-        
+
+        // 레이어 기준으로 좌표 재계산
+        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x,y));
+
         const brush = this.editor.brush;      
         ctx.save();
-
-        this.remainInterval = brush.drawOnLine(ctx,x0,y0,x,y,this.remainInterval)
+        // this.applyLayerAngle(ctx);
+        
+        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,this.remainInterval)
         ctx.restore();
         layer.flush();
 
@@ -71,10 +75,13 @@ export default class Brush extends BaseTool{
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
         
+        // 레이어 기준으로 좌표 재계산
+        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        
         const brush = this.editor.brush;      
         ctx.save();
-                
-        brush.dot(ctx,x0,y0);
+        this.applyLayerAngle(ctx);
+        brush.dot(ctx,lx0,ly0);
         ctx.restore();
         layer.flush();
 
