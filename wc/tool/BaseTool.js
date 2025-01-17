@@ -1,4 +1,17 @@
 export default class BaseTool {
+
+	name = null;
+	editor = null;
+	document = null;
+	layer = null;
+	drawLayer = null;
+	x0 = null;
+	y0 = null;
+	// x = null;
+	// y = null;
+	x1 = null;
+	y1 = null;
+
 	constructor(editor){
 		this.name = 'BaseTool';
 		this.editor = editor;
@@ -9,8 +22,10 @@ export default class BaseTool {
 
 		this.x0 = null;
 		this.y0 = null;
-		this.x = null;
-		this.y = null;
+		// this.x = null;
+		// this.y = null;
+		this.x1 = null;
+		this.y1 = null;
 	}
 
 	init(){
@@ -21,8 +36,10 @@ export default class BaseTool {
 
 		this.x0 = null;
 		this.y0 = null;
-		this.x = null;
-		this.y = null;
+		// this.x = null;
+		// this.y = null;
+		this.x1 = null;
+		this.y1 = null;
 
 	}
 	start(){

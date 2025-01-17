@@ -23,14 +23,14 @@ export default class Rectangle extends BaseTool{
     onpointerdown(event){
         super.onpointerdown(event);
         const [x,y] = this.getXyFromEvent(event);
-        this.x0 = x; this.y0 = y; this.x = x; this.y = y;
+        this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.draw(x,y,x,y);
     }
     onpointermove(event){
         super.onpointermove(event);
         const [x,y] = this.getXyFromEvent(event);
-        this.x = x; this.y = y;
-        this.draw(this.x0,this.y0,x,y);
+        this.x1 = x; this.y1 = y;
+        this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     onpointerup(event){
         super.onpointerup(event);
