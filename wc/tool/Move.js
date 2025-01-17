@@ -36,7 +36,7 @@ export default class Move extends BaseTool{
     }
     end(){
         super.end();
-        this.apply();
+        // this.apply();
     }
 
     draw(x0,y0,x1,y1){

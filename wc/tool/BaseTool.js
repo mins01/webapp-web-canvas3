@@ -162,18 +162,27 @@ export default class BaseTool {
 	// 	return [x,y];
 	// }
 
+	//TODO 아직 사용하지 말라.
+	// angle은 나중에
 	applyLayerAngle(ctx){
 		const doc = this.document;
 		const layer = this.document.layer;	
 		// doc.angle 적용
-		ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top)
-		ctx.rotate(-doc.angle*Math.PI)
-		ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top))
+		if(doc.angle !== 1){
+			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
+			ctx.rotate(-doc.angle*Math.PI);
+			ctx.fillStyle='#00ff0010'
+			ctx.fillRect(-5,-5,10,10)
+			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
+		}
 		// layer.angle 적용
-		ctx.translate(layer.width / 2,layer.height / 2)
-		ctx.rotate(-layer.angle*Math.PI)
-		ctx.translate(-layer.width / 2,-layer.height / 2)
-		// ctx.translate(- layer.left,- layer.top)
+		if(layer.angle !== 1){
+			ctx.translate(layer.width / 2,layer.height / 2);
+			ctx.rotate(-layer.angle*Math.PI);
+			ctx.fillStyle='#ff000010'
+			ctx.fillRect(-2,-2,4,4)
+			ctx.translate(-layer.width / 2,-layer.height / 2);
+		}
 
 	}
 }

@@ -22,6 +22,7 @@ export default class Layer extends Canvas{
     #left;
     #top;
     #zoom;
+    #visible;
     constructor(w=null,h=null){
         super(w,h);
         
@@ -30,6 +31,7 @@ export default class Layer extends Canvas{
         this.compositeOperation = 'source-over';
         this.alpha = 1;
         this.zoom = 1;
+        this.visible = true;
         this.angle = 0;
     }
 
@@ -39,6 +41,15 @@ export default class Layer extends Canvas{
     set top(v){ this.#top = parseFloat(v); this.setAttribute('top',this.#top) }
     get zoom(){ return this.#zoom; }
     set zoom(v){ this.#zoom = parseFloat(v); this.setAttribute('zoom',this.#zoom) }
+    get visible(){ return this.#visible; }
+    set visible(v){ 
+        this.#visible = v==='true'?true:(v==='false')?false:(!!v);
+        if(this.#visible){
+            this.setAttribute('visible','') 
+        }else if(this.hasAttribute('visible') ){
+            this.removeAttribute('visible') 
+        }
+    }
 
     merge(canvas){
         const xmin = Math.min(this.left,canvas.left)

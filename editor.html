@@ -552,6 +552,9 @@
 
             </div>
             <hr>
+            <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = true; editor.document.layer.flush() }">visible:on</button>
+            <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = false; editor.document.layer.flush() }">visible:off</button>
+            <hr>
             BRUSH
             <div>
                 <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>

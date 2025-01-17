@@ -131,7 +131,9 @@ export default class Document extends Layer{
             ctx.translate(layer.left, layer.top)
             if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
             if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
-            ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+            if(layer.visible){
+                ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
+            }
             ctx.restore()
 
             if(index == this.layers.selectedIndex){
