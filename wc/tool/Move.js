@@ -23,7 +23,7 @@ export default class Move extends BaseTool{
         super.onpointerdown(event);
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
-        this.draw(x,y,x,y);
+        this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     onpointermove(event){
         super.onpointermove(event);
