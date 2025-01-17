@@ -34,8 +34,13 @@ export default class Document extends Layer{
     static defineCustomElements(name='wc-document'){
         super.defineCustomElements(name);
     }
+    get left(){ return super.left; }
+    get top(){ return super.top; }
+    set left(v){ super.left = v; this.style.left=`${this.left}px` }
+    set top(v){ super.top = v;  this.style.top=`${this.top}px` }
 
     init(){
+        this.classList.add('wc-document')
         this.add(new Layer(this.width,this.height));
         // this.select(0);
         this.flush()

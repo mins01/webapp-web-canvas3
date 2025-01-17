@@ -1,0 +1,60 @@
+import BaseTool from './BaseTool.js';
+
+export default class Hand extends BaseTool{
+    left0 = null;
+    top0 = null;
+    constructor(editor){
+        super(editor);
+        // this.x0 = null;
+        // this.y0 = null;
+        this.name = 'Hand';
+
+        this.left0 = null;
+        this.top0 = null;
+    }
+
+    start(){
+        super.start();
+        
+        this.left0 = this.document.left;
+        this.top0 = this.document.top;
+    }
+    onpointerdown(event){
+        super.onpointerdown(event);
+        const [x,y] = this.getXyFromEvent(event);
+        this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
+        this.draw(this.x0,this.y0,this.x1,this.y1);
+    }
+    onpointermove(event){
+        super.onpointermove(event);
+        const [x,y] = this.getXyFromEvent(event);
+        this.x1 = x; this.y1 = y;
+        this.draw(this.x0,this.y0,this.x1,this.y1);
+    }
+    onpointerup(event){
+        super.onpointerup(event);
+    }
+    end(){
+        super.end();
+        // this.apply();
+    }
+
+    draw(x0,y0,x1,y1){
+        const document = this.document
+        super.draw(...arguments);
+        
+        // 레이어 기준으로 좌표 재계산
+        const [lx0,ly0] = this.getXyInDocument(x0,y0);
+        const [lx1,ly1] = this.getXyInDocument(x1,y1);
+
+        const dx = lx1 - lx0;
+        const dy = ly1 - ly0;
+
+        document.left = this.left0 + dx;
+        document.top = this.top0 + dy;
+
+        document.flush()
+    }
+
+
+}

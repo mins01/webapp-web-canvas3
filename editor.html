@@ -171,8 +171,8 @@
         }
     </script>
     <style>
-        .radio-target:checked + button{
-
+        .wc-document{
+            /* position: absolute; */
         }
     </style>
 </head>
@@ -188,6 +188,7 @@
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-outline-info pe-none">tool:Eraser</button></label>
     
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-outline-info pe-none">tool:Move</button></label>
+                    <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Hand')"><button type="button" class="btn btn-outline-info pe-none">tool:Hand</button></label>
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-outline-info pe-none">tool:Rectangle</button></label>
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-outline-info pe-none">tool:Circle</button></label>
                     <label role="button" class="position-relative" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-outline-info pe-none">tool:Text</button></label>
@@ -544,7 +545,7 @@
             <hr>
         </div>
         <div class="flex-fill">
-            <div id="wc-editor" style="outline: dashed 1px #f00; max-width: 600px; height: 600px; touch-action: none;" class="d-flex justify-content-center align-items-center mx-auto">
+            <div id="wc-editor" style="outline: dashed 1px #f00; max-width: 600px; height: 600px; touch-action: none; user-select: none;" class="d-flex justify-content-center align-items-center mx-auto">
                 <canvas id="wc-document" width="300" height="300" is="wc-document"></canvas>
             </div>
         </div>
