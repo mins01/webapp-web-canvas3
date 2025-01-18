@@ -37,6 +37,8 @@
     <meta property="og:type" content="website">
 
     <!-- //meta og -->
+
+    <link rel="stylesheet" href="asset/style.css">
     <style>
         canvas{
             outline: 1px dashed #aabbcc99;
@@ -98,7 +100,7 @@
             // editor.tools.select('Brush');
             editor.addEventListener();
 
-
+            editor.document.zoom = 5
             editor.document.layer.left = 30
             editor.document.layer.zoom = 1.5
 
@@ -545,8 +547,14 @@
             <hr>
         </div>
         <div class="flex-fill">
-            <div id="wc-editor" style="outline: dashed 1px #f00; max-width: 600px; height: 600px; touch-action: none; user-select: none;" class="d-flex justify-content-center align-items-center mx-auto">
-                <canvas id="wc-document" width="300" height="300" is="wc-document"></canvas>
+            <div  class="wc-app debug-box">
+                <div class="wc-app-header"></div>
+                <div id="wc-editor" class="wc-editor wc-app-body debug-box">
+                    <div class="wc-frame">
+                        <canvas id="wc-document" class="wc-document" width="2000" height="300" is="wc-document"></canvas>
+                    </div>
+                </div>
+                <div class="wc-app-footer"></div>
             </div>
         </div>
         <div class="container">

@@ -1,10 +1,12 @@
 // import NamedSelectableArray from "./lib/NamedSelectableArray.js";
-import SelectableArray from "./lib/SelectableArray.js";
+// import SelectableArray from "./lib/SelectableArray.js";
 import PointerEventHandler from "./lib/PointerEventHandler.js";
 
 
 import Context2dConfig from "./lib/Context2dConfig.js";
 import Context2dTextConfig from "./lib/Context2dTextConfig.js";
+
+import Documents from "./element/Editor/Documents.js";
 
 // import jsColor from "./lib/jsColor.js";
 import Tools from "./tool/Tools.js";
@@ -17,7 +19,8 @@ export default class Editor{
     constructor(target){
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
-        this.documents = new SelectableArray();
+        this.documents = new Documents();
+        this.documents.editor = this
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
             el.editor = this;
             this.documents.add(el)

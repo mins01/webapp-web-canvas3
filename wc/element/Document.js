@@ -15,6 +15,7 @@ export default class Document extends Layer{
     history = null;
     drawLayer = null;
     editor = null;
+    frame = null;
     constructor(w=null,h=null){
         super(w,h);
         // this.layers = new SelectableArray();
@@ -42,8 +43,9 @@ export default class Document extends Layer{
     init(){
         this.classList.add('wc-document')
         this.add(new Layer(this.width,this.height));
-        // this.select(0);
         this.flush()
+
+        this.frame = this.closest('.wc-frame')??null;
     }
 
 
@@ -162,8 +164,9 @@ export default class Document extends Layer{
             }
         })
         ctx.restore()
-
-        this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
+        this.style.zoom = this.zoom;
+        this.style.transform = `rotate(${this.angle*Math.PI}rad)`;
+        // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
     }
 
 }

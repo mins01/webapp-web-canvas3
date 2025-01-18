@@ -79,7 +79,7 @@ export default class Brush extends BaseTool{
         const brush = this.editor.brush;      
         ctx.save();
         this.prepareLayer(ctx);
-        console.log(x0,y0,lx0,ly0);
+        // console.log(x0,y0,lx0,ly0);
         brush.dot(ctx,lx0,ly0);
         ctx.restore();
         layer.flush();

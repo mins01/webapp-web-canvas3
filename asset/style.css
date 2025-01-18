@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+.debug-box{
+  outline: dashed 1px #f003;
+  outline-offset: -1px;
+}
+.wc-app{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; 
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: stretch;
+
+  user-select: none;
+}
+
+.wc-app-header{
+  flex: 0 0 40px;
+  height: 40px;
+  display: flex;
+}
+.wc-app-footer{
+  flex: 0 0 40px;
+  height: 40px;
+  display: flex;
+}
+.wc-app-body{
+  flex: 1 1 auto;;
+  touch-action: none;
+}
+
+
+
+
+
+.wc-app-body{
+  position: relative;
+ 
+}
+.wc-frame{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; 
+  bottom: 0;
+  overflow: scroll;
+  scrollbar-width: thin; /* 스크롤바 두께: auto | thin | none */
+  scrollbar-color: #eee #333; /* 핸들 색상과 트랙 배경색 */
+}
+
+.wc-frame > .wc-document{
+  margin:50svh 50svw;
+}
+
+

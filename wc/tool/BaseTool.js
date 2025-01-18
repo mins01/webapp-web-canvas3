@@ -85,19 +85,35 @@ export default class BaseTool {
 		return [x,y];
 	}
 
+	// 아무 scrollbar 및 postion relative와 absolute 가 없을 경우, 그리고 transform scale 사용
+	// getXyInDocument(inX,inY){
+	// 	const doc = this.document;
+	// 	let x = inX - doc.offsetLeft;
+	// 	let y = inY - doc.offsetTop;
+	// 	const zoom = doc.zoom;
+	// 	if(zoom!==1){
+	// 		x += doc.width/2*(zoom-1);
+	// 		y += doc.height/2*(zoom-1);
+	// 		x = x/zoom;
+	// 		y = y/zoom;
+	// 	}
+	// 	return [x,y];
+	// }
+
+	//  scrollbar 및 postion relative와 absolute 가 있을 경우, 그리고 zoom 사용
 	getXyInDocument(inX,inY){
 		const doc = this.document;
-		let x = inX - doc.offsetLeft;
-		let y = inY - doc.offsetTop;
 		const zoom = doc.zoom;
+		let x = inX - (doc.offsetLeft * zoom + doc.frame.offsetLeft + doc.frame.parentElement.offsetLeft - doc.frame.scrollLeft);
+		let y = inY - (doc.offsetTop * zoom + doc.frame.offsetTop + doc.frame.parentElement.offsetTop - doc.frame.scrollTop);
+
 		if(zoom!==1){
-			x += doc.width/2*(zoom-1);
-			y += doc.height/2*(zoom-1);
 			x = x/zoom;
 			y = y/zoom;
 		}
 		return [x,y];
 	}
+
 
 	getXyInLayer(inX,inY){
 		return [inX,inY]
