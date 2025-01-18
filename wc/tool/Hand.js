@@ -16,8 +16,10 @@ export default class Hand extends BaseTool{
     start(){
         super.start();
         
-        this.left0 = this.document.left;
-        this.top0 = this.document.top;
+        // this.left0 = this.document.left;
+        // this.top0 = this.document.top;
+        this.left0 = this.document.frame.scrollLeft;
+        this.top0 = this.document.frame.scrollTop;
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -50,8 +52,12 @@ export default class Hand extends BaseTool{
         const dx = lx1 - lx0;
         const dy = ly1 - ly0;
 
-        document.left = this.left0 + dx;
-        document.top = this.top0 + dy;
+        // document.left = this.left0 + dx;
+        // document.top = this.top0 + dy;
+
+        document.frame.scrollLeft = this.left0 - dx;
+        document.frame.scrollTop = this.top0 - dy;
+        
 
         document.flush()
     }

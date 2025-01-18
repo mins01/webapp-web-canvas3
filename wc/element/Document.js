@@ -126,6 +126,7 @@ export default class Document extends Layer{
     }
     draw(){
         const ctx = this.ctx;
+        const drawLayer = this.drawLayer;
         ctx.save();
         ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
@@ -140,28 +141,30 @@ export default class Document extends Layer{
             if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
             ctx.translate(-layer.width/2, -layer.height/2)
             if(layer.visible){
-                // ctx.drawImage(layer, -layer.width/2, -layer.height/2, layer.width, layer.height);
                 ctx.drawImage(layer, 0, 0, layer.width, layer.height);
-            }            
+                if(index == this.layers.selectedIndex){
+                    ctx.drawImage(drawLayer, 0, 0, layer.width, layer.height);
+                }
+            }
             ctx.translate(-layer.left, -layer.top)
-            
-            
+
+
             ctx.restore()
 
-            if(index == this.layers.selectedIndex){
-                ctx.save();
-                ctx.globalCompositeOperation = layer.compositeOperation
-                ctx.globalAlpha = layer.alpha
-                ctx.translate(layer.left, layer.top)
-                ctx.translate(layer.width/2, layer.height/2)
-                // ctx.translate(layer.left, layer.top)
-                if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
-                if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
-                ctx.drawImage(this.drawLayer, -layer.width/2, -layer.height/2, layer.width, layer.height);                
-                ctx.translate(-layer.width/2, -layer.height/2)
+            // if(index == this.layers.selectedIndex){
+            //     ctx.save();
+            //     ctx.globalCompositeOperation = layer.compositeOperation
+            //     ctx.globalAlpha = layer.alpha
+            //     ctx.translate(layer.left, layer.top)
+            //     if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
+            //     ctx.translate(layer.width/2, layer.height/2)
+            //     if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
+            //     ctx.translate(-layer.width/2, -layer.height/2)
 
-                ctx.restore()
-            }
+            //     ctx.translate(-layer.left, -layer.top)
+
+            //     ctx.restore()
+            // }
         })
         ctx.restore()
         this.style.zoom = this.zoom;
