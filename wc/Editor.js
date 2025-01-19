@@ -116,15 +116,31 @@ export default class Editor{
 
 
 
-    saveDocument(filename=null){
+    saveDocument(type='wc.json',filename=null){
         if(!this.document){return false;}
-        const ep = this.document.export();
-        // console.log(ep);
-        if(filename===null){
-            filename = Date.now()+'.wc3.json';
+        if(filename===null){ filename = Date.now() }
+        let data = null;
+        let ext = '';
+        let mimetype = null;
+        if(type==='wc.json'){
+            data = JSON.stringify(this.document.export(),null,4);
+            ext = 'wc.json';
+            mimetype = 'application/json';
+            HtmlUtil.saveAsFile(data, filename+'.'+ext , mimetype);
+        }else if(type==='png'){
+            ext = 'png';
+            mimetype = 'image/png';
+            const cb = (blob)=>{
+                HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
+            }
+            data = this.document.toBlob(cb,'image/png')
+        }else{
+            console.error('지원되지 않는 타입')
         }
-        const type = 'application/json';
-        HtmlUtil.saveAsFile(JSON.stringify(ep,null,4), filename , type)
+        // console.log(ep);
+        
+        
+        
     }
     loadDocument(file){
         HtmlUtil.asyncLoadFile(file).then((text)=>{
