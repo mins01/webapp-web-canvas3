@@ -6,23 +6,44 @@ export default class Documents extends SelectableArray{
     super();
     this.editor = editor;
   }
-  add(element){
-    super.add(element);
-    if(!element.frame){
-      const frame = document.createElement('div');
-      frame.classList.add('wc-frame');
-      element.frame = frame;
+  add(document){
+    if(!(document.frame??false)){
+      document.frame = document.closest('.wc-frame')??null;
+      if(!document.frame){
+          const frame = window.document.createElement('div');
+          frame.classList.add('wc-frame');
+          document.frame = frame;
+          document.frame.append(document)
+      }
     }
-    this.editor.target.append(element.frame)
-    // element.scrollIntoView( { behavior:'smooth', block:'center', inline:'center', } );
-    element.flush();
-    element.history.save();
+    const frame = document.frame;
+    console.log(document.frame);
+    
+    super.add(document);
+    document.editor = this.editor;
+    // if(!document.frame){
+    //   const frame = document.createElement('div');
+    //   frame.classList.add('wc-frame');
+    //   document.frame = frame;
+    // }
+    this.editor.target.append(frame)
+    // document.scrollIntoView( { behavior:'smooth', block:'center', inline:'center', } );
+    document.flush();
+    document.readyDocument();
     setTimeout(()=>{
-      const frame = element.frame
       frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
       frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
-    },10)
-  
-    
+    },10)    
+  }
+
+  remove(){
+    if(!this.selected){
+      console.error('Not exists a selected document.')
+      return false;
+    }
+    const document = this.selected;
+    document.frame.remove();
+    const r = super.remove();
+    if(r>=0){ this.select(r); }
   }
 }

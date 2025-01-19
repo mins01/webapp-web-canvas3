@@ -21,7 +21,6 @@ export default class Editor{
         // this.documents = new NamedSelectableArray('document');
         this.documents = new Documents(this);
         this.target.querySelectorAll('canvas[is="wc-document"]').forEach(el => {
-            el.editor = this;
             this.documents.add(el)
         });
         this.activeTool = null;
@@ -135,12 +134,33 @@ export default class Editor{
             const document = Document.importFrom(conf)
             // console.log(document.layers);
             this.documents.add(document);
-            window.document.querySelector('#wc-editor').append(document);
+            // window.document.querySelector('#wc-editor').append(document);
             
             
         })
     }
+    closeDocument(){
+        this.documents.remove();
+    }
 
+
+
+
+    readyLayer(){
+        console.log('Editor.readyLayer()')
+        const document = this.document
+
+        const divForDebug = window.document.querySelector('#div-for-debug');
+        divForDebug.innerHTML = '';
+        divForDebug.append(document.drawLayer)
+        document.layers.forEach((layer,index)=>{
+            divForDebug.append(layer)
+            layer.onclick = (event)=>{
+                layer.parent.select(index);
+            }
+        })
+
+    }
 
     
 }

@@ -44,7 +44,6 @@ export default class Document extends Layer{
         this.classList.add('wc-document')
         this.add(new Layer(this.width,this.height));
         this.flush()
-        this.frame = this.closest('.wc-frame')??null;
     }
 
 
@@ -113,9 +112,13 @@ export default class Document extends Layer{
         this.syncDrawLayer();
         this.sync();
     }
+    readyLayer(){ // 레이어 변화후 준비 처리
+        console.log('Document.readyLayer()')
+        this.editor?.readyLayer();
+    }
     
     readyDocument(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
-
+        this.readyLayer();
     }
 
     

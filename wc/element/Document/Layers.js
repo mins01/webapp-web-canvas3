@@ -12,10 +12,18 @@ export default class Layers extends SelectableArray{
     constructor(...elements) {
         super(...elements);
     }
+    ready(){ // 변경 작업호 호출하면 문서도 래디 한다.
+        console.log('Layers.readyLayer()')
+        this.document.readyLayer();
+    }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){
             const r = super.select(index);
-            if(!withoutHistory) this.document.history.save('Layers.select',true);
+            if(!withoutHistory){
+                this.document.history.save('Layers.select',true);
+                this.ready();
+            }
+            
         }
     }
     add(layer,withoutHistory=false){
@@ -25,7 +33,10 @@ export default class Layers extends SelectableArray{
         document.syncDrawLayer(layer);
         layer.flush();
         document?.editor?.onselectLayer(document.layer);
-        if(!withoutHistory) this.document.history.save('Layers.add');
+        if(!withoutHistory){
+            this.document.history.save('Layers.select',true);
+            this.ready();
+        }
         return true;
     }
     remove(){
@@ -34,6 +45,7 @@ export default class Layers extends SelectableArray{
         document.syncDrawLayer(document.layer);
         document.flush();
         this.document.history.save('Layers.remove');
+        this.ready();
         return true;
     }
     move(index){
@@ -42,6 +54,7 @@ export default class Layers extends SelectableArray{
         document.flush();
         document?.editor?.onselectLayer(document.layer);
         this.document.history.save('Layers.move');
+        this.ready();
         return true;
     }
 
@@ -63,6 +76,7 @@ export default class Layers extends SelectableArray{
             });
         }
         if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
+        this.ready();
     }
     export(){
         return this.toJSON();

@@ -151,15 +151,16 @@
             editor.document.add(wcl4);
 
             editor.document.layers.select(0);
+            editor.document.readyDocument();
+            editor.document.history.save('Document.New');
 
-
-            divForDebug.append(editor.document.drawLayer)
-            editor.document.layers.all().forEach((layer,index)=>{
-                divForDebug.append(layer)
-                layer.onclick = (event)=>{
-                    layer.parent.select(index);
-                }
-            })
+            // divForDebug.append(editor.document.drawLayer)
+            // editor.document.layers.all().forEach((layer,index)=>{
+            //     divForDebug.append(layer)
+            //     layer.onclick = (event)=>{
+            //         layer.parent.select(index);
+            //     }
+            // })
         })
     </script>
 
@@ -247,6 +248,9 @@
                                         <button type="button" class="btn btn-primary" onclick="if(this.form.loadfile.files.length){ editor.loadDocument(this.form.loadfile.files[0]) }else{ alert('Select a file(*.wc3.json)')}">load</button>
                                     </div>
                                 </form>
+                                <div>
+                                    <button type="button" class="btn btn-primary" onclick="editor.closeDocument()">CLOSE</button>
+                                </div>
                             </div>
                             <hr>
                             <div>
