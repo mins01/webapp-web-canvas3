@@ -110,10 +110,16 @@ export default class Document extends Layer{
         this.drawLayer.angle = layer.angle;
     }
     ready(){
+        this.drawLayer.clear();
         this.syncDrawLayer();
         this.sync();
     }
 
+    
+    /** Description placeholder
+     * 
+     * @deprecated 대신 ready()를 하자. 
+     */
     apply(){
         // console.log(this.layer);
         // this.layer.ctx.drawImage(this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);

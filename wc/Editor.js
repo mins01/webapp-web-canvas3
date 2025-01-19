@@ -101,7 +101,7 @@ export default class Editor{
     }
     onpointerup=(event)=>{
         this.tool.onpointerup(event);
-        this.tool.end();        
+        this.tool.end();
     }
 
 

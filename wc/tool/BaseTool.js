@@ -65,10 +65,15 @@ export default class BaseTool {
 	input(){
 
 	}
+
+	
+	/** 
+	 * 툴 모양과 위치 잡은 후 레이어에 적용하는 메소드
+	 * 
+	 * @deprecated 기존 사용법은 this.document.ready를 대신하라.
+	 */
 	apply(){
-		this.layer.merge(this.drawLayer)
-		this.drawLayer.clear();
-		this.document.apply();
+		// this.document.apply();
 	}
 
 

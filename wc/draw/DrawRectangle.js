@@ -4,14 +4,15 @@ export default class DrawRectangle{
             'fillAfterStroke':(ctx.fillAfterStroke??true), 
             'disableFill':(ctx.disableFill??false), 
             'disableStroke':(ctx.disableStroke??false), 
-            'strokeLocation':(ctx.strokeLocation??'inside'), // inside, outside, center 
+            // 'strokeLocation':(ctx.strokeLocation??'inside'), // inside, outside, center 
+            'strokeLocation':(ctx.strokeLocation??'center'), // inside, outside, center 
         },option)
         
         const lw = ctx.lineWidth;
 
         let fx = x,fy=y, fw=w, fh=h;
         let sx = x,sy=y, sw=w, sh=h;
-        if(option.strokeLocation=='inside'){
+        if(option.strokeLocation=='inside'){ //우선 포기
             sx = x+lw/2; sy = y+lw/2;
             sw = w-lw; sh = h-lw;
         }

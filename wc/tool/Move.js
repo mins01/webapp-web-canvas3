@@ -15,7 +15,7 @@ export default class Move extends BaseTool{
 
     start(){
         super.start();
-        
+        this.document.ready()
         this.layerLeft0 = this.layer.left;
         this.layerTop0 = this.layer.top;
     }
@@ -36,6 +36,7 @@ export default class Move extends BaseTool{
     }
     end(){
         super.end();
+        // this.document.ready()
         // this.apply();
     }
 

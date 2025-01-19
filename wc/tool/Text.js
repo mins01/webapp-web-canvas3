@@ -17,6 +17,7 @@ export default class Text extends BaseTool{
 
     start(){
         super.start();
+        this.document.ready();
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -37,6 +38,7 @@ export default class Text extends BaseTool{
     }
     end(){
         super.end();
+        // this.document.ready();
 
     }
     input(event){
@@ -44,6 +46,12 @@ export default class Text extends BaseTool{
         this.text = event.target.value??event.target.innerText;
     }
 
+    apply(){
+        super.apply();
+        this.layer.merge(this.drawLayer)
+        this.document.ready();
+
+    }
     
 
     draw(x0,y0,x1,y1){

@@ -11,6 +11,7 @@ export default class Line extends BaseTool{
 
     start(){
         super.start();
+        this.document.ready()
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -29,7 +30,8 @@ export default class Line extends BaseTool{
     }
     end(){
         super.end();
-        this.apply();
+        this.layer.merge(this.drawLayer)
+        this.document.ready()       
     }
 
     sync(){

@@ -14,11 +14,12 @@ export default class Rectangle extends BaseTool{
 
 
     conf(){
-        
+
     }
 
     start(){
         super.start();
+        this.document.ready()
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -37,7 +38,8 @@ export default class Rectangle extends BaseTool{
     }
     end(){
         super.end();
-        this.apply();
+        this.layer.merge(this.drawLayer)
+        this.document.ready()
     }
 
     sync(){
@@ -61,7 +63,7 @@ export default class Rectangle extends BaseTool{
 
         let w = lx1 - lx1;
         let h = ly1 - ly0;
-        let r =  Math.sqrt(w * w + h * h);       
+        let r =  Math.sqrt(w * w + h * h);
 
         drawLayer.clear();
         ctx.save();

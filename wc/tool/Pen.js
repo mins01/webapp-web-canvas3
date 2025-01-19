@@ -13,6 +13,7 @@ export default class Pen extends BaseTool{
 
     start(){
         super.start();
+        this.document.ready()
         this.coordinates = [];
     }
     onpointerdown(event){
@@ -34,8 +35,8 @@ export default class Pen extends BaseTool{
     }
     end(){
         super.end();
-        // this.apply();
-        this.document.apply();
+        this.layer.merge(this.drawLayer)
+        this.document.ready()
     }
 
     sync(){
@@ -47,10 +48,12 @@ export default class Pen extends BaseTool{
         const document = this.document;
         const layer = this.layer;
         const drawLayer = this.drawLayer;
-        const ctx = layer.ctx;
+        // const ctx = layer.ctx;
+        const ctx = drawLayer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
 
+        drawLayer.clear();
         ctx.save();
         this.prepareLayer(ctx);
         ctx.canvas.contextConfig.assignTo(ctx);
@@ -68,7 +71,7 @@ export default class Pen extends BaseTool{
         // DrawLine.drawByCoordinates(ctx,this.coordinates);
         DrawLine.drawByCoordinates(ctx,lCoordinates);
         ctx.restore();
-        layer.flush()
+        drawLayer.flush()
         // drawLayer.flush()
     }
 

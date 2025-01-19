@@ -70,12 +70,13 @@
   scrollbar-color: #333 #eee; /* 핸들 색상과 트랙 배경색 */
   touch-action: none;
   scrollbar-gutter: stable both-edges;
-  background-image: url(bg.gif);
+  background-color: #39f;
 }
 
 .wc-frame > .wc-document{
   margin:50svh 50svw;
   outline:4px dashed #000;
+  background-image: url(bg.gif);
 }
 
 
