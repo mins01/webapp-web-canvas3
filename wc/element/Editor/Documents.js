@@ -29,7 +29,7 @@ export default class Documents extends SelectableArray{
     this.editor.target.append(frame)
     // document.scrollIntoView( { behavior:'smooth', block:'center', inline:'center', } );
     document.flush();
-    document.readyDocument();
+    document.ready();
     setTimeout(()=>{
       frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
       frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
