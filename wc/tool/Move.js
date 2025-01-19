@@ -36,8 +36,7 @@ export default class Move extends BaseTool{
     }
     end(){
         super.end();
-        // this.document.ready()
-        // this.apply();
+        this.document.history.save(`Tool.${this.constructor.name}`);
     }
 
     draw(x0,y0,x1,y1){

@@ -36,6 +36,7 @@ export default class Rectangle extends BaseTool{
         super.end();
         this.layer.merge(this.drawLayer)
         this.document.ready();
+        this.document.history.save(`Tool.${this.constructor.name}`);
     }
 
     sync(){

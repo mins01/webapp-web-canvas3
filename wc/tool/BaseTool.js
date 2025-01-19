@@ -70,12 +70,21 @@ export default class BaseTool {
 	/** 
 	 * 툴 모양과 위치 잡은 후 레이어에 적용하는 메소드
 	 * 
-	 * @deprecated 기존 사용법은 this.document.ready를 대신하라.
+	 * @deprecated
 	 */
 	apply(){
 		// this.document.apply();
 	}
 
+	
+	/** 
+	 * Description placeholder 
+	 * 
+	 * 뭔가를 준비해서 실제 적용시킬 때 호출하라.
+	 */
+	commit(){
+
+	}
 
 	sync(){
 

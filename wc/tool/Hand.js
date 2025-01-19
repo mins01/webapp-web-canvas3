@@ -38,7 +38,6 @@ export default class Hand extends BaseTool{
     }
     end(){
         super.end();
-        // this.apply();
     }
 
     draw(x0,y0,x1,y1){

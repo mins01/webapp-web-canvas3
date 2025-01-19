@@ -46,11 +46,11 @@ export default class Text extends BaseTool{
         this.text = event.target.value??event.target.innerText;
     }
 
-    apply(){
-        super.apply();
+    commit(){
+        super.commit();
         this.layer.merge(this.drawLayer)
         this.document.ready();
-
+        this.document.history.save(`Tool.${this.constructor.name}`);
     }
     
 

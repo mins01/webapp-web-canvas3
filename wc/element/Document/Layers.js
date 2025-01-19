@@ -13,9 +13,10 @@ export default class Layers extends SelectableArray{
         super(...elements);
     }
     select(index,withoutHistory=false){
-        const r = super.select(index);
-        if(!withoutHistory) this.document.history.save('Layers.select');
-        return r;
+        if(this.selectedIndex != index){
+            const r = super.select(index);
+            if(!withoutHistory) this.document.history.save('Layers.select',true);
+        }
     }
     add(layer,withoutHistory=false){
         const document = this.document
@@ -47,30 +48,33 @@ export default class Layers extends SelectableArray{
 
 
     import(conf){
-        this.clear();
-        // console.log(this,conf);
-        // this.length = 0;
-        conf.elements.forEach(layerConf => {
-            if(layerConf?.__class__===undefined){ throw new Error(`Module name is not exists. - ${layerConf.__class__}`); }
-            let module = Wc?.[layerConf.__class__]
-            if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
-            const layer = module.importFrom(layerConf);
-            // this.document.add(layer);
-            this.add(layer,true);
-        });
+        
+        if(conf.elements === null){ //레이어의 변화가 없는 경우
+
+        }else{
+            this.clear();
+            conf.elements.forEach(layerConf => {
+                if(layerConf?.__class__===undefined){ throw new Error(`Module name is not exists. - ${layerConf.__class__}`); }
+                let module = Wc?.[layerConf.__class__]
+                if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
+                const layer = module.importFrom(layerConf);
+                // this.document.add(layer);
+                this.add(layer,true);
+            });
+        }
         if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
     }
     export(){
         return this.toJSON();
     }
-    snapshot(){
-        const elements = [];
-        console.log('s',this.selectedIndex);
-        
-        this.forEach(element=>{
-            elements.push(element.snapshot());
-        })
-        console.log('e',this.selectedIndex);        
+    snapshot(withoutElements=false){
+        let elements = null;
+        if(!withoutElements){
+            elements = []
+            this.forEach(element=>{
+                elements.push(element.snapshot());
+            })
+        }
         return {
             selectedIndex:this.selectedIndex,
             elements:elements,

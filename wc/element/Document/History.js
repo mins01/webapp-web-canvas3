@@ -5,10 +5,10 @@ export default class History extends LimitedHistory{
         super(maxLength)
         this.document = document;
     }
-    save(title='no-title'){
+    save(title='no-title',withoutElements=false){
         console.log('History:save();',this.currentIndex,this.length);
         const layers = this.document.layers;
-        const snapshot = layers.snapshot();
+        const snapshot = layers.snapshot(withoutElements);
         snapshot.title = title
         super.save(snapshot);
         console.log('END History:save();',snapshot.selectedIndex);

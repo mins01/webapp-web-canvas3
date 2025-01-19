@@ -24,7 +24,7 @@ export default class LimitedHistory{
     }
     redo(){
         if(this.currentIndex >= this.history.length - 1){
-            console.log(`History index > length. (${this.currentIndex} >= ${this.history.length - 1})`)            
+            console.log(`History index >= length -1. (${this.currentIndex} >= ${this.history.length - 1})`)            
             return null
         }
         this.currentIndex++;
