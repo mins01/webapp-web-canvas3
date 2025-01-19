@@ -23,6 +23,7 @@ export default class Layers extends SelectableArray{
         layer.flush();
         // document.flush();
         document?.editor?.onselectLayer(document.layer);
+        // document.history.save();
         return true;
     }
     remove(){
@@ -30,6 +31,7 @@ export default class Layers extends SelectableArray{
         super.remove();
         document.syncDrawLayer(document.layer);
         document.flush();
+        // document.history.save();
         return true;
     }
     move(index){
@@ -37,6 +39,7 @@ export default class Layers extends SelectableArray{
         super.move(index);
         document.flush();
         document?.editor?.onselectLayer(document.layer);
+        document.history.save();
         return true;
     }
 

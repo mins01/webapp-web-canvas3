@@ -13,6 +13,8 @@ export default class History extends LimitedHistory{
     undo(){
         const layers = this.document.layers;
         const snapshot = super.undo();
+        console.log(snapshot);
+        
         if(snapshot===null){return false}
         layers.import(snapshot);
         return true;

@@ -2,6 +2,7 @@ import LimitedQueueArray from "./LimitedQueueArray.js";
 
 export default class LimitedHistory{
     history = null;
+    currentIndex = null;
     constructor(maxLength){
         this.history = new LimitedQueueArray(maxLength)
         this.currentIndex = -1;
@@ -14,12 +15,18 @@ export default class LimitedHistory{
         this.currentIndex = this.history.length -1;
     }
     undo(){
-        if(this.currentIndex <= 0){return null}
+        if(this.currentIndex <= 0){
+            console.log(`History index <= 0. (${this.currentIndex} <= 0)`)
+            return null
+        }
         this.currentIndex--;
         return this.history?.[this.currentIndex]??null;
     }
     redo(){
-        if(this.currentIndex >= this.history.length - 1){return null}
+        if(this.currentIndex >= this.history.length - 1){
+            console.log(`History index > length. (${this.currentIndex} >= ${this.history.length - 1})`)            
+            return null
+        }
         this.currentIndex++;
         return this.history?.[this.currentIndex]??null;
     }

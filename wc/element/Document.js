@@ -44,7 +44,6 @@ export default class Document extends Layer{
         this.classList.add('wc-document')
         this.add(new Layer(this.width,this.height));
         this.flush()
-
         this.frame = this.closest('.wc-frame')??null;
     }
 
