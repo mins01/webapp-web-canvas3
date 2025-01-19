@@ -5,26 +5,32 @@ export default class History extends LimitedHistory{
         super(maxLength)
         this.document = document;
     }
-    save(){
+    save(title='no-title'){
+        console.log('History:save();',this.currentIndex,this.length);
         const layers = this.document.layers;
         const snapshot = layers.snapshot();
+        snapshot.title = title
         super.save(snapshot);
+        console.log('END History:save();',snapshot.selectedIndex);
     }
     undo(){
+        console.log('History:undo();',this.currentIndex,this.length);
         const layers = this.document.layers;
         const snapshot = super.undo();
-        console.log(snapshot);
-        
         if(snapshot===null){return false}
+        console.log('history.undo();',snapshot.title);
         layers.import(snapshot);
         return true;
     }
     redo(){
+        console.log('History:redo();',this.currentIndex,this.length);
         const layers = this.document.layers;
         const snapshot = super.redo();
         if(snapshot===null){return false}
+        console.log('history.redo();',snapshot.title);
+        console.log(snapshot.title);
         layers.import(snapshot);
         return true;
     }
-    
+
 }

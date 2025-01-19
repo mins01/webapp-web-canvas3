@@ -12,18 +12,19 @@ export default class Layers extends SelectableArray{
     constructor(...elements) {
         super(...elements);
     }
-    select(index){
-        return super.select(index)
+    select(index,withoutHistory=false){
+        const r = super.select(index);
+        if(!withoutHistory) this.document.history.save('Layers.select');
+        return r;
     }
-    add(layer){
+    add(layer,withoutHistory=false){
         const document = this.document
         layer.parent = document;
         const r = super.add(layer);
         document.syncDrawLayer(layer);
         layer.flush();
-        // document.flush();
         document?.editor?.onselectLayer(document.layer);
-        // document.history.save();
+        if(!withoutHistory) this.document.history.save('Layers.add');
         return true;
     }
     remove(){
@@ -31,7 +32,7 @@ export default class Layers extends SelectableArray{
         super.remove();
         document.syncDrawLayer(document.layer);
         document.flush();
-        // document.history.save();
+        this.document.history.save('Layers.remove');
         return true;
     }
     move(index){
@@ -39,7 +40,7 @@ export default class Layers extends SelectableArray{
         super.move(index);
         document.flush();
         document?.editor?.onselectLayer(document.layer);
-        document.history.save();
+        this.document.history.save('Layers.move');
         return true;
     }
 
@@ -54,18 +55,22 @@ export default class Layers extends SelectableArray{
             let module = Wc?.[layerConf.__class__]
             if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
             const layer = module.importFrom(layerConf);
-            this.document.add(layer);
+            // this.document.add(layer);
+            this.add(layer,true);
         });
-        if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex)
+        if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
     }
     export(){
         return this.toJSON();
     }
     snapshot(){
         const elements = [];
+        console.log('s',this.selectedIndex);
+        
         this.forEach(element=>{
             elements.push(element.snapshot());
         })
+        console.log('e',this.selectedIndex);        
         return {
             selectedIndex:this.selectedIndex,
             elements:elements,

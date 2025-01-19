@@ -150,7 +150,7 @@
             let divForDebug = document.querySelector('#div-for-debug');
             editor.document.add(wcl4);
 
-            editor.document.layers.select(0)
+            editor.document.layers.select(0);
 
 
             divForDebug.append(editor.document.drawLayer)
@@ -203,7 +203,7 @@
                 <div class="d-flex gap-1 p-1">
                     <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.undo()">UNDO</button>
                     <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.redo()">REDO</button>
-                    <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.save()">SAVE</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.save('manual')">SAVE</button>
                 </div>
             </div>
             <div class="wc-app-modal-btns">
@@ -252,7 +252,7 @@
                             <div>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.history.undo()">UNDO</button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.history.redo()">REDO</button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document.history.save()">SAVE</button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document.history.save('manual')">SAVE</button>
                             </div>
                         </div>
                         <div class="modal-footer">
