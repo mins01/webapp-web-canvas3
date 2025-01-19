@@ -32,7 +32,7 @@ export default class BaseTool {
 		this.document = this.editor.document??null;
 		this.layer = this.document.layer??null;
 		this.drawLayer = this.document.drawLayer??null;
-		if(this.document) this.document.readyTool()
+		if(this.document) this.ready()
 
 		this.x0 = null;
 		this.y0 = null;
@@ -76,6 +76,12 @@ export default class BaseTool {
 		// this.document.apply();
 	}
 
+	/**
+	 * 툴을 사용하기 위해서 준비 처리
+	 */
+	ready(){
+		this.document.readyTool()
+	}
 	
 	/** 
 	 * Description placeholder 

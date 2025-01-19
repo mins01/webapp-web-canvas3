@@ -15,7 +15,7 @@ export default class Hand extends BaseTool{
 
     start(){
         super.start();
-        this.document.readyTool()
+        this.ready()
         // this.left0 = this.document.left;
         // this.top0 = this.document.top;
         this.left0 = this.document.frame.scrollLeft;

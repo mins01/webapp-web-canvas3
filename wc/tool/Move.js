@@ -15,7 +15,7 @@ export default class Move extends BaseTool{
 
     start(){
         super.start();
-        this.document.readyTool()
+        this.ready()
         this.layerLeft0 = this.layer.left;
         this.layerTop0 = this.layer.top;
     }
