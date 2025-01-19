@@ -12,7 +12,7 @@ export default class Brush extends BaseTool{
 
     start(){
         super.start();
-        this.document.ready()
+        this.document.readyTool()
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -35,7 +35,7 @@ export default class Brush extends BaseTool{
     end(){
         super.end();
         // this.layer.merge(this.drawLayer)
-        this.document.ready()
+        this.document.readyTool()
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
 

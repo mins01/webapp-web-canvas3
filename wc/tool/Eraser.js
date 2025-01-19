@@ -13,7 +13,7 @@ export default class Eraser extends BaseTool{
 
     start(){
         super.start();
-        this.document.ready()
+        this.document.readyTool()
         this.coordinates = [];
     }
     onpointerdown(event){
@@ -36,7 +36,7 @@ export default class Eraser extends BaseTool{
     end(){
         super.end();
         this.layer.merge(this.drawLayer)
-        this.document.ready()
+        this.document.readyTool()
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
 

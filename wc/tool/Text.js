@@ -17,7 +17,7 @@ export default class Text extends BaseTool{
 
     start(){
         super.start();
-        this.document.ready();
+        this.document.readyTool();
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -38,7 +38,7 @@ export default class Text extends BaseTool{
     }
     end(){
         super.end();
-        // this.document.ready();
+        // this.document.readyTool();
 
     }
     input(event){
@@ -49,7 +49,7 @@ export default class Text extends BaseTool{
     commit(){
         super.commit();
         this.layer.merge(this.drawLayer)
-        this.document.ready();
+        this.document.readyTool();
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
     

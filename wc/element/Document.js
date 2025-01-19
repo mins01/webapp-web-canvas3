@@ -108,16 +108,20 @@ export default class Document extends Layer{
         this.drawLayer.zoom = layer.zoom;
         this.drawLayer.angle = layer.angle;
     }
-    ready(){
+    readyTool(){ // 툴을 사용할 준비
         this.drawLayer.clear();
         this.syncDrawLayer();
         this.sync();
+    }
+    
+    readyDocument(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
+
     }
 
     
     /** Description placeholder
      * 
-     * @deprecated 대신 ready()를 하자. 
+     * @deprecated 대신 readyTool()를 하자. 
      */
     apply(){
         // console.log(this.layer);
