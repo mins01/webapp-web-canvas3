@@ -173,15 +173,72 @@ export default class Editor{
         console.log('Editor.readyLayer()')
         const document = this.document
 
-        const divForDebug = window.document.querySelector('#div-for-debug');
-        divForDebug.innerHTML = '';
-        divForDebug.append(document.drawLayer)
+
+        const layerBoxContainer = window.document.querySelector('.layer-box-container');
+        const templateLayerBox = window.document.querySelector('#template-layer-box');
+        
+        layerBoxContainer.innerHTML = '';
+
+        // const layers = [document.drawLayer].concat(document.layers);
+        const selectedIndex = document.layers.selectedIndex;
         document.layers.forEach((layer,index)=>{
-            divForDebug.append(layer)
-            layer.onclick = (event)=>{
+            const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
+            const layerBox = layerBoxNode.querySelector('.layer-box');
+            const layerBoxPreview = layerBoxNode.querySelector('.layer-box-preview');
+            // const layerBoxDetail = layerBoxNode.querySelector('.layer-box-detail');
+            const layerBoxEye = layerBoxNode.querySelector('.layer-box-eye');
+
+            const label = layerBoxNode.querySelector('.layer-box-detail-label');
+            const size = layerBoxNode.querySelector('.layer-box-detail-size');
+            const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
+            const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
+
+            label.textContent = layer.label
+            size.textContent = layer.width+'x'+layer.height
+            zoom.textContent = Math.floor(layer.zoom*100)+'%'
+            alpha.textContent = Math.floor(layer.alpha*100)+'%'
+
+            if(selectedIndex == index){
+                layerBox.classList.add('active')
+            }
+            layerBox.onclick = (event)=>{
                 layer.parent.select(index);
             }
+            layerBoxEye.onclick = (event)=>{
+                layer.visible = !layer.visible;
+                layer.flush();
+                layer?.parent?.readyLayer();
+            }
+            
+            layerBox.dataset.wcVisible = layer.visible;
+
+            layerBoxPreview.innerHTML = '';
+            layerBoxPreview.append(layer);
+            layerBoxContainer.prepend(layerBox)
+
+            
         })
+
+        // {
+        //     const layer = document.drawLayer;
+        //     const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
+        //     const layerBox = layerBoxNode.querySelector('.layer-box');
+        //     const layerBoxPreview = layerBoxNode.querySelector('.layer-box-preview');
+        //     const layerBoxDetail = layerBoxNode.querySelector('.layer-box-detail');
+
+        //     layerBox.dataset.wcVisible = layer.visible;
+
+        //     layerBoxPreview.innerHTML = '';
+        //     layerBoxPreview.append(layer);
+        //     layerBoxDetail.textContent = layer.label;
+        //     layerBoxContainer.prepend(layerBox) 
+        // }
+
+
+        if(this?.document?.layer){
+            const layerAlpha = window.document.querySelector('#layer-alpha')
+            layerAlpha.value = this?.document?.layer.alpha
+        }
 
     }
 

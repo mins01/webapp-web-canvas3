@@ -20,8 +20,8 @@ export default class Layers extends SelectableArray{
         if(this.selectedIndex != index){
             const r = super.select(index);
             if(!withoutHistory){
-                this.document.history.save('Layers.select',true);
                 this.ready();
+                this.document.history.save('Layers.select',true);
             }
             
         }
@@ -34,8 +34,8 @@ export default class Layers extends SelectableArray{
         layer.flush();
         document?.editor?.onselectLayer(document.layer);
         if(!withoutHistory){
-            this.document.history.save('Layers.select',true);
             this.ready();
+            this.document.history.save('Layers.select',true);
         }
         return true;
     }
@@ -44,8 +44,8 @@ export default class Layers extends SelectableArray{
         super.remove();
         document.syncDrawLayer(document.layer);
         document.flush();
-        this.document.history.save('Layers.remove');
         this.ready();
+        this.document.history.save('Layers.remove');
         return true;
     }
     move(index){
@@ -53,9 +53,15 @@ export default class Layers extends SelectableArray{
         super.move(index);
         document.flush();
         document?.editor?.onselectLayer(document.layer);
-        this.document.history.save('Layers.move');
         this.ready();
+        this.document.history.save('Layers.move');
         return true;
+    }
+    moveUp(){
+        return this.move(this.selectedIndex+1)
+    }
+    moveDown(){
+        return this.move(this.selectedIndex-1)
     }
 
 

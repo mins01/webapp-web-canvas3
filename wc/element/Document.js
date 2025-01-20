@@ -50,6 +50,7 @@ export default class Document extends Layer{
     get layer(){ return this.layers.selected; }
 
     select(index=null){
+        return this.layers.select(index);
         const activeLayer = this.layers.select(index);
         if(index !== null && activeLayer){
             this.syncDrawLayer(activeLayer);
@@ -114,6 +115,7 @@ export default class Document extends Layer{
     }
     readyLayer(){ // 레이어 변화후 준비 처리
         console.log('Document.readyLayer()')
+        this.syncDrawLayer();
         this.editor?.readyLayer();
     }
     

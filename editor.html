@@ -110,7 +110,7 @@
 
             const wcl4 = globalThis.wcl4 = new Layer(100,100);
             wcl4.fill('#ff000066')
-            wcl4.left = 300;
+            wcl4.left = 100;
             wcl4.top = 20
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
@@ -192,16 +192,16 @@
 <body>
     <div>
         <div id="wc-app" class="wc-app debug-box">
-            <div class="wc-app-nav">
-                <div class="wc-app-nav-menu d-flex gap-1 px-2 py-1 justify-content-center mx-auto" style="">
+            <div class="wc-app-header">
+                <div class="wc-app-nav d-flex gap-1 px-2 py-1 justify-content-center mx-auto" style="">
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"  data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" onclick="this.classList.toggle('active'); wcApp.classList.toggle('show-wc-app-nav-tools')"><i class="bi bi-brush"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" onclick="this.classList.toggle('active'); wcApp.classList.toggle('show-wc-app-tools')"><i class="bi bi-brush"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-collection"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-layers"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;">X</button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;">X</button>
                 </div>
-                <div class="wc-app-nav-tools gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
+                <div class="wc-app-tools gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
                     <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                     <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label>
                     <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
@@ -213,11 +213,12 @@
                     <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label>
                     <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
                 </div>
-                <div class="wc-app-nav-layers gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
 
-                </div>
             </div>
 
+            <div class="wc-app-footer">
+
+            </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
                 <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
@@ -232,7 +233,7 @@
             </div>
             <div class="wc-app-modal-btns">
                 <div class="d-flex gap-1 flex-wrap">
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-menu-main">Main</button>
+                    <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-menu-main">Main</button> -->
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProperty">Property</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalText">Text</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalBrush">Brush</button>
@@ -240,7 +241,7 @@
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalDocument">Document</button>
                 </div>
             </div>
-            <div class="wc-app-preview-layers">
+            <!-- <div class="wc-app-preview-layers">
                 <div id="div-for-debug" class="preview-layers">
 
                 </div>
@@ -248,7 +249,7 @@
                     <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = true; editor.document.layer.flush() }">visible:on</button>
                     <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = false; editor.document.layer.flush() }">visible:off</button>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- Modal -->
@@ -730,6 +731,58 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="modal-layers"  aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title fs-4"><i class="bi bi-layers"></i> Layers</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="my-1 d-flex justify-content-end gap-1">
+                                <input type="range" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
+                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-arrow-bar-up"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-arrow-bar-down"></i></button>
+                            </div>
+                            <hr class="my-1">
+                            <template id="template-layer-box" >
+                                <div class="layer-box d-flex gap-1 align-items-center" role="button">
+                                    <div class="layer-box-eye d-flex justify-content-center align-items-center">
+                                        <i class="bi bi-eye on-visible"></i>
+                                        <i class="bi bi-eye-slash no-visible"></i>
+                                    </div>
+                                    <div class="layer-box-preview">canvas</div>
+                                    <div class="layer-box-detail">
+                                        <div>
+                                            <div class="layer-box-detail-label"></div>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-3 row-gap-1">
+                                            <div class="d-flex gap-1">
+                                                <div>Size</div>
+                                                <div class="layer-box-detail-size"></div>
+                                            </div>
+                                            <div class="d-flex gap-1">
+                                                <div><i class="bi bi-zoom-in"></i></div>
+                                                <div class="layer-box-detail-zoom"></div>
+                                            </div>
+                                            <div class="d-flex gap-1">
+                                                <div><i class="bi bi-at"></i></div>
+                                                <div class="layer-box-detail-alpha"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <div class="layer-box-container d-flex flex-column gap-1">
+                                
+                            </div>
+
                         </div>
                     </div>
                 </div>
