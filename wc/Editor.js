@@ -158,6 +158,11 @@ export default class Editor{
     closeDocument(){
         this.documents.remove();
     }
+    newDocument(width,height){
+        const document = new Document(width,height);
+        document.layers[0].fill('#fff')
+        this.documents.add(document);
+    }
 
 
 
@@ -179,4 +184,7 @@ export default class Editor{
     }
 
     
+
+
+
 }

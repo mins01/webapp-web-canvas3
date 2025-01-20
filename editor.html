@@ -244,7 +244,7 @@
                         <div class="modal-body">
                             <div class="row g-1">
                                 <div class="col-6">
-                                    <button type="button" class="w-100 btn btn-lg btn-primary"><i class="bi bi-file-earmark-plus"></i> NEW</button>
+                                    <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new"><i class="bi bi-file-earmark-plus"></i> NEW</button>
                                 </div>
                                 <div class="col-6">
                                     <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-load"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
@@ -298,6 +298,34 @@
                                     <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('png')"><i class="bi bi-filetype-png"></i> SAVE png</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-file-new"  aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-plus"></i> NEW</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
+                                <div class="d-flex flex-column gap-1">
+                                    <div>
+                                        <label for="" class="form-label">Size</label>
+                                        <div class="input-group input-group-lg">
+                                            <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
+                                            <span class="input-group-text" >x</span>
+                                            <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="w-100 btn btn-lg btn-primary">Create</button>
+                                    </div>
+                                </div> 
+                            </form>
                         </div>
                     </div>
                 </div>
