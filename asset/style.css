@@ -4,7 +4,7 @@
   outline: dashed 1px #f003;
   outline-offset: -1px;
 }
-.wc-app{
+.wc-app-wrap{
   position: absolute;
   top: 0;
   left: 0;
@@ -134,6 +134,7 @@
 
 
 .layer-box{
+  user-select: none;
   border:1px dashed #eee;
 }
 .layer-box.active{

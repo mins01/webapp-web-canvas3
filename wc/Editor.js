@@ -161,6 +161,8 @@ export default class Editor{
         }
     }
     newDocument(width,height){
+        // 다중 document 우선 지원하지 말자.
+        if(this?.document){ this.documents.remove(); }
         const document = new Document(width,height);
         document.layers[0].fill('#fff')
         this.documents.add(document);

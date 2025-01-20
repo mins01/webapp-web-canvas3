@@ -185,13 +185,13 @@
 
     <script>
         globalThis.addEventListener('load',(event)=>{
-            globalThis.wcApp = document.querySelector('#wc-app')
+            const wcApp = globalThis.wcApp = document.querySelector('#wc-app')
         })
     </script>
 </head>
 <body>
-    <div>
-        <div id="wc-app" class="wc-app debug-box">
+    <div id="wc-app" class="wc-app debug-box">
+        <div class="wc-app-wrap">
             <div class="wc-app-header">
                 <div class="wc-app-nav d-flex gap-1 px-2 py-1 justify-content-center mx-auto" style="">
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"  data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
@@ -213,11 +213,11 @@
                     <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label>
                     <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
                 </div>
-
+    
             </div>
-
+    
             <div class="wc-app-footer">
-
+    
             </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
                 <div class="wc-frame">
@@ -241,549 +241,385 @@
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalDocument">Document</button>
                 </div>
             </div>
-            <!-- <div class="wc-app-preview-layers">
-                <div id="div-for-debug" class="preview-layers">
+        </div>
+        <!-- <div class="wc-app-preview-layers">
+            <div id="div-for-debug" class="preview-layers">
 
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = true; editor.document.layer.flush() }">visible:on</button>
+                <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = false; editor.document.layer.flush() }">visible:off</button>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modals">
+
+        <div class="modal fade" id="modal-menu-main"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4">Webapp WC3</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-1">
+                            <div class="col-6">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new"><i class="bi bi-file-earmark-plus"></i> NEW</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-load"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()"><i class="bi bi-x-circle"></i> CLOSE</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = true; editor.document.layer.flush() }">visible:on</button>
-                    <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = false; editor.document.layer.flush() }">visible:off</button>
-                </div>
-            </div> -->
+            </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modals">
+        <div class="modal fade" id="modal-file-load"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" onsubmit="if(this.loadfile.files.length){ editor.loadDocument(this.loadfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
+                            <div class="input-group input-group-lg">
+                                <input type="file" class="form-control" name="loadfile" accept=".wc3.json">
+                                <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
+                            </div>
+                            <div class="form-text text-end"><i class="bi bi-info-circle"></i> *.wc3.json만 지원됩니다.</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="modal fade" id="modal-menu-main"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">Webapp WC3</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row g-1">
-                                <div class="col-6">
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new"><i class="bi bi-file-earmark-plus"></i> NEW</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-load"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()"><i class="bi bi-x-circle"></i> CLOSE</button>
-                                </div>
+        <div class="modal fade" id="modal-file-save"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column gap-1 p-1">
+                            <div>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('wc.json')"><i class="bi bi-filetype-json"></i> SAVE wc3.json</button>
+                                <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+                            </div>
+                            <div>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('png')"><i class="bi bi-filetype-png"></i> SAVE png</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="modal fade" id="modal-file-load"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" onsubmit="if(this.loadfile.files.length){ editor.loadDocument(this.loadfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
-                                <div class="input-group input-group-lg">
-                                    <input type="file" class="form-control" name="loadfile" accept=".wc3.json">
-                                    <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
-                                </div>
-                                <div class="form-text text-end"><i class="bi bi-info-circle"></i> *.wc3.json만 지원됩니다.</div>
-                            </form>
-                        </div>
+        <div class="modal fade" id="modal-file-new"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-plus"></i> NEW</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="modal-file-save"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="d-flex flex-column gap-1 p-1">
+                    <div class="modal-body">
+                        <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
+                            <div class="d-flex flex-column gap-1">
                                 <div>
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('wc.json')"><i class="bi bi-filetype-json"></i> SAVE wc3.json</button>
-                                    <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+                                    <label for="" class="form-label">Size</label>
+                                    <div class="input-group input-group-lg">
+                                        <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
+                                        <span class="input-group-text" >x</span>
+                                        <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
+                                    </div>
                                 </div>
                                 <div>
-                                    <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('png')"><i class="bi bi-filetype-png"></i> SAVE png</button>
+                                    <button class="w-100 btn btn-lg btn-primary">Create</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="modalText"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4">text</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
+                            <h3 class="fs-5">TEXT</h3>
+                            <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
+                        </form>
+                        <hr>
+                        <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
+                            <div class="d-flex flex-wrap gap-1 property-wrap">
+                                <div class="input-group">
+                                    <span class="input-group-text" >글자색</span>
+                                    <input type="color" class="form-control form-control-color"  name="textColor" value="#00ff00">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >글자크기</span>
+                                    <label class="form-control" role="button">
+                                        <input type="range" class="form-range d-block" name="fontSizeNumber" value="10" step="1" min="0" max="100">
+                                    </label>
+                                    <select name="fontSizeUnit" class="form-select" >
+                                        <option value="px">px</option>
+                                        <!-- <option value="pt">pt</option> -->
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >lineHeight</span>
+                                    <label class="form-control" role="button">
+                                        <input type="range" class="form-range d-block" name="lineHeightNumber" value="1.5" step="0.1" min="0" max="100">
+                                    </label>
+                                    <select name="lineHeightUnit" class="form-select" >
+                                        <option value="em">em</option>
+                                        <option value="px">px</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >fontWeight</span>
+                                    <select name="fontWeight" class="form-select" >
+                                        <option value="normal">normal</option>
+                                        <option value="bold">bold</option>
+                                        <option value="bolder">bolder</option>
+                                        <option value="lighter">lighter</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="300">300</option>
+                                        <option value="400">400</option>
+                                        <option value="500">500</option>
+                                        <option value="600">600</option>
+                                        <option value="700">700</option>
+                                        <option value="800">800</option>
+                                        <option value="900">900</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >fontStyle</span>
+                                    <select name="fontStyle" class="form-select" style="width: 6em;">
+                                        <option value="normal">normal</option>
+                                        <option value="italic">italic</option>
+                                        <option value="oblique">oblique</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >fontFamily</span>
+                                    <select name="fontFamily" class="form-select" style="width: 6em;">
+                                        <option value="">Default</option>
+                                        <option value="sans-serif">sans-serif</option>
+                                        <option value="serif">serif</option>
+                                        <option value="monospace">monospace</option>
+                                        <option value="Arial, sans-serif">Arial</option>
+                                        <option value="Helvetica, sans-serif">Helvetica</option>
+                                        <option value="cursive">cursive</option>
+                                        <option value="fantasy">fantasy</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >textPadding</span>
+                                    <label class="form-control" role="button">
+                                        <input type="range" class="form-range d-block" name="textPaddingNumber" value="0" step="0.1" min="0" max="100">
+                                    </label>
+                                    <select name="textPaddingUnit" class="form-select" >
+                                        <option value="px">px</option>
+                                        <option value="em">em</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >letterSpacing</span>
+                                    <label class="form-control" role="button">
+                                        <input type="range" class="form-range d-block" name="letterSpacingNumber" value="0" step="0.1" min="-10" max="10">
+                                    </label>
+                                    <select name="letterSpacingUnit" class="form-select" >
+                                        <option value="px">px</option>
+                                        <option value="em">em</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >textAlign</span>
+                                    <select name="textAlign" class="form-select" style="width: 6em;">
+                                        <option value="left">left</option>
+                                        <option value="right">right</option>
+                                        <option value="center">center</option>
+                                        <option value="start">start</option>
+                                        <option value="end">end</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >textBaseline</span>
+                                    <select name="textBaseline" class="form-select" style="width: 6em;">
+                                        <option value="alphabetic">alphabetic(이걸로 고정하자)</option>
+                                        <option value="top">top</option>
+                                        <option value="middle">middle</option>
+                                        <option value="bottom">bottom</option>
+                                        <option value="hanging">hanging</option>
+                                        <option value="ideographic">ideographic</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="modal fade" id="modal-file-new"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-plus"></i> NEW</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
-                                <div class="d-flex flex-column gap-1">
-                                    <div>
-                                        <label for="" class="form-label">Size</label>
-                                        <div class="input-group input-group-lg">
-                                            <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
-                                            <span class="input-group-text" >x</span>
-                                            <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <button class="w-100 btn btn-lg btn-primary">Create</button>
-                                    </div>
-                                </div> 
-                            </form>
-                        </div>
+        <div class="modal fade" id="modalProperty"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4">property</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-            </div>
-
-
-            <div class="modal fade" id="modalText"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">text</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
-                                <h3 class="fs-5">TEXT</h3>
-                                <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
-                            </form>
-                            <hr>
-                            <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-                                <div class="d-flex flex-wrap gap-1 property-wrap">
-                                    <div class="input-group">
-                                        <span class="input-group-text" >글자색</span>
-                                        <input type="color" class="form-control form-control-color"  name="textColor" value="#00ff00">
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >글자크기</span>
-                                        <label class="form-control" role="button">
-                                            <input type="range" class="form-range d-block" name="fontSizeNumber" value="10" step="1" min="0" max="100">
-                                        </label>
-                                        <select name="fontSizeUnit" class="form-select" >
-                                            <option value="px">px</option>
-                                            <!-- <option value="pt">pt</option> -->
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >lineHeight</span>
-                                        <label class="form-control" role="button">
-                                            <input type="range" class="form-range d-block" name="lineHeightNumber" value="1.5" step="0.1" min="0" max="100">
-                                        </label>
-                                        <select name="lineHeightUnit" class="form-select" >
-                                            <option value="em">em</option>
-                                            <option value="px">px</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >fontWeight</span>
-                                        <select name="fontWeight" class="form-select" >
-                                            <option value="normal">normal</option>
-                                            <option value="bold">bold</option>
-                                            <option value="bolder">bolder</option>
-                                            <option value="lighter">lighter</option>
-                                            <option value="100">100</option>
-                                            <option value="200">200</option>
-                                            <option value="300">300</option>
-                                            <option value="400">400</option>
-                                            <option value="500">500</option>
-                                            <option value="600">600</option>
-                                            <option value="700">700</option>
-                                            <option value="800">800</option>
-                                            <option value="900">900</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >fontStyle</span>
-                                        <select name="fontStyle" class="form-select" style="width: 6em;">
-                                            <option value="normal">normal</option>
-                                            <option value="italic">italic</option>
-                                            <option value="oblique">oblique</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >fontFamily</span>
-                                        <select name="fontFamily" class="form-select" style="width: 6em;">
-                                            <option value="">Default</option>
-                                            <option value="sans-serif">sans-serif</option>
-                                            <option value="serif">serif</option>
-                                            <option value="monospace">monospace</option>
-                                            <option value="Arial, sans-serif">Arial</option>
-                                            <option value="Helvetica, sans-serif">Helvetica</option>
-                                            <option value="cursive">cursive</option>
-                                            <option value="fantasy">fantasy</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >textPadding</span>
-                                        <label class="form-control" role="button">
-                                            <input type="range" class="form-range d-block" name="textPaddingNumber" value="0" step="0.1" min="0" max="100">
-                                        </label>
-                                        <select name="textPaddingUnit" class="form-select" >
-                                            <option value="px">px</option>
-                                            <option value="em">em</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >letterSpacing</span>
-                                        <label class="form-control" role="button">
-                                            <input type="range" class="form-range d-block" name="letterSpacingNumber" value="0" step="0.1" min="-10" max="10">
-                                        </label>
-                                        <select name="letterSpacingUnit" class="form-select" >
-                                            <option value="px">px</option>
-                                            <option value="em">em</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >textAlign</span>
-                                        <select name="textAlign" class="form-select" style="width: 6em;">
-                                            <option value="left">left</option>
-                                            <option value="right">right</option>
-                                            <option value="center">center</option>
-                                            <option value="start">start</option>
-                                            <option value="end">end</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >textBaseline</span>
-                                        <select name="textBaseline" class="form-select" style="width: 6em;">
-                                            <option value="alphabetic">alphabetic(이걸로 고정하자)</option>
-                                            <option value="top">top</option>
-                                            <option value="middle">middle</option>
-                                            <option value="bottom">bottom</option>
-                                            <option value="hanging">hanging</option>
-                                            <option value="ideographic">ideographic</option>
-                                        </select>
-                                    </div>
+                    <div class="modal-body">
+                        <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
+                            <h3 class="fs-5">COLOR</h3>
+                            <div class="d-flex flex-wrap gap-1 property-wrap">
+                                <div class="input-group">
+                                    <span class="input-group-text" >전경색</span>
+                                    <input type="color" class="form-control form-control-color"  name="foreColor" value="#ff0000">
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="modalProperty"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">property</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-                                <h3 class="fs-5">COLOR</h3>
-                                <div class="d-flex flex-wrap gap-1 property-wrap">
-                                    <div class="input-group">
-                                        <span class="input-group-text" >전경색</span>
-                                        <input type="color" class="form-control form-control-color"  name="foreColor" value="#ff0000">
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >배경색</span>
-                                        <input type="color" class="form-control form-control-color"  name="backColor" value="#00ff00">
-                                    </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >배경색</span>
+                                    <input type="color" class="form-control form-control-color"  name="backColor" value="#00ff00">
                                 </div>
-                                <hr class="my-1">
-                                <h3 class="fs-5">LINE AND FILL</h3>
-                                <div class="d-flex flex-wrap gap-1 property-wrap">
-                                    <div class="input-group">
-                                        <span class="input-group-text" >선크기</span>
-                                        <label class="form-control" role="button">
-                                            <input type="range" class="form-range d-block" name="lineWidth" value="3" min="0" max="180" step="1">
-                                        </label>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >질하기순서</span>
-                                        <label class="form-control" role="button"><input type="radio" value="true" name="fillAfterStroke" checked> fill-stroke</label>
-                                        <label class="form-control" role="button"><input type="radio" value="false" name="fillAfterStroke"> stroke-fill</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >칠하기</span>
-                                        <label class="form-control" role="button"><input type="radio" value="false" name="disableFill" checked> 사용</label>
-                                        <label class="form-control" role="button"><input type="radio" value="true" name="disableFill"> 금지</label>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >테두리</span>
-                                        <label class="form-control" role="button"><input type="radio" value="false" name="disableStroke" checked> 사용</label>
-                                        <label class="form-control" role="button"><input type="radio" value="true" name="disableStroke"> 금지</label>
-                                    </div>
-
-                                    <!-- 우선 inside 로 고정
-                                    <div class="input-group">
-                                        <span class="input-group-text" >strokeLocation</span>
-                                        <select name="strokeLocation" class="form-select">
-                                            <option value="inside">inside</option>
-                                            <option value="center">center</option>
-                                            <option value="outside">outside</option>
-                                        </select>
-                                    </div> -->
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="modalBrush"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">brush</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form name="formBrushConfig" action="" oninput="b1.setBrushConfig(Wc.HtmlUtil.formToObject(this));b1.flush();  return false" >
-                                <div class="text-center d-flex justify-content-center align-items-center" style="min-height: 100px;">
-                                    <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
-                                </div>
-                                <hr>
-                                <div class="d-flex flex-wrap gap-1 property-wrap">
-                                    <div class="input-group">
-                                        <span class="input-group-text" >size</span>
-                                        <input class="form-control" type="number" name="size" placeholder="size"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="5"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >roundness(원형율)</span>
-                                        <input class="form-control" type="number" name="roundness" placeholder="roundness" step="0.05" min="0" max="1"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="1"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >angle(각도)</span>
-                                        <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="0"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >hardness(경도)</span>
-                                        <input class="form-control" type="number" name="hardness" placeholder="hardness" step="0.05" min="0" max="1"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="1"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >opacity(불투명도)</span>
-                                        <input class="form-control" type="number" name="opacity" placeholder="opacity" step="0.05" min="0" max="1"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="1"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >spacing(간격)</span>
-                                        <input class="form-control" type="number" name="spacing" placeholder="spacing" step="0.005" min="0.005" max="2"
-                                            onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
-                                            value="0.25"
-                                            >
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text" >solidColor(단색)</span>
-                                        <select class="form-select " name="solidColor" id="" onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"  >
-                                            <option selected value="">NO</option>
-                                            <option value="1">YES</option>
-
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="modalLayer"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">layer</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="d-flex flex-wrap gap-1">
-                                <form action="" onsubmit="editor?.document?.layer?.resize(this.width.value,this.height.value);editor?.document?.layer?.flush(); return false">
-                                    <div class="input-group" style="width:300px;">
-                                        <input class="form-control" type="number" name="width" placeholder="width"
-                                            onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
-                                            >
-                                        <span class="input-group-text" >X</span>
-                                        <input class="form-control" type="number" name="height" placeholder="height"
-                                            onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
-                                            >
-                                        <button class="btn btn-primary">변경</button>
-                                    </div>
-                                </form>
-                                <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
-                                    <div class="input-group" style="width:300px;">
-                                        <span class="input-group-text">ZOOM</span>
-                                        <input class="form-control" type="number" name="zoom" placeholder="zoom"
-                                            step="0.05" min="0" max="3"
-                                            onfocus="if(editor?.document?.layer){ this.form.zoom.value = editor?.document?.layer.zoom;}"
-                                            >
-                                        <button class="btn btn-primary">변경</button>
-                                    </div>
-                                </form>
-                                <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
-                                    <div class="input-group" style="width:300px;">
-                                        <span class="input-group-text">ANGLE</span>
-                                        <input class="form-control" type="number" name="angle" placeholder="angle"
-                                            step="0.05" min="-1" max="1"
-                                            onfocus="if(editor?.document?.layer){ this.form.angle.value = editor?.document?.layer.angle;}"
-                                            >
-                                        <button class="btn btn-primary">변경</button>
-                                    </div>
-                                </form>
-
-                                <form action="" onsubmit="return false">
-                                    <div class="input-group" style="width:300px;">
-                                        <input class="form-control" type="number" name="left" placeholder="left"
-                                            onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
-                                            oninput="if(editor?.document?.layer){ editor.document.layer.left = this.value; editor.document.layer.flush()}"
-                                            >
-                                        <span class="input-group-text" >X</span>
-                                        <input class="form-control" type="number" name="top" placeholder="top"
-                                            onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
-                                            oninput="if(editor?.document?.layer){ editor.document.layer.top = parseFloat(this.value);  editor.document.layer.flush()}"
-                                            >
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="modalDocument"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4">document</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="d-flex flex-wrap gap-1">
-                                <form action="" onsubmit="if(editor?.document) { editor.document.zoom=parseFloat(this.zoom.value); editor.document.flush();} return false" oninput="return this.onsubmit(event)">
-                                    <div class="input-group" style="width:300px;">
-                                        <span class="input-group-text">ZOOM</span>
-                                        <input class="form-control" type="number" name="zoom" placeholder="zoom"
-                                            step="0.05" min="0" max="3"
-                                            onfocus="if(editor?.document){ this.form.zoom.value = editor?.document.zoom;}"
-                                            >
-                                        <button class="btn btn-primary">변경</button>
-                                    </div>
-                                </form>
-                                <form action="" onsubmit="if(editor?.document) { editor.document.angle=parseFloat(this.angle.value); editor.document.flush();} return false" oninput="return this.onsubmit(event)">
-                                    <div class="input-group" style="width:300px;">
-                                        <span class="input-group-text">ANGLE</span>
-                                        <input class="form-control" type="number" name="angle" placeholder="angle"
-                                            step="0.05" min="-1" max="1"
-                                            onfocus="if(editor?.document){ this.form.angle.value = editor?.document.angle;}"
-                                            >
-                                        <button class="btn btn-primary">변경</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                            <hr>
-                            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
-                                <h3 class="fs-5">TEXT</h3>
-                                <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="modal fade" id="modal-layers"  aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title fs-4"><i class="bi bi-layers"></i> Layers</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="my-1 d-flex justify-content-end gap-1">
-                                <input type="range" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
-                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-arrow-bar-up"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-arrow-bar-down"></i></button>
                             </div>
                             <hr class="my-1">
-                            <template id="template-layer-box" >
-                                <div class="layer-box d-flex gap-1 align-items-center" role="button">
-                                    <div class="layer-box-eye d-flex justify-content-center align-items-center">
-                                        <i class="bi bi-eye on-visible"></i>
-                                        <i class="bi bi-eye-slash no-visible"></i>
-                                    </div>
-                                    <div class="layer-box-preview">canvas</div>
-                                    <div class="layer-box-detail">
-                                        <div>
-                                            <div class="layer-box-detail-label"></div>
-                                        </div>
-                                        <div class="d-flex flex-wrap gap-3 row-gap-1">
-                                            <div class="d-flex gap-1">
-                                                <div>Size</div>
-                                                <div class="layer-box-detail-size"></div>
-                                            </div>
-                                            <div class="d-flex gap-1">
-                                                <div><i class="bi bi-zoom-in"></i></div>
-                                                <div class="layer-box-detail-zoom"></div>
-                                            </div>
-                                            <div class="d-flex gap-1">
-                                                <div><i class="bi bi-at"></i></div>
-                                                <div class="layer-box-detail-alpha"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <h3 class="fs-5">LINE AND FILL</h3>
+                            <div class="d-flex flex-wrap gap-1 property-wrap">
+                                <div class="input-group">
+                                    <span class="input-group-text" >선크기</span>
+                                    <label class="form-control" role="button">
+                                        <input type="range" class="form-range d-block" name="lineWidth" value="3" min="0" max="180" step="1">
+                                    </label>
                                 </div>
-                            </template>
-                            <div class="layer-box-container d-flex flex-column gap-1">
-                                
-                            </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >질하기순서</span>
+                                    <label class="form-control" role="button"><input type="radio" value="true" name="fillAfterStroke" checked> fill-stroke</label>
+                                    <label class="form-control" role="button"><input type="radio" value="false" name="fillAfterStroke"> stroke-fill</label>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >칠하기</span>
+                                    <label class="form-control" role="button"><input type="radio" value="false" name="disableFill" checked> 사용</label>
+                                    <label class="form-control" role="button"><input type="radio" value="true" name="disableFill"> 금지</label>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >테두리</span>
+                                    <label class="form-control" role="button"><input type="radio" value="false" name="disableStroke" checked> 사용</label>
+                                    <label class="form-control" role="button"><input type="radio" value="true" name="disableStroke"> 금지</label>
+                                </div>
 
-                        </div>
+                                <!-- 우선 inside 로 고정
+                                <div class="input-group">
+                                    <span class="input-group-text" >strokeLocation</span>
+                                    <select name="strokeLocation" class="form-select">
+                                        <option value="inside">inside</option>
+                                        <option value="center">center</option>
+                                        <option value="outside">outside</option>
+                                    </select>
+                                </div> -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalBrush"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4">brush</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formBrushConfig" action="" oninput="b1.setBrushConfig(Wc.HtmlUtil.formToObject(this));b1.flush();  return false" >
+                            <div class="text-center d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                                <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
+                            </div>
+                            <hr>
+                            <div class="d-flex flex-wrap gap-1 property-wrap">
+                                <div class="input-group">
+                                    <span class="input-group-text" >size</span>
+                                    <input class="form-control" type="number" name="size" placeholder="size"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="5"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >roundness(원형율)</span>
+                                    <input class="form-control" type="number" name="roundness" placeholder="roundness" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="1"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >angle(각도)</span>
+                                    <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="0"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >hardness(경도)</span>
+                                    <input class="form-control" type="number" name="hardness" placeholder="hardness" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="1"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >opacity(불투명도)</span>
+                                    <input class="form-control" type="number" name="opacity" placeholder="opacity" step="0.05" min="0" max="1"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="1"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >spacing(간격)</span>
+                                    <input class="form-control" type="number" name="spacing" placeholder="spacing" step="0.005" min="0.005" max="2"
+                                        onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"
+                                        value="0.25"
+                                        >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >solidColor(단색)</span>
+                                    <select class="form-select " name="solidColor" id="" onfocus="if(b1){ this.value = b1.brushConfig[this.name];}"  >
+                                        <option selected value="">NO</option>
+                                        <option value="1">YES</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -791,9 +627,178 @@
 
 
 
+        <div class="modal fade" id="modalDocument"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4">document</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-wrap gap-1">
+                            <form action="" onsubmit="if(editor?.document) { editor.document.zoom=parseFloat(this.zoom.value); editor.document.flush();} return false" oninput="return this.onsubmit(event)">
+                                <div class="input-group" style="width:300px;">
+                                    <span class="input-group-text">ZOOM</span>
+                                    <input class="form-control" type="number" name="zoom" placeholder="zoom"
+                                        step="0.05" min="0" max="3"
+                                        onfocus="if(editor?.document){ this.form.zoom.value = editor?.document.zoom;}"
+                                        >
+                                    <button class="btn btn-primary">변경</button>
+                                </div>
+                            </form>
+                            <form action="" onsubmit="if(editor?.document) { editor.document.angle=parseFloat(this.angle.value); editor.document.flush();} return false" oninput="return this.onsubmit(event)">
+                                <div class="input-group" style="width:300px;">
+                                    <span class="input-group-text">ANGLE</span>
+                                    <input class="form-control" type="number" name="angle" placeholder="angle"
+                                        step="0.05" min="-1" max="1"
+                                        onfocus="if(editor?.document){ this.form.angle.value = editor?.document.angle;}"
+                                        >
+                                    <button class="btn btn-primary">변경</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        <hr>
+                        <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
+                            <h3 class="fs-5">TEXT</h3>
+                            <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="modal fade" id="modal-layers"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-layers"></i> Layers</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="my-1 d-flex justify-content-end gap-1">
+                            <div class="d-flex justify-content-start gap-1">
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush()"><i class="bi bi-plus-circle"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush()"><i class="bi bi-eraser-fill"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
 
+                            </div>
+                            <div class="d-flex justify-content-end gap-1 flex-fill">
+                                <input type="range" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
+                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
+                            </div>
+                        </div>
+                        <hr class="my-1">
+                        <template id="template-layer-box" >
+                            <div class="layer-box d-flex gap-1 align-items-center" role="button">
+                                <div class="layer-box-eye d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-eye on-visible"></i>
+                                    <i class="bi bi-eye-slash no-visible"></i>
+                                </div>
+                                <div class="layer-box-preview">canvas</div>
+                                <div class="layer-box-detail">
+                                    <div>
+                                        <div class="layer-box-detail-label"></div>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-3 row-gap-1">
+                                        <div class="d-flex gap-1">
+                                            <div>Size</div>
+                                            <div class="layer-box-detail-size"></div>
+                                        </div>
+                                        <div class="d-flex gap-1">
+                                            <div><i class="bi bi-zoom-in"></i></div>
+                                            <div class="layer-box-detail-zoom"></div>
+                                        </div>
+                                        <div class="d-flex gap-1">
+                                            <div><i class="bi bi-at"></i></div>
+                                            <div class="layer-box-detail-alpha"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="layer-box-container d-flex flex-column gap-1">
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-layer"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-layers-half"></i> Layer</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-wrap gap-1">
+                            <form action="" onsubmit="editor?.document?.layer?.resize(this.width.value,this.height.value);editor?.document?.layer?.flush(); return false">
+                                <div class="input-group" style="width:300px;">
+                                    <input class="form-control" type="number" name="width" placeholder="width"
+                                        onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
+                                        >
+                                    <span class="input-group-text" >X</span>
+                                    <input class="form-control" type="number" name="height" placeholder="height"
+                                        onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
+                                        >
+                                    <button class="btn btn-primary">변경</button>
+                                </div>
+                            </form>
+                            <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
+                                <div class="input-group" style="width:300px;">
+                                    <span class="input-group-text">ZOOM</span>
+                                    <input class="form-control" type="number" name="zoom" placeholder="zoom"
+                                        step="0.05" min="0" max="3"
+                                        onfocus="if(editor?.document?.layer){ this.form.zoom.value = editor?.document?.layer.zoom;}"
+                                        >
+                                    <button class="btn btn-primary">변경</button>
+                                </div>
+                            </form>
+                            <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
+                                <div class="input-group" style="width:300px;">
+                                    <span class="input-group-text">ANGLE</span>
+                                    <input class="form-control" type="number" name="angle" placeholder="angle"
+                                        step="0.05" min="-1" max="1"
+                                        onfocus="if(editor?.document?.layer){ this.form.angle.value = editor?.document?.layer.angle;}"
+                                        >
+                                    <button class="btn btn-primary">변경</button>
+                                </div>
+                            </form>
+
+                            <form action="" onsubmit="return false">
+                                <div class="input-group" style="width:300px;">
+                                    <input class="form-control" type="number" name="left" placeholder="left"
+                                        onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
+                                        oninput="if(editor?.document?.layer){ editor.document.layer.left = this.value; editor.document.layer.flush()}"
+                                        >
+                                    <span class="input-group-text" >X</span>
+                                    <input class="form-control" type="number" name="top" placeholder="top"
+                                        onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
+                                        oninput="if(editor?.document?.layer){ editor.document.layer.top = parseFloat(this.value);  editor.document.layer.flush()}"
+                                        >
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
 </body>
 </html>

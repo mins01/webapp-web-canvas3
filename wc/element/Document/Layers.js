@@ -26,6 +26,11 @@ export default class Layers extends SelectableArray{
             
         }
     }
+    addLayer(){
+        const document = this.document
+        const layer = new Layer(document.width,document.height)
+        this.add(layer);
+    }
     add(layer,withoutHistory=false){
         const document = this.document
         layer.parent = document;
@@ -40,9 +45,9 @@ export default class Layers extends SelectableArray{
         return true;
     }
     remove(){
+        if(this.length===1){ throw new Error("Must be at least one layer."); }
         const document = this.document
         super.remove();
-        document.syncDrawLayer(document.layer);
         document.flush();
         this.ready();
         this.document.history.save('Layers.remove');
