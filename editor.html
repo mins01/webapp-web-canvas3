@@ -182,22 +182,42 @@
             /* position: absolute; */
         }
     </style>
+
+    <script>
+        globalThis.addEventListener('load',(event)=>{
+            globalThis.wcApp = document.querySelector('#wc-app')
+        })
+    </script>
 </head>
 <body>
     <div>
-        <div  class="wc-app debug-box">
-            <div class="wc-app-tools">
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-sm btn-outline-info pe-none" >tool:Line</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Pen</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Brush</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Eraser</button></label>       </div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Move</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Hand')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Hand</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Rectangle</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Circle</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-sm btn-outline-info pe-none">tool:Text</button></label></div>
-                <div><label role="button" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-sm btn-outline-info pe-none" >tool:Text - commit</button></label></div>
+        <div id="wc-app" class="wc-app debug-box">
+            <div class="wc-app-nav">
+                <div class="wc-app-nav-menu d-flex gap-1 px-2 py-1 justify-content-center mx-auto" style="">
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"  data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" onclick="this.classList.toggle('active'); wcApp.classList.toggle('show-wc-app-nav-tools')"><i class="bi bi-brush"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-collection"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-layers"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;">X</button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;">X</button>
+                </div>
+                <div class="wc-app-nav-tools gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
+                    <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
+                    <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label>
+                    <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
+                    <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>       
+                    <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
+                    <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Hand')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
+                    <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label>
+                    <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label>
+                    <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label>
+                    <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
+                </div>
+                <div class="wc-app-nav-layers gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
+
+                </div>
             </div>
+
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
                 <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
