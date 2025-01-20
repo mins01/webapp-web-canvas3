@@ -237,7 +237,7 @@
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProperty">Property</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalText">Text</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalBrush">Brush</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalLayer">Layer</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-layer">Layer</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalDocument">Document</button>
                 </div>
             </div>
@@ -684,8 +684,8 @@
                     <div class="modal-body">
                         <div class="my-1 d-flex justify-content-end gap-1">
                             <div class="d-flex justify-content-start gap-1">
-                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush()"><i class="bi bi-plus-circle"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush()"><i class="bi bi-eraser-fill"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-plus-circle"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
 
                             </div>
@@ -697,31 +697,36 @@
                         </div>
                         <hr class="my-1">
                         <template id="template-layer-box" >
-                            <div class="layer-box d-flex gap-1 align-items-center" role="button">
-                                <div class="layer-box-eye d-flex justify-content-center align-items-center">
+                            <div class="layer-box d-flex gap-1 align-items-center p-1" role="button">
+                                <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
                                     <i class="bi bi-eye on-visible"></i>
                                     <i class="bi bi-eye-slash no-visible"></i>
-                                </div>
-                                <div class="layer-box-preview">canvas</div>
-                                <div class="layer-box-detail">
-                                    <div>
-                                        <div class="layer-box-detail-label"></div>
+                                </button>
+                                <button class="btn layer-box-content text-start flex-fill d-flex gap-1 align-items-center p-0 m-0">
+                                    <div class="layer-box-preview">canvas</div>
+                                    <div class="layer-box-detail">
+                                        <div>
+                                            <div class="layer-box-detail-label"></div>
+                                        </div>
+                                        <small class="d-flex flex-wrap gap-3 row-gap-1">
+                                            <div class="d-flex gap-1">
+                                                <div>Size</div>
+                                                <div class="layer-box-detail-size"></div>
+                                            </div>
+                                            <div class="d-flex gap-1">
+                                                <div><i class="bi bi-zoom-in"></i></div>
+                                                <div class="layer-box-detail-zoom"></div>
+                                            </div>
+                                            <div class="d-flex gap-1">
+                                                <div><i class="bi bi-at"></i></div>
+                                                <div class="layer-box-detail-alpha"></div>
+                                            </div>
+                                        </small>
                                     </div>
-                                    <div class="d-flex flex-wrap gap-3 row-gap-1">
-                                        <div class="d-flex gap-1">
-                                            <div>Size</div>
-                                            <div class="layer-box-detail-size"></div>
-                                        </div>
-                                        <div class="d-flex gap-1">
-                                            <div><i class="bi bi-zoom-in"></i></div>
-                                            <div class="layer-box-detail-zoom"></div>
-                                        </div>
-                                        <div class="d-flex gap-1">
-                                            <div><i class="bi bi-at"></i></div>
-                                            <div class="layer-box-detail-alpha"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </button>
+                                <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" data-bs-toggle="modal" data-bs-target="#modal-layer">
+                                    <i class="bi bi-sliders"></i>
+                                </button>
                             </div>
                         </template>
                         <div class="layer-box-container d-flex flex-column gap-1">
@@ -742,62 +747,79 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-wrap gap-1">
-                            <form action="" onsubmit="editor?.document?.layer?.resize(this.width.value,this.height.value);editor?.document?.layer?.flush(); return false">
-                                <div class="input-group" style="width:300px;">
-                                    <input class="form-control" type="number" name="width" placeholder="width"
-                                        onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
-                                        >
+
+                            <form name="form_layer_resize" class="flex-fill" action="" onsubmit="if(editor?.document?.layer){ editor.document.layer.resize(this.width.value,this.height.value);editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
+                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
                                     <span class="input-group-text" >X</span>
-                                    <input class="form-control" type="number" name="height" placeholder="height"
-                                        onfocus="if(editor?.document?.layer){ this.form.width.value = editor?.document?.layer.width; this.form.height.value = editor?.document?.layer.height;}"
-                                        >
-                                    <button class="btn btn-primary">변경</button>
+                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
                                 </div>
                             </form>
-                            <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
-                                <div class="input-group" style="width:300px;">
-                                    <span class="input-group-text">ZOOM</span>
-                                    <input class="form-control" type="number" name="zoom" placeholder="zoom"
-                                        step="0.05" min="0" max="3"
-                                        onfocus="if(editor?.document?.layer){ this.form.zoom.value = editor?.document?.layer.zoom;}"
-                                        >
-                                    <button class="btn btn-primary">변경</button>
+                            <form name="form_layer_zoom" class="flex-fill" action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false" oninput="return this.onsubmit(event)"  oninput="return this.onsubmit(event)">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
+                                    <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
                                 </div>
                             </form>
-                            <form action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();} return false" oninput="return this.onsubmit(event)">
-                                <div class="input-group" style="width:300px;">
-                                    <span class="input-group-text">ANGLE</span>
-                                    <input class="form-control" type="number" name="angle" placeholder="angle"
-                                        step="0.05" min="-1" max="1"
-                                        onfocus="if(editor?.document?.layer){ this.form.angle.value = editor?.document?.layer.angle;}"
-                                        >
-                                    <button class="btn btn-primary">변경</button>
+                            <form name="form_layer_angle" class="flex-fill" action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false" oninput="return this.onsubmit(event)">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
+                                    <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
                                 </div>
                             </form>
 
-                            <form action="" onsubmit="return false">
-                                <div class="input-group" style="width:300px;">
-                                    <input class="form-control" type="number" name="left" placeholder="left"
-                                        onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
-                                        oninput="if(editor?.document?.layer){ editor.document.layer.left = this.value; editor.document.layer.flush()}"
-                                        >
-                                    <span class="input-group-text" >X</span>
-                                    <input class="form-control" type="number" name="top" placeholder="top"
-                                        onfocus="if(editor?.document?.layer){ this.form.left.value = editor?.document?.layer.left; this.form.top.value = editor?.document?.layer.top;}"
-                                        oninput="if(editor?.document?.layer){ editor.document.layer.top = parseFloat(this.value);  editor.document.layer.flush()}"
-                                        >
+                            <form name="form_layer_postion" class="flex-fill" action="" onsubmit="if(editor?.document?.layer){ editor.document.layer.postion(this.left.value,this.top.value); editor.document.layer.flush(); editor.document.layers.ready(); editor.document.history.save();  } return false " oninput="return this.onsubmit(event)" >
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Postion</button>
                                 </div>
                             </form>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            window.addEventListener('load',(event)=>{
+                // window.modalLayer = new bootstrap.Modal('#modal-layer')
+                document.querySelector('#modal-layer').addEventListener('show.bs.modal', event => {
+                    const layer = editor?.document?.layer
+                    console.log(layer);
+                    if(!layer){return;}
+                    {
+                        const f = document.form_layer_resize;
+                        
+                        f.width.value = layer.width
+                        f.height.value = layer.height
+                        f.width.value = layer.width
+                        f.height.value = layer.height
+                    }
+                    {
+                        const f = document.form_layer_zoom;
+                        f.zoom.value = layer.zoom
+                    }
+                    {
+                        const f = document.form_layer_angle;
+                        f.angle.value = layer.angle
+                    }
+                    {
+                        const f = document.form_layer_postion;
+                        f.left.value = layer.left
+                        f.top.value = layer.top
+                    }
+                    
+                    
+                })
+            })
+        </script>
     </div>
     
 </body>

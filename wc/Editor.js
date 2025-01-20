@@ -186,9 +186,11 @@ export default class Editor{
         document.layers.forEach((layer,index)=>{
             const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
             const layerBox = layerBoxNode.querySelector('.layer-box');
-            const layerBoxPreview = layerBoxNode.querySelector('.layer-box-preview');
-            // const layerBoxDetail = layerBoxNode.querySelector('.layer-box-detail');
+            const content = layerBoxNode.querySelector('.layer-box-content');
+            const preview = layerBoxNode.querySelector('.layer-box-preview');
+            const detail = layerBoxNode.querySelector('.layer-box-detail');
             const layerBoxEye = layerBoxNode.querySelector('.layer-box-eye');
+            
 
             const label = layerBoxNode.querySelector('.layer-box-detail-label');
             const size = layerBoxNode.querySelector('.layer-box-detail-size');
@@ -203,19 +205,21 @@ export default class Editor{
             if(selectedIndex == index){
                 layerBox.classList.add('active')
             }
-            layerBox.onclick = (event)=>{
+            content.onclick = (event)=>{
                 layer.parent.select(index);
             }
             layerBoxEye.onclick = (event)=>{
+                event.stopPropagation()
                 layer.visible = !layer.visible;
                 layer.flush();
                 layer?.parent?.readyLayer();
+                layer?.parent?.history.save('layer.visible')
             }
             
-            layerBox.dataset.wcVisible = layer.visible;
+            layerBox.dataset.wcLayerVisible = layer.visible;
 
-            layerBoxPreview.innerHTML = '';
-            layerBoxPreview.append(layer);
+            preview.innerHTML = '';
+            preview.append(layer);
             layerBoxContainer.prepend(layerBox)
 
             
@@ -225,13 +229,13 @@ export default class Editor{
         //     const layer = document.drawLayer;
         //     const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
         //     const layerBox = layerBoxNode.querySelector('.layer-box');
-        //     const layerBoxPreview = layerBoxNode.querySelector('.layer-box-preview');
+        //     const preview = layerBoxNode.querySelector('.layer-box-preview');
         //     const layerBoxDetail = layerBoxNode.querySelector('.layer-box-detail');
 
-        //     layerBox.dataset.wcVisible = layer.visible;
+        //     layerBox.dataset.wcLayerVisible = layer.visible;
 
-        //     layerBoxPreview.innerHTML = '';
-        //     layerBoxPreview.append(layer);
+        //     preview.innerHTML = '';
+        //     preview.append(layer);
         //     layerBoxDetail.textContent = layer.label;
         //     layerBoxContainer.prepend(layerBox) 
         // }

@@ -139,6 +139,7 @@
 }
 .layer-box.active{
   border:1px dashed #333;
+  background-color: #eee;
 }
 .layer-box-preview canvas{
   display: block;
@@ -147,16 +148,22 @@
   max-width: 3em;
   object-fit: contain;
 }
-.layer-box[data-wc-visible='true'] .on-visible,
-.layer-box[data-wc-visible='false'] .no-visible{
+.layer-box[data-wc-layer-visible='true'] .on-visible,
+.layer-box[data-wc-layer-visible='false'] .no-visible{
   display: block;
 }
-.layer-box[data-wc-visible='false'] .on-visible,
-.layer-box[data-wc-visible='true'] .no-visible{
+.layer-box[data-wc-layer-visible='false'] .on-visible,
+.layer-box[data-wc-layer-visible='true'] .no-visible{
   display: none;
 }
 .layer-box-eye{
-  font-size: 2rem;
-  width: 50px;
+  font-size: 1.2rem;
+  width: 2rem;
   padding:4px;
+}
+.layer-box-config{
+  display: none !important;
+}
+.layer-box.active .layer-box-config{
+  display: flex !important;
 }

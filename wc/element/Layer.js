@@ -5,7 +5,7 @@ import Canvas from "./Canvas.js"
 export default class Layer extends Canvas{
 
     static get keys(){
-        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom'])
+        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom','visible'])
     }
     static defineCustomElements(name='wc-layer'){
         super.defineCustomElements(name);
@@ -49,6 +49,11 @@ export default class Layer extends Canvas{
         }else if(this.hasAttribute('visible') ){
             this.removeAttribute('visible') 
         }
+    }
+
+    postion(left,top){
+        this.left = left;
+        this.top = top;
     }
 
     merge(canvas){
