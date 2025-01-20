@@ -198,7 +198,7 @@ export default class Editor{
             const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
             const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
 
-            label.textContent = layer.label
+            label.textContent = layer.constructor.name
             size.textContent = layer.width+'x'+layer.height
             zoom.textContent = Math.floor(layer.zoom*100)+'%'
             alpha.textContent = Math.floor(layer.alpha*100)+'%'

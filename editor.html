@@ -122,11 +122,11 @@
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
 
-            // const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
-            // wcl5.text='하늘하늘! \n 그렇구나';
-            // wcl5.textConfig.textColor="#0000cc"
+            const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
+            wcl5.text='하늘하늘! \n 그렇구나';
+            wcl5.textConfig.textColor="#0000cc"
 
-            // editor.document.add(wcl5);
+            editor.document.add(wcl5);
 
             // const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
             // editor.document.add(wcl6);
@@ -179,11 +179,6 @@
             }
         }
     </script>
-    <style>
-        .wc-document{
-            /* position: absolute; */
-        }
-    </style>
 
     <script>
         globalThis.addEventListener('load',(event)=>{
@@ -198,7 +193,6 @@
                 <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()"><i class="bi bi-brush"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-collection"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button>
@@ -217,10 +211,11 @@
                         <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
                     </div>
                     <div class="wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
-                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-gear"></i></button>
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document"><i class="bi bi-window"></i></button>
-                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-alphabet-uppercase"></i></button>
-                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-brush"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-context-config"><i class="bi bi-gear"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button>
                     </div>
                 </div>
     
@@ -244,10 +239,10 @@
             <div class="wc-app-modal-btns">
                 <div class="d-flex gap-1 flex-wrap">
                     <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-menu-main">Main</button> -->
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProperty">Property</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalText">Text</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalBrush">Brush</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-layer">Layer</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-context-config">Property</button>
+                    <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalText">Text</button> -->
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-brush-config">Brush</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-layer-config">Layer</button>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalDocument">Document</button>
                 </div>
             </div>
@@ -364,11 +359,11 @@
         </div>
 
 
-        <div class="modal fade" id="modalText"  aria-hidden="true">
+        <div class="modal fade" id="modal-text-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4">text</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-alphabet-uppercase"></i> Text</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -494,7 +489,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalProperty"  aria-hidden="true">
+        <div class="modal fade" id="modal-context-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -559,7 +554,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalBrush"  aria-hidden="true">
+        <div class="modal fade" id="modal-brush-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -734,7 +729,7 @@
                                         </small>
                                     </div>
                                 </button>
-                                <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" data-bs-toggle="modal" data-bs-target="#modal-layer">
+                                <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" data-bs-toggle="modal" data-bs-target="#modal-layer-config">
                                     <i class="bi bi-sliders"></i>
                                 </button>
                             </div>
@@ -748,7 +743,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modal-layer"  aria-hidden="true">
+        <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -784,6 +779,20 @@
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
                                     <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                </div>
+                            </form>
+                            <form name="form_layer_alpha" class="flex-fill" action="" 
+                                oninput="
+                                if(this.closest('.modal')?.layer){ 
+                                    const layer = this.closest('.modal')?.layer
+                                    layer.alpha=parseFloat(this.alpha.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
+                                    <input class="form-control" type="number" name="alpha" placeholder="alpha" step="0.1" min="0" max="1" >
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
                                 </div>
                             </form>
@@ -824,11 +833,11 @@
         </div>
         <script>
             window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer')
-                document.querySelector('#modal-layer').addEventListener('show.bs.modal', event => {
+                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
+                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', event => {
                     console.log(event);
                     
-                    const layer = event.relatedTarget.layer
+                    const layer = event.relatedTarget?.layer??editor?.document?.layer
                     event.target.layer = layer;
                     if(!layer){return;}
                     {
@@ -839,6 +848,10 @@
                         f.width.value = layer.width
                         f.height.value = layer.height
                     }
+                    {
+                        const f = document.form_layer_alpha;
+                        f.alpha.value = layer.alpha
+                    }                    
                     {
                         const f = document.form_layer_zoom;
                         f.zoom.value = layer.zoom
@@ -859,7 +872,7 @@
         </script>
 
 
-        <div class="modal fade" id="modal-document"  aria-hidden="true">
+        <div class="modal fade" id="modal-document-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -932,8 +945,8 @@
 
         <script>
             window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer')
-                document.querySelector('#modal-document').addEventListener('show.bs.modal', event => {
+                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
+                document.querySelector('#modal-document-config').addEventListener('show.bs.modal', event => {
                     const document = editor.document
                     event.target.document = document;
                     if(!document){return;}
