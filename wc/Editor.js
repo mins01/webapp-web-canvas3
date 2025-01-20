@@ -16,6 +16,7 @@ import Document from "./element/Document.js";
 
 export default class Editor{
     brush = null;
+    modalHandler = null;
     constructor(target){
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
@@ -174,7 +175,7 @@ export default class Editor{
     readyLayer(){
         console.log('Editor.readyLayer()')
         const document = this.document
-
+        const modalHandler = this.modalHandler;
 
         const layerBoxContainer = window.document.querySelector('.layer-box-container');
         const templateLayerBox = window.document.querySelector('#template-layer-box');
@@ -189,8 +190,8 @@ export default class Editor{
             const content = layerBoxNode.querySelector('.layer-box-content');
             const preview = layerBoxNode.querySelector('.layer-box-preview');
             const detail = layerBoxNode.querySelector('.layer-box-detail');
-            const layerBoxEye = layerBoxNode.querySelector('.layer-box-eye');
-            
+            const eye = layerBoxNode.querySelector('.layer-box-eye');
+            const config = layerBoxNode.querySelector('.layer-box-config');
 
             const label = layerBoxNode.querySelector('.layer-box-detail-label');
             const size = layerBoxNode.querySelector('.layer-box-detail-size');
@@ -208,14 +209,15 @@ export default class Editor{
             content.onclick = (event)=>{
                 layer.parent.select(index);
             }
-            layerBoxEye.onclick = (event)=>{
+            eye.onclick = (event)=>{
                 event.stopPropagation()
                 layer.visible = !layer.visible;
                 layer.flush();
                 layer?.parent?.readyLayer();
                 layer?.parent?.history.save('layer.visible')
             }
-            
+            config.layer = layer;
+                
             layerBox.dataset.wcLayerVisible = layer.visible;
 
             preview.innerHTML = '';
@@ -225,20 +227,6 @@ export default class Editor{
             
         })
 
-        // {
-        //     const layer = document.drawLayer;
-        //     const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
-        //     const layerBox = layerBoxNode.querySelector('.layer-box');
-        //     const preview = layerBoxNode.querySelector('.layer-box-preview');
-        //     const layerBoxDetail = layerBoxNode.querySelector('.layer-box-detail');
-
-        //     layerBox.dataset.wcLayerVisible = layer.visible;
-
-        //     preview.innerHTML = '';
-        //     preview.append(layer);
-        //     layerBoxDetail.textContent = layer.label;
-        //     layerBoxContainer.prepend(layerBox) 
-        // }
 
 
         if(this?.document?.layer){

@@ -91,6 +91,8 @@
         globalThis.Wc.EllipseLayer = EllipseLayer;
 
         import Editor from "./wc/Editor.js";
+        import ModalHandler from "./wc/ui/ModalHandler.js"
+
 
         window.addEventListener('load',(event)=>{
             const brush1 = globalThis.brush1 = document.querySelector('#brush1');
@@ -102,7 +104,12 @@
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
             globalThis.b1 = editor.brush = brush1
             // editor.tools.select('Brush');
+            //-- 모달 핸들러
+            const modalHandler = globalThis.modalHandler = new ModalHandler();
+            editor.modalHandler = modalHandler;            
             editor.addEventListener();
+
+
 
             editor.document.zoom = 1
             editor.document.layer.left = 30
@@ -157,16 +164,11 @@
             editor.document.ready();
             editor.document.history.save('Document.New');
 
-            // divForDebug.append(editor.document.drawLayer)
-            // editor.document.layers.all().forEach((layer,index)=>{
-            //     divForDebug.append(layer)
-            //     layer.onclick = (event)=>{
-            //         layer.parent.select(index);
-            //     }
-            // })
+            
         })
     </script>
 
+    
     <script>
         function randomFill(event){
             const target = event.target;
@@ -193,16 +195,16 @@
     <div id="wc-app" class="wc-app debug-box">
         <div class="wc-app-wrap">
             <div class="wc-app-header">
-                <div class="wc-app-nav d-flex gap-1 px-2 py-1 justify-content-center mx-auto" style="">
+                <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="button"  onclick="wcApp.classList.toggle('show-wc-app-tools'); this.blur()"><i class="bi bi-brush"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()"><i class="bi bi-brush"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-collection"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;"><i class="bi bi-palette"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;">X</button>
+                    <button type="button" class="btn btn-lg btn-outline-light p-1" style="width:2em;height:2em;" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button>
                 </div>
                 <div class="px-1">
-                    <div class="wc-app-tools gap-1 px-2 py-1 d-flex flex-wrap justify-content-center mx-auto " >
+                    <div class="wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
                         <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                         <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label>
                         <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
@@ -213,6 +215,12 @@
                         <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label>
                         <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label>
                         <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
+                    </div>
+                    <div class="wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
+                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-gear"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document"><i class="bi bi-window"></i></button>
+                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-alphabet-uppercase"></i></button>
+                        <button type="button" class="btn btn-md btn-success"><i class="bi bi-brush"></i></button>
                     </div>
                 </div>
     
@@ -749,8 +757,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-wrap gap-1">
-
-                            <form name="form_layer_resize" class="flex-fill" action="" onsubmit="if(editor?.document?.layer){ editor.document.layer.resize(this.width.value,this.height.value);editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false">
+                            <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
+                                if(this.closest('.modal')?.layer){ 
+                                    const layer = this.closest('.modal')?.layer
+                                    layer.resize(this.width.value,this.height.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                    editor.document.history.save();
+                                } return false">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
                                     <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
@@ -759,22 +773,42 @@
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
                                 </div>
                             </form>
-                            <form name="form_layer_zoom" class="flex-fill" action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.zoom=parseFloat(this.zoom.value); editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false" oninput="return this.onsubmit(event)"  oninput="return this.onsubmit(event)">
+                            <form name="form_layer_zoom" class="flex-fill" action="" 
+                                oninput="
+                                if(this.closest('.modal')?.layer){ 
+                                    const layer = this.closest('.modal')?.layer
+                                    layer.zoom=parseFloat(this.zoom.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
                                     <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
                                 </div>
                             </form>
-                            <form name="form_layer_angle" class="flex-fill" action="" onsubmit="if(editor?.document?.layer) { editor.document.layer.angle=parseFloat(this.angle.value); editor.document.layer.flush();editor.document.layers.ready(); editor.document.history.save(); } return false" oninput="return this.onsubmit(event)">
+                            <form name="form_layer_angle" class="flex-fill" action="" 
+                                oninput="
+                                if(this.closest('.modal')?.layer){ 
+                                    const layer = this.closest('.modal')?.layer
+                                    layer.angle=parseFloat(this.angle.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
                                     <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1">
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
                                 </div>
                             </form>
-
-                            <form name="form_layer_postion" class="flex-fill" action="" onsubmit="if(editor?.document?.layer){ editor.document.layer.postion(this.left.value,this.top.value); editor.document.layer.flush(); editor.document.layers.ready(); editor.document.history.save();  } return false " oninput="return this.onsubmit(event)" >
+                            <form name="form_layer_postion" class="flex-fill" action="" 
+                                oninput="
+                                    if(this.closest('.modal')?.layer){ 
+                                        const layer = this.closest('.modal')?.layer
+                                        layer.postion(this.left.value,this.top.value);
+                                        layer.flush();
+                                        editor.document.layers.ready();
+                                    }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
                                     <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
@@ -784,7 +818,6 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -793,8 +826,10 @@
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer')
                 document.querySelector('#modal-layer').addEventListener('show.bs.modal', event => {
-                    const layer = editor?.document?.layer
-                    console.log(layer);
+                    console.log(event);
+                    
+                    const layer = event.relatedTarget.layer
+                    event.target.layer = layer;
                     if(!layer){return;}
                     {
                         const f = document.form_layer_resize;
@@ -822,6 +857,111 @@
                 })
             })
         </script>
+
+
+        <div class="modal fade" id="modal-document"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-window"></i> Document</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-wrap gap-1">
+                            <form name="form_document_resize" class="flex-fill" action="" onsubmit="
+                                if(editor?.document){ 
+                                    editor.document.resize(this.width.value,this.height.value);
+                                    editor.document.flush();
+                                    editor.document.layers.ready();
+                                    editor.document.history.save();
+                                } return false">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
+                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                                    <span class="input-group-text" >X</span>
+                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                                </div>
+                            </form>
+                            <form name="form_document_zoom" class="flex-fill" action="" 
+                                oninput="
+                                if(editor?.document){ 
+                                    editor.document.zoom=parseFloat(this.zoom.value);
+                                    editor.document.flush();
+                                    editor.document.layers.ready();
+                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
+                                    <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                </div>
+                            </form>
+                            <form name="form_document_angle" class="flex-fill" action="" 
+                                oninput="
+                                if(editor?.document){ 
+                                    editor.document.angle=parseFloat(this.angle.value);
+                                    editor.document.flush();
+                                    editor.document.layers.ready();
+                                }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
+                                    <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                </div>
+                            </form>
+                            <!-- <form name="form_document_postion" class="flex-fill" action="" 
+                                oninput="
+                                    if(editor?.document){ 
+                                        editor.document.postion(this.left.value,this.top.value);
+                                        editor.document.flush();
+                                        editor.document.layers.ready();
+                                    }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                    <button type="submit"  style="width:6em" class="btn btn-primary">Postion</button>
+                                </div>
+                            </form> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener('load',(event)=>{
+                // window.modalLayer = new bootstrap.Modal('#modal-layer')
+                document.querySelector('#modal-document').addEventListener('show.bs.modal', event => {
+                    const document = editor.document
+                    event.target.document = document;
+                    if(!document){return;}
+                    {
+                        const f = window.document.form_document_resize;
+                        
+                        f.width.value = document.width
+                        f.height.value = document.height
+                        f.width.value = document.width
+                        f.height.value = document.height
+                    }
+                    {
+                        const f = window.document.form_document_zoom;
+                        f.zoom.value = document.zoom
+                    }
+                    {
+                        const f = window.document.form_document_angle;
+                        f.angle.value = document.angle
+                    }
+                    // {
+                    //     const f = window.document.form_document_postion;
+                    //     f.left.value = document.left
+                    //     f.top.value = document.top
+                    // }
+                })
+            })
+        </script>
+
     </div>
     
 </body>

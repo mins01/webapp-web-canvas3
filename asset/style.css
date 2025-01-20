@@ -11,6 +11,7 @@
   right: 0; 
   bottom: 0;
 
+
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -61,25 +62,38 @@
 .wc-app-nav > *{
   pointer-events: all;
 }
-.wc-app-tools{
+.wc-app-menu-tools{
   margin-top: 4px;
   background-color: #ffffffff;
-  /* width: max-content; */
+  width: max-content;
   border-radius: 5px;
-  max-width: 100vw;
+  max-width: 90vw;
 }
-.wc-app-tools > *{
+.wc-app-menu-tools > *{
   pointer-events: all;
 }
 
-.wc-app-tools{
-  transform: scaleY(0);
-  transform-origin: top center;
-  transition: transform 0.3s ease ;
+.wc-app-menu-propeties{
+  margin-top: 4px;
+  background-color: #ffffeeff;
+  width: max-content;
+  border-radius: 5px;
+  max-width: 90vw;
 }
-.wc-app.show-wc-app-tools .wc-app-tools{
-  transform: scaleY(1);
+.wc-app-menu-propeties > *{
+  pointer-events: all;
 }
+
+.wc-app-menu-tools , 
+.wc-app-menu-propeties{
+  display: none !important;
+}
+.wc-app.show-wc-app-menu-tools .wc-app-menu-tools,
+.wc-app.show-wc-app-menu-propeties .wc-app-menu-propeties
+{
+  display: flex !important;
+}
+
 
 
 
@@ -160,10 +174,4 @@
   font-size: 1.2rem;
   width: 2rem;
   padding:4px;
-}
-.layer-box-config{
-  display: none !important;
-}
-.layer-box.active .layer-box-config{
-  display: flex !important;
 }

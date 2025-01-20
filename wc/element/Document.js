@@ -186,4 +186,10 @@ export default class Document extends Layer{
         // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
     }
 
+    resize(width,height){
+        this.width = width;
+        this.height = height;
+        this.flush();
+        this.history.save();
+    }
 }
