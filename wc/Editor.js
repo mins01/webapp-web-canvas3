@@ -156,7 +156,9 @@ export default class Editor{
         })
     }
     closeDocument(){
-        this.documents.remove();
+        if(this.document){
+            this.documents.remove();
+        }
     }
     newDocument(width,height){
         const document = new Document(width,height);
