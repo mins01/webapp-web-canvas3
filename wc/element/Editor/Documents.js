@@ -17,7 +17,7 @@ export default class Documents extends SelectableArray{
       }
     }
     const frame = document.frame;
-    console.log(document.frame);
+    // console.log(document.frame);
     
     super.add(document);
     document.editor = this.editor;

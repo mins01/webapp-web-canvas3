@@ -43,6 +43,17 @@
     <!-- //meta og -->
 
     <link rel="stylesheet" href="asset/style.css">
+
+
+    <link rel="stylesheet" href="third_party/ui-input-stepper/ui-input-stepper.css">
+    <script src="third_party/ui-input-stepper/UiInputStepper.js"></script>
+    <script>
+        UiInputStepper.addEventListener();
+        window.addEventListener('load',(event)=>{
+            UiInputStepper.initDataValue()
+        })
+    </script>
+
     <style>
         canvas{
             outline: 1px dashed #aabbcc99;
@@ -625,7 +636,7 @@
                             <div class="d-flex justify-content-end gap-1 flex-fill">
                                 <div class="input-group" style="width:20em">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
-                                    <div class="form-control">
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)+' %'" onchange="editor.document.history.save()">
                                         <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
                                     </div>
                                 </div>
@@ -675,6 +686,15 @@
                 </div>
             </div>
         </div>
+        <script>
+            window.addEventListener('load',(event)=>{
+                document.querySelector('#modal-layers').addEventListener('show.bs.modal', event => {
+                    window.document.querySelector('#layer-alpha').value = editor.document.layer.alpha
+                    
+                    
+                })
+            })
+        </script>
 
         <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -708,11 +728,12 @@
                                     layer.zoom=parseFloat(this.zoom.value);
                                     layer.flush();
                                     editor.document.layers.ready();
-                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)+' %'" onchange="editor.document.history.save()">
+                                        <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                    </div>
                                 </div>
                             </form>
                             <form name="form_layer_alpha" class="flex-fill" action="" 
@@ -722,11 +743,12 @@
                                     layer.alpha=parseFloat(this.alpha.value);
                                     layer.flush();
                                     editor.document.layers.ready();
-                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                }" onchange="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
-                                    <input class="form-control" type="number" name="alpha" placeholder="alpha" step="0.1" min="0" max="1" >
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)+' %'" onchange="editor.document.history.save()">
+                                        <input class="form-range d-block" type="range" name="alpha" placeholder="alpha" step="0.1" min="0" max="1" >
+                                    </div>
                                 </div>
                             </form>
                             <form name="form_layer_angle" class="flex-fill" action="" 
@@ -736,11 +758,12 @@
                                     layer.angle=parseFloat(this.angle.value);
                                     layer.flush();
                                     editor.document.layers.ready();
-                                }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*Math.PI*180/Math.PI).toFixed(0)+' °'" onchange="editor.document.history.save()">
+                                        <input class="form-range d-block" type="range" name="angle" placeholder="angle" step="0.01" min="-1" max="1" >
+                                    </div>
                                 </div>
                             </form>
                             <form name="form_layer_postion" class="flex-fill" action="" 
@@ -767,9 +790,7 @@
         <script>
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', event => {
-                    console.log(event);
-                    
+                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', function(event){                   
                     const layer = event.relatedTarget?.layer??editor?.document?.layer
                     event.target.layer = layer;
                     if(!layer){return;}
@@ -799,7 +820,7 @@
                         f.top.value = layer.top
                     }
                     
-                    
+                    UiInputStepper.initDataValue(this)
                 })
             })
         </script>
@@ -835,11 +856,13 @@
                                     editor.document.zoom=parseFloat(this.zoom.value);
                                     editor.document.flush();
                                     editor.document.layers.ready();
-                                }" oninput="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
+                                
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <input class="form-control" type="number" name="zoom" placeholder="zoom" step="0.05" min="0" max="5" >
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)+' %'" onchange="editor.document.history.save()">
+                                        <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                    </div>
                                 </div>
                             </form>
                             <form name="form_document_angle" class="flex-fill" action="" 
@@ -848,11 +871,12 @@
                                     editor.document.angle=parseFloat(this.angle.value);
                                     editor.document.flush();
                                     editor.document.layers.ready();
-                                }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <input class="form-control" type="number" name="angle" placeholder="angle" step="0.05" min="-1" max="1">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Change</button>
+                                    <div class="form-control ui-input-stepper data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*Math.PI*180/Math.PI).toFixed(0)+' °'" onchange="editor.document.history.save()">
+                                        <input class="form-range d-block" type="range" name="angle" placeholder="angle" step="0.01" min="-1" max="1" >
+                                    </div>
                                 </div>
                             </form>
                             <!-- <form name="form_document_postion" class="flex-fill" action="" 
@@ -879,7 +903,7 @@
         <script>
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-document-config').addEventListener('show.bs.modal', event => {
+                document.querySelector('#modal-document-config').addEventListener('show.bs.modal', function(event){
                     const document = editor.document
                     event.target.document = document;
                     if(!document){return;}
@@ -904,6 +928,7 @@
                     //     f.left.value = document.left
                     //     f.top.value = document.top
                     // }
+                    UiInputStepper.initDataValue(this)
                 })
             })
         </script>

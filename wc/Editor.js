@@ -232,6 +232,7 @@ export default class Editor{
         if(this?.document?.layer){
             const layerAlpha = window.document.querySelector('#layer-alpha')
             layerAlpha.value = this?.document?.layer.alpha
+            UiInputStepper.dataValueFromInput(layerAlpha)
         }
 
     }

@@ -213,7 +213,9 @@
 
 
 /* Modals */
-
+.modals , .modals input{
+  touch-action: none;
+}
 
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog{
   align-items: flex-end;
