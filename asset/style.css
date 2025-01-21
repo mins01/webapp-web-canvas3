@@ -128,8 +128,11 @@
 
   transform:
     translate( clamp(calc(-50svw - var(--width) * var(--zoom) / 2),calc(var(--left)* var(--zoom)),  calc(50svw + var(--width) * var(--zoom) / 2)) ,  clamp(calc(-50svh - var(--height) * var(--zoom) / 3),calc(var(--top)* var(--zoom)),  calc(50svh + var(--height) * var(--zoom) / 3))  ) 
+    rotate(var(--angle))
     scale(var(--zoom)) 
-    rotate(var(--angle));
+    ;
+  /* transform:  scale(var(--zoom))  rotate(var(--angle));     */
+  
 }
 
 
