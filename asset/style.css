@@ -188,3 +188,36 @@
   width: 2rem;
   padding:4px;
 }
+
+
+
+
+
+
+
+
+
+.brush-config{
+
+}
+.brush-config .brush-wrap{
+  background-image: url(bg.gif);
+  overflow: hidden;
+}
+.brush-config .brush-wrap > canvas{
+  outline: 1px dotted #333;
+}
+
+
+
+
+
+/* Modals */
+
+
+.modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog{
+  align-items: flex-end;
+}
+.modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
+  max-height: 50svh;
+}

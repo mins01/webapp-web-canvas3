@@ -15,6 +15,14 @@ export default class HtmlUtil{
         });
         return obj;
     }
+    static objectToForm(object,form){
+        for(let k in object){
+            if(form.elements?.[k] !== undefined){
+                form.elements[k].value = object[k].toString();
+            }
+        }
+
+    }
 
     static saveAsFile(content, filename , type='text/plain') {
         const blob = new Blob([content], { type: type });
