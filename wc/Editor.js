@@ -117,15 +117,15 @@ export default class Editor{
 
 
 
-    saveDocument(type='wc.json',filename=null){
+    saveDocument(type='wc3.json',filename=null){
         if(!this.document){return false;}
         if(filename===null){ filename = Date.now() }
         let data = null;
         let ext = '';
         let mimetype = null;
-        if(type==='wc.json'){
+        if(type==='wc3.json'){
             data = JSON.stringify(this.document.export(),null,4);
-            ext = 'wc.json';
+            ext = 'wc3.json';
             mimetype = 'application/json';
             HtmlUtil.saveAsFile(data, filename+'.'+ext , mimetype);
         }else if(type==='png'){

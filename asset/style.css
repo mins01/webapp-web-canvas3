@@ -45,7 +45,7 @@
 
 .wc-app-footer{
   position: fixed;
-  top:0; left:0;right:0;
+  bottom:0; left:0;right:0;
   z-index: 10;
   pointer-events: none;
   overflow: hidden;
@@ -93,6 +93,21 @@
 {
   display: flex !important;
 }
+
+
+
+
+
+
+.wc-app-memu-undo{
+  width: max-content;
+  border-radius: 5px 5px 0 0;
+  background-color: #000000ff;
+}
+.wc-app-memu-undo > *{
+  pointer-events: all;
+}
+
 
 
 

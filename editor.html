@@ -234,30 +234,20 @@
             </div>
     
             <div class="wc-app-footer">
-    
+                <div class="container">
+                    <div class="wc-app-memu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
+                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
+                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
+                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.save('manual')"><i class="bi bi-save2"></i></button>
+                    </div>
+                </div>
             </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
                 <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
                 </div>
             </div>
-            <div class="wc-app-etcs">
-                <div class="d-flex gap-1 p-1">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.undo()">UNDO</button>
-                    <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.redo()">REDO</button>
-                    <button type="button" class="btn btn-sm btn-primary" onclick="editor?.document.history.save('manual')">SAVE</button>
-                </div>
-            </div>
-            <div class="wc-app-modal-btns">
-                <div class="d-flex gap-1 flex-wrap">
-                    <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-menu-main">Main</button> -->
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-context-config">Property</button>
-                    <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalText">Text</button> -->
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-brush-config">Brush</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-layer-config">Layer</button>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalDocument">Document</button>
-                </div>
-            </div>
+            
         </div>
         <!-- <div class="wc-app-preview-layers">
             <div id="div-for-debug" class="preview-layers">
@@ -330,7 +320,7 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column gap-1 p-1">
                             <div>
-                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('wc.json')"><i class="bi bi-filetype-json"></i> SAVE wc3.json</button>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('wc3.json')"><i class="bi bi-filetype-json"></i> SAVE wc3.json</button>
                                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
                             </div>
                             <div>
