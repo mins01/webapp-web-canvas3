@@ -1,3 +1,6 @@
 [submodule "third_party/js-color"]
 	path = third_party/js-color
 	url = https://github.com/mins01/js-color.git
+[submodule "third_party/ui-input-stepper"]
+	path = third_party/ui-input-stepper
+	url = https://github.com/mins01/ui-input-stepper.git
