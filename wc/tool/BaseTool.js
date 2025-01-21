@@ -152,21 +152,7 @@ export default class BaseTool {
 
 
 	getXyInLayer(inX,inY){
-		console.log('getXyInLayer',inX,inY);
-		
 		return [inX,inY]
-		// 추가 처리 안한다. prepareLayer 로 자동 처리 된다.
-		// const layer = this.layer;
-		// let x = inX - layer.left;
-		// let y = inY - layer.top;
-		// const zoom = layer.zoom;
-		// if(zoom!==1){
-		// 	x += layer.width/2*(zoom-1);
-		// 	y += layer.height/2*(zoom-1);
-		// 	x = x/zoom;
-		// 	y = y/zoom;
-		// }
-		// return [x,y];
 	}
 
 	
