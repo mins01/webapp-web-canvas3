@@ -108,18 +108,28 @@
   left: 0;
   right: 0; 
   bottom: 0;
-  overflow: scroll;
-  scrollbar-width: thin; /* 스크롤바 두께: auto | thin | none */
-  scrollbar-color: #333 #eee; /* 핸들 색상과 트랙 배경색 */
+  /* overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #eee;
   touch-action: none;
   scrollbar-gutter: stable both-edges;
-  background-color: #39f;
+  */
+  overflow: hidden;
+  background-color: #39f; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .wc-frame > .wc-document{
-  margin:100svh 100svw;
+  /* margin:100svh 100svw; */
   outline:4px dashed #000;
   background-image: url(bg.gif);
+
+  transform:
+    translate( clamp(calc(-50svw - var(--width) * var(--zoom) / 2),calc(var(--left)* var(--zoom)),  calc(50svw + var(--width) * var(--zoom) / 2)) ,  clamp(calc(-50svh - var(--height) * var(--zoom) / 3),calc(var(--top)* var(--zoom)),  calc(50svh + var(--height) * var(--zoom) / 3))  ) 
+    scale(var(--zoom)) 
+    rotate(var(--angle));
 }
 
 

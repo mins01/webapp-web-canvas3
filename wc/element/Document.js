@@ -181,8 +181,17 @@ export default class Document extends Layer{
             // }
         })
         ctx.restore()
-        this.style.zoom = this.zoom;
-        this.style.transform = `rotate(${this.angle*Math.PI}rad)`;
+        // this.style.zoom = this.zoom;
+
+        this.style.setProperty('--width',this.width+'px');
+        this.style.setProperty('--height',this.height+'px');
+        this.style.setProperty('--zoom',this.zoom);
+        this.style.setProperty('--angle',this.angle*Math.PI+'rad');
+        this.style.setProperty('--left',this.left+'px');
+        this.style.setProperty('--top',this.top+'px');
+
+        // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad) translate(${this.left}px,${this.top}px)`;
+        // this.style.transform = `translate(          clamp(calc(-50svw - var(--width) * var(--zoom) / 2),calc(var(--left)* var(--zoom)),   calc(50svw + var(--width) * var(--zoom) / 2))   ,   clamp(calc(-50svh - var(--height) * var(--zoom) / 3),calc(var(--top)* var(--zoom)),   calc(50svh + var(--height) * var(--zoom) / 3))          ) scale(var(--zoom)) rotate(var(--angle)) `;
         // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
     }
 
