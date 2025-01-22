@@ -152,7 +152,7 @@ export default class Document extends Layer{
             ctx.translate(layer.left, layer.top)
             if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
             ctx.translate(layer.width/2, layer.height/2)
-            if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
+            if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI / 180); }
             ctx.translate(-layer.width/2, -layer.height/2)
             if(layer.visible){
                 ctx.drawImage(layer, 0, 0, layer.width, layer.height);
@@ -186,7 +186,7 @@ export default class Document extends Layer{
         this.style.setProperty('--width',this.width+'px');
         this.style.setProperty('--height',this.height+'px');
         this.style.setProperty('--zoom',this.zoom);
-        this.style.setProperty('--angle',this.angle*Math.PI+'rad');
+        this.style.setProperty('--angle',this.angle+'deg');
         this.style.setProperty('--left',this.left+'px');
         this.style.setProperty('--top',this.top+'px');
 

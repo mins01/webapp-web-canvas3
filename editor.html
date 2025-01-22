@@ -111,7 +111,7 @@
 
 
             editor.document.zoom = 1
-            editor.document.angle = 0.05
+            editor.document.angle = 0;
             editor.document.layer.left = 0
             editor.document.layer.zoom = 1
 
@@ -570,8 +570,7 @@
                             <form action="" onsubmit="if(editor?.document) { editor.document.angle=parseFloat(this.angle.value); editor.document.flush();} return false" oninput="return this.onsubmit(event)">
                                 <div class="input-group" style="width:300px;">
                                     <span class="input-group-text">ANGLE</span>
-                                    <input class="form-control" type="number" name="angle" placeholder="angle"
-                                        step="0.05" min="-1" max="1"
+                                    <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" 
                                         onfocus="if(editor?.document){ this.form.angle.value = editor?.document.angle;}"
                                         >
                                     <button class="btn btn-primary">변경</button>
@@ -613,8 +612,8 @@
                             </div>
                             <div class="d-flex justify-content-end gap-1 flex-fill">
                                 <div class="input-group" style="width:20em">
-                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)+' %'" onchange="editor.document.history.save()">
-                                        <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
+                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
                                         <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
                                     </div>
                                 </div>
@@ -709,7 +708,7 @@
                                 }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)" onchange="editor.document.history.save()">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" onchange="editor.document.history.save()">
                                         <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
                                     </div>
                                 </div>
@@ -724,7 +723,7 @@
                                 }" onchange="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)" onchange="editor.document.history.save()">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" onchange="editor.document.history.save()">
                                         <input class="form-range d-block" type="range" name="alpha" placeholder="alpha" step="0.1" min="0" max="1" >
                                     </div>
                                 </div>
@@ -739,8 +738,8 @@
                                 }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group  ui-input-steppe">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="°" oninput="this.dataset.value = (parseFloat(event.target.value)*Math.PI*180/Math.PI).toFixed(0)" onchange="editor.document.history.save()">
-                                        <input class="form-range d-block" type="range" name="angle" placeholder="angle" step="0.01" min="-1" max="1" >
+                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                     </div>
                                 </div>
                             </form>
@@ -838,7 +837,7 @@
                                 
                                 <div class="input-group ui-input-stepper" >
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)" onchange="editor.document.history.save()">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" onchange="editor.document.history.save()">
                                         <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
                                     </div>
                                 </div>
@@ -852,8 +851,8 @@
                                 }" onchange="this.oninput(event); editor.document.history.save(); return false;">
                                 <div class="input-group ui-input-stepper" >
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°" oninput="this.dataset.value = (parseFloat(event.target.value)*Math.PI*180/Math.PI).toFixed(0)" onchange="editor.document.history.save()">
-                                        <input class="form-range d-block" type="range" name="angle" placeholder="angle" step="0.001" min="-1" max="1" >
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                     </div>
                                 </div>
                             </form>
@@ -931,7 +930,7 @@
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >Size</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" oninput="this.dataset.value = (parseFloat(event.target.value)).toFixed(0)">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
                                         <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
@@ -940,7 +939,7 @@
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >roundness(원형율)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%"  oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                         <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
@@ -948,15 +947,15 @@
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >angle(각도)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  oninput="this.dataset.value = (parseFloat(event.target.value)*Math.PI*180/Math.PI).toFixed(0)">
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="0.001" min="-1" max="1" value="0" >
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
+                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >hardness(경도)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
                                         <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
@@ -964,7 +963,7 @@
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >opacity(불투명도)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                         <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
@@ -972,7 +971,7 @@
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >spacing(간격)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" oninput="this.dataset.value = (parseFloat(event.target.value)*100).toFixed(0)">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                         <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
