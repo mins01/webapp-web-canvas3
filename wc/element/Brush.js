@@ -117,7 +117,7 @@ export default class Brush extends Layer{
         // ctx.imageSmoothingEnabled = false;
         ctx.globalAlpha = parseFloat(brushConfig.opacity)        
         ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
-        ctx.rotate(Math.PI * brushConfig.angle); // 45도 회전 (Math.PI / 4 라디안)
+        ctx.rotate(brushConfig.angle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
         ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
         ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
         ctx.restore();
