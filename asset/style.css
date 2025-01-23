@@ -151,6 +151,16 @@
 }
 
 
+.wc-app .wc-frame{
+  cursor: crosshair;
+}
+.wc-app[data-tool="Move"] .wc-frame{
+  cursor: move;
+}
+.wc-app[data-tool="Hand"] .wc-frame{
+  cursor: grab;
+}
+
 
 
 

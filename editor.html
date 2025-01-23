@@ -120,7 +120,7 @@
         import TextLayer from "./wc/element/TextLayer.js";
         import RectangleLayer from "./wc/element/RectangleLayer.js";
         import EllipseLayer from "./wc/element/EllipseLayer.js";
-        import Brush from "./wc/element/Brush.js";
+        import Brush from "./wc/element/Brush.js";       
 
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
@@ -148,9 +148,15 @@
             brush1.size = 10
             brush1.flush();
 
+            const eraser1 = globalThis.eraser1 = document.querySelector('#eraser1');
+            eraser1.contextConfig.foreColor="#f00"
+            eraser1.size = 10
+            eraser1.flush();
+
 
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
-            globalThis.b1 = editor.brush = brush1
+            globalThis.brush1 = editor.brush = brush1
+            globalThis.eraser1 = editor.brushEraser = eraser1
             // editor.tools.select('Brush');
             //-- 모달 핸들러
             const modalHandler = globalThis.modalHandler = new ModalHandler();
@@ -256,15 +262,15 @@
                 </div>
                 <div class="px-1">
                     <div class="wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
-                        <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
+                        <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                         <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
-                        <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
-                        <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>       
-                        <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
-                        <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Hand')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
-                        <!-- <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label> -->
-                        <!-- <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label> -->
-                        <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
+                        <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
+                        <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>       
+                        <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
+                        <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Hand" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
+                        <!-- <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label> -->
+                        <!-- <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label> -->
+                        <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
                         <!-- <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label> -->
                     </div>
                     <div class="wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
@@ -272,6 +278,7 @@
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button> -->
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-eraser-config" ><i class="bi bi-eraser"></i> <i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button>
                     </div>
                 </div>
@@ -965,7 +972,7 @@
                     UiInputStepper.initDataValue(this)
                 })
             })
-        </script>
+</script>
 
 
         <div class="modal fade" id="modal-brush-config"  aria-hidden="true">
@@ -1051,15 +1058,110 @@
                 </div>
             </div>
         </div>
-
         <script>
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
                 document.querySelector('#modal-brush-config').addEventListener('show.bs.modal', event => {
                     const brush = editor.brush
                     event.target.brush = brush;
-                    const f = formBrushConfig;
-                    Wc.HtmlUtil.objectToForm(brush.brushConfig,f)
+                    const f = document.formBrushConfig;
+                    Wc.HtmlUtil.objectToForm({...brush.brushConfig},f)
+                })
+            })
+        </script>
+   
+        <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> Eraser config</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" >
+                            <div>
+                                <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                                    <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-flex flex-column gap-1">
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >Size</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                                        <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >roundness(원형율)</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >angle(각도)</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
+                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >hardness(경도)</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                        <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >opacity(불투명도)</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >spacing(간격)</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >solidColor(단색)</span>
+                                    <select class="form-select " name="solidColor" id="" >
+                                        <option selected value="false">NO</option>
+                                        <option value="true">YES</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener('load',(event)=>{
+                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
+                document.querySelector('#modal-eraser-config').addEventListener('show.bs.modal', event => {
+                    const brushEraser = editor.brushEraser
+                    event.target.brushEraser = brushEraser;
+                    const f = document.formEraserConfig;
+                    Wc.HtmlUtil.objectToForm(brushEraser.brushConfig,f)
                 })
             })
         </script>

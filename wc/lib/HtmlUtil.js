@@ -19,6 +19,7 @@ export default class HtmlUtil{
         for(let k in object){
             if(form.elements?.[k] !== undefined){
                 form.elements[k].value = object[k].toString();
+                form.elements[k].dispatchEvent(new Event('change',{bubbles:true,cancelable:true}))
             }
         }
 

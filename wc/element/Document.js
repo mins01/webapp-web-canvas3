@@ -65,6 +65,10 @@ export default class Document extends Layer{
     add(layer){
         return this.layers.add(layer);
     }
+    addEmptyLayer(){
+        const layer = new Layer(this.width,this.height)
+        return this.add(layer);
+    }
     remove(){
         return this.layers.remove();
     }

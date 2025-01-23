@@ -16,6 +16,7 @@ import Document from "./element/Document.js";
 
 export default class Editor{
     brush = null;
+    brushEraser = null;
     modalHandler = null;
     constructor(target){
         this.target = target;
@@ -55,6 +56,7 @@ export default class Editor{
 
     initConfigs(){
         this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'));
+        this.setEraserConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'));
     }
 
     setContextConfig(conf){
@@ -79,10 +81,20 @@ export default class Editor{
             this.brush?.setBrushConfig(conf);
             this.brush.flush();
             localStorage.setItem('brushConfig',JSON.stringify(this.brush.brushConfig))
-            console.log('x',JSON.stringify(this.brush.brushConfig));
+            // console.log('x',JSON.stringify(this.brush.brushConfig));
             
         }
     }
+    setEraserConfig(conf){
+        if(this?.brushEraser){
+            this.brushEraser?.setBrushConfig(conf);
+            this.brushEraser.contextConfig.foreColor='#fff'
+            this.brushEraser.flush();
+            localStorage.setItem('eraserConfig',JSON.stringify(this.brushEraser.brushConfig))
+            // console.log('x',JSON.stringify(this.brushEraser.brushConfig));
+        }
+    }
+    
 
     addEventListener(){
         this.peh.addEventListener(this.target);
@@ -178,6 +190,7 @@ export default class Editor{
         if(this?.document){ this.documents.remove(); }
         const document = new Document(width,height);
         document.layers[0].fill('#fff')
+        document.addEmptyLayer();
         this.documents.add(document);
     }
 

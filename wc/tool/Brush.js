@@ -1,8 +1,8 @@
 import BaseTool from './BaseTool.js';
-import DrawLine from '../draw/DrawLine.js';
 
 export default class Brush extends BaseTool{
     remainInterval = 0;
+    brush = null;
     constructor(editor){
         super(editor);
         // this.x0 = null;
@@ -13,6 +13,7 @@ export default class Brush extends BaseTool{
     start(){
         super.start();
         this.ready()
+        this.brush = this.editor.brush;
     }
     onpointerdown(event){
         super.onpointerdown(event);
@@ -57,7 +58,7 @@ export default class Brush extends BaseTool{
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
         const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
 
-        const brush = this.editor.brush;      
+        const brush = this.brush;
         ctx.save();
         this.prepareLayer(ctx);
         // console.log(lx0,ly0,lx1,ly1);
@@ -79,7 +80,7 @@ export default class Brush extends BaseTool{
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
         
-        const brush = this.editor.brush;      
+        const brush = this.brush;
         ctx.save();
         this.prepareLayer(ctx);
         // console.log(x0,y0,lx0,ly0);
