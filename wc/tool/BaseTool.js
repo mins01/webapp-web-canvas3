@@ -1,7 +1,10 @@
 export default class BaseTool {
 
+	pointerType = null; // mouse, pen , touch
+	downAt = null
 	name = null;
 	editor = null;
+	peh = null;
 	document = null;
 	documentRect = null;
 	layer = null;
@@ -12,10 +15,15 @@ export default class BaseTool {
 	// y = null;
 	x1 = null;
 	y1 = null;
-
+	
+	
 	constructor(editor){
+		this.pointerType = null
+		this.downAt = null;
+
 		this.name = 'BaseTool';
 		this.editor = editor;
+		this.peh = editor.peh
 
 		this.document = null;
 		this.layer = null;
@@ -30,6 +38,8 @@ export default class BaseTool {
 	}
 
 	init(){
+		this.pointerType = null
+		this.downAt = null;
 		this.document = this.editor.document??null;
 		this.layer = this.document.layer??null;
 		this.drawLayer = this.document.drawLayer??null;
@@ -49,7 +59,8 @@ export default class BaseTool {
 
 	onpointerdown(event){
 		this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
-
+		this.pointerType = event.pointerType??null;
+		if(!this.downAt) this.downAt = Date.now();
 	}
 
 	onpointermove(event){
@@ -61,7 +72,12 @@ export default class BaseTool {
 	}
 
 	end(){
+		this.downAt = null;
+	}
 
+	cancel(){
+		// this.end();
+		this.downAt = null;
 	}
 
 	input(){
@@ -100,6 +116,8 @@ export default class BaseTool {
 	draw(){
 
 	}
+
+
 
 	getXyFromEvent(event){
 		let x = event.x + window.scrollX;

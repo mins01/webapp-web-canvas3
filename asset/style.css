@@ -62,6 +62,15 @@
 .wc-app-nav > *{
   pointer-events: all;
 }
+
+.wc-app-menu{
+  /* background-color: #000000; */
+}
+.wc-app-menu > *{
+  pointer-events: all;
+
+}
+
 .wc-app-menu-tools{
   margin-top: 4px;
   background-color: #ffffffff;
@@ -69,19 +78,12 @@
   border-radius: 5px;
   max-width: 90vw;
 }
-.wc-app-menu-tools > *{
-  pointer-events: all;
-}
-
 .wc-app-menu-propeties{
   margin-top: 4px;
   background-color: #ffffeeff;
   width: max-content;
   border-radius: 5px;
   max-width: 90vw;
-}
-.wc-app-menu-propeties > *{
-  pointer-events: all;
 }
 
 .wc-app-menu-tools , 
@@ -99,14 +101,32 @@
 
 
 
-.wc-app-memu-undo{
+.wc-app-menu-undo{
   width: max-content;
   border-radius: 5px 5px 0 0;
-  background-color: #000000ff;
 }
-.wc-app-memu-undo > *{
+.wc-app-menu-undo > *{
   pointer-events: all;
 }
+
+
+
+
+
+
+
+.only-shown{display: none;}
+.wc-app[data-tool="Brush"] .only-shown-tool-Brush{display: block;}
+.wc-app[data-tool="Eraser"] .only-shown-tool-Eraser{display: block;}
+.wc-app[data-tool="Move"] .only-shown-tool-Move{display: block;}
+.wc-app[data-tool="Hand"] .only-shown-tool-Hand{display: block;}
+
+
+
+
+
+
+
 
 
 

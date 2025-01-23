@@ -22,10 +22,14 @@ export default class Hand extends BaseTool{
         // this.top0 = this.document.frame.scrollTop;
     }
     onpointerdown(event){
+        console.log('touches',event);
         super.onpointerdown(event);
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
+
+        
+        
     }
     onpointermove(event){
         super.onpointermove(event);
@@ -61,5 +65,13 @@ export default class Hand extends BaseTool{
         document.flush()
     }
 
+
+
+    ondblclick(event){
+        const document = this.editor.document
+        document.left = 0;
+        document.top = 0;
+        document.flush()
+    }
 
 }

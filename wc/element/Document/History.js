@@ -14,21 +14,18 @@ export default class History extends LimitedHistory{
         console.log('END History:save();',snapshot.selectedIndex);
     }
     undo(){
-        console.log('History:undo();',this.currentIndex,this.length);
         const layers = this.document.layers;
         const snapshot = super.undo();
         if(snapshot===null){return false}
-        console.log('history.undo();',snapshot.title);
+        console.log('history.undo();',this.currentIndex,this.length,snapshot.title);
         layers.import(snapshot);
         return true;
     }
     redo(){
-        console.log('History:redo();',this.currentIndex,this.length);
         const layers = this.document.layers;
         const snapshot = super.redo();
         if(snapshot===null){return false}
-        console.log('history.redo();',snapshot.title);
-        console.log(snapshot.title);
+        console.log('history.redo();',this.currentIndex,this.length,snapshot.title);
         layers.import(snapshot);
         return true;
     }

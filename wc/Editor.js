@@ -2,7 +2,6 @@
 // import SelectableArray from "./lib/SelectableArray.js";
 import PointerEventHandler from "./lib/PointerEventHandler.js";
 
-
 import Context2dConfig from "./lib/Context2dConfig.js";
 import Context2dTextConfig from "./lib/Context2dTextConfig.js";
 
@@ -18,7 +17,9 @@ export default class Editor{
     brush = null;
     brushEraser = null;
     modalHandler = null;
+    temp = null
     constructor(target){
+        this.temp = {}
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
         this.documents = new Documents(this);
@@ -98,6 +99,15 @@ export default class Editor{
 
     addEventListener(){
         this.peh.addEventListener(this.target);
+        this.target.addEventListener('dblclick',(event)=>{ 
+            if(this.peh.maxPointers===1 ){
+                if(this?.tool?.ondblclick) this?.tool?.ondblclick(event) 
+            }else if(this.peh.maxPointers >= 2){
+                if(this.peh.pointers.size===2){
+                    
+                }
+            }
+        })
     }
     removeEventListener(){
         this.peh.removeEventListener(this.target);
@@ -115,19 +125,57 @@ export default class Editor{
         let y = event.y - doc.offsetTop - layer.top + window.scrollY;
         return {x:x,y:y};
     }
+
     onpointerdown=(event)=>{
-        this.tool.start();
-        this.tool.onpointerdown(event);
+        // console.log( this.peh.maxPointers );
+        if(this.peh.maxPointers===1 ){
+            this.tool.start();
+            this.tool.onpointerdown(event);
+        }else if(this.peh.maxPointers >= 2){
+            if(this.tool.downAt){
+                this.tool.cancel();
+            }
+            if(this.peh.pointers.size===2){
+                // 줌 처리
+                this.temp.document_zoom = this.document.zoom;
+                const points = Array.from(this.peh.pointers.values());
+                this.temp.touchStartDistance = Math.hypot(
+                    points[1].x - points[0].x,
+                    points[1].y - points[0].y
+                );
+            }
+        }
+        
+        
     }
     onpointermove=(event)=>{
-        this.tool.onpointermove(event);
+        if(this.peh.maxPointers===1 ){
+            this.tool.onpointermove(event);
+        }else if(this.peh.maxPointers >= 2){
+            if(this.peh.pointers.size===2){
+                // 줌 처리
+                this.temp.document_zoom = this.document.zoom;
+                const points = Array.from(this.peh.pointers.values());
+                const currentDistance = Math.hypot( points[1].x - points[0].x, points[1].y - points[0].y );
+                const scale = Math.round(((currentDistance / this.temp.touchStartDistance) - 1)*100)/1000;
+                const zoom = Math.min(3,Math.max(0.1,this.temp.document_zoom + scale));
+                // console.log(this.document.zoom-zoom,zoom);
+                
+                if(Math.abs(this.document.zoom-zoom)>0.01){
+                    this.document.zoom = zoom
+                    this.document.flush();
+                }
+            }
+        }
     }
     onpointerup=(event)=>{
-        this.tool.onpointerup(event);
-        this.tool.end();
+        if(this.peh.maxPointers===1 ){
+            this.tool.onpointerup(event);
+            this.tool.end();
+        }else if(this.maxPointers>=2 && this.peh.pointers.size===2 ){
+            
+        }
     }
-
-
 
     // document가 변경되면 불러야한다.
     onchangeDocument(document){

@@ -55,7 +55,8 @@ export default class Layers extends SelectableArray{
     }
     move(index){
         const document = this.document
-        super.move(index);
+        const r = super.move(index);
+        if(r===-1){return false}
         document.flush();
         document?.editor?.onselectLayer(document.layer);
         this.ready();

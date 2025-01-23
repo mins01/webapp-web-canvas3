@@ -41,6 +41,11 @@
     <meta property="og:type" content="website">
 
     <!-- //meta og -->
+    <!-- hammer.js -->
+    <!-- <script src="https://cdnjs.com/libraries/hammer.js/"></script> -->
+    
+    <!-- //hammer.js -->
+
     <!-- color palette -->
 	<link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css"> 
 	<script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
@@ -217,6 +222,7 @@
 
             editor.document.layers.select(0);
             editor.document.ready();
+            editor.document.history.clear();
             editor.document.history.save('Document.New');
 
             
@@ -227,6 +233,9 @@
             editor.setContextConfig(obj)
 
             editor.initConfigs();
+
+            
+            // globalThis.hammer = new Hammer(editor.target);
 
         })
     </script>
@@ -255,13 +264,18 @@
             <div class="wc-app-header">
                 <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()"><i class="bi bi-brush"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()">
+                        <div class="only-shown only-shown-tool-Brush"><i class="bi bi-brush"></i></div>
+                        <div class="only-shown only-shown-tool-Eraser"><i class="bi bi-eraser"></i></div>
+                        <div class="only-shown only-shown-tool-Move"><i class="bi bi-arrows-move"></i></div>
+                        <div class="only-shown only-shown-tool-Hand"><i class="bi bi-hand-index"></i></div>                        
+                    </button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button>
                 </div>
                 <div class="px-1">
-                    <div class="wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
+                    <div class="wc-app-menu wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
                         <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                         <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
                         <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
@@ -273,12 +287,10 @@
                         <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
                         <!-- <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label> -->
                     </div>
-                    <div class="wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
+                    <div class="wc-app-menu wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-context-config"><i class="bi bi-gear"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button> -->
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i></button>
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-eraser-config" ><i class="bi bi-eraser"></i> <i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button>
                     </div>
                 </div>
@@ -286,12 +298,17 @@
             </div>
     
             <div class="wc-app-footer">
-                <div class="container">
-                    <div class="wc-app-memu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
-                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
-                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
-                        <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.save('manual')"><i class="bi bi-save2"></i></button>
+                <div class="container px-0 d-flex justify-content-between">
+                    <div class="wc-app-menu wc-app-menu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
+                        <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
+                        <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
+                        <!-- <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.save('manual')"><i class="bi bi-save2"></i></button> -->
                     </div>
+                    <div class="wc-app-menu wc-app-menu-tool-propety  d-flex gap-1 px-1 py-1 justify-content-center mx-auto me-0">
+                        <button type="button" class="btn btn-md btn-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i></button>
+                        <button type="button" class="btn btn-md btn-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config" ><i class="bi bi-eraser"></i> <i class="bi bi-sliders"></i></button>                        
+                    </div>
+
                 </div>
             </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
@@ -325,16 +342,28 @@
                     <div class="modal-body">
                         <div class="row g-1">
                             <div class="col-6">
-                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new"><i class="bi bi-file-earmark-plus"></i> NEW</button>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new">
+                                    <div class="fs-4"><i class="bi bi-file-earmark-plus"></i></div>
+                                    <div>NEW</div>
+                                </button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-load"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-open">
+                                    <div class="fs-4"><i class="bi bi-file-earmark-arrow-up"></i></div>
+                                    <div>OPEN</div>
+                                </button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</button>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save">
+                                    <div class="fs-4"><i class="bi bi-file-earmark-arrow-down"></i></div>
+                                    <div>SAVE</div>
+                                </button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()"><i class="bi bi-x-circle"></i> CLOSE</button>
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()">
+                                    <div class="fs-4"><i class="bi bi-x-circle"></i></div>
+                                    <div>CLOSE</div>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -342,20 +371,22 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modal-file-load"  aria-hidden="true">
+        <div class="modal fade" id="modal-file-open"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> LOAD</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> OPEN</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" onsubmit="if(this.loadfile.files.length){ editor.loadDocument(this.loadfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
+                        <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
                             <div class="input-group input-group-lg">
-                                <input type="file" class="form-control" name="loadfile" accept=".wc3.json">
-                                <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> LOAD</button>
+                                <input type="file" class="form-control" name="openfile" accept=".wc3.json">
                             </div>
                             <div class="form-text text-end"><i class="bi bi-info-circle"></i> *.wc3.json만 지원됩니다.</div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -395,16 +426,28 @@
                         <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
                             <div class="d-flex flex-column gap-1">
                                 <div>
-                                    <label class="form-label">Size</label>
                                     <div class="input-group input-group-lg">
                                         <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
-                                        <span class="input-group-text" >x</span>
+                                        <span class="input-group-text" >X</span>
                                         <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
+                                        
                                     </div>
                                 </div>
-                                <div>
+                                <div class="text-end">
                                     <button class="w-100 btn btn-lg btn-primary">Create</button>
                                 </div>
+                                <hr class="my-1">
+                                <div>
+                                    <div class="form-label m-0">Template</div>
+                                    <div class="d-flex flex-wrap gap-1 p-1">
+                                        <button type="button" class="btn btn-primary" onclick="editor.newDocument(300,300);">300x300</button>
+                                        <button type="button" class="btn btn-primary" onclick="editor.newDocument(600,800);">600x800</button>
+                                        <button type="button" class="btn btn-primary" onclick="editor.newDocument(320,240);">320x240</button>
+                                        <button type="button" class="btn btn-primary" onclick="editor.newDocument(640,480);">640x480</button>
+                                        
+                                    </div>
+                                </div>
+                                
                             </div> 
                         </form>
                     </div>
