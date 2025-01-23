@@ -4,3 +4,6 @@
 [submodule "third_party/ui-input-stepper"]
 	path = third_party/ui-input-stepper
 	url = https://github.com/mins01/ui-input-stepper.git
+[submodule "third_party/ui_ColorPalette"]
+	path = third_party/ui_ColorPalette
+	url = https://github.com/mins01/ui_ColorPalette.git
