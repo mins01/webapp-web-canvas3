@@ -201,7 +201,7 @@ export default class BaseTool {
 			ctx.rotate(-layer.angle * (Math.PI / 180));
 			ctx.translate(-layer.width / 2,-layer.height / 2);
 		}
-		console.log('layer.angle',layer.angle);
+		// console.log('layer.angle',layer.angle);
 		
 		// layer 적용 크기 변경
 		ctx.scale(1/layer.zoom,1/layer.zoom)

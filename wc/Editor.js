@@ -53,6 +53,10 @@ export default class Editor{
     // }
 
 
+    initConfigs(){
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'));
+    }
+
     setContextConfig(conf){
         // Object.assign(this.contextConfig,conf);
         this.contextConfig.assignFrom(conf);
@@ -60,6 +64,10 @@ export default class Editor{
         this.brush.contextConfig.foreColor =this.contextConfig.foreColor;
         this.brush.contextConfig.backColor =this.contextConfig.backColor;
         this.brush.flush();
+        if(window.document.querySelector('#btn-palette')){
+            window.document.querySelector('#btn-palette').style.color = this.contextConfig.foreColor
+        }
+        
     }
     setTextConfig(conf){
         // Object.assign(this.textConfig,conf);        
@@ -67,9 +75,13 @@ export default class Editor{
         this.document?.setTextConfig(this.textConfig.toObject());
     }
     setBrushConfig(conf){
-        // Object.assign(this.brushConfig,conf);        
-        // this.brush?.setBrushConfig(this.brushConfig.toObject());
-        this.brush?.setBrushConfig(conf);
+        if(this?.brush){
+            this.brush?.setBrushConfig(conf);
+            this.brush.flush();
+            localStorage.setItem('brushConfig',JSON.stringify(this.brush.brushConfig))
+            console.log('x',JSON.stringify(this.brush.brushConfig));
+            
+        }
     }
 
     addEventListener(){

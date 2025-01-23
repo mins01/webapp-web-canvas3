@@ -41,6 +41,55 @@
     <meta property="og:type" content="website">
 
     <!-- //meta og -->
+    <!-- color palette -->
+	<link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css"> 
+	<script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
+	
+	<script src="third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>	
+	<link rel="stylesheet" href="third_party/ui_ColorPalette/ColorPalette.css"> 
+	<script src="third_party/ui_ColorPalette/ColorPalette.js"></script>
+
+    <style>
+        .colorPalette-tab-hsl {
+            max-height: 300px;
+        }
+    </style>
+    <script>
+        window.addEventListener('load',(evnet)=>{
+            const foreColor = localStorage.getItem('foreColor')??'#000000';
+            const bookmark = ["#000000","#ffffff","#c00000","#ff0000","#ffc000","#ffff00","#92d050","#00b050","#00b0f0","#0070c0","#002060","#7030a0"]
+
+            const cp = globalThis.cp = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cp"});
+            InputRangeBox.autoInit(cp);
+           
+            document.getElementById('box-color-palette').appendChild(cp);
+            cp.addEventListener('input',function(evt){
+                const obj = {'foreColor':this.toString()}
+                editor.setContextConfig(obj);
+            })
+            cp.addEventListener('change',function(evt){
+                // const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
+                // modal.hide();
+            })
+            cp.addEventListener('confirm',function(evt){
+                const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
+                modal.hide();
+                const obj = {'foreColor':this.toString()}
+                editor.setContextConfig(obj);
+                localStorage.setItem('foreColor',this.toString())
+            })
+            cp.addEventListener('cancel',function(evt){
+                const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
+                modal.hide();
+            })
+            cp.addEventListener('setselectedcolor',function(evt){
+                // console.log(evt.type,this.getSelectedColor())
+            })
+
+        })
+    </script>
+    <!-- //color palette -->
+
 
     <link rel="stylesheet" href="asset/style.css">
 
@@ -153,7 +202,7 @@
 
 
 
-            document.formBrushConfig.oninput(event)
+            // document.formBrushConfig.oninput(event)
             document.querySelector('.checkbox-tool[value="Brush"]').click();
 
 
@@ -165,6 +214,14 @@
             editor.document.history.save('Document.New');
 
             
+
+
+            const foreColor = localStorage.getItem('foreColor')??'#000000';
+            const obj = {'foreColor':foreColor}
+            editor.setContextConfig(obj)
+
+            editor.initConfigs();
+
         })
     </script>
 
@@ -193,28 +250,28 @@
                 <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()"><i class="bi bi-brush"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button>
                 </div>
                 <div class="px-1">
                     <div class="wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
-                        <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
-                        <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label>
+                        <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select('Line')" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
+                        <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
                         <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select('Brush')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
                         <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select('Eraser')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>       
                         <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Move')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
                         <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select('Hand')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
-                        <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label>
-                        <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label>
-                        <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label>
-                        <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label>
+                        <!-- <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select('Rectangle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label> -->
+                        <!-- <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select('Circle')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label> -->
+                        <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select('Text')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
+                        <!-- <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label> -->
                     </div>
                     <div class="wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-context-config"><i class="bi bi-gear"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button>
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i></button>
+                        <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button> -->
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-brush-config" ><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button>
                     </div>
                 </div>
@@ -331,7 +388,7 @@
                         <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
                             <div class="d-flex flex-column gap-1">
                                 <div>
-                                    <label for="" class="form-label">Size</label>
+                                    <label class="form-label">Size</label>
                                     <div class="input-group input-group-lg">
                                         <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
                                         <span class="input-group-text" >x</span>
@@ -488,7 +545,7 @@
                     </div>
                     <div class="modal-body">
                         <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-                            <h3 class="fs-5">COLOR</h3>
+                            <!-- <h3 class="fs-5">COLOR</h3>
                             <div class="d-flex flex-wrap gap-1 property-wrap">
                                 <div class="input-group">
                                     <span class="input-group-text" >전경색</span>
@@ -499,7 +556,7 @@
                                     <input type="color" class="form-control form-control-color"  name="backColor" value="#00ff00">
                                 </div>
                             </div>
-                            <hr class="my-1">
+                            <hr class="my-1"> -->
                             <h3 class="fs-5">LINE AND FILL</h3>
                             <div class="d-flex flex-wrap gap-1 property-wrap">
                                 <div class="input-group">
@@ -915,11 +972,11 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> Brush config</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> Brush config</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body brush-config">
-                        <form name="formBrushConfig" action="" oninput="b1.setBrushConfig(Wc.HtmlUtil.formToObject(this));b1.flush();  return false" >
+                        <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" >
                             <div>
                                 <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
                                     <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
@@ -1006,6 +1063,21 @@
                 })
             })
         </script>
+   
+        <div class="modal fade" id="modal-color-palette"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-palette"></i> Color palette</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <div id="box-color-palette"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
     </div>
     
 </body>
