@@ -26,8 +26,11 @@ export default class PointerEventHandler{
         event.stopPropagation();
 		event.preventDefault();
         if(this.pointers.size===0){ this.downAt = Date.now(); this.maxPointers=0; }
-        this.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-        this.maxPointers = Math.max(this.maxPointers,this.pointers.size)       
+        if(!this.pointers.has(event.pointerId)){
+            this.pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+            this.maxPointers = Math.max(this.maxPointers,this.pointers.size)       
+        }
+        
         if(this.onpointerdown){this.onpointerdown(event)}
     }
     pointermove = (event)=>{
@@ -42,8 +45,8 @@ export default class PointerEventHandler{
         event.stopPropagation();
 		event.preventDefault();
         this.pointers.delete(event.pointerId);
-        if(this.pointers.size===0){ this.downAt = null; this.maxPointers=0;}
         if(this.onpointerup){this.onpointerup(event)}
+        if(this.pointers.size===0){this.downAt = null; this.maxPointers=0;}
     }
 
     onpointerdown(event){

@@ -179,11 +179,11 @@ export default class Editor{
 
     // document가 변경되면 불러야한다.
     onchangeDocument(document){
-        console.log('onchangeDocument',document.id,document.layer.id)
+        // console.log('onchangeDocument',document.id,document.layer.id)
     }
     // 레이어가 선택되면 불려야한다. (순서 변경 때도)
     onselectLayer(layer){
-        console.log('onselectLayer',layer.id)
+        // console.log('onselectLayer',layer.id)
     }
 
 

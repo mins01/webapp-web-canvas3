@@ -36,10 +36,13 @@ export default class Brush extends BaseTool{
         super.onpointerup(event);
     }
     end(){
-        super.end();
-        // this.layer.merge(this.drawLayer)
+        const r = super.end()
+        if(r){ this.document.history.save(`Tool.${this.constructor.name}`); }
         this.ready()
-        this.document.history.save(`Tool.${this.constructor.name}`);
+    }
+    cancel(){
+        super.cancel();
+        this.document.history.reload();
     }
 
     sync(){

@@ -71,13 +71,20 @@ export default class BaseTool {
 
 	}
 
+	
+	/**
+	 * Description placeholder
+	 *
+	 * @returns {boolean} 정상종료시 true, 아니면 false
+	 */
 	end(){
-		this.downAt = null;
+		if(this.downAt){ this.downAt = null; return true }
+		return false;
 	}
 
 	cancel(){
-		// this.end();
 		this.downAt = null;
+		return true;
 	}
 
 	input(){
@@ -110,15 +117,27 @@ export default class BaseTool {
 
 	}
 
+	
+	/** 이거 안쓰는 것 같네
+	 * @deprecated
+	 */
 	sync(){
 
 	}
+
+
 	draw(){
 
 	}
 
 
 
+	/**
+	 * x,y in viewport from event
+	 *
+	 * @param {*} event 
+	 * @returns {{}} 
+	 */
 	getXyFromEvent(event){
 		let x = event.x + window.scrollX;
 		let y = event.y + window.scrollY;

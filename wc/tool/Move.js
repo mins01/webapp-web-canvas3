@@ -35,8 +35,13 @@ export default class Move extends BaseTool{
         super.onpointerup(event);
     }
     end(){
-        super.end();
-        this.document.history.save(`Tool.${this.constructor.name}`);
+        const r = super.end()
+        if(r){ this.document.history.save(`Tool.${this.constructor.name}`); }
+        this.ready()
+    }
+    cancel(){
+        super.cancel();
+        this.document.history.reload();
     }
 
     draw(x0,y0,x1,y1){
