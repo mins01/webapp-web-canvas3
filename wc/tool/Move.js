@@ -20,23 +20,25 @@ export default class Move extends BaseTool{
         this.layerTop0 = this.layer.top;
     }
     onpointerdown(event){
-        super.onpointerdown(event);
+        if(super.onpointerdown(event)===false){return false;}
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
+        return;
     }
     onpointermove(event){
-        super.onpointermove(event);
+        if(super.onpointermove(event)===false){return false;}
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
+        return;
     }
     onpointerup(event){
-        super.onpointerup(event);
+        return super.onpointerup(event);
     }
     end(){
-        const r = super.end()
-        if(r){ this.document.history.save(`Tool.${this.constructor.name}`); }
+        if(super.end()===false){return false;}
+        this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready()
     }
     cancel(){

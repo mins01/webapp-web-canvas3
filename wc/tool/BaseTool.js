@@ -55,20 +55,21 @@ export default class BaseTool {
 	}
 	start(){
 		this.init();
+		this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
 	}
 
 	onpointerdown(event){
-		this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
 		this.pointerType = event.pointerType??null;
 		if(!this.downAt) this.downAt = Date.now();
+		if(!this.downAt) return false;
 	}
 
 	onpointermove(event){
-
+		if(!this.downAt) return false;
 	}
 
 	onpointerup(event){
-
+		if(!this.downAt) return false;
 	}
 
 	
@@ -83,6 +84,7 @@ export default class BaseTool {
 	}
 
 	cancel(){
+		console.error('tool.cancel()');
 		this.downAt = null;
 		return true;
 	}

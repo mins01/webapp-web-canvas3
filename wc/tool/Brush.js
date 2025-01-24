@@ -16,35 +16,37 @@ export default class Brush extends BaseTool{
         this.brush = this.editor.brush;
     }
     onpointerdown(event){
-        super.onpointerdown(event);
+        if(super.onpointerdown(event)===false){return false;}
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
         if(event.pointerType!=='touch'){
             this.drawForDown(this.x0,this.y0)
         }
+        return;
     }
     onpointermove(event){
-        super.onpointermove(event);
+        if(super.onpointermove(event)===false){return false;}
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
         this.x0 = x; this.y0 = y;
-
+        return;
     }
     onpointerup(event){
-        super.onpointerup(event);
+        return super.onpointerup(event);
     }
     end(){
-        const r = super.end()
-        if(r){ this.document.history.save(`Tool.${this.constructor.name}`); }
-        this.ready()
+        if(super.end()===false){return false;}
+        this.document.history.save(`Tool.${this.constructor.name}`);
+        this.ready();
     }
     cancel(){
         super.cancel();
         this.document.history.reload();
     }
 
+    /** @deprecated */
     sync(){
         super.sync();
         this.draw(this.x0,this.y0,this.x,this.y);

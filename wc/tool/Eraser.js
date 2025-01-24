@@ -12,6 +12,7 @@ export default class Eraser extends Brush{
 
     start(){
         super.start();
+        this.ready()
         this.brush = this.editor.brushEraser;
     }
 
