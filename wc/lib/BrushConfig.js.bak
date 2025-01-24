@@ -28,7 +28,7 @@ class BrushConfig{
     flowControl = ''; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
 
     // 기타
-    solidColor = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
+    makeOpaque = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
     
 
     constructor(){
@@ -37,7 +37,7 @@ class BrushConfig{
                 if(['size','angle','roundness','hardness','spacing','sizeJitter','mininumDiameter','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter',].includes(prop)){
                     // 숫자만
                     value = parseFloat(value);                    
-                }else if(['flipX','flipY','solidColor',].includes(prop)){
+                }else if(['flipX','flipY','makeOpaque',].includes(prop)){
                     // bool
                     if(value==='true'){ value = true;}else{ value = !!value; }
                 }

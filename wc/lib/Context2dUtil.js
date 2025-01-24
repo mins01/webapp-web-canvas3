@@ -29,7 +29,7 @@ export default class Context2dUtil{
      * @param {number} [a=255] alpha
      * @param {number} [minAlpha=1] 
      */
-    static solidColor(ctx,r,g,b,a=255,minAlpha=1){
+    static makeOpaque(ctx,r,g,b,a=255,minAlpha=1){
         const c = ctx.canvas
         const imageData = ctx.getImageData(0,0,c.width,c.height);      
         for(let i=0,m=imageData.data.length;i<m;i+=4){
