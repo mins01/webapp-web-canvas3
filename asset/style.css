@@ -268,3 +268,27 @@
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
   max-height: 50svh;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* img-preview */
+
+#img-preview{
+  display: block;
+  margin:0 auto;
+  outline: 1px solid #999;
+  max-width: 100%;
+  /* height: 100%; */
+  object-fit: contain;
+  background-image: url(bg.gif);
+}

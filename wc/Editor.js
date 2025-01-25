@@ -211,7 +211,6 @@ export default class Editor{
         if(filename != this.document.name){ this.document.name = filename; }
 
         console.log(filename);
-        
 
         let ext = '';
         let mimetype = null;
@@ -228,11 +227,41 @@ export default class Editor{
         }else{
             console.error('지원되지 않는 타입')
         }
-        // console.log(ep);
-        
-        
-        
+        // console.log(ep);  
     }
+    /**
+     * Description placeholder
+     *
+     * @param {string} [type='wc3.json'] 
+     * @param {string} [filename=null] 
+     * @returns {boolean} 
+     */
+    uploadDocument(type='wc3.json',filename=null){
+        if(!this.document){return false;}
+        if(filename===null){ filename = this.document.name }
+        filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        if(filename.length==0) filename = Date.now();
+        if(filename != this.document.name){ this.document.name = filename; }
+
+        console.log(filename);
+
+        let ext = '';
+        let mimetype = null;
+        if(type==='wc3.json'){
+            ext = 'wc3.json';
+            mimetype = 'application/json';
+            const cb = (blob)=>{ this.upload(blob, filename+'.'+ext); }
+            this.document.toBlob(cb,mimetype)
+        }else if(type==='png'){
+            ext = 'png';
+            mimetype = 'image/png';
+            const cb = (blob)=>{ this.upload(blob, filename+'.'+ext); }
+            this.document.toBlob(cb,mimetype)
+        }else{
+            console.error('지원되지 않는 타입')
+        }
+        // console.log(ep);  
+    }    
     loadDocument(file){
         HtmlUtil.asyncLoadFile(file).then((text)=>{
             // console.log(file,text);
@@ -258,6 +287,25 @@ export default class Editor{
         document.layers[0].fill('#fff')
         document.addEmptyLayer();
         this.documents.add(document);
+    }
+    previewDocument(){
+        if(this?.document){
+            const url = this.document.toDataURL('image/png');
+            this.previewImage(url);
+        }
+    }
+
+    previewImage(url){
+        const imgPreview = window.document.querySelector('#img-preview');
+        imgPreview.src = url;
+        imgPreview.addEventListener('load',(event)=>{
+            let target = event.target;
+            let modalNode = target.closest('.modal');
+            modalNode.querySelector('#img-preview-size').textContent = `${target.naturalWidth}px x ${target.naturalHeight}px`;
+            const modal = bootstrap.Modal.getInstance(modalNode)
+            globalThis.modals.hideAll();
+            modal.show()
+        },{once:true})
     }
 
 
@@ -330,6 +378,11 @@ export default class Editor{
 
     
 
+    upload(file,filename){
+        console.log(upload,file,filename);
+      
+        //재선언해야함.
+    }
 
 
 }

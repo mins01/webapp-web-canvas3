@@ -46,6 +46,11 @@
     
     <!-- //hammer.js -->
 
+    <!-- WG2 uploader -->
+    
+    <script src="/WG2/js/Wg2Uploder.js"></script>
+    <!-- //WG2 uploader -->
+
     <!-- color palette -->
 	<link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css"> 
 	<script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
@@ -237,6 +242,33 @@
             
             // globalThis.hammer = new Hammer(editor.target);
 
+            //-- upload
+            if(Wg2Uploder??false){
+                editor.upload = function(file,filename){
+                    const resJson = Wg2Uploder.upload(file,filename)
+                    resJson.then((obj)=>{
+                        if(!obj[0]){ return; }
+                        const uploaded = obj[0];
+                        console.log(uploaded);
+                        
+                        // let name = null;
+                        // if(uploaded.filename.includes('.wc')){
+                        //     name = uploaded.filename.replace(/\.wc$/,'');
+                        // }else{
+                        //     name = uploaded.filename;
+                        // }
+                        // this.document.name = name;
+
+                        if(uploaded.previewurl){
+                            editor.previewImage(uploaded.previewurl);
+                        }
+
+                    }).catch(e => {
+                        console.error(e);
+                    })
+                }
+            }
+
         })
     </script>
 
@@ -362,21 +394,28 @@
                             <div class="col-6">
                                 <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save">
                                     <div class="fs-4"><i class="bi bi-file-earmark-arrow-down"></i></div>
-                                    <div>SAVE</div>
+                                    <div>DOWNLOAD</div>
                                 </button>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-upload">
                                     <div class="fs-4"><i class="bi bi-cloud-upload"></i></div>
                                     <div>UPLOAD</div>
                                 </button>
-                            </div>                            
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.previewDocument()">
+                                    <div class="fs-4"><i class="bi bi-image"></i></div>
+                                    <div>PREVIEW</div>
+                                </button>
+                            </div>
                             <div class="col-6">
                                 <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()">
                                     <div class="fs-4"><i class="bi bi-x-circle"></i></div>
                                     <div>CLOSE</div>
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -400,6 +439,23 @@
                                 <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-file-preview"  aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-image"></i> PREVIEW</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center form-text mb-1">
+                            <div id="img-preview-size"></div>
+                        </div>
+                        <div><img id="img-preview" class="my-3 shadow" src="" alt="image preview"></div>
                     </div>
                 </div>
             </div>
@@ -440,12 +496,55 @@
             window.addEventListener('load',(event)=>{
                 document.querySelector('#modal-file-save').addEventListener('show.bs.modal', event => {
                     const target = event.target;
-                    target.querySelectorAll('.filename').forEach(el => { el.value = editor.document.name });
+                    if(editor.document){
+                        target.querySelectorAll('.filename').forEach(el => { el.value = editor.document.name });
+                    }
                     
                 })
             })
         </script>
 
+        <div class="modal fade" id="modal-file-upload"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-down"></i> UPLOAD</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column gap-1 p-1">
+                            <form action="" onsubmit="editor.uploadDocument('wc3.json',this.filename.value);return false;">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
+                                    <input type="text" class="form-control filename" name="filename" value="" required>
+                                    <span class="input-group-text">.wc3.json</span>
+                                    <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
+                                </div>
+                                <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+                            </form>
+                            <form action="" onsubmit="editor.uploadDocument('png',this.filename.value);return false;">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
+                                    <input type="text" class="form-control filename"  name="filename" value="" required>
+                                    <span class="input-group-text">.png</span>
+                                    <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            window.addEventListener('load',(event)=>{
+                document.querySelector('#modal-file-upload').addEventListener('show.bs.modal', event => {
+                    const target = event.target;
+                    if(editor.document){
+                        target.querySelectorAll('.filename').forEach(el => { el.value = editor.document.name });
+                    }
+                })
+            })
+        </script>
 
         <div class="modal fade" id="modal-file-new"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -679,7 +778,7 @@
 
 
 
-        <div class="modal fade" id="modalDocument"  aria-hidden="true">
+        <!-- <div class="modal fade" id="modalDocument"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -719,7 +818,7 @@
                 </div>
             </div>
         </div>
-
+ -->
 
         <div class="modal fade" id="modal-layers"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1236,6 +1335,21 @@
         </div>
    
     </div>
+    <script>
+        globalThis.modals = {
+            modals:{},
+            hideAll:function(){
+                for(let k in this.modals){
+                    const modal = this.modals[k];
+                    modal.hide();
+                }
+            }
+        };
+        window.document.querySelectorAll('.modal[id]').forEach(node=>{
+            const modal = new bootstrap.Modal(node);
+            if(!(globalThis.modals.modals?.[node.id]??false)) globalThis.modals.modals[node.id] = modal;
+        })
+    </script>
     
 </body>
 </html>
