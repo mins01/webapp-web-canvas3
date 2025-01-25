@@ -45,6 +45,13 @@ export default class Editor{
     }
 
     get tool(){ return this.tools.selected; }
+    
+    /**
+     * Description placeholder
+     *
+     * @readonly
+     * @type {HTMLCanvasElement|Document}
+     */
     get document(){ return this.documents.selected; }
 
     // get contextConf(){
@@ -189,24 +196,35 @@ export default class Editor{
 
 
 
+    /**
+     * Description placeholder
+     *
+     * @param {string} [type='wc3.json'] 
+     * @param {string} [filename=null] 
+     * @returns {boolean} 
+     */
     saveDocument(type='wc3.json',filename=null){
         if(!this.document){return false;}
-        if(filename===null){ filename = Date.now() }
-        let data = null;
+        if(filename===null){ filename = this.document.name }
+        filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        if(filename.length==0) filename = Date.now();
+        if(filename != this.document.name){ this.document.name = filename; }
+
+        console.log(filename);
+        
+
         let ext = '';
         let mimetype = null;
         if(type==='wc3.json'){
-            data = JSON.stringify(this.document.export(),null,4);
             ext = 'wc3.json';
             mimetype = 'application/json';
-            HtmlUtil.saveAsFile(data, filename+'.'+ext , mimetype);
+            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
+            this.document.toBlob(cb,mimetype)
         }else if(type==='png'){
             ext = 'png';
             mimetype = 'image/png';
-            const cb = (blob)=>{
-                HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
-            }
-            data = this.document.toBlob(cb,'image/png')
+            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
+            this.document.toBlob(cb,mimetype)
         }else{
             console.error('지원되지 않는 타입')
         }

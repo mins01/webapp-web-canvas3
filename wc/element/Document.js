@@ -205,4 +205,21 @@ export default class Document extends Layer{
         this.flush();
         this.history.save();
     }
+
+
+
+    /**
+     * Description placeholder
+     *
+     * @param {Function} callback 
+     * @param {string} type 
+     * @param {any} quality 
+     */
+    toBlob(callback, type, quality){
+        if(type==='wc3.json' || type=== 'application/json'){
+            callback(JSON.stringify(this.export(),null,4));
+        }else{
+            super.toBlob(...arguments)
+        }
+    }
 }

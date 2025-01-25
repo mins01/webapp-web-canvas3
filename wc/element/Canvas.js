@@ -6,7 +6,7 @@ class Canvas extends HTMLCanvasElement{
     static context2dOptions = {"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,};
 
     static get keys(){
-        return ['width', 'height', 'drawable', 'label', 'contextConfig', 'createdAt','updatedAt',];
+        return ['name', 'width', 'height', 'drawable', 'label', 'contextConfig', 'createdAt','updatedAt',];
     }
     // static get observedAttributes() { return ['width', 'height']; }
 
@@ -20,24 +20,30 @@ class Canvas extends HTMLCanvasElement{
     }
 
 
+    name = null;
     ctx = null;
     drawable = true;
-    #left;
-    #top;
+    // #left;
+    // #top;
     constructor(w=null,h=null){
         super();
 
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
-        if(this.id === undefined || this.id === '') this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+(Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
-        this.label = "created at "+(new Date()).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
+
+        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
+        if(this.id === undefined || this.id === '') this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+rand;
+        
+        const d = new Date();
+        this.name = [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
+        
+        this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
         this.contextConfig = new Context2dConfig();
 
         Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
         Object.defineProperty(this, 'parent', { enumerable: false, configurable: true, writable: true, value: null, })
         // this.parent = null
 
-        this.createdAt = Date.now();
-        this.updatedAt = Date.now();
+        this.updatedAt = this.createdAt = Date.now();
         this.setContext2d();
 
         if(w && w != this.width) this.width = w;

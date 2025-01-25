@@ -414,18 +414,38 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column gap-1 p-1">
-                            <div>
-                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('wc3.json')"><i class="bi bi-filetype-json"></i> SAVE wc3.json</button>
+                            <form action="" onsubmit="editor.saveDocument('wc3.json',this.filename.value);return false;">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
+                                    <input type="text" class="form-control filename" name="filename" value="" required>
+                                    <span class="input-group-text">.wc3.json</span>
+                                    <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
+                                </div>
                                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
-                            </div>
-                            <div>
-                                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.saveDocument('png')"><i class="bi bi-filetype-png"></i> SAVE png</button>
-                            </div>
+                            </form>
+                            <form action="" onsubmit="editor.saveDocument('png',this.filename.value);return false;">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
+                                    <input type="text" class="form-control filename"  name="filename" value="" required>
+                                    <span class="input-group-text">.png</span>
+                                    <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            window.addEventListener('load',(event)=>{
+                document.querySelector('#modal-file-save').addEventListener('show.bs.modal', event => {
+                    const target = event.target;
+                    target.querySelectorAll('.filename').forEach(el => { el.value = editor.document.name });
+                    
+                })
+            })
+        </script>
+
 
         <div class="modal fade" id="modal-file-new"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
