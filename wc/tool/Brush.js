@@ -12,11 +12,14 @@ export default class Brush extends BaseTool{
 
     start(){
         super.start();
-        this.ready()
         this.brush = this.editor.brush;
+        this.brush.ready()
+        this.ready()
+        
     }
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
+        this.brush.pointerEvent = event;
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
@@ -27,6 +30,7 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
+        this.brush.pointerEvent = event;
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
@@ -34,6 +38,7 @@ export default class Brush extends BaseTool{
         return;
     }
     onpointerup(event){
+        this.brush.pointerEvent = event;
         return super.onpointerup(event);
     }
     end(){
@@ -69,6 +74,8 @@ export default class Brush extends BaseTool{
         ctx.save();
         this.prepareLayer(ctx);
         // console.log(lx0,ly0,lx1,ly1);
+        // console.log(this.lastEvent);
+
         this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,this.remainInterval)
         ctx.restore();
         layer.flush();

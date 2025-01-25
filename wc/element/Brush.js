@@ -15,6 +15,7 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 export default class Brush extends Layer{
 
     margin = 2;
+    pointerEvent = null
     constructor(w=null,h=null){
         super(w,h);
         this.parent = null;
@@ -33,6 +34,9 @@ export default class Brush extends Layer{
 
     init(){
         
+    }
+    ready(){
+        this.pointerEvent = null
     }
 
     setBrushConfig(conf){
@@ -124,7 +128,7 @@ export default class Brush extends Layer{
 
         if(brushConfig.makeOpaque){
             const c = jsColor.Color.from(ctx.fillStyle);
-            const o = Math.round(brushConfig.opacity*255);
+            const o = Math.round(255);
             Context2dUtil.makeOpaque(ctx,c.r,c.g,c.b,o,o/2)
         }
     }
@@ -139,6 +143,7 @@ export default class Brush extends Layer{
     dot(ctx,x,y){
         const image = this
         const brushConfig = this.brushConfig;
+        const pointerEvent = this.pointerEvent
 
         let gx = image.width/2;
         let gy = image.height/2;
@@ -152,31 +157,83 @@ export default class Brush extends Layer{
         if(brushConfig.hueJitter>0){ const v = (Math.floor(Math.random()*361)-180)*brushConfig.hueJitter; filters.push(`hue-rotate(${v}deg)`); }
         if(brushConfig.saturationJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.saturationJitter; filters.push(`saturate(${v}%)`); }
         if(brushConfig.brightnessJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.brightnessJitter; filters.push(`brightness(${v}%)`); }
-        if(brushConfig.opacityJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.opacityJitter; filters.push(`opacity(${v}%)`); }
 
-        if(filters.length){ ctx.filter = filters.join(' '); }
-        if(brushConfig.sizeJitter > 0 && brushConfig.mininumDiameter < 1){
-            const v = Math.max(1 - Math.random()*brushConfig.sizeJitter, brushConfig.mininumDiameter); ctx.scale(v,v)
+
+        // pointerType :  "mouse"
+        // altitudeAngle :  1.5707963267948966
+        // azimuthAngle :  0
+        // pressure :  0.5
+
+        const sizeControl = brushConfig.sizeControl
+        if(sizeControl==='off'){ // 아무 설정이 없을 경우
+            if(brushConfig.sizeJitter > 0 && brushConfig.mininumSizeRatio < 1){
+                const v = Math.max(1 - Math.random()*brushConfig.sizeJitter, brushConfig.mininumSizeRatio); ctx.scale(v,v)
+            }
+        }else if(pointerEvent && sizeControl==='penPressure'){
+            const pressure = pointerEvent.pressure;
+            if(pointerEvent.pointerType=='pen'){
+                const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
+            }
         }
+
+        const opacityControl = brushConfig.opacityControl
+        if(opacityControl==='off'){ // 아무 설정이 없을 경우
+            if(brushConfig.opacityJitter>0 && brushConfig.mininumOpacity < 1){ 
+                const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.opacityJitter; filters.push(`opacity(${v}%)`); 
+            }
+        }else if(pointerEvent && opacityControl==='penPressure'){
+            const pressure = pointerEvent.pressure;
+            if(pointerEvent.pointerType=='pen'){
+                const v = Math.round(Math.max(pressure, brushConfig.mininumOpacity) * 100); filters.push(`opacity(${v}%)`); 
+            }
+        }
+
+        const angleControl = brushConfig.angleControl
+        if(angleControl==='off'){ // 아무 설정이 없을 경우
+
+        }else if(pointerEvent && angleControl==='penTilt'){
+            const azimuthAngle = pointerEvent.azimuthAngle;
+            if(pointerEvent.pointerType=='pen'){
+                const v = azimuthAngle; ctx.rotate(azimuthAngle)
+                // console.log('azimuthAngle',azimuthAngle);
+            }
+        }
+
+        const roundnessControl = brushConfig.roundnessControl
+        if(roundnessControl==='off'){ // 아무 설정이 없을 경우
+
+        }else if(pointerEvent && roundnessControl==='penTilt'){
+            const altitudeAngle = pointerEvent.altitudeAngle;
+            if(pointerEvent.pointerType=='pen' && brushConfig.mininumRoundness < 1){
+                const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mininumRoundness); ctx.scale(1,v)
+                // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mininumRoundness);
+            }
+        }
+
+
+
         if(brushConfig.angleJitter > 0){ 
-            
             const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
             ctx.rotate(Math.PI * v); // 45도 회전 (Math.PI / 4 라디안)
         }
 
+                
         
-        
+
+        if(filters.length){ ctx.filter = filters.join(' '); }
         ctx.drawImage(image, -gx,-gy,image.width,image.height );
 
 
         ctx.restore();
 
     }
+
     drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0) {
         const image = this
         const brushConfig = this.brushConfig;
-        const size = Math.max(1,parseFloat(brushConfig.size));
-
+        const pointerEvent = this.pointerEvent
+        let size = Math.max(1,parseFloat(brushConfig.size));
+        
         const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
         // 선의 길이를 계산
         let r = size / 2;
@@ -190,22 +247,16 @@ export default class Brush extends Layer{
             return distance2;
             
         }else{
-            // 선의 길이에 맞춰 이미지가 반복되도록 반복문을 돌린다
-            let steps = Math.floor(distance2 / interval);
-    
+            let steps = Math.floor(distance2 / interval);   
             for (let i = 0; i < steps; i++) {
-                // 선 상의 각 점 계산
                 let t = i / steps;
                 let x = x0 + t * dx;
                 let y = y0 + t * dy;   
-                // 이미지 그리기
-                // ctx.imageSmoothingEnabled = false;
-
-                // ctx.drawImage(image, x - r, y - r);
                 this.dot(ctx,x,y);
             }
 
-            remainInterval = distance2 % interval
+            remainInterval = distance2 % interval;
+            this.lastSize = size;
             return remainInterval;
             
         }

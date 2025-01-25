@@ -196,6 +196,13 @@
                                 </div>
                             </div>
                             <div class="input-group">
+                                <span class="input-group-text" >sizeControl</span>
+                                <select class="form-select " name="sizeControl"  onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" >
+                                    <option selected value="off">OFF</option>
+                                    <option value="penPressure">penPressure</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
                                 <span class="input-group-text" >sizeJitter</span>
                                 <div class="form-control">
                                     <input class="form-range d-block" type="range" name="sizeJitter" placeholder="sizeJitter" step="0.05" min="0" max="1"
@@ -205,9 +212,9 @@
                                 </div>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text" >mininumDiameter(최소 크기)</span>
+                                <span class="input-group-text" >mininumSizeRatio(최소 크기)</span>
                                 <div class="form-control">
-                                    <input class="form-range d-block" type="range" name="mininumDiameter" placeholder="mininumDiameter" step="0.05" min="0" max="1"
+                                    <input class="form-range d-block" type="range" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.05" min="0" max="1"
                                         onfocus="if(b1){ this.value = b1.brushConfig[this.name];}" 
                                         value="0"
                                         >

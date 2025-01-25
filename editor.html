@@ -616,7 +616,7 @@
                     <div class="modal-body">
                         <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
                             <h3 class="fs-5">TEXT</h3>
-                            <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
+                            <textarea name="" rows="3" class="form-control" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
                         </form>
                         <hr>
                         <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
@@ -830,7 +830,7 @@
                         <hr>
                         <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
                             <h3 class="fs-5">TEXT</h3>
-                            <textarea name="" rows="3" class="form-control" id="" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
+                            <textarea name="" rows="3" class="form-control" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
                         </form>
 
                     </div>
@@ -1223,11 +1223,70 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-text" >makeOpaque(불투명하게)</span>
-                                    <select class="form-select " name="makeOpaque" id="" >
+                                    <select class="form-select " name="makeOpaque" >
                                         <option selected value="false">NO</option>
                                         <option value="true">YES</option>
                                     </select>
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >sizeControl</span>
+                                    <select class="form-select " name="sizeControl" >
+                                        <option selected value="off">OFF</option>
+                                        <option value="penPressure">penPressure</option>
+                                    </select>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >mininumSizeRatio</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+
+                                <div class="input-group">
+                                    <span class="input-group-text" >opacityControl</span>
+                                    <select class="form-select " name="opacityControl" >
+                                        <option selected value="off">OFF</option>
+                                        <option value="penPressure">penPressure</option>
+                                    </select>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >mininumOpacity</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="mininumOpacity" placeholder="mininumOpacity" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text" >roundnessControl</span>
+                                    <select class="form-select " name="roundnessControl" >
+                                        <option selected value="off">OFF</option>
+                                        <!-- <option value="penPressure">penPressure</option> -->
+                                        <option value="penTilt">penTilt</option>
+                                    </select>
+                                </div>
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text" >mininumRoundness</span>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                        <input type="range" class="form-range d-block" name="mininumRoundness" placeholder="mininumRoundness" step="0.01" min="0" max="1" value="1" >
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <span class="input-group-text" >angleControl</span>
+                                    <select class="form-select " name="angleControl" >
+                                        <option selected value="off">OFF</option>
+                                        <!-- <option value="penPressure">penPressure</option> -->
+                                        <option value="penTilt">penTilt</option>
+                                    </select>
+                                </div>
+
+                                
+                                
 
                             </div>
                         </form>
@@ -1314,7 +1373,7 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-text" >makeOpaque(불투명하게)</span>
-                                    <select class="form-select " name="makeOpaque" id="" >
+                                    <select class="form-select " name="makeOpaque" >
                                         <option selected value="false">NO</option>
                                         <option value="true">YES</option>
                                     </select>
