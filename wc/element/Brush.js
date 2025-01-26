@@ -234,6 +234,19 @@ export default class Brush extends Layer{
         const pointerEvent = this.pointerEvent
         let size = Math.max(1,parseFloat(brushConfig.size));
         
+        
+        const sizeControl = brushConfig.sizeControl
+        if(sizeControl==='off'){ // 아무 설정이 없을 경우
+        }else if(pointerEvent && sizeControl==='penPressure'){
+            const pressure = pointerEvent.pressure;
+            if(pointerEvent.pointerType=='pen'){
+                const v = Math.max(pressure, brushConfig.mininumSizeRatio); 
+                size *= v;
+            }
+        }
+
+
+
         const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
         // 선의 길이를 계산
         let r = size / 2;
