@@ -209,11 +209,11 @@
             let l = editor.document.layers.item(0)
             l.fill('#00ff0066');
 
-            const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
-            wcl5.text='하늘하늘! \n 그렇구나';
-            wcl5.textConfig.textColor="#0000cc"
+            // const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
+            // wcl5.text='하늘하늘! \n 그렇구나';
+            // wcl5.textConfig.textColor="#0000cc"
 
-            editor.document.add(wcl5);
+            // editor.document.add(wcl5);
 
             // const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
             // editor.document.add(wcl6);
@@ -349,6 +349,7 @@
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <!-- <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button> -->
+                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-setting"><i class="bi bi-gear"></i></button>
                 </div>
                 <div class="px-1">
                     <div class="wc-app-menu wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
@@ -473,6 +474,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-menu-setting"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-gear"></i> Setting</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column gap-1">
+                            <button type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i> Document</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
 
         <div class="modal fade" id="modal-file-open"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1033,8 +1053,10 @@
                                     editor.document.resize(this.width.value,this.height.value);
                                     editor.document.flush();
                                     editor.document.layers.ready();
-                                    editor.document.history.save();
-                                } return false">
+                                    // editor.document.history.save();
+                                } return false"
+                                data-wc-sync-form="editor.document"
+                                >
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
                                     <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
@@ -1043,57 +1065,50 @@
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
                                 </div>
                             </form>
-                            <form name="form_document_zoom" class="flex-fill" action="" 
-                                oninput="
-                                if(editor?.document){ 
-                                    editor.document.zoom=parseFloat(this.zoom.value);
-                                    editor.document.flush();
-                                    editor.document.layers.ready();
-                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
+                            <hr>
+                            <form  class="d-flex flex-column gap-1" action="" 
+                                x-onchange="this.oninput(event); editor.document.history.save(); return false;"
+                                oninput="if(editor?.document){ const document = editor.document; Object.assign(document,Wc.HtmlUtil.formToObject(this));document.flush(); }"
+                                data-wc-sync-form="editor.document"
+                                >
                                 
                                 <div class="input-group ui-input-stepper" >
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" onchange="editor.document.history.save()">
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
                                         <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
                                     </div>
+                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+
                                 </div>
-                            </form>
-                            <form name="form_document_angle" class="flex-fill" action="" 
-                                oninput="
-                                if(editor?.document){ 
-                                    editor.document.angle=parseFloat(this.angle.value);
-                                    editor.document.flush();
-                                    editor.document.layers.ready();
-                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
+
+
+
                                 <div class="input-group ui-input-stepper" >
                                     <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
                                         <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                     </div>
                                 </div>
-                            </form>
-                            <!-- <form name="form_document_postion" class="flex-fill" action="" 
-                                oninput="
-                                    if(editor?.document){ 
-                                        editor.document.postion(this.left.value,this.top.value);
-                                        editor.document.flush();
-                                        editor.document.layers.ready();
-                                    }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
+
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
                                     <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
                                     <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Postion</button>
                                 </div>
-                            </form> -->
+                            </form>
+                            <hr>
+                            <div>
+                                <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">center center</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
+        <!-- <script>
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
                 document.querySelector('#modal-document-config').addEventListener('show.bs.modal', function(event){
@@ -1124,7 +1139,7 @@
                     UiInputStepper.initDataValue(this)
                 })
             })
-        </script>
+        </script> -->
 
 
         <div class="modal fade" id="modal-brush-config"  aria-hidden="true">

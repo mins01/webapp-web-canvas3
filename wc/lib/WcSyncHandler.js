@@ -1,6 +1,6 @@
 import HtmlUtil from "./HtmlUtil.js"
 
-export default class WcSyncFromHandler{
+export default class WcSyncHandler{
   constructor(){
 
   }
@@ -8,20 +8,24 @@ export default class WcSyncFromHandler{
   addEventListener(){
     window.addEventListener('shown.bs.modal',(event)=>{
       const target = event.target;
-      target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
-        this.syncFrom(el);
-      });
-      target.querySelectorAll('form[data-wc-sync-form]').forEach(form=> {
-        this.syncForm(form);
-      });
-
-      target.querySelectorAll('.ui-input-stepper input').forEach((input)=>{
-        UiInputStepper.syncDataValue(input);
-      })
+      this.sync(target);
       
     })
   }
 
+
+  sync(target){
+    target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
+      this.syncFrom(el);
+    });
+    target.querySelectorAll('form[data-wc-sync-form]').forEach(form=> {
+      this.syncForm(form);
+    });
+
+    target.querySelectorAll('.ui-input-stepper input').forEach((input)=>{
+      UiInputStepper.syncDataValue(input);
+    })
+  }
 
   /**
    * 설정 값을 가져와서 input.value에 적용
