@@ -1,3 +1,5 @@
+import HtmlUtil from "./HtmlUtil.js"
+
 export default class WcSyncFromHandler{
   constructor(){
 
@@ -68,6 +70,6 @@ export default class WcSyncFromHandler{
     if(v===null){ return; }
     console.log(v);
     
-    Wc.HtmlUtil.objectToForm({... v },form)
+    HtmlUtil.objectToForm({... v },form)
   }
 }

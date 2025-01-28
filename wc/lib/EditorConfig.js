@@ -8,7 +8,7 @@ export default class EditorConfig extends BaseConfig{
         const proxyConfig = {
             keys:['inputMode']
             // number:[],
-            // boolean:['flipX','flipY','makeOpaque',],
+            // boolean:[],
         }
         const proxy = super(proxyConfig);
         this.reset();

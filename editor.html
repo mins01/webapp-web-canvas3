@@ -459,13 +459,13 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column gap-3">
-                            <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))">
+                            <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))" data-wc-sync-form="editor.editorConfig">
                                 <h5>Input mode</h5>
                                 <div class="row g-1">
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="none" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="all" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
                                 </div>
                             </form>
                         </div>
