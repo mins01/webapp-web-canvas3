@@ -20,7 +20,7 @@ export default class Document extends Layer{
         super(w,h);
         // this.layers = new SelectableArray();
         this.layers = new Layers()
-        this.history = new History(this,5);
+        this.history = new History(this,20);
         this.layers.document = this;
         this.parent = null;
         // this.syncing = false;

@@ -88,30 +88,30 @@
             const foreColor = localStorage.getItem('foreColor')??'#000000';
             const bookmark = ["#000000","#ffffff","#c00000","#ff0000","#ffc000","#ffff00","#92d050","#00b050","#00b0f0","#0070c0","#002060","#7030a0"]
 
-            const cp = globalThis.cp = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cp"});
-            InputRangeBox.autoInit(cp);
+            const cpForeColor = globalThis.cpForeColor = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cpForeColor"});
+            InputRangeBox.autoInit(cpForeColor);
            
-            document.getElementById('box-color-palette').appendChild(cp);
-            cp.addEventListener('input',function(evt){
+            document.getElementById('box-color-palette').appendChild(cpForeColor);
+            cpForeColor.addEventListener('input',function(evt){
                 const obj = {'foreColor':this.toString()}
                 editor.setContextConfig(obj);
             })
-            cp.addEventListener('change',function(evt){
+            cpForeColor.addEventListener('change',function(evt){
                 // const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
                 // modal.hide();
             })
-            cp.addEventListener('confirm',function(evt){
+            cpForeColor.addEventListener('confirm',function(evt){
                 const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
                 modal.hide();
                 const obj = {'foreColor':this.toString()}
                 editor.setContextConfig(obj);
                 localStorage.setItem('foreColor',this.toString())
             })
-            cp.addEventListener('cancel',function(evt){
+            cpForeColor.addEventListener('cancel',function(evt){
                 const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
                 modal.hide();
             })
-            cp.addEventListener('setselectedcolor',function(evt){
+            cpForeColor.addEventListener('setselectedcolor',function(evt){
                 // console.log(evt.type,this.getSelectedColor())
             })
 
@@ -1143,7 +1143,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body brush-config">
-                        <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" >
+                        <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brush.brushConfig" >
                             <div>
                                 <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
                                     <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
@@ -1273,17 +1273,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-brush-config').addEventListener('show.bs.modal', event => {
-                    const brush = editor.brush
-                    event.target.brush = brush;
-                    const f = document.formBrushConfig;
-                    Wc.HtmlUtil.objectToForm({...brush.brushConfig},f)
-                })
-            })
-        </script>
    
         <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1293,7 +1282,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body brush-config">
-                        <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" >
+                        <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brushEraser.brushConfig">
                             <div>
                                 <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
                                     <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
@@ -1365,18 +1354,7 @@
             </div>
         </div>
 
-        <script>
-            window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-eraser-config').addEventListener('show.bs.modal', event => {
-                    const brushEraser = editor.brushEraser
-                    event.target.brushEraser = brushEraser;
-                    const f = document.formEraserConfig;
-                    Wc.HtmlUtil.objectToForm(brushEraser.brushConfig,f)
-                })
-            })
-        </script>
-   
+  
         <div class="modal fade" id="modal-color-palette"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -1392,21 +1370,6 @@
         </div>
    
     </div>
-    <script>
-        // globalThis.modals = {
-        //     modals:{},
-        //     hideAll:function(){
-        //         for(let k in this.modals){
-        //             const modal = this.modals[k];
-        //             modal.hide();
-        //         }
-        //     }
-        // };
-        // window.document.querySelectorAll('.modal[id]').forEach(node=>{
-        //     const modal = new bootstrap.Modal(node);
-        //     if(!(globalThis.modals.modals?.[node.id]??false)) globalThis.modals.modals[node.id] = modal;
-        // })
-    </script>
     
 </body>
 </html>

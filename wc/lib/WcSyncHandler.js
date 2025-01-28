@@ -16,16 +16,26 @@ export default class WcSyncFromHandler{
       const target = event.target;
       target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
         this.syncFrom(el);
-      });      
+      });
+      target.querySelectorAll('form[data-wc-sync-form]').forEach(form=> {
+        this.syncForm(form);
+      });
     })
   }
 
-  syncFrom(input){
+
+  /**
+   * 설정 값을 가져와서 input.value에 적용
+   *
+   * @param {HTMLInputElement} input 
+   * @param {typeof globalThis} [v=globalThis] 
+   */
+  syncFrom(input,v=globalThis){
     const wcSyncFrom = input.dataset.wcSyncFrom;
     const splits = wcSyncFrom.split(/\./g);
     const inputType = input.type??'text'
 
-    let v = globalThis;
+    // let v = globalThis;
     splits.forEach((split)=>{
       if(v===null){return;}
       v = v?.[split]??null;
@@ -38,5 +48,26 @@ export default class WcSyncFromHandler{
     }else{
       input.value = v
     }
+  }
+
+  /**
+   * config의 내용을 form 에 넣음.
+   *
+   * @param {HTMLFormElement} form 
+   */
+  syncForm(form){
+    const wcSyncForm = form.dataset.wcSyncForm;
+    const splits = wcSyncForm.split(/\./g);
+    console.log(splits);
+    
+    let v = globalThis;
+    splits.forEach((split)=>{
+      if(v===null){return;}
+      v = v?.[split]??null;
+    })
+    if(v===null){ return; }
+    console.log(v);
+    
+    Wc.HtmlUtil.objectToForm({... v },form)
   }
 }
