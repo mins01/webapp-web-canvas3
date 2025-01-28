@@ -291,6 +291,14 @@
         })
     </script>
 
+    <script type="module">
+        import ModalHandler from "./wc/ui/ModalHandler.js";
+        if(!globalThis.Wc) globalThis.Wc = {}
+        globalThis.Wc.ModalHandler = ModalHandler;
+
+        const modals = globalThis.modals = new ModalHandler();
+        modals.windowOnload();
+    </script>
     
     <script>
         function randomFill(event){
@@ -1414,19 +1422,19 @@
    
     </div>
     <script>
-        globalThis.modals = {
-            modals:{},
-            hideAll:function(){
-                for(let k in this.modals){
-                    const modal = this.modals[k];
-                    modal.hide();
-                }
-            }
-        };
-        window.document.querySelectorAll('.modal[id]').forEach(node=>{
-            const modal = new bootstrap.Modal(node);
-            if(!(globalThis.modals.modals?.[node.id]??false)) globalThis.modals.modals[node.id] = modal;
-        })
+        // globalThis.modals = {
+        //     modals:{},
+        //     hideAll:function(){
+        //         for(let k in this.modals){
+        //             const modal = this.modals[k];
+        //             modal.hide();
+        //         }
+        //     }
+        // };
+        // window.document.querySelectorAll('.modal[id]').forEach(node=>{
+        //     const modal = new bootstrap.Modal(node);
+        //     if(!(globalThis.modals.modals?.[node.id]??false)) globalThis.modals.modals[node.id] = modal;
+        // })
     </script>
     
 </body>
