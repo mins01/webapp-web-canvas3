@@ -348,7 +348,7 @@
                     </div>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button>
+                    <!-- <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button> -->
                 </div>
                 <div class="px-1">
                     <div class="wc-app-menu wc-app-menu-tools gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto " >
@@ -367,7 +367,7 @@
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-context-config"><i class="bi bi-gear"></i></button>
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button> -->
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button>
+                        <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button> -->
                     </div>
                 </div>
     
@@ -754,7 +754,8 @@
                 </div>
             </div>
         </div>
-
+        
+        <!-- 
         <div class="modal fade" id="modal-context-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -764,18 +765,6 @@
                     </div>
                     <div class="modal-body">
                         <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-                            <!-- <h3 class="fs-5">COLOR</h3>
-                            <div class="d-flex flex-wrap gap-1 property-wrap">
-                                <div class="input-group">
-                                    <span class="input-group-text" >전경색</span>
-                                    <input type="color" class="form-control form-control-color"  name="foreColor" value="#ff0000">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >배경색</span>
-                                    <input type="color" class="form-control form-control-color"  name="backColor" value="#00ff00">
-                                </div>
-                            </div>
-                            <hr class="my-1"> -->
                             <h3 class="fs-5">LINE AND FILL</h3>
                             <div class="d-flex flex-wrap gap-1 property-wrap">
                                 <div class="input-group">
@@ -799,22 +788,12 @@
                                     <label class="form-control" role="button"><input type="radio" value="false" name="disableStroke" checked> 사용</label>
                                     <label class="form-control" role="button"><input type="radio" value="true" name="disableStroke"> 금지</label>
                                 </div>
-
-                                <!-- 우선 inside 로 고정
-                                <div class="input-group">
-                                    <span class="input-group-text" >strokeLocation</span>
-                                    <select name="strokeLocation" class="form-select">
-                                        <option value="inside">inside</option>
-                                        <option value="center">center</option>
-                                        <option value="outside">outside</option>
-                                    </select>
-                                </div> -->
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -910,8 +889,8 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
                             <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
-                                if(this.closest('.modal')?.layer){ 
-                                    const layer = this.closest('.modal')?.layer
+                                if(editor.temp?.selectedLayer){ 
+                                    const layer = editor.temp.selectedLayer
                                     layer.resize(this.width.value,this.height.value);
                                     layer.flush();
                                     editor.document.layers.ready();
@@ -925,6 +904,7 @@
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
                                 </div>
                             </form>
+                            <hr>
                             <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action="" 
                                 xoninput="
                                 if(this.closest('.modal')?.layer){ 

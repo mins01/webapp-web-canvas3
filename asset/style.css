@@ -132,6 +132,7 @@
 
 
 
+
 .wc-app-body{
   position: relative;
   background-color: #000;
@@ -179,6 +180,9 @@
 }
 .wc-app[data-tool="Hand"] .wc-frame{
   cursor: grab;
+}
+.wc-app[data-tool="Hand"] .wc-editor[data-pointer-event-type] .wc-frame{
+  cursor: grabbing;
 }
 
 

@@ -146,7 +146,7 @@ export default class Editor{
     }
 
     onpointerdown=(event)=>{
-        console.log( this.peh.maxPointers );
+        this.target.dataset.pointerEventType = event.type;
         if(this.peh.maxPointers===1 ){
             this.tool.start();
             this.tool.onpointerdown(event);
@@ -168,6 +168,7 @@ export default class Editor{
         
     }
     onpointermove=(event)=>{
+        this.target.dataset.pointerEventType = event.type;
         if(this.peh.maxPointers===1 ){
             this.tool.onpointermove(event);
         }else if(this.peh.maxPointers >= 2){
@@ -188,6 +189,8 @@ export default class Editor{
         }
     }
     onpointerup=(event)=>{
+        // this.target.dataset.pointerEventType = event.type;
+        delete this.target.dataset.pointerEventType
         if(this.peh.maxPointers===1 ){
             this.tool.onpointerup(event);
             this.tool.end();
