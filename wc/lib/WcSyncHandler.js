@@ -14,7 +14,7 @@ export default class WcSyncFromHandler{
     //   const target = event.target;
     //   if(target.dataset.wcSyncFrom){ this.syncFrom(target) }
     // })
-    window.addEventListener('show.bs.modal',(event)=>{
+    window.addEventListener('shown.bs.modal',(event)=>{
       const target = event.target;
       target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
         this.syncFrom(el);
@@ -60,16 +60,21 @@ export default class WcSyncFromHandler{
   syncForm(form){
     const wcSyncForm = form.dataset.wcSyncForm;
     const splits = wcSyncForm.split(/\./g);
-    console.log(splits);
+    // console.log(splits);
     
     let v = globalThis;
     splits.forEach((split)=>{
       if(v===null){return;}
       v = v?.[split]??null;
     })
+    // console.log('v',v);
     if(v===null){ return; }
-    console.log(v);
+
+    if(v?.toObject){
+      HtmlUtil.objectToForm(v.toObject(),form)
+    }else{
+      HtmlUtil.objectToForm({...v},form)
+    }
     
-    HtmlUtil.objectToForm({... v },form)
   }
 }

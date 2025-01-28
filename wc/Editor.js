@@ -367,7 +367,9 @@ export default class Editor{
                 layer?.parent?.history.save('layer.visible')
             }
             config.layer = layer;
-                
+            config.onclick = (event)=>{
+                this.temp.selectedLayer = layer;
+            }   
             layerBox.dataset.wcLayerVisible = layer.visible;
 
             preview.innerHTML = '';

@@ -925,22 +925,47 @@
                                     <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
                                 </div>
                             </form>
-                            <form name="form_layer_zoom" class="flex-fill" action="" 
-                                oninput="
+                            <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action="" 
+                                xoninput="
                                 if(this.closest('.modal')?.layer){ 
                                     const layer = this.closest('.modal')?.layer
                                     layer.zoom=parseFloat(this.zoom.value);
                                     layer.flush();
                                     editor.document.layers.ready();
-                                }" onchange="this.oninput(event); editor.document.history.save(); return false;">
+                                }" 
+                                onchange="this.oninput(event); editor.document.history.save(); return false;"
+                                oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
+                                data-wc-sync-form="editor.temp.selectedLayer"
+                                >
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" onchange="editor.document.history.save()">
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                         <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
                                     </div>
                                 </div>
+
+                                <div class="input-group ui-input-stepper">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
+                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                        <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
+                                    </div>
+                                </div>
+
+                                <div class="input-group  ui-input-stepper">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
+                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                    </div>
+                                </div>
+
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                </div>
                             </form>
-                            <form name="form_layer_alpha" class="flex-fill" action="" 
+                            <!-- <form name="form_layer_alpha" class="flex-fill" action="" 
                                 oninput="
                                 if(this.closest('.modal')?.layer){ 
                                     const layer = this.closest('.modal')?.layer
@@ -948,14 +973,9 @@
                                     layer.flush();
                                     editor.document.layers.ready();
                                 }" onchange="return this.onsubmit(event)" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
-                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
-                                    </div>
-                                </div>
-                            </form>
-                            <form name="form_layer_angle" class="flex-fill" action="" 
+                                
+                            </form> -->
+                            <!-- <form name="form_layer_angle" class="flex-fill" action="" 
                                 oninput="
                                 if(this.closest('.modal')?.layer){ 
                                     const layer = this.closest('.modal')?.layer
@@ -963,14 +983,9 @@
                                     layer.flush();
                                     editor.document.layers.ready();
                                 }" onchange="this.oninput(event); editor.document.history.save(); return false;">
-                                <div class="input-group  ui-input-steppe">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
-                                    </div>
-                                </div>
-                            </form>
-                            <form name="form_layer_postion" class="flex-fill" action="" 
+                               
+                            </form> -->
+                            <!-- <form name="form_layer_postion" class="flex-fill" action="" 
                                 oninput="
                                     if(this.closest('.modal')?.layer){ 
                                         const layer = this.closest('.modal')?.layer
@@ -978,14 +993,8 @@
                                         layer.flush();
                                         editor.document.layers.ready();
                                     }" onsubmit="this.oninput(event); editor.document.history.save(); return false;">
-                                <div class="input-group w-100">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Postion</button>
-                                </div>
-                            </form>
+                                
+                            </form> -->
                         </div>
                     </div>
                 </div>
@@ -1006,23 +1015,23 @@
                         f.width.value = layer.width
                         f.height.value = layer.height
                     }
-                    {
-                        const f = document.form_layer_alpha;
-                        f.alpha.value = layer.alpha
-                    }                    
-                    {
-                        const f = document.form_layer_zoom;
-                        f.zoom.value = layer.zoom
-                    }
-                    {
-                        const f = document.form_layer_angle;
-                        f.angle.value = layer.angle
-                    }
-                    {
-                        const f = document.form_layer_postion;
-                        f.left.value = layer.left
-                        f.top.value = layer.top
-                    }
+                    // {
+                    //     const f = document.form_layer_alpha;
+                    //     f.alpha.value = layer.alpha
+                    // }                    
+                    // {
+                    //     const f = document.form_layer_zoom;
+                    //     f.zoom.value = layer.zoom
+                    // }
+                    // {
+                    //     const f = document.form_layer_angle;
+                    //     f.angle.value = layer.angle
+                    // }
+                    // {
+                    //     const f = document.form_layer_postion;
+                    //     f.left.value = layer.left
+                    //     f.top.value = layer.top
+                    // }
                     
                     UiInputStepper.initDataValue(this)
                 })
