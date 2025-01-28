@@ -838,7 +838,10 @@
                                 <div class="input-group" style="width:20em">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
                                     <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01" oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" >
+                                        <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01" 
+                                            oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" 
+                                            data-wc-sync-from="editor.document.layer.alpha"
+                                        >
                                     </div>
                                 </div>
                                 
@@ -887,7 +890,7 @@
                 </div>
             </div>
         </div>
-        <script>
+        <!-- <script>
             window.addEventListener('load',(event)=>{
                 document.querySelector('#modal-layers').addEventListener('show.bs.modal', event => {
                     window.document.querySelector('#layer-alpha').value = editor.document.layer.alpha
@@ -895,7 +898,7 @@
                     
                 })
             })
-        </script>
+        </script> -->
 
         <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
