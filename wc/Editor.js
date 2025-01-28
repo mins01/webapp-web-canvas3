@@ -13,13 +13,17 @@ import HtmlUtil from "./lib/HtmlUtil.js";
 
 import Document from "./element/Document.js";
 
+import EditorConfig from "./lib/EditorConfig.js";
+
 export default class Editor{
     brush = null;
     brushEraser = null;
+    editorConfig = null;
     modalHandler = null;
     temp = null
     constructor(target){
         this.temp = {}
+        this.editorConfig = new EditorConfig()
         this.target = target;
         // this.documents = new NamedSelectableArray('document');
         this.documents = new Documents(this);
@@ -27,7 +31,7 @@ export default class Editor{
             this.documents.add(el)
         });
         this.activeTool = null;
-        this.peh = new PointerEventHandler(target);
+        this.peh = new PointerEventHandler(this);
         this.peh.onpointerdown = this.onpointerdown;
         this.peh.onpointermove = this.onpointermove;
         this.peh.onpointerup = this.onpointerup;
@@ -63,10 +67,15 @@ export default class Editor{
 
 
     initConfigs(){
+        this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
         this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'));
         this.setEraserConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'));
     }
 
+    setEditorConfig(conf){
+        this.editorConfig.assignFrom(conf);
+        localStorage.setItem('editorConfig',JSON.stringify(this.editorConfig))
+    }
     setContextConfig(conf){
         // Object.assign(this.contextConfig,conf);
         this.contextConfig.assignFrom(conf);
@@ -102,6 +111,8 @@ export default class Editor{
             // console.log('x',JSON.stringify(this.brushEraser.brushConfig));
         }
     }
+    
+    
     
 
     addEventListener(){

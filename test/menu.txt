@@ -1,0 +1,34 @@
+web canvas
+
+Preferences
+  펜모드
+
+File
+  New
+  open
+  download
+  upload
+  preview
+  close
+
+tools
+  brush
+  eraser
+  move
+  hand
+
+tool propertys
+  eraser
+  move
+  hand
+
+color
+  foreColor
+  backColor
+
+layers
+
+etc
+  etc property
+  document property
+  layer property
