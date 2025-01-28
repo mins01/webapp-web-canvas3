@@ -6,14 +6,6 @@ export default class WcSyncFromHandler{
   }
 
   addEventListener(){
-    // window.addEventListener('change',(event)=>{
-    //   const target = event.target;
-    //   if(target.dataset.wcSyncFrom){ this.syncFrom(target) }
-    // })
-    // window.addEventListener('input',(event)=>{
-    //   const target = event.target;
-    //   if(target.dataset.wcSyncFrom){ this.syncFrom(target) }
-    // })
     window.addEventListener('shown.bs.modal',(event)=>{
       const target = event.target;
       target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
@@ -22,6 +14,11 @@ export default class WcSyncFromHandler{
       target.querySelectorAll('form[data-wc-sync-form]').forEach(form=> {
         this.syncForm(form);
       });
+
+      target.querySelectorAll('.ui-input-stepper input').forEach((input)=>{
+        UiInputStepper.syncDataValue(input);
+      })
+      
     })
   }
 

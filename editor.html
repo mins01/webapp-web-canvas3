@@ -168,7 +168,10 @@
         globalThis.Wc.EllipseLayer = EllipseLayer;
 
         import Editor from "./wc/Editor.js";
+
         import ModalHandler from "./wc/ui/ModalHandler.js"
+        globalThis.Wc.ModalHandler = ModalHandler;
+
 
 
         window.addEventListener('load',(event)=>{
@@ -190,10 +193,10 @@
             //-- 모달 핸들러
             const modalHandler = globalThis.modalHandler = new ModalHandler();
             editor.modalHandler = modalHandler;            
-            editor.addEventListener();
+            editor.modalHandler.collectModals();
 
 
-
+            
             editor.document.zoom = 1
             editor.document.angle = 0;
             editor.document.layer.left = 0
@@ -295,10 +298,7 @@
         if(!globalThis.Wc) globalThis.Wc = {}
         
         
-        import ModalHandler from "./wc/ui/ModalHandler.js";
-        globalThis.Wc.ModalHandler = ModalHandler;
-        const modals = globalThis.modals = new ModalHandler();
-        modals.windowOnload();
+
 
 
 
@@ -342,7 +342,7 @@
                     <div>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
-                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-sliders"></i></button>
+                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
                         
                     </div>
@@ -877,7 +877,7 @@
                                         </small>
                                     </div>
                                 </button>
-                                <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" data-bs-toggle="modal" data-bs-target="#modal-layer-config">
+                                <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config">
                                     <i class="bi bi-sliders"></i>
                                 </button>
                             </div>

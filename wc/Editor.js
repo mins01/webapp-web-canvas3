@@ -35,6 +35,7 @@ export default class Editor{
         this.peh.onpointerdown = this.onpointerdown;
         this.peh.onpointermove = this.onpointermove;
         this.peh.onpointerup = this.onpointerup;
+        this.peh.addEventListener(target)
 
         // this.tool = null;
         this.tools = new Tools(this);
@@ -145,7 +146,7 @@ export default class Editor{
     }
 
     onpointerdown=(event)=>{
-        // console.log( this.peh.maxPointers );
+        console.log( this.peh.maxPointers );
         if(this.peh.maxPointers===1 ){
             this.tool.start();
             this.tool.onpointerdown(event);
@@ -368,7 +369,7 @@ export default class Editor{
             }
             config.layer = layer;
             config.onclick = (event)=>{
-                this.temp.selectedLayer = layer;
+                this.showModalLayerProperty(layer);
             }   
             layerBox.dataset.wcLayerVisible = layer.visible;
 
@@ -397,5 +398,11 @@ export default class Editor{
         //재선언해야함.
     }
 
+
+    showModalLayerProperty(layer){
+        this.temp.selectedLayer = layer;
+        this.modalHandler.hideAll();
+        this.modalHandler.get('modal-layer-config').show();
+    }
 
 }
