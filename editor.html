@@ -416,6 +416,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <h5>File</h5>
+
                         <div class="row g-1">
                             <div class="col-6">
                                 <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new">
@@ -458,23 +460,14 @@
                         <hr>
                         <div class="d-flex flex-column gap-3">
                             <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))">
-                                <h4>Input mode</h4>
+                                <h5>Input mode</h5>
                                 <div class="row g-1">
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync="editor.editorConfig.inputMode" value="none" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync="editor.editorConfig.inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync="editor.editorConfig.inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync="editor.editorConfig.inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="none" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
+                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" data-wc-sync-from="editor.editorConfig.inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
                                 </div>
                             </form>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
-                            <button class="btn btn-primary">1</button>
                         </div>
                     </div>
                 </div>
@@ -532,7 +525,7 @@
                             <form action="" onsubmit="editor.saveDocument('wc3.json',this.filename.value);return false;">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
-                                    <input type="text" class="form-control filename" name="filename" value="" required>
+                                    <input type="text" class="form-control filename" name="filename" value="" required data-wc-sync-from="editor.document.name">
                                     <span class="input-group-text">.wc3.json</span>
                                     <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
                                 </div>
@@ -541,7 +534,7 @@
                             <form action="" onsubmit="editor.saveDocument('png',this.filename.value);return false;">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
-                                    <input type="text" class="form-control filename"  name="filename" value="" required>
+                                    <input type="text" class="form-control filename"  name="filename" value="" required  data-wc-sync-from="editor.document.name">
                                     <span class="input-group-text">.png</span>
                                     <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
                                 </div>
@@ -551,17 +544,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            window.addEventListener('load',(event)=>{
-                document.querySelector('#modal-file-save').addEventListener('show.bs.modal', event => {
-                    const target = event.target;
-                    if(editor.document){
-                        target.querySelectorAll('.filename').forEach(el => { el.value = editor.document.name });
-                    }
-                    
-                })
-            })
-        </script>
+ 
 
         <div class="modal fade" id="modal-file-upload"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
