@@ -85,7 +85,7 @@ export default class Editor{
         this.brush.contextConfig.backColor =this.contextConfig.backColor;
         this.brush.flush();
         if(window.document.querySelector('#btn-palette')){
-            window.document.querySelector('#btn-palette').style.color = this.contextConfig.foreColor
+            window.document.querySelector('#btn-palette').style.backgroundColor = this.contextConfig.foreColor
         }
         
     }

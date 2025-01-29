@@ -25,7 +25,9 @@
 
   z-index: 5;
 }
-
+.wc-app, .wc-app * , .modals , .modals *{
+  scrollbar-width: thin;
+}
 
 
 .wc-app-body{
