@@ -17,15 +17,15 @@ export default class Layers extends SelectableArray{
         this.document.readyLayer();
     }
     select(index,withoutHistory=false){
-        this?.document?.editor?.tool?.inactivate()
         if(this.selectedIndex != index){           
+            this?.document?.editor?.tool?.inactivate()
             const r = super.select(index);
             if(!withoutHistory){
                 this.ready();
                 this.document.history.save('Layers.select',true);
             }
+            this?.document?.editor?.tool?.activate()
         }
-        this?.document?.editor?.tool?.activate()
     }
     addLayer(){
         const document = this.document
