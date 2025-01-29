@@ -18,43 +18,80 @@ export default class BaseTool {
 	
 	
 	constructor(editor){
-		this.pointerType = null
-		this.downAt = null;
-
-		this.name = 'BaseTool';
 		this.editor = editor;
-		this.peh = editor.peh
+		this.name = 'BaseTool';
 
-		this.document = null;
-		this.layer = null;
-		this.drawLayer = null;
-
-		this.x0 = null;
-		this.y0 = null;
-		// this.x = null;
-		// this.y = null;
-		this.x1 = null;
-		this.y1 = null;
+		this.init();
 	}
 
 	init(){
+		this.peh = this.editor.peh
+
 		this.pointerType = null
 		this.downAt = null;
-		this.document = this.editor.document??null;
-		this.layer = this.document.layer??null;
-		this.drawLayer = this.document.drawLayer??null;
-		if(this.document) this.ready()
+
+		this.document = this.editor.document;
+		this.layer = this.document.layer;
+		this.drawLayer = this.document.drawLayer;
+		// if(this.document) this.ready()
 
 		this.x0 = null;
 		this.y0 = null;
-		// this.x = null;
-		// this.y = null;
 		this.x1 = null;
 		this.y1 = null;
 	}
+
+	/** 
+	 * 활성화 : 툴이 선택 되면
+	 */
+	activate(){
+		this.ready();
+		console.log('tool-activate:',this.name);
+	}
+
+	/** 
+	 * 비활성화 : 다른 툴이 활성화 되면
+	 */
+	inactivate(){
+		console.log('tool-inactivate',this.name);
+	}
+
+	/** 추가적인 확정 동작이 필요할 경우 호출 */
+	confirm(){
+		console.log('tool-confirm',this.name);
+	}
+
+	/** 동작 취소가 필요할 경우 호출. 초기화 시킨다. */
+	cancel(){
+		console.log('tool-cancel',this.name);
+		this.downAt = null;
+	}
+
+
+
+
+
+
+
+
+	/**
+	 * 툴을 사용할 수 있도록 준비 시킴.
+	 */
+	ready(){
+		this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
+		this?.document.readyTool()
+	}
+
+
+
+
+
+
+
+
+
+	/** 이벤트 처리 시작 */
 	start(){
-		this.init();
-		// this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다. //init 속 ready 에서 처리한다.
 	}
 
 	onpointerdown(event){
@@ -73,7 +110,7 @@ export default class BaseTool {
 
 	
 	/**
-	 * Description placeholder
+	 * 이벤트 처리에 대한 최종 종료
 	 *
 	 * @returns {boolean} 정상종료시 true, 아니면 false
 	 */
@@ -82,52 +119,7 @@ export default class BaseTool {
 		return false;
 	}
 
-	cancel(){
-		console.error('tool.cancel()');
-		this.downAt = null;
-		return true;
-	}
-
-	input(){
-
-	}
-
 	
-	/** 
-	 * 툴 모양과 위치 잡은 후 레이어에 적용하는 메소드
-	 * 
-	 * @deprecated
-	 */
-	apply(){
-		// this.document.apply();
-	}
-
-	/**
-	 * 툴을 사용하기 위해서 준비 처리
-	 */
-	ready(){
-		this.documentRect = this.editor.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
-		this.editor.document.readyTool()
-	}
-	
-	/** 
-	 * Description placeholder 
-	 * 
-	 * 뭔가를 준비해서 실제 적용시킬 때 호출하라.
-	 */
-	commit(){
-
-	}
-
-	
-	/** 이거 안쓰는 것 같네
-	 * @deprecated
-	 */
-	sync(){
-
-	}
-
-
 	draw(){
 
 	}
@@ -229,6 +221,11 @@ export default class BaseTool {
 		return [x,y];
 	}
 
+	/**
+	 * layer 에 그릴 때 위치 조정 등을 준비한다.
+	 *
+	 * @param {*} ctx 
+	 */
 	prepareLayer(ctx){		
 		const doc = this.document;
 		const layer = this.document.layer;	

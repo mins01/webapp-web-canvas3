@@ -5,17 +5,14 @@ export default class Brush extends BaseTool{
     brush = null;
     constructor(editor){
         super(editor);
-        // this.x0 = null;
-        // this.y0 = null;
         this.name = 'Brush';
+        this.brush = this.editor.brush;
     }
 
     start(){
         super.start();
-        this.brush = this.editor.brush;
-        this.brush.ready()
+        this.brush.ready()        
         this.ready()
-        
     }
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
@@ -43,6 +40,7 @@ export default class Brush extends BaseTool{
     }
     end(){
         if(super.end()===false){return false;}
+        // this.document.history.save(`Tool.${this.constructor.name}`);
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
     }
@@ -51,11 +49,6 @@ export default class Brush extends BaseTool{
         this.document.history.reload();
     }
 
-    /** @deprecated */
-    sync(){
-        super.sync();
-        this.draw(this.x0,this.y0,this.x,this.y);
-    }
 
     draw(x0,y0,x1,y1){
         super.draw(...arguments);

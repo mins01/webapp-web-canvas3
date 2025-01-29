@@ -5,8 +5,6 @@ export default class Hand extends BaseTool{
     top0 = null;
     constructor(editor){
         super(editor);
-        // this.x0 = null;
-        // this.y0 = null;
         this.name = 'Hand';
 
         this.left0 = null;
@@ -18,8 +16,6 @@ export default class Hand extends BaseTool{
         this.ready()
         this.left0 = this.document.left;
         this.top0 = this.document.top;
-        // this.left0 = this.document.frame.scrollLeft;
-        // this.top0 = this.document.frame.scrollTop;
     }
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
@@ -40,7 +36,6 @@ export default class Hand extends BaseTool{
     }
     end(){
         if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready()
     }
     cancel(){

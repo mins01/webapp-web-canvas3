@@ -5,8 +5,6 @@ export default class Move extends BaseTool{
     layerTop0 = null;
     constructor(editor){
         super(editor);
-        // this.x0 = null;
-        // this.y0 = null;
         this.name = 'Move';
 
         this.layerLeft0 = null;

@@ -8,13 +8,14 @@ export default class Eraser extends Brush{
         // this.x0 = null;
         // this.y0 = null;
         this.name = 'Eraser';
-    }
-
-    start(){
-        super.start();
-        this.ready()
         this.brush = this.editor.brushEraser;
     }
+
+    // start(){
+    //     super.start();
+    //     this.brush.ready();
+    //     this.ready();
+    // }
 
     draw(x0,y0,x1,y1){
         const ctx = this.layer.ctx;
@@ -25,8 +26,7 @@ export default class Eraser extends Brush{
     }
 
     drawForDown(x0,y0){      
-        console.log(this.brush );
-          
+        // console.log(this.brush );
         const ctx = this.layer.ctx;
         ctx.save();
         ctx.globalCompositeOperation = 'destination-out';

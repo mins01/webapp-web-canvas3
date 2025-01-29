@@ -14,17 +14,23 @@ export default class Tools extends SelectableMap{
         // this.set(this.toolName, new Line(this.editor)); // line이 기본 툴이 된다.
 
     }
+
+    get tool(){ return this?.selected??null; }
+
+
     select(toolName){
+        if(this.tool){ this.tool.inactivate(); }
         if(!this.has(toolName)){
             this.load(toolName).then(()=>{
                 console.log('selected tool: '+toolName);
                 this.toolName = toolName;
                 super.select(toolName);
+                if(this.tool) this.tool.activate();
             }).catch(e=>{console.error(e)});
         }else{
             super.select(toolName);
+            if(this.tool) this.tool.activate();
         }
-        if(this.selected) this.selected.init();
     }
     async load(toolName){       
         let module = await import(`./${toolName}.js`);

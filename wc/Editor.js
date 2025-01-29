@@ -51,7 +51,7 @@ export default class Editor{
         this.textConfig = new Context2dTextConfig();
     }
 
-    get tool(){ return this?.tools?.selected??null; }
+    get tool(){ return this?.tools?.tool; }
     
     /**
      * Description placeholder
@@ -325,9 +325,9 @@ export default class Editor{
         },{once:true})
     }
 
-    saveHistory(){
+    saveHistory(title='no-title'){
         if(!this.document) return;
-        this.document.history.save();
+        this.document.history.save(title);
     }
 
 
