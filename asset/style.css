@@ -122,6 +122,7 @@
 .wc-app[data-tool="Eraser"] .only-shown-tool-Eraser{display: block;}
 .wc-app[data-tool="Move"] .only-shown-tool-Move{display: block;}
 .wc-app[data-tool="Hand"] .only-shown-tool-Hand{display: block;}
+.wc-app[data-tool="Transform"] .only-shown-tool-Transform{display: block;}
 
 
 
