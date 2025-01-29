@@ -1,0 +1,14 @@
+툴 라이프 사이클
+
+construct()
+  init() // 최초 한번만 불린다.
+
+prepare() // 툴이 선택되면 호출
+ready() 
+pointerdown() // draw()
+pointermove() // draw()
+pointerup() // draw()
+exit() // goto ready(), 툴이 바뀌면 호출
+apply() // goto ready(), 동작을 적용시킴
+
+draw() // 페인팅 동작
