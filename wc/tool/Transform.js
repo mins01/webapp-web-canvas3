@@ -50,6 +50,8 @@ export default class Transform extends BaseTool{
     cancel(){
         super.cancel();
         this.document.history.reload();
+        this.ready();
+        this.draw();
     }
 
 

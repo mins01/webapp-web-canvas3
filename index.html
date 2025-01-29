@@ -62,20 +62,20 @@
     <!-- //meta og -->
     <!-- hammer.js -->
     <!-- <script src="https://cdnjs.com/libraries/hammer.js/"></script> -->
-    
+
     <!-- //hammer.js -->
 
     <!-- WG2 uploader -->
-    
+
     <script src="/WG2/js/Wg2Uploder.js"></script>
     <!-- //WG2 uploader -->
 
     <!-- color palette -->
-	<link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css"> 
+	<link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css">
 	<script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
-	
-	<script src="third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>	
-	<link rel="stylesheet" href="third_party/ui_ColorPalette/ColorPalette.css"> 
+
+	<script src="third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>
+	<link rel="stylesheet" href="third_party/ui_ColorPalette/ColorPalette.css">
 	<script src="third_party/ui_ColorPalette/ColorPalette.js"></script>
 
     <style>
@@ -90,7 +90,7 @@
 
             const cpForeColor = globalThis.cpForeColor = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cpForeColor"});
             InputRangeBox.autoInit(cpForeColor);
-           
+
             document.getElementById('box-color-palette').appendChild(cpForeColor);
             cpForeColor.addEventListener('input',function(evt){
                 const obj = {'foreColor':this.toString()}
@@ -119,7 +119,7 @@
     </script>
     <!-- //color palette -->
     <!-- ui-transform-tool -->
-    <link rel="stylesheet" href="./third_party/ui-transform-tool/asset/ui-transform-tool.css">     
+    <link rel="stylesheet" href="./third_party/ui-transform-tool/asset/ui-transform-tool.css">
     <script src="./third_party/ui-transform-tool/lib/UiTransformToolElement.js"></script>
     <script>
         // UiTransformToolElement.cssHtml = `<link rel="stylesheet" href="./asset/ui-transform-tool-shadowdom.css">`; // 올바른 경로로 변경!! 필수
@@ -160,7 +160,7 @@
         import TextLayer from "./wc/element/TextLayer.js";
         import RectangleLayer from "./wc/element/RectangleLayer.js";
         import EllipseLayer from "./wc/element/EllipseLayer.js";
-        import Brush from "./wc/element/Brush.js";       
+        import Brush from "./wc/element/Brush.js";
 
         Canvas.defineCustomElements();
         Layer.defineCustomElements();
@@ -203,13 +203,13 @@
             // editor.tools.select('Brush');
             //-- 모달 핸들러
             const modalHandler = globalThis.modalHandler = new ModalHandler();
-            editor.modalHandler = modalHandler;            
+            editor.modalHandler = modalHandler;
             editor.modalHandler.collectModals();
             // ui-transform-tool
             editor.utt = document.querySelector('#utt01');
 
 
-            
+
             editor.document.zoom = 1
             editor.document.angle = 0;
             editor.document.layer.left = 0
@@ -265,7 +265,7 @@
             editor.document.history.clear();
             editor.document.history.save('Document.New');
 
-            
+
 
 
             const foreColor = localStorage.getItem('foreColor')??'#000000';
@@ -274,7 +274,7 @@
 
             editor.initConfigs();
 
-            
+
             // globalThis.hammer = new Hammer(editor.target);
 
             //-- upload
@@ -285,7 +285,7 @@
                         if(!obj[0]){ return; }
                         const uploaded = obj[0];
                         console.log(uploaded);
-                        
+
                         // let name = null;
                         // if(uploaded.filename.includes('.wc')){
                         //     name = uploaded.filename.replace(/\.wc$/,'');
@@ -309,8 +309,8 @@
 
     <script type="module">
         if(!globalThis.Wc) globalThis.Wc = {}
-        
-        
+
+
 
 
 
@@ -322,7 +322,7 @@
 
 
     </script>
-    
+
     <script>
         function randomFill(event){
             const target = event.target;
@@ -349,17 +349,18 @@
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()">
                         <div class="only-shown only-shown-tool-Brush"><i class="bi bi-brush"></i></div>
                         <div class="only-shown only-shown-tool-Eraser"><i class="bi bi-eraser"></i></div>
+                        <div class="only-shown only-shown-tool-Transform"><i class="bi bi-bounding-box"></i></div>
                         <div class="only-shown only-shown-tool-Move"><i class="bi bi-arrows-move"></i></div>
-                        <div class="only-shown only-shown-tool-Hand"><i class="bi bi-hand-index"></i></div>                        
-                        <div class="only-shown only-shown-tool-Transform"><i class="bi bi-bounding-box"></i></div>                        
+                        <div class="only-shown only-shown-tool-Hand"><i class="bi bi-hand-index"></i></div>
+
                     </button>
                     <div>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
-                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform" disabled data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
-                        
+                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform"  data-bs-toggle="modal" data-bs-target="#modal-transform-config"><i class="bi bi-sliders"></i></button>
+
                     </div>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
@@ -371,11 +372,11 @@
                         <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                         <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
                         <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
-                        <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>       
+                        <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
                         <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
                         <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Hand" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
                         <label role="button" title="tool Transform" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Transform" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-bounding-box"></i></button></label>
-                        
+
                         <!-- <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square"></i></button></label> -->
                         <!-- <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label> -->
                         <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
@@ -388,9 +389,9 @@
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button> -->
                     </div>
                 </div>
-    
+
             </div>
-    
+
             <div class="wc-app-footer">
                 <div class="container px-0 d-flex justify-content-between">
                     <div class="wc-app-menu wc-app-menu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
@@ -409,7 +410,7 @@
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
                 </div>
                 <ui-transform-tool id="utt01" class="custom-01 only-shown only-shown-tool-Transform" resizable moveable  width="100" height="100" left="10" top="10" >
-                    
+
                     <div class="text-center">
                         TRANSFORM<br>
                         <i class="bi bi-bounding-box"></i>
@@ -427,19 +428,19 @@
                             const utt = event.target
                             event.stopPropagation();
                             event.preventDefault();
-                            editor?.tool?.onmoveend()                            
+                            editor?.tool?.onmoveend()
                         })
                         utt01.addEventListener('utt-resize',(event)=>{
                             const utt = event.target
                             event.stopPropagation();
                             event.preventDefault();
-                            editor?.tool?.onresizeend()                            
+                            editor?.tool?.onresizeend()
                         })
-                        
+
                     }
                 </script>
             </div>
-            
+
         </div>
         <!-- <div class="wc-app-preview-layers">
             <div id="div-for-debug" class="preview-layers">
@@ -472,7 +473,7 @@
                                     <div class="fs-4"><i class="bi bi-file-earmark-plus"></i></div>
                                     <div>NEW</div>
                                 </button>
-                            </div>                           
+                            </div>
                             <div class="col-6">
                                 <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-open">
                                     <div class="fs-4"><i class="bi bi-file-earmark-arrow-up"></i></div>
@@ -538,7 +539,7 @@
             </div>
         </div>
 
-        
+
 
 
         <div class="modal fade" id="modal-file-open"  aria-hidden="true">
@@ -611,7 +612,7 @@
                 </div>
             </div>
         </div>
- 
+
 
         <div class="modal fade" id="modal-file-upload"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -670,7 +671,7 @@
                                         <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
                                         <span class="input-group-text" >X</span>
                                         <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="text-end">
@@ -684,11 +685,11 @@
                                         <button type="button" class="btn btn-primary" onclick="editor.newDocument(600,800);">600x800</button>
                                         <button type="button" class="btn btn-primary" onclick="editor.newDocument(320,240);">320x240</button>
                                         <button type="button" class="btn btn-primary" onclick="editor.newDocument(640,480);">640x480</button>
-                                        
+
                                     </div>
                                 </div>
-                                
-                            </div> 
+
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -821,8 +822,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 
+
+        <!--
         <div class="modal fade" id="modal-context-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -884,15 +885,15 @@
                                 <div class="input-group" style="width:20em">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
                                     <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01" 
-                                            oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}" 
+                                        <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
+                                            oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
                                             data-wc-sync-from="editor.document.layer.alpha"
                                         >
                                     </div>
                                 </div>
                             </div>
                             <hr class="my-1">
-                        </div>                        
+                        </div>
                     </div>
                     <div class="modal-body">
 
@@ -931,15 +932,15 @@
                                             <i class="bi bi-sliders"></i>
                                         </button>
                                     </div>
-                                </template>                                
+                                </template>
                                 <div class="layer-box-container d-flex flex-column gap-1">
-                            
+
                                 </div>
                             </div>
                         </div>
 
 
-                        
+
 
 
 
@@ -952,8 +953,8 @@
             window.addEventListener('load',(event)=>{
                 document.querySelector('#modal-layers').addEventListener('show.bs.modal', event => {
                     window.document.querySelector('#layer-alpha').value = editor.document.layer.alpha
-                    
-                    
+
+
                 })
             })
         </script> -->
@@ -968,7 +969,7 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
                             <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
-                                if(editor.temp?.selectedLayer){ 
+                                if(editor.temp?.selectedLayer){
                                     const layer = editor.temp.selectedLayer
                                     layer.resize(this.width.value,this.height.value);
                                     layer.flush();
@@ -986,14 +987,14 @@
                                 </div>
                             </form>
                             <hr>
-                            <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action="" 
+                            <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action=""
                                 xoninput="
-                                if(this.closest('.modal')?.layer){ 
+                                if(this.closest('.modal')?.layer){
                                     const layer = this.closest('.modal')?.layer
                                     layer.zoom=parseFloat(this.zoom.value);
                                     layer.flush();
                                     editor.document.layers.ready();
-                                }" 
+                                }"
                                 onchange="this.oninput(event); editor.document.history.save(); return false;"
                                 oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
                                 data-wc-sync-form="editor.temp.selectedLayer"
@@ -1045,13 +1046,13 @@
         <!-- <script>
             window.addEventListener('load',(event)=>{
                 // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', function(event){                   
+                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', function(event){
                     const layer = event.relatedTarget?.layer??editor?.document?.layer
                     event.target.layer = layer;
                     if(!layer){return;}
                     {
                         const f = document.form_layer_resize;
-                        
+
                         f.width.value = layer.width
                         f.height.value = layer.height
                         f.width.value = layer.width
@@ -1060,7 +1061,7 @@
                     // {
                     //     const f = document.form_layer_alpha;
                     //     f.alpha.value = layer.alpha
-                    // }                    
+                    // }
                     // {
                     //     const f = document.form_layer_zoom;
                     //     f.zoom.value = layer.zoom
@@ -1074,7 +1075,7 @@
                     //     f.left.value = layer.left
                     //     f.top.value = layer.top
                     // }
-                    
+
                     UiInputStepper.initDataValue(this)
                 })
             })
@@ -1091,7 +1092,7 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
                             <form name="form_document_resize" class="flex-fill" action="" onsubmit="
-                                if(editor?.document){ 
+                                if(editor?.document){
                                     editor.document.resize(this.width.value,this.height.value);
                                     editor.document.flush();
                                     editor.document.layers.ready();
@@ -1108,12 +1109,12 @@
                                 </div>
                             </form>
                             <hr>
-                            <form  class="d-flex flex-column gap-1" action="" 
+                            <form  class="d-flex flex-column gap-1" action=""
                                 x-onchange="this.oninput(event); editor.document.history.save(); return false;"
                                 oninput="if(editor?.document){ const document = editor.document; Object.assign(document,Wc.HtmlUtil.formToObject(this));document.flush(); }"
                                 data-wc-sync-form="editor.document"
                                 >
-                                
+
                                 <div class="input-group ui-input-stepper" >
                                     <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
@@ -1162,7 +1163,7 @@
                     if(!document){return;}
                     {
                         const f = window.document.form_document_resize;
-                        
+
                         f.width.value = document.width
                         f.height.value = document.height
                         f.width.value = document.width
@@ -1185,6 +1186,45 @@
                 })
             })
         </script> -->
+
+
+
+        <div class="modal fade" id="modal-transform-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-bounding-box"></i> Transform</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column flex-wrap gap-1">
+                            <form  class="d-flex flex-column gap-1" action=""
+                                data-wc-sync-form="editor.utt"
+                                >
+                                <div class="input-group w-100">
+                                    <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
+                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000" oninput="editor.utt.width=this.value;editor.tool.draw();wcSyncHandler.sync(this.closest('.modal'))">
+                                    <span class="input-group-text" >X</span>
+                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000" oninput="editor.utt.height=this.value;editor.tool.draw();wcSyncHandler.sync(this.closest('.modal'))">
+                                    <!-- <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button> -->
+                                </div>
+                                <!-- <div class="input-group">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                </div> -->
+                            </form>
+                            <hr>
+                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
+                                <button class="btn btn-primary" onclick="editor.tool.confirm();wcSyncHandler.sync(this.closest('.modal'))">Confirm</button>
+                                <button class="btn btn-primary" onclick="editor.tool.cancel();wcSyncHandler.sync(this.closest('.modal'))">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div class="modal fade" id="modal-brush-config"  aria-hidden="true">
@@ -1211,7 +1251,7 @@
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                
+
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >roundness(원형율)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
@@ -1306,7 +1346,7 @@
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                
+
                                 <div class="input-group">
                                     <span class="input-group-text" >angleControl</span>
                                     <select class="form-select " name="angleControl" >
@@ -1316,8 +1356,8 @@
                                     </select>
                                 </div>
 
-                                
-                                
+
+
 
                             </div>
                         </form>
@@ -1325,7 +1365,7 @@
                 </div>
             </div>
         </div>
-   
+
         <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -1350,7 +1390,7 @@
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                
+
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >roundness(원형율)</span>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
@@ -1406,7 +1446,7 @@
             </div>
         </div>
 
-  
+
         <div class="modal fade" id="modal-color-palette"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
@@ -1420,8 +1460,8 @@
                 </div>
             </div>
         </div>
-   
+
     </div>
-    
+
 </body>
 </html>

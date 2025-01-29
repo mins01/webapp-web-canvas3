@@ -73,6 +73,8 @@ export default class WcSyncHandler{
 
     if(v?.toObject){
       HtmlUtil.objectToForm(v.toObject(),form)
+    }if(v?.toJSON){
+      HtmlUtil.objectToForm(v.toJSON(),form)
     }else{
       HtmlUtil.objectToForm({...v},form)
     }

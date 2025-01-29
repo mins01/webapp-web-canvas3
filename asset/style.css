@@ -141,6 +141,9 @@
   background-color: #000;
  
 }
+.wc-editor{
+  overflow: hidden;
+}
 .wc-frame{
   position: absolute;
   top: 0;
