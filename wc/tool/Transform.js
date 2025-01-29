@@ -1,25 +1,28 @@
 import BaseTool from './BaseTool.js';
 
 export default class Transform extends BaseTool{
-    left0 = null;
-    top0 = null;
     utt = null;
     constructor(editor){
         super(editor);
-        // this.x0 = null;
-        // this.y0 = null;
         this.name = 'Transform';
-
-        this.left0 = null;
-        this.top0 = null;
         this.utt = editor.utt;
+    }
 
-        this.init();
+    activate(){
+        super.activate();
+        this.layer.visibleByTool = false;
+        this.ready();
+        this.draw();
+    }
+    inactivate(){
+        super.inactivate();
+        this.layer.visibleByTool = true;
     }
 
     ready(){
-        super.ready();
-        console.log(this.documentRect);
+        // super.ready();
+        this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
+
         const documentRect = this.documentRect;
         const layer = this.document.layer;
         this.utt.left = layer.left + documentRect.left;
@@ -29,51 +32,38 @@ export default class Transform extends BaseTool{
     }
 
     start(){
-        super.start();
-        this.ready()
-        this.left0 = this.document.left;
-        this.top0 = this.document.top;
-        // this.left0 = this.document.frame.scrollLeft;
+        
         // this.top0 = this.document.frame.scrollTop;
     }
     onpointerdown(event){
-        if(super.onpointerdown(event)===false){return false;}
-        const [x,y] = this.getXyFromEvent(event);
-        this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
-        this.draw(this.x0,this.y0,this.x1,this.y1);
-        return;
+        
     }
     onpointermove(event){
-        if(super.onpointermove(event)===false){return false;}
-        const [x,y] = this.getXyFromEvent(event);
-        this.x1 = x; this.y1 = y;
-        this.draw(this.x0,this.y0,this.x1,this.y1);
-        return;
+       
     }
     onpointerup(event){
-        return super.onpointerup(event);
+        
     }
     end(){
-        if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
-        this.ready()
+        
     }
     cancel(){
         super.cancel();
         this.document.history.reload();
     }
 
-    draw(x0,y0,x1,y1){
-        
-    }
 
 
     onmoveend(){
-        this.onresizeend()
+        this.draw()
         
     }
     onresizeend(){
+        this.draw()
+    }
+    draw(){
         const utt = this.utt;
+        const document = this.document
         const layer = this.document.layer
         const drawLayer = this.document.drawLayer
         const [left,top] = this.getXyInDocument(utt.left,utt.top)
@@ -81,21 +71,25 @@ export default class Transform extends BaseTool{
         const height = utt.height;
 
         drawLayer.ctx.save();
-        drawLayer.clear();
-        drawLayer.ctx.drawImage(layer,left-layer.left,top-layer.top,width,height)
+        drawLayer.left = left;
+        drawLayer.top = top;
+        drawLayer.width = width;
+        drawLayer.height = height;
+        
+        // drawLayer.fill('#000000f0')
+        // drawLayer.stroke('#ff0000',4)
+        
+        // console.log(drawLayer.left,drawLayer.top,drawLayer.width,drawLayer.height);
+        drawLayer.ctx.drawImage(layer,0,0,width,height)
         drawLayer.ctx.restore();
-        drawLayer.flush();  
+        drawLayer.flush();
     }
 
-    apply(){
+    confirm(){
+        super.confirm();
         const layer = this.document.layer
         const drawLayer = this.document.drawLayer
-        layer.ctx.save();
-        layer.resize(drawLayer.width,drawLayer.height)
-        layer.clear();
-        drawLayer.ctx.drawImage(drawLayer,0,0);
-        layer.ctx.restore();
-        layer.flush();
+        layer.import(drawLayer.snapshot())
         this.ready();
     }
 

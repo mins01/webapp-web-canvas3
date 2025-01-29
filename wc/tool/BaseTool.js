@@ -45,8 +45,10 @@ export default class BaseTool {
 	 * 활성화 : 툴이 선택 되면
 	 */
 	activate(){
-		this.ready();
 		console.log('tool-activate:',this.name);
+		this.init();
+		this.ready();
+		this.document.flush();
 	}
 
 	/** 

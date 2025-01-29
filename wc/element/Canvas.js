@@ -123,10 +123,18 @@ class Canvas extends HTMLCanvasElement{
         const ctx = this.ctx;
         this.ctx.save();
         ctx.fillStyle = color;
-        // ctx.fillRect(0,0,this.width,this.height);
         this.ctx.fillRect(0,0,this.width,this.height);
         this.ctx.restore();
-        // this.flush();
+    }
+    stroke(color,lineWidth=1){
+        const ctx = this.ctx;
+        this.ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        this.ctx.strokeRect(0,0,this.width,this.height);
+        this.ctx.restore();
+        console.log('stroke',color,lineWidth);
+        
     }
     clear(){
         this.ctx.save();

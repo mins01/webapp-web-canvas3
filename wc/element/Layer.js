@@ -82,7 +82,7 @@ export default class Layer extends Canvas{
         this.top = ymin;
         this.width = w;
         this.height = h;
-        // this.fill('#00ee0033');
+        // this.stroke('#00ee0033');
 
         this.ctx.putImageData(imageData,dx,dy);
 

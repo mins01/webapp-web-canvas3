@@ -149,23 +149,41 @@ export default class Document extends Layer{
         ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
             // const ctx = layer.ctx;
+            
+            let targetLayer = layer
 
             ctx.save();
-            ctx.globalCompositeOperation = layer.compositeOperation
-            ctx.globalAlpha = layer.alpha
-            ctx.translate(layer.left, layer.top)
-            if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
-            ctx.translate(layer.width/2, layer.height/2)
-            if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI / 180); }
-            ctx.translate(-layer.width/2, -layer.height/2)
-            if(layer.visible && layer.visibleByTool){
-                ctx.drawImage(layer, 0, 0, layer.width, layer.height);
-                if(index == this.layers.selectedIndex){
-                    ctx.drawImage(drawLayer, 0, 0, layer.width, layer.height);
-                }
+            ctx.globalCompositeOperation = targetLayer.compositeOperation
+            ctx.globalAlpha = targetLayer.alpha
+            ctx.translate(targetLayer.left, targetLayer.top)
+            if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
+            ctx.translate(targetLayer.width/2, targetLayer.height/2)
+            if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
+            ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
+            if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
+                ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
             }
-            ctx.translate(-layer.left, -layer.top)
+            ctx.translate(-targetLayer.left, -targetLayer.top)
             ctx.restore()
+
+
+            if(index == this.layers.selectedIndex){
+                targetLayer = drawLayer
+
+                ctx.save();
+                ctx.globalCompositeOperation = targetLayer.compositeOperation
+                ctx.globalAlpha = targetLayer.alpha
+                ctx.translate(targetLayer.left, targetLayer.top)
+                if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
+                ctx.translate(targetLayer.width/2, targetLayer.height/2)
+                if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
+                ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
+                if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
+                    ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
+                }
+                ctx.translate(-targetLayer.left, -targetLayer.top)
+                ctx.restore()                
+            }
 
         })
         ctx.restore()

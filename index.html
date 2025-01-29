@@ -125,6 +125,7 @@
         // UiTransformToolElement.cssHtml = `<link rel="stylesheet" href="./asset/ui-transform-tool-shadowdom.css">`; // 올바른 경로로 변경!! 필수
         UiTransformToolElement.defineCustomElements();
     </script>
+    <link rel="stylesheet" href="asset/utt-custom.css">
     <!-- //ui-transform-tool -->
 
 
@@ -407,7 +408,13 @@
                 <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
                 </div>
-                <ui-transform-tool id="utt01" class="only-shown only-shown-tool-Transform" resizable moveable  width="100" height="100" left="10" top="10" >static</ui-transform-tool>
+                <ui-transform-tool id="utt01" class="custom-01 only-shown only-shown-tool-Transform" resizable moveable  width="100" height="100" left="10" top="10" >
+                    
+                    <div class="text-center">
+                        TRANSFORM<br>
+                        <i class="bi bi-bounding-box"></i>
+                    </div>
+                </ui-transform-tool>
                 <script>
                     {
                         const utt01 = document.querySelector('#utt01');
