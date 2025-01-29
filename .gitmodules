@@ -7,3 +7,6 @@
 [submodule "third_party/ui_ColorPalette"]
 	path = third_party/ui_ColorPalette
 	url = https://github.com/mins01/ui_ColorPalette.git
+[submodule "third_party/ui-transform-tool"]
+	path = third_party/ui-transform-tool
+	url = https://github.com/mins01/ui-transform-tool.git
