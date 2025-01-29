@@ -323,6 +323,11 @@ export default class Editor{
         },{once:true})
     }
 
+    saveHistory(){
+        if(!this.document) return;
+        this.document.history.save();
+    }
+
 
 
 

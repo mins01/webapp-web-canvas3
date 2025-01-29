@@ -56,6 +56,14 @@ export default class Layer extends Canvas{
         this.top = top;
     }
 
+    postionCenterCenter(){
+        if(!this?.parent) return false;
+        const left = (this.parent.width - this.width*this.zoom) / 2
+        this.left = left;
+        const top = (this.parent.height - this.height*this.zoom) / 2
+        this.top = top;
+    }
+
     merge(canvas){
         const xmin = Math.min(this.left,canvas.left)
         const ymin = Math.min(this.top,canvas.top)
