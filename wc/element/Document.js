@@ -158,31 +158,15 @@ export default class Document extends Layer{
             ctx.translate(layer.width/2, layer.height/2)
             if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI / 180); }
             ctx.translate(-layer.width/2, -layer.height/2)
-            if(layer.visible){
+            if(layer.visible && layer.visibleByTool){
                 ctx.drawImage(layer, 0, 0, layer.width, layer.height);
                 if(index == this.layers.selectedIndex){
                     ctx.drawImage(drawLayer, 0, 0, layer.width, layer.height);
                 }
             }
             ctx.translate(-layer.left, -layer.top)
-
-
             ctx.restore()
 
-            // if(index == this.layers.selectedIndex){
-            //     ctx.save();
-            //     ctx.globalCompositeOperation = layer.compositeOperation
-            //     ctx.globalAlpha = layer.alpha
-            //     ctx.translate(layer.left, layer.top)
-            //     if(layer.zoom !== 1){ ctx.scale(layer.zoom,layer.zoom); }
-            //     ctx.translate(layer.width/2, layer.height/2)
-            //     if(layer.angle !== 0){ ctx.rotate(layer.angle * Math.PI); }
-            //     ctx.translate(-layer.width/2, -layer.height/2)
-
-            //     ctx.translate(-layer.left, -layer.top)
-
-            //     ctx.restore()
-            // }
         })
         ctx.restore()
         // this.style.zoom = this.zoom;
@@ -193,10 +177,6 @@ export default class Document extends Layer{
         this.style.setProperty('--angle',this.angle+'deg');
         this.style.setProperty('--left',this.left+'px');
         this.style.setProperty('--top',this.top+'px');
-
-        // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad) translate(${this.left}px,${this.top}px)`;
-        // this.style.transform = `translate(          clamp(calc(-50svw - var(--width) * var(--zoom) / 2),calc(var(--left)* var(--zoom)),   calc(50svw + var(--width) * var(--zoom) / 2))   ,   clamp(calc(-50svh - var(--height) * var(--zoom) / 3),calc(var(--top)* var(--zoom)),   calc(50svh + var(--height) * var(--zoom) / 3))          ) scale(var(--zoom)) rotate(var(--angle)) `;
-        // this.style.transform = `scale(${this.zoom}) rotate(${this.angle*Math.PI}rad)`;
     }
 
     resize(width,height){

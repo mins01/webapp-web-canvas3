@@ -23,6 +23,7 @@ export default class Layer extends Canvas{
     #top;
     #zoom;
     #visible;
+    visibleByTool = true; // 강제로 숨긴다. (외부에서 설정하지 마라, 툴에서 제어한다.)
     constructor(w=null,h=null){
         super(w,h);
         
@@ -33,6 +34,7 @@ export default class Layer extends Canvas{
         this.zoom = 1;
         this.visible = true;
         this.angle = 0;
+        this.visibleByTool = true;
     }
 
     get left(){ return this.#left; }
