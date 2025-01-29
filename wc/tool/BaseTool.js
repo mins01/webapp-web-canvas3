@@ -51,11 +51,10 @@ export default class BaseTool {
 		// this.y = null;
 		this.x1 = null;
 		this.y1 = null;
-
 	}
 	start(){
 		this.init();
-		this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
+		// this.documentRect = this.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다. //init 속 ready 에서 처리한다.
 	}
 
 	onpointerdown(event){
@@ -107,7 +106,8 @@ export default class BaseTool {
 	 * 툴을 사용하기 위해서 준비 처리
 	 */
 	ready(){
-		this.document.readyTool()
+		this.documentRect = this.editor.document.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
+		this.editor.document.readyTool()
 	}
 	
 	/** 

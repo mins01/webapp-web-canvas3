@@ -21,6 +21,8 @@ export default class Editor{
     editorConfig = null;
     modalHandler = null;
     temp = null
+
+    utt = null;
     constructor(target){
         this.temp = {}
         this.editorConfig = new EditorConfig()
@@ -49,7 +51,7 @@ export default class Editor{
         this.textConfig = new Context2dTextConfig();
     }
 
-    get tool(){ return this.tools.selected; }
+    get tool(){ return this?.tools?.selected??null; }
     
     /**
      * Description placeholder
@@ -57,7 +59,7 @@ export default class Editor{
      * @readonly
      * @type {HTMLCanvasElement|Document}
      */
-    get document(){ return this.documents.selected; }
+    get document(){ return this?.documents?.selected??null; }
 
     // get contextConf(){
     //     return {
@@ -396,6 +398,8 @@ export default class Editor{
             UiInputStepper.syncDataValue(layerAlpha)
         }
 
+        this?.tool?.ready();
+
     }
 
     
@@ -413,4 +417,12 @@ export default class Editor{
         this.modalHandler.get('modal-layer-config').show();
     }
 
+    readyUtt(){
+        if(!this?.document?.layer) return;
+        const layer = this.document.layer;
+        console.log(layer);
+        
+        this.utt.left =layer.left
+        this.utt.top =layer.top
+    }
 }
