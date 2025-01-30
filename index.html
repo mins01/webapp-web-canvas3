@@ -1199,21 +1199,22 @@
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
                             <form  class="d-flex flex-column gap-1" action=""
-                                data-wc-sync-form="editor.utt"
+                                
+                                data-wc-sync-form="editor.document.drawLayer"
                                 >
                                 <div class="input-group w-100">
                                     <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
-                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000" oninput="editor.utt.width=this.value;editor.tool.draw();wcSyncHandler.sync(this.closest('.modal'))">
+                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000" oninput="editor.document.drawLayer.width = this.value; editor.tool.readyUtt(); editor.tool.draw();">
                                     <span class="input-group-text" >X</span>
-                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000" oninput="editor.utt.height=this.value;editor.tool.draw();wcSyncHandler.sync(this.closest('.modal'))">
+                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000" oninput="editor.document.drawLayer.height = this.value; editor.tool.readyUtt(); editor.tool.draw();">
                                     <!-- <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button> -->
                                 </div>
-                                <!-- <div class="input-group">
+                                <div class="input-group">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000" oninput="editor.document.drawLayer.left = this.value; editor.tool.readyUtt(); editor.tool.draw();">
                                     <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                </div> -->
+                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000" oninput="editor.document.drawLayer.top = this.value; editor.tool.readyUtt(); editor.tool.draw();">
+                                </div>
                             </form>
                             <hr>
                             <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">

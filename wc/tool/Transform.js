@@ -20,15 +20,22 @@ export default class Transform extends BaseTool{
     }
 
     ready(){
-        // super.ready();
-        this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
+        super.ready();
+        this.readyUtt();
+        this.draw();
+    }
 
+    readyUtt(){
+        const document = this.document
         const documentRect = this.documentRect;
-        const layer = this.document.layer;
-        this.utt.left = layer.left + documentRect.left;
-        this.utt.top = layer.top + documentRect.top;
-        this.utt.width = layer.width;
-        this.utt.height = layer.height;
+        // const layer = this.document.layer;
+        const drawLayer = this.document.drawLayer;
+        const mul = document.zoom*drawLayer.zoom
+
+        this.utt.left = documentRect.left + drawLayer.left * mul;
+        this.utt.top = documentRect.top + drawLayer.top * mul;
+        this.utt.width = drawLayer.width * mul;
+        this.utt.height = drawLayer.height * mul;
     }
 
     start(){
@@ -68,21 +75,26 @@ export default class Transform extends BaseTool{
         const document = this.document
         const layer = this.document.layer
         const drawLayer = this.document.drawLayer
+
+        const mul = document.zoom * drawLayer.zoom
+
         const [left,top] = this.getXyInDocument(utt.left,utt.top)
         const width = utt.width;
         const height = utt.height;
+        
+
 
         drawLayer.ctx.save();
         drawLayer.left = left;
         drawLayer.top = top;
-        drawLayer.width = width;
-        drawLayer.height = height;
+        drawLayer.width = width / mul;
+        drawLayer.height = height / mul;
         
         // drawLayer.fill('#000000f0')
         // drawLayer.stroke('#ff0000',4)
         
         // console.log(drawLayer.left,drawLayer.top,drawLayer.width,drawLayer.height);
-        drawLayer.ctx.drawImage(layer,0,0,width,height)
+        drawLayer.ctx.drawImage(layer,0,0,drawLayer.width,drawLayer.height)
         drawLayer.ctx.restore();
         drawLayer.flush();
     }
@@ -91,7 +103,10 @@ export default class Transform extends BaseTool{
         super.confirm();
         const layer = this.document.layer
         const drawLayer = this.document.drawLayer
+        console.log(drawLayer.snapshot());
+        
         layer.import(drawLayer.snapshot())
+        this.document.history.save();
         this.ready();
     }
 
