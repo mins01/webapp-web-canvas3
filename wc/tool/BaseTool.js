@@ -151,23 +151,57 @@ export default class BaseTool {
 	getXyInDocument(inX,inY){
 		const doc = this.document;
 		const docRect = this.documentRect;
-		// const docParnet = doc.parentElement;
 		const zoom = doc.zoom;
 
-		let docCenterLeft = (docRect.right + docRect.left) / 2
-		let docCenterTop = (docRect.bottom + docRect.top) / 2
-		// let left = docCenterLeft - docParnet.offsetWidth/2;
-		// let top =docCenterTop - docParnet.offsetHeight/2;
+		let docCenterX = (docRect.right + docRect.left) / 2
+		let docCenterY = (docRect.bottom + docRect.top) / 2
+		// let left = docCenterX - docParnet.offsetWidth/2;
+		// let top =docCenterY - docParnet.offsetHeight/2;
 		
-		let x = inX - (docCenterLeft - doc.width*zoom/2);
-		let y = inY - (docCenterTop - doc.height*zoom/2);	
+		let x = inX;
+		let y = inY;
 		
 		[x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, -doc.angle)
+
+		x = inX - (docCenterX - doc.width*zoom/2);
+		y = inY - (docCenterY - doc.height*zoom/2);	
+		
+		
 
 		if(zoom!==1){
 			x /= zoom;
 			y /= zoom;
 		}
+		return [x,y];
+	}
+	getDocumentXyFromPageXy(inX,inY){
+		return this.getXyInDocument(inX,inY);
+	}
+
+	getPageXyFromDocumentXy(inX,inY){
+		const doc = this.document;
+		const docRect = this.documentRect;
+		const zoom = doc.zoom;
+
+		let docCenterX = (docRect.right + docRect.left) / 2
+		let docCenterY = (docRect.bottom + docRect.top) / 2
+		
+		let x = inX;
+		let y = inY;
+
+		if(zoom!==1){
+			x *= zoom;
+			y *= zoom;
+		}
+		
+		// [x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, doc.angle)
+
+		x = (docCenterX - doc.width/2*zoom) + x;
+		y = (docCenterY - doc.height/2*zoom) + y;
+
+		[x,y] = this.rotatePoint(x, y, docCenterX, docCenterY, doc.angle)
+
+	
 		return [x,y];
 	}
 

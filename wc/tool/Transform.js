@@ -32,10 +32,14 @@ export default class Transform extends BaseTool{
         const drawLayer = this.document.drawLayer;
         const mul = document.zoom*drawLayer.zoom
 
-        this.utt.left = documentRect.left + drawLayer.left * mul;
-        this.utt.top = documentRect.top + drawLayer.top * mul;
-        this.utt.width = drawLayer.width * mul;
-        this.utt.height = drawLayer.height * mul;
+        let [leftC,topC] =this.getPageXyFromDocumentXy(drawLayer.left+drawLayer.width/2,drawLayer.top+drawLayer.height/2)
+        
+        this.utt.left = leftC - drawLayer.width/2*mul;
+        this.utt.top = topC - drawLayer.height/2*mul;
+        
+        this.utt.width = drawLayer.width*mul
+        this.utt.height = drawLayer.height*mul
+
     }
 
     start(){
@@ -73,29 +77,48 @@ export default class Transform extends BaseTool{
     draw(){
         const utt = this.utt;
         const document = this.document
+        const documentRect = this.documentRect;
         const layer = this.document.layer
         const drawLayer = this.document.drawLayer
+        const mul = document.zoom / drawLayer.zoom
+        const ctx = drawLayer.ctx
 
-        const mul = document.zoom * drawLayer.zoom
 
-        const [left,top] = this.getXyInDocument(utt.left,utt.top)
-        const width = utt.width;
-        const height = utt.height;
+        let docCenterX = (documentRect.right + documentRect.left) / 2
+		let docCenterY = (documentRect.bottom + documentRect.top) / 2
+
+        let leftUttC = utt.left + utt.width/2;
+        let topUttC = utt.top + utt.height/2;
+        [leftUttC,topUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
+
+
+        let [leftLC,topLC] = this.getDocumentXyFromPageXy(leftUttC,topUttC);
         
 
+        let width = utt.width / mul;      
+        let height = utt.height / mul;
 
-        drawLayer.ctx.save();
+        let left = leftLC - width/2;
+        let top = topLC - height/2;
+
+        // [left,top] = this.rotatePoint(left, top, topUttC, topUttC, +document.angle)
+
+        console.log(leftUttC,left,leftLC,documentRect.left+documentRect.width/2,width);
+
+
+        ctx.save();
         drawLayer.left = left;
         drawLayer.top = top;
-        drawLayer.width = width / mul;
-        drawLayer.height = height / mul;
+        drawLayer.width = width;
+        drawLayer.height = height;
         
-        // drawLayer.fill('#000000f0')
+        // this.prepareLayer(ctx);
+        drawLayer.fill('#000000f0')
         // drawLayer.stroke('#ff0000',4)
         
         // console.log(drawLayer.left,drawLayer.top,drawLayer.width,drawLayer.height);
-        drawLayer.ctx.drawImage(layer,0,0,drawLayer.width,drawLayer.height)
-        drawLayer.ctx.restore();
+        ctx.drawImage(layer,0,0,drawLayer.width,drawLayer.height)
+        ctx.restore();
         drawLayer.flush();
     }
 
