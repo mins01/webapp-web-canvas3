@@ -300,10 +300,11 @@ export default class Editor{
     newDocument(width,height){
         // 다중 document 우선 지원하지 말자.
         if(this?.document){ this.documents.remove(); }
-        const document = new Document(width,height);
-        document.layers[0].fill('#fff')
-        document.addEmptyLayer();
-        this.documents.add(document);
+        this.documents.create(width,height);
+        // const document = new Document(width,height);
+        // document.layers[0].fill('#fff')
+        // document.addEmptyLayer();
+        // this.documents.add(document);
     }
     previewDocument(){
         if(this?.document){

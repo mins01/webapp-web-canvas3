@@ -1,4 +1,6 @@
 import SelectableArray from "../../lib/SelectableArray.js";
+import Document from "../Document.js";
+
 
 export default class Documents extends SelectableArray{
   editor = null;
@@ -30,10 +32,21 @@ export default class Documents extends SelectableArray{
     // document.scrollIntoView( { behavior:'smooth', block:'center', inline:'center', } );
     document.flush();
     document.ready();
+    document.history.clear();
+    document.history.save('new document');
     setTimeout(()=>{
       frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
       frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
-    },10)    
+    },10)
+    this.editor?.tool?.init();
+  }
+
+  create(width,height){
+    const document = new Document(width,height);
+    document.layers[0].fill('#fff')
+    document.addEmptyLayer();
+    this.add(document);
+    return document;
   }
 
   remove(){

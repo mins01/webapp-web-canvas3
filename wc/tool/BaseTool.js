@@ -25,6 +25,8 @@ export default class BaseTool {
 	}
 
 	init(){
+		console.log('BaseTool::init()');
+		
 		this.peh = this.editor.peh
 
 		this.pointerType = null
