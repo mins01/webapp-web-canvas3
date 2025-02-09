@@ -337,6 +337,9 @@
     <script>
         globalThis.addEventListener('load',(event)=>{
             const wcApp = globalThis.wcApp = document.querySelector('#wc-app')
+            wcApp.header = wcApp.querySelector('.wc-app-header')
+            wcApp.body = wcApp.querySelector('.wc-app-body')
+            wcApp.footer = wcApp.querySelector('.wc-app-footer')
         })
     </script>
 </head>
@@ -1146,6 +1149,7 @@
                             <hr>
                             <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
                                 <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
+                                <button class="btn btn-primary" onclick="wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))">ZOOM:Fit</button>
                                 <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">CENTERxCENTER</button>
                             </div>
                         </div>
@@ -1153,41 +1157,26 @@
                 </div>
             </div>
         </div>
+        <script>
+            function wcAppZoomFit(){
+                const document = editor.document;
+                const rectBody = wcApp.body.getBoundingClientRect();
+                const rectHeader = wcApp.header.getBoundingClientRect();
+                const rectFooter = wcApp.footer.getBoundingClientRect();
+                const outlineWidth = parseFloat(window.getComputedStyle(document).outlineWidth);
+                const mh = rectBody.height - rectHeader.height - rectFooter.height - outlineWidth * 2 - 5
+                const mw = rectBody.width - outlineWidth * 2 - 5
+                const w = document.width;
+                const h = document.height;
+                let z = Math.min(mh/h , mw/w);
+                z = Math.floor(z * 100)/100;
+                document.zoom = z;
+                document.left = 0;
+                document.top = 0;
+                document.flush();
 
-        <!-- <script>
-            window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-document-config').addEventListener('show.bs.modal', function(event){
-                    const document = editor.document
-                    event.target.document = document;
-                    if(!document){return;}
-                    {
-                        const f = window.document.form_document_resize;
-
-                        f.width.value = document.width
-                        f.height.value = document.height
-                        f.width.value = document.width
-                        f.height.value = document.height
-                    }
-                    {
-                        const f = window.document.form_document_zoom;
-                        f.zoom.value = document.zoom
-                    }
-                    {
-                        const f = window.document.form_document_angle;
-                        f.angle.value = document.angle
-                    }
-                    // {
-                    //     const f = window.document.form_document_postion;
-                    //     f.left.value = document.left
-                    //     f.top.value = document.top
-                    // }
-                    UiInputStepper.initDataValue(this)
-                })
-            })
-        </script> -->
-
-
+            }
+        </script>
 
         <div class="modal fade" id="modal-transform-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
