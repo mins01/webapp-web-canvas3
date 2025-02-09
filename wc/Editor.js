@@ -280,17 +280,25 @@ export default class Editor{
         // console.log(ep);  
     }    
     loadDocument(file){
-        HtmlUtil.asyncLoadFile(file).then((text)=>{
-            // console.log(file,text);
-            const conf = JSON.parse(text);
-            // console.log(conf);
-            const document = Document.importFrom(conf)
-            // console.log(document.layers);
-            this.documents.add(document);
-            // window.document.querySelector('#wc-editor').append(document);
-            
-            
-        })
+        this.closeDocument();
+        // console.log(file);
+        if(file.name.match(/wc3\.json$/)){
+            HtmlUtil.asyncLoadFile(file).then((text)=>{
+                const conf = JSON.parse(text);
+                const document = Document.importFrom(conf)
+                this.documents.add(document);
+            })
+        }else if(file.type.match(/^image\//)){
+            const imageURL = URL.createObjectURL(file);
+            const image = new Image();
+            image.onload=(event)=>{
+                const target = event.target;
+                URL.revokeObjectURL(imageURL);
+                const document = Document.fromImage(target);
+                this.documents.add(document);
+            }
+            image.src = imageURL;
+        }
     }
     closeDocument(){
         if(this.document){
@@ -299,7 +307,7 @@ export default class Editor{
     }
     newDocument(width,height){
         // 다중 document 우선 지원하지 말자.
-        if(this?.document){ this.documents.remove(); }
+        this.closeDocument();
         this.documents.create(width,height);
         // const document = new Document(width,height);
         // document.layers[0].fill('#fff')

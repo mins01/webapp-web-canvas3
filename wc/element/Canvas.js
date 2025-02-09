@@ -229,13 +229,18 @@ class Canvas extends HTMLCanvasElement{
         c.import(conf)
         return c;
     }
+
+    /**
+     * Description placeholder
+     *
+     * @static
+     * @param {HTMLImageElement|HTMLCanvasElement} image 
+     */
+    static fromImage(image){
+        const c = new this(image.width,image.height);
+        c.ctx.drawImage(image, 0, 0, image.width, image.height);
+    }
 }
-
-// ['width','height'].forEach((v)=>{
-// 	const d = Object.getOwnPropertyDescriptor(Canvas.prototype,v); d.enumerable=true; Object.defineProperty(Canvas.prototype,v,d);
-// })
-
-
 
 
 export default Canvas;

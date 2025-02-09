@@ -221,4 +221,22 @@ export default class Document extends Layer{
             super.toBlob(...arguments)
         }
     }
+
+
+
+
+
+    /**
+     * Description placeholder
+     *
+     * @static
+     * @param {HTMLImageElement|HTMLCanvasElement} image 
+     */
+    static fromImage(image){
+        const c = new this(image.width,image.height);
+        c.layer.ctx.drawImage(image, 0, 0, image.width, image.height);
+        c.history.clear();
+        c.history.save();
+        return c;
+    }
 }

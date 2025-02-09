@@ -555,9 +555,9 @@
                     <div class="modal-body">
                         <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
                             <div class="input-group input-group-lg">
-                                <input type="file" class="form-control" name="openfile" accept=".wc3.json">
+                                <input type="file" class="form-control" name="openfile" accept=".wc3.json,image/*">
                             </div>
-                            <div class="form-text text-end"><i class="bi bi-info-circle"></i> *.wc3.json만 지원됩니다.</div>
+                            <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json 파일이 지원됩니다.</div>
                             <div class="text-end">
                                 <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
                             </div>
@@ -1162,6 +1162,8 @@
             function wcAppZoomFit(){
                 const document = editor.document;
                 const rectBody = wcApp.body.getBoundingClientRect();
+                console.log(rectBody);
+                
                 const rectHeader = wcApp.header.getBoundingClientRect();
                 const rectFooter = wcApp.footer.getBoundingClientRect();
                 const outlineWidth = parseFloat(window.getComputedStyle(document).outlineWidth);
