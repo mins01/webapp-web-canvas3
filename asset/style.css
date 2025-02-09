@@ -229,6 +229,7 @@
   max-height: 3em;
   max-width: 3em;
   object-fit: contain;
+  background-image: url(bg.gif);
 }
 .layer-box[data-wc-layer-visible='true'] .on-visible,
 .layer-box[data-wc-layer-visible='false'] .no-visible{
