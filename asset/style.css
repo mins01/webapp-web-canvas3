@@ -158,9 +158,13 @@
   */
   overflow: hidden;
   background-color: #39f; 
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  display: grid;
+  place-items: center;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
 }
 
 .wc-frame > .wc-document{

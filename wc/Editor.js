@@ -329,7 +329,7 @@ export default class Editor{
             let modalNode = target.closest('.modal');
             modalNode.querySelector('#img-preview-size').textContent = `${target.naturalWidth}px x ${target.naturalHeight}px`;
             const modal = bootstrap.Modal.getInstance(modalNode)
-            globalThis.modals.hideAll();
+            editor.modalHandler.hideAll();
             modal.show()
         },{once:true})
     }
