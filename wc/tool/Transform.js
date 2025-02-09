@@ -103,7 +103,7 @@ export default class Transform extends BaseTool{
 
         // [left,top] = this.rotatePoint(left, top, topUttC, topUttC, +document.angle)
 
-        console.log(leftUttC,left,leftLC,documentRect.left+documentRect.width/2,width);
+        // console.log(leftUttC,left,leftLC,documentRect.left+documentRect.width/2,width);
 
 
         ctx.save();
@@ -113,7 +113,7 @@ export default class Transform extends BaseTool{
         drawLayer.height = height;
         
         // this.prepareLayer(ctx);
-        drawLayer.fill('#000000f0')
+        // drawLayer.fill('#000000f0')
         // drawLayer.stroke('#ff0000',4)
         
         // console.log(drawLayer.left,drawLayer.top,drawLayer.width,drawLayer.height);
