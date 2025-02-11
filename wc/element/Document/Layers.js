@@ -43,6 +43,7 @@ export default class Layers extends SelectableArray{
             this.ready();
             this.document.history.save('Layers.select',true);
         }
+        this?.document?.editor?.tool?.activate()
         return true;
     }
     remove(){
