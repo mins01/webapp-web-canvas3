@@ -281,7 +281,7 @@
   align-items: flex-end;
 }
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
-  max-height: 50svh;
+  max-height: 70svh;
 }
 
 

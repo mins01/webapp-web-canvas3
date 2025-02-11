@@ -38,7 +38,7 @@ export default class Documents extends SelectableArray{
       frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
       frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
     },10)
-    this.editor?.tool?.init();
+    this.editor?.tool?.activate();
   }
 
   create(width,height){

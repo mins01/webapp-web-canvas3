@@ -1095,6 +1095,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
+                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
+                                <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> 100%</button>
+                                <button class="btn btn-primary" onclick="wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
+                                <button class="btn btn-primary" onclick="wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
+                                <button class="btn btn-primary" onclick="wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
+                                <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-arrows-move"></i> CENTER</button>
+                            </div>
+                            <hr>
                             <form name="form_document_resize" class="flex-fill" action="" onsubmit="
                                 if(editor?.document){
                                     editor.document.resize(this.width.value,this.height.value);
@@ -1146,20 +1154,14 @@
                                     <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
                                     <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
                                 </div>
-                            </form>
-                            <hr>
-                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
-                                <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
-                                <button class="btn btn-primary" onclick="wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))">ZOOM:Fit</button>
-                                <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">CENTERxCENTER</button>
-                            </div>
+                            </form>                           
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-            function wcAppZoomFit(){
+            function wcAppZoomFit(type="auto"){
                 const document = editor.document;
                 const rectBody = wcApp.body.getBoundingClientRect();
                 console.log(rectBody);
@@ -1171,13 +1173,19 @@
                 const mw = rectBody.width - outlineWidth * 2 - 5
                 const w = document.width;
                 const h = document.height;
-                let z = Math.min(mh/h , mw/w);
+                let z = null;
+                if(type=='auto'){
+                    z = Math.min(mh/h , mw/w);
+                }else if(type=='width'){
+                    z = mw/w
+                }else if(type=='height'){
+                    z = mh/h
+                }
                 z = Math.floor(z * 100)/100;
                 document.zoom = z;
                 document.left = 0;
                 document.top = 0;
                 document.flush();
-
             }
         </script>
 

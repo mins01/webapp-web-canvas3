@@ -2,13 +2,13 @@ import BaseConfig from "./BaseConfig.js"
 
 class BrushConfig extends BaseConfig{
     // 브러시 모양: Brush Tip Shape
-    size = 50; //크기 px . diameter
+    size = 5; //크기 px . diameter
     angle = 0; //각도 0~1
     roundness = 1; // 원형율
     flipX = false; //x 뒤집기. 사용안할 예정
     flipY = false; //y 뒤집기. 사용안할 예정
     hardness = 1; // 경도
-    spacing = 0.25; //간격
+    spacing = 0.1; //간격
     // 모양: Shape Dynamics
     sizeJitter = 0; //크기 지터
     sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
@@ -48,13 +48,13 @@ class BrushConfig extends BaseConfig{
     
     reset(){
         // 브러시 모양: Brush Tip Shape
-        this.size = 50; //크기 px . diameter
+        this.size = 5; //크기 px . diameter
         this.angle = 0; //각도 deg 
         this.roundness = 1; // 원형율
         this.flipX = false; //x 뒤집기. 사용안할 예정
         this.flipY = false; //y 뒤집기. 사용안할 예정
         this.hardness = 1; // 경도
-        this.spacing = 0.25; //간격
+        this.spacing = 0.1; //간격
         // 모양: Shape Dynamics
         this.sizeJitter = 0; //크기 지터
         this.sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...

@@ -18,7 +18,7 @@ export default class History extends LimitedHistory{
         if(snapshot===null){return false}
         console.log('history.undo();',snapshot.title,this.currentIndex,this.length);
         layers.import(snapshot);
-        this.document.editor?.tool?.init()
+        this.document.editor?.tool?.activate()
         return true;
     }
     redo(){
@@ -27,7 +27,7 @@ export default class History extends LimitedHistory{
         if(snapshot===null){return false}
         console.log('history.redo();',snapshot.title,this.currentIndex,this.length);
         layers.import(snapshot);
-        this.document.editor?.tool?.init()
+        this.document.editor?.tool?.activate()
         return true;
     }
     reload(){
@@ -36,7 +36,7 @@ export default class History extends LimitedHistory{
         if(snapshot===null){return false}
         console.log('history.reload();',snapshot.title,this.currentIndex,this.length);
         layers.import(snapshot);
-        this.document.editor?.tool?.init()
+        this.document.editor?.tool?.activate()
         return true;
     }
 
