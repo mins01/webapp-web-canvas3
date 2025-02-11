@@ -33,13 +33,13 @@ class BrushConfig extends BaseConfig{
     brightnessJitter = 0;
 
     // 기타
-    makeOpaque = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
+    flattenOpacity = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
     
 
     constructor(){
         const proxyConfig = {
             number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter'],
-            boolean:['flipX','flipY','makeOpaque',],
+            boolean:['flipX','flipY','flattenOpacity',],
         }
         const proxy = super(proxyConfig);
         this.reset();

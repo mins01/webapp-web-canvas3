@@ -119,6 +119,9 @@
 
 .only-shown{display: none;}
 .wc-app[data-tool="Brush"] .only-shown-tool-Brush{display: block;}
+.wc-app[data-tool="Brush1"] .only-shown-tool-Brush1{display: block;}
+.wc-app[data-tool="Brush2"] .only-shown-tool-Brush2{display: block;}
+.wc-app[data-tool="Brush3"] .only-shown-tool-Brush3{display: block;}
 .wc-app[data-tool="Eraser"] .only-shown-tool-Eraser{display: block;}
 .wc-app[data-tool="Move"] .only-shown-tool-Move{display: block;}
 .wc-app[data-tool="Hand"] .only-shown-tool-Hand{display: block;}
@@ -260,13 +263,13 @@
 .brush-config{
 
 }
-.brush-config .brush-wrap{
+.brush-wrap{
   background-image: url(bg.gif);
   overflow: hidden;
 }
-.brush-config .brush-wrap > canvas{
+/* .brush-wrap > canvas{
   outline: 1px dotted #333;
-}
+} */
 
 
 

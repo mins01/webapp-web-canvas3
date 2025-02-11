@@ -17,6 +17,9 @@ import EditorConfig from "./lib/EditorConfig.js";
 
 export default class Editor{
     brush = null;
+    brush1 = null;
+    brush2 = null;
+    brush3 = null;
     brushEraser = null;
     editorConfig = null;
     modalHandler = null;
@@ -72,6 +75,9 @@ export default class Editor{
     initConfigs(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
         this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'));
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),1);
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),2);
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),3);
         this.setEraserConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'));
     }
 
@@ -83,9 +89,16 @@ export default class Editor{
         // Object.assign(this.contextConfig,conf);
         this.contextConfig.assignFrom(conf);
         this.document?.setContextConfig(this.contextConfig.toObject());
-        this.brush.contextConfig.foreColor =this.contextConfig.foreColor;
-        this.brush.contextConfig.backColor =this.contextConfig.backColor;
-        this.brush.flush();
+
+        [this?.brush,this?.brush1,this?.brush2,this?.brush3].forEach(brush=>{
+            if(brush){
+                brush.contextConfig.foreColor =this.contextConfig.foreColor;
+                brush.contextConfig.backColor =this.contextConfig.backColor;
+                brush.flush();
+            }
+        })
+
+        
         if(window.document.querySelector('#btn-palette')){
             window.document.querySelector('#btn-palette').style.backgroundColor = this.contextConfig.foreColor
         }
@@ -96,11 +109,13 @@ export default class Editor{
         this.textConfig.assignFrom(conf);
         this.document?.setTextConfig(this.textConfig.toObject());
     }
-    setBrushConfig(conf){
-        if(this?.brush){
-            this.brush?.setBrushConfig(conf);
-            this.brush.flush();
-            localStorage.setItem('brushConfig',JSON.stringify(this.brush.brushConfig))
+    setBrushConfig(conf,brushIdx=0){        
+        let brush = [this?.brush,this?.brush1,this?.brush2,this?.brush3][brushIdx];
+        let key = ['brushConfig','brush1Config','brush2Config','brush3Config'][brushIdx];
+        if(brush){
+            brush?.setBrushConfig(conf);
+            brush.flush();
+            localStorage.setItem(key,JSON.stringify(brush.brushConfig))
             // console.log('x',JSON.stringify(this.brush.brushConfig));
             
         }

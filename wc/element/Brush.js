@@ -126,10 +126,10 @@ export default class Brush extends Layer{
         ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
         ctx.restore();
 
-        if(brushConfig.makeOpaque){
+        if(brushConfig.flattenOpacity){
             const c = jsColor.Color.from(ctx.fillStyle);
-            const o = Math.round(255);
-            Context2dUtil.makeOpaque(ctx,c.r,c.g,c.b,o,o/2)
+            const o = Math.round(brushConfig.opacity*255);           
+            Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,1)
         }
     }
 

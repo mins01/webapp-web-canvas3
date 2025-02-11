@@ -144,9 +144,9 @@
     </script>
 
     <style>
-        canvas{
+        /* canvas{
             outline: 1px dashed #aabbcc99;
-        }
+        } */
     </style>
     <script type="module">
         import HtmlUtil from "./wc/lib/HtmlUtil.js";
@@ -186,10 +186,22 @@
 
 
         window.addEventListener('load',(event)=>{
-            const brush1 = globalThis.brush1 = document.querySelector('#brush1');
-            brush1.contextConfig.foreColor="#f00"
-            brush1.size = 10
-            brush1.flush();
+            const brush0 = globalThis.brush0 = document.querySelector('#brush0');
+            brush0.contextConfig.foreColor="#f00"
+            brush0.size = 10
+            brush0.flush();
+            // const brush1 = globalThis.brush1 = document.querySelector('#brush1');
+            // brush1.contextConfig.foreColor="#f00"
+            // brush1.size = 10
+            // brush1.flush();
+            const brush2 = globalThis.brush2 = document.querySelector('#brush2');
+            brush2.contextConfig.foreColor="#f00"
+            brush2.size = 10
+            brush2.flush();
+            const brush3 = globalThis.brush3 = document.querySelector('#brush3');
+            brush3.contextConfig.foreColor="#f00"
+            brush3.size = 10
+            brush3.flush();
 
             const eraser1 = globalThis.eraser1 = document.querySelector('#eraser1');
             eraser1.contextConfig.foreColor="#f00"
@@ -198,7 +210,10 @@
 
 
             const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
-            globalThis.brush1 = editor.brush = brush1
+            globalThis.brush0 = editor.brush = brush0
+            // editor.brush1 = brush1
+            editor.brush2 = brush2
+            editor.brush3 = brush3
             globalThis.eraser1 = editor.brushEraser = eraser1
             // editor.tools.select('Brush');
             //-- 모달 핸들러
@@ -351,6 +366,9 @@
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()">
                         <div class="only-shown only-shown-tool-Brush"><i class="bi bi-brush"></i></div>
+                        <!-- <div class="only-shown only-shown-tool-Brush1"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">1</sub></div> -->
+                        <div class="only-shown only-shown-tool-Brush2"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></div>
+                        <div class="only-shown only-shown-tool-Brush3"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></div>
                         <div class="only-shown only-shown-tool-Eraser"><i class="bi bi-eraser"></i></div>
                         <div class="only-shown only-shown-tool-Transform"><i class="bi bi-bounding-box"></i></div>
                         <div class="only-shown only-shown-tool-Move"><i class="bi bi-arrows-move"></i></div>
@@ -359,6 +377,10 @@
                     </button>
                     <div>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
+                        <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush1" data-bs-toggle="modal" data-bs-target="#modal-brush1-config"><i class="bi bi-sliders"></i></button> -->
+                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush2" data-bs-toggle="modal" data-bs-target="#modal-brush2-config"><i class="bi bi-sliders"></i></button>
+                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush3" data-bs-toggle="modal" data-bs-target="#modal-brush3-config"><i class="bi bi-sliders"></i></button>
+
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform"  data-bs-toggle="modal" data-bs-target="#modal-transform-config"><i class="bi bi-sliders"></i></button>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
@@ -375,6 +397,12 @@
                         <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                         <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
                         <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
+                        <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">1</sub></button></label> -->
+                        <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></button></label>
+                        <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></button></label>
+
+
+
                         <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
                         <label role="button" title="tool Transform" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Transform" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-bounding-box"></i></button></label>
                         <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
@@ -1232,17 +1260,18 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> Brush config</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush config</span></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-preview pb-0" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="brush0" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                        <hr>
                     </div>
                     <div class="modal-body brush-config">
                         <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brush.brushConfig" >
-                            <div>
-                                <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
-                                    <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
-                                </div>
-                            </div>
-                            <hr>
+                            
                             <div class="d-flex flex-column gap-1">
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >Size</span>
@@ -1294,8 +1323,8 @@
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-text" >makeOpaque(불투명하게)</span>
-                                    <select class="form-select " name="makeOpaque" >
+                                    <span class="input-group-text" >flattenOpacity(불투명하게)</span>
+                                    <select class="form-select " name="flattenOpacity" >
                                         <option selected value="false">NO</option>
                                         <option value="true">YES</option>
                                     </select>
@@ -1366,6 +1395,28 @@
                 </div>
             </div>
         </div>
+        <script>
+            {
+                const modalBrushConfig = document.querySelector('#modal-brush-config');
+                [3,2].forEach((v,idx)=>{
+                    const id = `modal-brush${v}-config`;
+                    const cloneModalBrushConfig = modalBrushConfig.cloneNode(true);
+                    const modalConfigTitle = cloneModalBrushConfig.querySelector('.modal-config-title');
+                    modalConfigTitle.textContent = `Brush${v} config`
+                    const canvas = cloneModalBrushConfig.querySelector('canvas');
+                    canvas.removeAttribute('id')
+                    canvas.id = `brush${v}`;
+                    const f = cloneModalBrushConfig.querySelector('form');
+                    cloneModalBrushConfig.id = id;
+                    f.removeAttribute('oninput')
+                    f.oninput = function(event){
+                        editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),v); return false
+                    }
+                    f.dataset.wcSyncForm = `editor.brush${v}.brushConfig`;
+                    modalBrushConfig.after(cloneModalBrushConfig)
+                })
+            }
+        </script>
 
         <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1374,14 +1425,14 @@
                         <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> Eraser config</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body brush-preview pb-0" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                        <hr>
+                    </div>
                     <div class="modal-body brush-config">
                         <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brushEraser.brushConfig">
-                            <div>
-                                <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
-                                    <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
-                                </div>
-                            </div>
-                            <hr>
                             <div class="d-flex flex-column gap-1">
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >Size</span>
@@ -1433,8 +1484,8 @@
                                     <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-text" >makeOpaque(불투명하게)</span>
-                                    <select class="form-select " name="makeOpaque" >
+                                    <span class="input-group-text" >flattenOpacity(불투명하게)</span>
+                                    <select class="form-select " name="flattenOpacity" >
                                         <option selected value="false">NO</option>
                                         <option value="true">YES</option>
                                     </select>
