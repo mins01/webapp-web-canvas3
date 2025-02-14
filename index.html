@@ -148,6 +148,7 @@
             outline: 1px dashed #aabbcc99;
         } */
     </style>
+    <script src="asset/WcHelper.js"></script>
     <script type="module">
         import HtmlUtil from "./wc/lib/HtmlUtil.js";
         if(!globalThis.Wc) globalThis.Wc = {}
@@ -855,45 +856,6 @@
             </div>
         </div>
 
-        <!--
-        <div class="modal fade" id="modal-context-config"  aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-4">property</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" onsubmit="return false;" oninput="editor.setContextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-                            <h3 class="fs-5">LINE AND FILL</h3>
-                            <div class="d-flex flex-wrap gap-1 property-wrap">
-                                <div class="input-group">
-                                    <span class="input-group-text" >선크기</span>
-                                    <label class="form-control" role="button">
-                                        <input type="range" class="form-range d-block" name="lineWidth" value="3" min="0" max="180" step="1">
-                                    </label>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >질하기순서</span>
-                                    <label class="form-control" role="button"><input type="radio" value="true" name="fillAfterStroke" checked> fill-stroke</label>
-                                    <label class="form-control" role="button"><input type="radio" value="false" name="fillAfterStroke"> stroke-fill</label>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >칠하기</span>
-                                    <label class="form-control" role="button"><input type="radio" value="false" name="disableFill" checked> 사용</label>
-                                    <label class="form-control" role="button"><input type="radio" value="true" name="disableFill"> 금지</label>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >테두리</span>
-                                    <label class="form-control" role="button"><input type="radio" value="false" name="disableStroke" checked> 사용</label>
-                                    <label class="form-control" role="button"><input type="radio" value="true" name="disableStroke"> 금지</label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
 
 
@@ -981,15 +943,6 @@
                 </div>
             </div>
         </div>
-        <!-- <script>
-            window.addEventListener('load',(event)=>{
-                document.querySelector('#modal-layers').addEventListener('show.bs.modal', event => {
-                    window.document.querySelector('#layer-alpha').value = editor.document.layer.alpha
-
-
-                })
-            })
-        </script> -->
 
         <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1075,43 +1028,6 @@
                 </div>
             </div>
         </div>
-        <!-- <script>
-            window.addEventListener('load',(event)=>{
-                // window.modalLayer = new bootstrap.Modal('#modal-layer-config')
-                document.querySelector('#modal-layer-config').addEventListener('show.bs.modal', function(event){
-                    const layer = event.relatedTarget?.layer??editor?.document?.layer
-                    event.target.layer = layer;
-                    if(!layer){return;}
-                    {
-                        const f = document.form_layer_resize;
-
-                        f.width.value = layer.width
-                        f.height.value = layer.height
-                        f.width.value = layer.width
-                        f.height.value = layer.height
-                    }
-                    // {
-                    //     const f = document.form_layer_alpha;
-                    //     f.alpha.value = layer.alpha
-                    // }
-                    // {
-                    //     const f = document.form_layer_zoom;
-                    //     f.zoom.value = layer.zoom
-                    // }
-                    // {
-                    //     const f = document.form_layer_angle;
-                    //     f.angle.value = layer.angle
-                    // }
-                    // {
-                    //     const f = document.form_layer_postion;
-                    //     f.left.value = layer.left
-                    //     f.top.value = layer.top
-                    // }
-
-                    UiInputStepper.initDataValue(this)
-                })
-            })
-        </script> -->
 
 
         <div class="modal fade" id="modal-document-config"  aria-hidden="true">
@@ -1125,9 +1041,9 @@
                         <div class="d-flex flex-column flex-wrap gap-1">
                             <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
                                 <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> 100%</button>
-                                <button class="btn btn-primary" onclick="wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
-                                <button class="btn btn-primary" onclick="wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
-                                <button class="btn btn-primary" onclick="wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
+                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
+                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
+                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
                                 <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-arrows-move"></i> CENTER</button>
                             </div>
                             <hr>
@@ -1188,34 +1104,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            function wcAppZoomFit(type="auto"){
-                const document = editor.document;
-                const rectBody = wcApp.body.getBoundingClientRect();
-                console.log(rectBody);
-                
-                const rectHeader = wcApp.header.getBoundingClientRect();
-                const rectFooter = wcApp.footer.getBoundingClientRect();
-                const outlineWidth = parseFloat(window.getComputedStyle(document).outlineWidth);
-                const mh = rectBody.height - rectHeader.height - rectFooter.height - outlineWidth * 2 - 5
-                const mw = rectBody.width - outlineWidth * 2 - 5
-                const w = document.width;
-                const h = document.height;
-                let z = null;
-                if(type=='auto'){
-                    z = Math.min(mh/h , mw/w);
-                }else if(type=='width'){
-                    z = mw/w
-                }else if(type=='height'){
-                    z = mh/h
-                }
-                z = Math.floor(z * 100)/100;
-                document.zoom = z;
-                document.left = 0;
-                document.top = 0;
-                document.flush();
-            }
-        </script>
 
         <div class="modal fade" id="modal-transform-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1397,23 +1285,8 @@
         </div>
         <script>
             {
-                const modalBrushConfig = document.querySelector('#modal-brush-config');
                 [3,2].forEach((v,idx)=>{
-                    const id = `modal-brush${v}-config`;
-                    const cloneModalBrushConfig = modalBrushConfig.cloneNode(true);
-                    const modalConfigTitle = cloneModalBrushConfig.querySelector('.modal-config-title');
-                    modalConfigTitle.textContent = `Brush${v} config`
-                    const canvas = cloneModalBrushConfig.querySelector('canvas');
-                    canvas.removeAttribute('id')
-                    canvas.id = `brush${v}`;
-                    const f = cloneModalBrushConfig.querySelector('form');
-                    cloneModalBrushConfig.id = id;
-                    f.removeAttribute('oninput')
-                    f.oninput = function(event){
-                        editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),v); return false
-                    }
-                    f.dataset.wcSyncForm = `editor.brush${v}.brushConfig`;
-                    modalBrushConfig.after(cloneModalBrushConfig)
+                    WcHelper. cloneModalBrushConfig(v,idx)
                 })
             }
         </script>
