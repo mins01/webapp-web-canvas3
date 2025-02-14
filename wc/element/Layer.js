@@ -66,6 +66,22 @@ export default class Layer extends Canvas{
         this.top = top;
     }
 
+    
+    /**
+     * resize 후 위치정보(left,top) 기반으로 이미지를 붙임
+     *
+     * @param {*} width 
+     * @param {*} height 
+     */
+    adjustSize(width,height){
+        const cloned = this.clone();
+        this.width = width;
+        this.height = height;
+        this.ctx.drawImage(cloned, this.left, this.top, cloned.width, cloned.height);
+        this.left = 0;
+        this.top = 0;
+    }
+
     merge(canvas){
         const xmin = Math.min(this.left,canvas.left)
         const ymin = Math.min(this.top,canvas.top)

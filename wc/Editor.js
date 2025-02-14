@@ -352,6 +352,7 @@ export default class Editor{
     saveHistory(title='no-title'){
         if(!this.document) return;
         this.document.history.save(title);
+        this.tool.activate();
     }
 
 
