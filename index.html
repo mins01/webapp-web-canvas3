@@ -955,8 +955,8 @@
                         <div class="d-flex flex-column flex-wrap gap-0">
                             <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
                                 <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTERxCENTER</button>
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
+                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();this.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
                             </div>
                             <hr>
                             <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
