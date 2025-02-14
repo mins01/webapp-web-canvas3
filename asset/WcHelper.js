@@ -1,4 +1,5 @@
 class WcHelper{
+  // modal-brush-config 를 복사해서 1,2,3 만든다
   static cloneModalBrushConfig(v,idx){
     const modalBrushConfig = document.querySelector('#modal-brush-config');
     const id = `modal-brush${v}-config`;
@@ -18,6 +19,7 @@ class WcHelper{
     modalBrushConfig.after(cloneModalBrushConfig)
   }
 
+  // document의 zoom 화면에 맞추기
   static wcAppZoomFit(type=auto){
     const document = editor.document;
     const rectBody = wcApp.body.getBoundingClientRect();
