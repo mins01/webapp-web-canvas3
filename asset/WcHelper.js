@@ -20,7 +20,7 @@ class WcHelper{
   }
 
   // document의 zoom 화면에 맞추기
-  static wcAppZoomFit(type=auto){
+  static wcAppZoomFit(type='auto'){
     const document = editor.document;
     const rectBody = wcApp.body.getBoundingClientRect();
     console.log(rectBody);
@@ -45,5 +45,26 @@ class WcHelper{
     document.left = 0;
     document.top = 0;
     document.flush();
+  }
+
+
+
+
+  static onpaste = (event)=>{
+    let target = event.target;
+    if(target.value??false){ return; } // 이벤트 발생 부분이 form control 종류면 무시
+    // console.log(event);
+    const clipboardData = event.clipboardData
+    if(clipboardData.files[0] && clipboardData.files[0].type.startsWith('image/')){ // 첨부파일이 있고 이미지 형식이면
+      const file = clipboardData.files[0];
+      if(!editor.document){
+        editor.loadDocument(file)
+      }else{
+        editor.insertLayerFromFile(file)
+      }
+      
+    }else{
+
+    }    
   }
 }

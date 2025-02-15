@@ -149,6 +149,9 @@
         } */
     </style>
     <script src="asset/WcHelper.js"></script>
+    <script>
+        window.addEventListener('paste',WcHelper.onpaste)
+    </script>
     <script type="module">
         import HtmlUtil from "./wc/lib/HtmlUtil.js";
         if(!globalThis.Wc) globalThis.Wc = {}
@@ -515,7 +518,7 @@
                             <div class="col-6">
                                 <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-save">
                                     <div class="fs-4"><i class="bi bi-file-earmark-arrow-down"></i></div>
-                                    <div>DOWNLOAD</div>
+                                    <div>SAVE</div>
                                 </button>
                             </div>
                             <div class="col-6">
@@ -543,10 +546,10 @@
                             <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))" data-wc-sync-form="editor.editorConfig">
                                 <h5>Input mode</h5>
                                 <div class="row g-1">
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="all" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
-                                    <label class="col-3"><input class="btn-check" type="radio" name="inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
+                                    <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="all" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
+                                    <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
+                                    <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
+                                    <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
                                 </div>
                             </form>
                         </div>
@@ -617,7 +620,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-down"></i> SAVE</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-down"></i> Save</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -627,7 +630,7 @@
                                     <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
                                     <input type="text" class="form-control filename"  name="filename" value="" required  data-wc-sync-from="editor.document.name">
                                     <span class="input-group-text">.png</span>
-                                    <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
+                                    <button type="submit" class="btn btn-lg btn-primary"> Save </button>
                                 </div>
                             </form>
                             <form action="" onsubmit="editor.saveDocument('wc3.json',this.filename.value);return false;">
@@ -635,7 +638,7 @@
                                     <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                                     <input type="text" class="form-control filename" name="filename" value="" required data-wc-sync-from="editor.document.name">
                                     <span class="input-group-text">.wc3.json</span>
-                                    <button type="submit" class="btn btn-lg btn-primary"> SAVE </button>
+                                    <button type="submit" class="btn btn-lg btn-primary"> Save </button>
                                 </div>
                                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
                             </form>

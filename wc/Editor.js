@@ -336,6 +336,7 @@ export default class Editor{
             this.previewImage(url);
         }
     }
+
     insertLayerFromFile(file){
         if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);

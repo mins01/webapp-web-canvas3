@@ -32,7 +32,7 @@ export default class PointerEventHandler{
         return this.editor.editorConfig.inputMode == event.pointerType;
     }
     pointerdown = (event)=>{
-        if(!this.checkInputMode(event)){return}
+        if(!this.checkInputMode(event)){ console.warn('Block by imputMode'); return; }
 
         event.stopPropagation();
 		event.preventDefault();
@@ -45,8 +45,7 @@ export default class PointerEventHandler{
         if(this.onpointerdown){this.onpointerdown(event)}
     }
     pointermove = (event)=>{
-        if(!this.checkInputMode(event)){return}
-
+        if(!this.checkInputMode(event)){ return; }
         event.stopPropagation();
 		event.preventDefault();
         if(this.downAt){
@@ -55,8 +54,7 @@ export default class PointerEventHandler{
         }
     }
     pointerup = (event)=>{
-        if(!this.checkInputMode(event)){return}
-
+        if(!this.checkInputMode(event)){ return; }
         event.stopPropagation();
 		event.preventDefault();
         this.pointers.delete(event.pointerId);

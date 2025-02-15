@@ -62,8 +62,8 @@ export default class Document extends Layer{
     //     alert('active');
     //     return this.select(index);
     // }
-    add(layer){
-        return this.layers.add(layer);
+    add(layer,withoutHistory=false){
+        return this.layers.add(layer,withoutHistory);
     }
     addEmptyLayer(){
         const layer = new Layer(this.width,this.height)
