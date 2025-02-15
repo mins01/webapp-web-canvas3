@@ -41,7 +41,7 @@ export default class Layers extends SelectableArray{
         document?.editor?.onselectLayer(document.layer);
         if(!withoutHistory){
             this.ready();
-            this.document.history.save('Layers.select',true);
+            this.document.history.save('Layers.add');
         }
         this?.document?.editor?.tool?.activate()
         return true;
