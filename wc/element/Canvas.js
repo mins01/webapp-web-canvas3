@@ -239,6 +239,7 @@ class Canvas extends HTMLCanvasElement{
     static fromImage(image){
         const c = new this(image.width,image.height);
         c.ctx.drawImage(image, 0, 0, image.width, image.height);
+        return c
     }
 }
 

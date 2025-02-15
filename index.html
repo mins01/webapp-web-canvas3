@@ -578,11 +578,11 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> OPEN</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-arrow-up"></i> OPEN FILE</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json)')}; return false;" >
+                        <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json | image file )')}; return false;" >
                             <div class="input-group input-group-lg">
                                 <input type="file" class="form-control" name="openfile" accept=".wc3.json,image/*">
                             </div>
@@ -869,7 +869,10 @@
                     <div class="modal-body pb-0" style="flex:0 0 auto">
                         <div class="d-flex flex-column gap-1">
                             <div class="d-flex justify-content-end gap-1">
-                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-plus-circle"></i></button>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-plus-circle"></i></button>
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
+                                </div>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
@@ -956,7 +959,7 @@
                             <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
                                 <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
                                 <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();this.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
                             </div>
                             <hr>
                             <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
@@ -1030,6 +1033,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal-insert-layer"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-layers-half"></i> <i class="bi bi-plus-circle"></i> Insert layer</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" onsubmit="if(this.openfile.files.length){ editor.insertLayerFromFile(this.openfile.files[0]); this.reset() }else{ alert('Select a file(image file)')}; return false;" >
+                            <h5>Local image file</h5>
+                            <div class="input-group input-group-lg">
+                                <input type="file" class="form-control" name="openfile" accept="image/*">
+                            </div>
+                            <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일만 지원됩니다.</div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary" ><i class="bi bi-file-plus"></i> INSERT</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
         <div class="modal fade" id="modal-document-config"  aria-hidden="true">

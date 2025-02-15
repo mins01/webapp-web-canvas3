@@ -14,6 +14,7 @@ import HtmlUtil from "./lib/HtmlUtil.js";
 import Document from "./element/Document.js";
 
 import EditorConfig from "./lib/EditorConfig.js";
+import Layer from "./element/Layer.js";
 
 export default class Editor{
     brush = null;
@@ -333,6 +334,24 @@ export default class Editor{
         if(this?.document){
             const url = this.document.toDataURL('image/png');
             this.previewImage(url);
+        }
+    }
+    insertLayerFromFile(file){
+        if(file.type.match(/^image\//)){
+            const imageURL = URL.createObjectURL(file);
+            const image = new Image();
+            image.onload=(event)=>{
+                const target = event.target;
+                URL.revokeObjectURL(imageURL);
+                const layer = Layer.fromImage(image)
+                this.document.add(layer);
+            }
+            image.onerror=(event)=>{
+                console.error(event);
+            }
+            image.src = imageURL;
+        }else{
+            console.error('It is not an image file',file);
         }
     }
 
