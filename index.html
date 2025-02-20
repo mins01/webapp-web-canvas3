@@ -1197,7 +1197,6 @@
                     </div>
                     <div class="modal-body brush-config">
                         <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brush.brushConfig" >
-                            
                             <div class="d-flex flex-column gap-1">
                                 <div class="input-group ui-input-stepper">
                                     <span class="input-group-text" >Size</span>
@@ -1408,6 +1407,9 @@
                 </div>
             </div>
         </div>
+        <script>
+            WcHelper.copyFormBrushConfigToFormEraserConfig()
+        </script>
 
 
         <div class="modal fade" id="modal-color-palette"  aria-hidden="true">

@@ -11,12 +11,20 @@ class WcHelper{
     canvas.id = `brush${v}`;
     const f = cloneModalBrushConfig.querySelector('form');
     cloneModalBrushConfig.id = id;
+    f.name +=v
     f.removeAttribute('oninput')
     f.oninput = function(event){
         editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),v); return false
     }
     f.dataset.wcSyncForm = `editor.brush${v}.brushConfig`;
     modalBrushConfig.after(cloneModalBrushConfig)
+  }
+
+  static copyFormBrushConfigToFormEraserConfig(){
+    const f1 = window.document.formBrushConfig;
+    const f2 = window.document.formEraserConfig;
+    f2.innerHTML = '';
+    f2.append(f1.firstElementChild.cloneNode(true));
   }
 
   // document의 zoom 화면에 맞추기
