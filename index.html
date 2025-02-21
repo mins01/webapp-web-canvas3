@@ -153,213 +153,15 @@
     <script>
         window.addEventListener('paste',WcHelper.onpaste)
     </script>
-    <script type="module">
-        import HtmlUtil from "./wc/lib/HtmlUtil.js";
-        if(!globalThis.Wc) globalThis.Wc = {}
-        globalThis.Wc.HtmlUtil = HtmlUtil;
-    </script>
-    <script type="module">
-        import Canvas from "./wc/element/Canvas.js";
-        import Layer from "./wc/element/Layer.js";
-        import Document from "./wc/element/Document.js";
-        import TextLayer from "./wc/element/TextLayer.js";
-        import RectangleLayer from "./wc/element/RectangleLayer.js";
-        import EllipseLayer from "./wc/element/EllipseLayer.js";
-        import Brush from "./wc/element/Brush.js";
-
-        Canvas.defineCustomElements();
-        Layer.defineCustomElements();
-        Document.defineCustomElements();
-        TextLayer.defineCustomElements();
-        RectangleLayer.defineCustomElements();
-        EllipseLayer.defineCustomElements();
-        Brush.defineCustomElements();
-
-        if(!globalThis.Wc) globalThis.Wc = {}
-        globalThis.Wc.Canvas = Canvas;
-        globalThis.Wc.Layer = Layer;
-        globalThis.Wc.Document = Document;
-        globalThis.Wc.TextLayer = TextLayer;
-        globalThis.Wc.RectangleLayer = RectangleLayer;
-        globalThis.Wc.EllipseLayer = EllipseLayer;
-
-        import Editor from "./wc/Editor.js";
-
-        import ModalHandler from "./wc/ui/ModalHandler.js"
-        globalThis.Wc.ModalHandler = ModalHandler;
-
-
-
-        window.addEventListener('load',(event)=>{
-            const brush0 = globalThis.brush0 = document.querySelector('#brush0');
-            brush0.contextConfig.foreColor="#f00"
-            brush0.size = 10
-            brush0.flush();
-            // const brush1 = globalThis.brush1 = document.querySelector('#brush1');
-            // brush1.contextConfig.foreColor="#f00"
-            // brush1.size = 10
-            // brush1.flush();
-            const brush2 = globalThis.brush2 = document.querySelector('#brush2');
-            brush2.contextConfig.foreColor="#f00"
-            brush2.size = 10
-            brush2.flush();
-            const brush3 = globalThis.brush3 = document.querySelector('#brush3');
-            brush3.contextConfig.foreColor="#f00"
-            brush3.size = 10
-            brush3.flush();
-
-            const eraser1 = globalThis.eraser1 = document.querySelector('#eraser1');
-            eraser1.contextConfig.foreColor="#f00"
-            eraser1.size = 10
-            eraser1.flush();
-
-
-            const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
-            globalThis.brush0 = editor.brush = brush0
-            // editor.brush1 = brush1
-            editor.brush2 = brush2
-            editor.brush3 = brush3
-            globalThis.eraser1 = editor.brushEraser = eraser1
-            // editor.tools.select('Brush');
-            //-- 모달 핸들러
-            const modalHandler = globalThis.modalHandler = new ModalHandler();
-            editor.modalHandler = modalHandler;
-            editor.modalHandler.collectModals();
-            // ui-transform-tool
-            editor.utt = document.querySelector('#utt01');
-
-
-
-            editor.document.zoom = 1
-            editor.document.angle = 0;
-            editor.document.layer.left = 0
-            editor.document.layer.zoom = 1
-
-            const wcl4 = globalThis.wcl4 = new Layer(100,100);
-            wcl4.fill('#ff000066')
-            wcl4.left = 100;
-            wcl4.top = 20
-            let l = editor.document.layers.item(0)
-            l.fill('#00ff0066');
-
-            // const wcl5 = globalThis.wcl5 = new TextLayer(editor.document.width,editor.document.height);
-            // wcl5.text='하늘하늘! \n 그렇구나';
-            // wcl5.textConfig.textColor="#0000cc"
-
-            // editor.document.add(wcl5);
-
-            // const wcl6 = globalThis.wcl6 = new RectangleLayer(editor.document.width,editor.document.height);
-            // editor.document.add(wcl6);
-            // wcl6.left=50;
-            // wcl6.top=75;
-            // wcl6.width=100;
-            // wcl6.height=100;
-            // wcl6.contextConfig.backColor="#cc0000"
-            // wcl6.contextConfig.foreColor="#00cc00"
-            // wcl6.contextConfig.lineWidth=5;
-            // wcl6.flush();
-
-            // const wcl7 = globalThis.wcl7 = new EllipseLayer(editor.document.width,editor.document.height);
-            // editor.document.add(wcl7);
-            // wcl7.left=150;
-            // wcl7.top=50;
-            // wcl7.width=100;
-            // wcl7.height=50;
-            // wcl7.contextConfig.backColor="#0000cc"
-            // wcl7.contextConfig.foreColor="#cc00cc"
-            // wcl7.contextConfig.lineWidth=3;
-            // wcl7.flush();
-
-
-
-
-            // document.formBrushConfig.oninput(event)
-            document.querySelector('.checkbox-tool[value="Brush"]').click();
-
-
-            let divForDebug = document.querySelector('#div-for-debug');
-            editor.document.add(wcl4);
-
-            editor.document.layers.select(0);
-            editor.document.ready();
-            editor.document.history.clear();
-            editor.document.history.save('Document.New');
-
-
-
-
-            const foreColor = localStorage.getItem('foreColor')??'#000000';
-            const obj = {'foreColor':foreColor}
-            editor.setContextConfig(obj)
-
-            editor.initConfigs();
-
-
-            // globalThis.hammer = new Hammer(editor.target);
-
-            //-- upload
-            if(Wg2Uploder??false){
-                editor.upload = function(file,filename){
-                    const resJson = Wg2Uploder.upload(file,filename)
-                    resJson.then((obj)=>{
-                        if(!obj[0]){ return; }
-                        const uploaded = obj[0];
-                        console.log(uploaded);
-
-                        // let name = null;
-                        // if(uploaded.filename.includes('.wc')){
-                        //     name = uploaded.filename.replace(/\.wc$/,'');
-                        // }else{
-                        //     name = uploaded.filename;
-                        // }
-                        // this.document.name = name;
-
-                        if(uploaded.previewurl){
-                            editor.previewImage(uploaded.previewurl);
-                        }
-
-                    }).catch(e => {
-                        console.error(e);
-                    })
-                }
-            }
-
-        })
-    </script>
-
-    <script type="module">
-        if(!globalThis.Wc) globalThis.Wc = {}
-
-
-
-
-
-
-        import WcSyncHandler from "./wc/lib/WcSyncHandler.js";
-        globalThis.Wc.WcSyncHandler = WcSyncHandler;
-        const wcSyncHandler = globalThis.wcSyncHandler = new WcSyncHandler();
-        wcSyncHandler.addEventListener();
-
-
-    </script>
-
-    <script>
-        function randomFill(event){
-            const target = event.target;
-            if(target.nodeName == 'CANVAS'){
-                let c = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
-
-                target.fill(c)
-            }
-        }
-    </script>
-
+    <script type="module" src="wc/app.js"></script>
     <script>
         globalThis.addEventListener('load',(event)=>{
             const wcApp = globalThis.wcApp = document.querySelector('#wc-app')
             wcApp.header = wcApp.querySelector('.wc-app-header')
             wcApp.body = wcApp.querySelector('.wc-app-body')
             wcApp.footer = wcApp.querySelector('.wc-app-footer')
+
+            document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
         })
     </script>
 </head>
@@ -442,11 +244,10 @@
                 </div>
             </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">
-                <div class="wc-frame">
+                <!-- <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
-                </div>
+                </div> -->
                 <ui-transform-tool id="utt01" class="custom-01 only-shown only-shown-tool-Transform" resizable moveable  width="100" height="100" left="10" top="10" >
-
                     <div class="text-center">
                         TRANSFORM<br>
                         <i class="bi bi-bounding-box"></i>

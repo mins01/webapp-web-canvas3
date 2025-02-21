@@ -32,9 +32,9 @@ export default class BaseTool {
 		this.pointerType = null
 		this.downAt = null;
 
-		this.document = this.editor.document;
-		this.layer = this.document.layer;
-		this.drawLayer = this.document.drawLayer;
+		this.document = this.editor?.document;
+		this.layer = this?.document?.layer;
+		this.drawLayer = this?.document?.drawLayer;
 		// if(this.document) this.ready()
 
 		this.x0 = null;
@@ -50,7 +50,7 @@ export default class BaseTool {
 		console.log('tool-activate:',this.name);
 		this.init();
 		this.ready();
-		this.document.flush();
+		this?.document?.flush();
 	}
 
 	/** 
@@ -83,7 +83,7 @@ export default class BaseTool {
 	 */
 	ready(){
 		this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
-		this?.document.readyTool()
+		this?.document?.readyTool()
 	}
 
 
