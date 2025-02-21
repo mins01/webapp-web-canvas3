@@ -990,131 +990,149 @@
                         <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush config</span></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body brush-preview pb-0" style="flex:0 0 auto;">
+                    <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
                         <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
                             <canvas id="brush0" is="wc-brush" width="5" height="5"></canvas>
                         </div>
-                        <hr>
                     </div>
                     <div class="modal-body brush-config">
                         <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brush.brushConfig" >
-                            <div class="d-flex flex-column gap-1">
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >Size</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                                        <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
+                            <div class="d-flex flex-column gap-2">
+                                <div>
+                                    <div class="form-label mb-0">size</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                                            <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >roundness(원형율)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
+                                <div>
+                                    <div class="form-label mb-0">roundness(원형율)</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >angle(각도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                <div>
+                                    <div class="form-label mb-0">angle(각도)</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
+                                            <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >hardness(경도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                        <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
+                                <div>
+                                    <div class="form-label mb-0">hardness(경도)</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                            <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >opacity(불투명도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                                <div>
+                                    <div class="form-label mb-0">opacity(불투명도)</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >spacing(간격)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
+                                <div>
+                                    <div class="form-label mb-0">spacing(간격)</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >flattenOpacity(불투명하게)</span>
-                                    <select class="form-select " name="flattenOpacity" >
-                                        <option selected value="false">NO</option>
-                                        <option value="true">YES</option>
-                                    </select>
+                                <div>
+                                    <div class="form-label mb-0">flattenOpacity(균일투명도)</div>
+                                    <div class="input-group">
+                                        <select class="form-select " name="flattenOpacity" >
+                                            <option selected value="false">NO</option>
+                                            <option value="true">YES</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >sizeControl</span>
+                                <hr class="my-1">
+                                <div>
+                                    <div class="form-label mb-0">sizeControl</div>
                                     <select class="form-select " name="sizeControl" >
                                         <option selected value="off">OFF</option>
                                         <option value="penPressure">penPressure</option>
                                     </select>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >mininumSizeRatio</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
+                                <div>
+                                    <div class="form-label mb-0">mininumSizeRatio</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-
-                                <div class="input-group">
-                                    <span class="input-group-text" >opacityControl</span>
+                                <hr class="my-1">
+                                <div>
+                                    <div class="form-label mb-0">opacityControl</div>
                                     <select class="form-select " name="opacityControl" >
                                         <option selected value="off">OFF</option>
                                         <option value="penPressure">penPressure</option>
                                     </select>
                                 </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >mininumOpacity</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="mininumOpacity" placeholder="mininumOpacity" step="0.01" min="0" max="1" value="1" >
+                                <div>
+                                    <div class="form-label mb-0">mininumOpacity</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="mininumOpacity" placeholder="mininumOpacity" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >roundnessControl</span>
-                                    <select class="form-select " name="roundnessControl" >
-                                        <option selected value="off">OFF</option>
-                                        <!-- <option value="penPressure">penPressure</option> -->
-                                        <option value="penTilt">penTilt</option>
-                                    </select>
-                                </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >mininumRoundness</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="mininumRoundness" placeholder="mininumRoundness" step="0.01" min="0" max="1" value="1" >
+                                <hr class="my-1">
+                                <div>
+                                    <div class="form-label mb-0">roundnessControl</div>
+                                    <div class="input-group">
+                                        <select class="form-select " name="roundnessControl" >
+                                            <option selected value="off">OFF</option>
+                                            <!-- <option value="penPressure">penPressure</option> -->
+                                            <option value="penTilt">penTilt</option>
+                                        </select>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
                                 </div>
-
-                                <div class="input-group">
-                                    <span class="input-group-text" >angleControl</span>
+                                <div>
+                                    <div class="form-label mb-0">mininumRoundness</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                            <input type="range" class="form-range d-block" name="mininumRoundness" placeholder="mininumRoundness" step="0.01" min="0" max="1" value="1" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                    </div>
+                                </div>
+                                <hr class="my-1">
+                                <div>
+                                    <div class="form-label mb-0">angleControl</div>
                                     <select class="form-select " name="angleControl" >
                                         <option selected value="off">OFF</option>
                                         <!-- <option value="penPressure">penPressure</option> -->
-                                        <option value="penTilt">penTilt</option>
+                                        <option value="penTilt">penTilt(기울기)</option>
                                     </select>
                                 </div>
-
-
-
-
                             </div>
                         </form>
                     </div>
@@ -1140,7 +1158,6 @@
                         <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
                             <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
                         </div>
-                        <hr>
                     </div>
                     <div class="modal-body brush-config">
                         <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brushEraser.brushConfig">

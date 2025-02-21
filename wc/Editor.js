@@ -124,7 +124,7 @@ export default class Editor{
     setEraserConfig(conf){
         if(this?.brushEraser){
             this.brushEraser?.setBrushConfig(conf);
-            this.brushEraser.contextConfig.foreColor='#fff'
+            this.brushEraser.contextConfig.foreColor='#666'
             this.brushEraser.flush();
             localStorage.setItem('eraserConfig',JSON.stringify(this.brushEraser.brushConfig))
             // console.log('x',JSON.stringify(this.brushEraser.brushConfig));
