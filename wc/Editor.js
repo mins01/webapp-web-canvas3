@@ -455,6 +455,10 @@ export default class Editor{
             const layerAlpha = window.document.querySelector('#layer-alpha')
             layerAlpha.value = this?.document?.layer.alpha
             UiInputStepper.syncDataValue(layerAlpha)
+
+            const layerCompositeOperation = window.document.querySelector('#layer-composite-operation')
+            layerCompositeOperation.value = this?.document?.layer.compositeOperation
+            UiInputStepper.syncDataValue(layerCompositeOperation)
         }
 
         this?.tool?.ready();

@@ -687,8 +687,42 @@
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
                             </div>
                             <div class="d-flex justify-content-end gap-1 flex-fill">
-                                <div class="input-group" style="width:20em">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Alpha</span>
+                                <div class="col">
+                                    <div class="form-label mb-0">composite</div>
+                                    <select name="compositeOperation" id="layer-composite-operation" class="form-select"
+                                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
+                                    data-wc-sync-from="editor.document.layer.compositeOperation"
+                                    >
+                                        <option value="source-over">source-over</option>
+                                        <option value="source-in">source-in</option>
+                                        <option value="source-out">source-out</option>
+                                        <option value="source-atop">source-atop</option>
+                                        <option value="destination-over">destination-over</option>
+                                        <option value="destination-in">destination-in</option>
+                                        <option value="destination-out">destination-out</option>
+                                        <option value="destination-atop">destination-atop</option>
+                                        <option value="lighter">lighter</option>
+                                        <option value="copy">copy</option>
+                                        <option value="xor">xor</option>
+                                        <option value="multiply">multiply</option>
+                                        <option value="screen">screen</option>
+                                        <option value="overlay">overlay</option>
+                                        <option value="darken">darken</option>
+                                        <option value="lighten">lighten</option>
+                                        <option value="color-dodge">color-dodge</option>
+                                        <option value="color-burn">color-burn</option>
+                                        <option value="hard-light">hard-light</option>
+                                        <option value="soft-light">soft-light</option>
+                                        <option value="difference">difference</option>
+                                        <option value="exclusion">exclusion</option>
+                                        <option value="hue">hue</option>
+                                        <option value="saturation">saturation</option>
+                                        <option value="color">color</option>
+                                        <option value="luminosity">luminosity</option>
+                                    </select>
+                                </div>                                
+                                <div class="col">
+                                    <div class="form-label mb-0">alpha</div>
                                     <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
                                         <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
                                             oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
