@@ -468,8 +468,8 @@ export default class Editor{
     
 
     upload(file,filename){
-        console.log(upload,file,filename);
-      
+        console.log('재선언해야함',file,filename);
+        alert('업로드가 지원되지 않는 상태입니다.')
         //재선언해야함.
     }
 
