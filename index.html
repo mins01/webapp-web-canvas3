@@ -222,7 +222,7 @@
                     </div>
                     <div class="wc-app-menu wc-app-menu-propeties gap-1 px-1 py-1 d-flex flex-wrap justify-content-center mx-auto ">
                         <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-context-config"><i class="bi bi-gear"></i></button>
-                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i></button>
+                        <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-file-earmark-image"></i></button>
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-alphabet-uppercase"></i></button> -->
                         <!-- <button type="button" class="btn btn-md btn-success" data-bs-toggle="modal" data-bs-target="#modal-layer-config"><i class="bi bi-layers-half"></i></button> -->
                     </div>
@@ -369,7 +369,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column gap-1">
-                            <button type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-window"></i> Document</button>
+                            <button type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-file-earmark-image"></i> Document</button>
                         </div>
                     </div>
                 </div>
@@ -807,7 +807,7 @@
                                     <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
                                         <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
 
                                 <div class="input-group ui-input-stepper">
@@ -816,7 +816,7 @@
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
                                         <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
 
                                 <div class="input-group  ui-input-stepper">
@@ -825,7 +825,7 @@
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
                                         <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
 
                                 <div class="input-group w-100">
@@ -871,19 +871,29 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-window"></i> Document</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-image"></i> Document</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-1">
-                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
-                                <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> 100%</button>
-                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
-                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
-                                <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
-                                <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-arrows-move"></i> CENTER</button>
+                            <div>
+                                <div class="form-label mb-0">zoom</div>
+                                <div class="d-flex flex-row gap-1 justify-content-start flex-wrap">
+                                    <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> 100%</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
+                                </div>
                             </div>
-                            <hr>
+                            <div>
+                                <div class="form-label mb-0">position</div>
+                                <div>
+                                    <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-arrows-move"></i> CENTER</button>
+                                </div>
+                                
+                            </div>
+                            
+                            <hr class="my-1">
                             <form name="form_document_resize" class="flex-fill" action="" onsubmit="
                                 if(editor?.document){
                                     editor.document.resize(this.width.value,this.height.value);
@@ -893,48 +903,58 @@
                                 } return false"
                                 data-wc-sync-form="editor.document"
                                 >
-                                <div class="input-group w-100">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
-                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
-                                    <span class="input-group-text" >X</span>
-                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                                <div>
+                                    <div class="form-label mb-0">size</div>
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                                        <span class="input-group-text" >X</span>
+                                        <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                                        <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                                    </div>
                                 </div>
                             </form>
-                            <hr>
                             <form  class="d-flex flex-column gap-1" action=""
                                 x-onchange="this.oninput(event); editor.document.history.save(); return false;"
                                 oninput="if(editor?.document){ const document = editor.document; Object.assign(document,Wc.HtmlUtil.formToObject(this));document.flush(); }"
                                 data-wc-sync-form="editor.document"
                                 >
-
-                                <div class="input-group ui-input-stepper" >
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                        <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                <div>
+                                    <div class="form-label mb-0">zoom</div>
+                                    <div class="input-group ui-input-stepper" >
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                            <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-
                                 </div>
-
-
-
-                                <div class="input-group ui-input-stepper" >
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                <div>
+                                    <div class="form-label mb-0">angle</div>
+                                    <div class="input-group ui-input-stepper" >
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                            <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                </div>
+                                <div>
+                                    <div class="form-label mb-0">postion</div>
+                                    <div class="d-flex gap-1">
+                                        <div class="col">
+                                            <div class="form-label mb-0">left</div>
+                                            <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-label mb-0">top</div>
+                                            <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="input-group">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                </div>
+
+
+
                             </form>                           
                         </div>
                     </div>
@@ -1005,7 +1025,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
                                             <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1015,7 +1035,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1025,7 +1045,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
                                             <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1035,7 +1055,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
                                             <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1045,7 +1065,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1055,7 +1075,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
@@ -1082,7 +1102,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <hr class="my-1">
@@ -1100,7 +1120,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="mininumOpacity" placeholder="mininumOpacity" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <hr class="my-1">
@@ -1121,7 +1141,7 @@
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                             <input type="range" class="form-range d-block" name="mininumRoundness" placeholder="mininumRoundness" step="0.01" min="0" max="1" value="1" >
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <hr class="my-1">
@@ -1135,7 +1155,7 @@
                                 </div>
                                 <hr class="my-1">
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-primary btn-reset-config" onclick="editor.resetBrushConfig(this.form.dataset.brushKey); editor.wcSyncHandler.sync(this.closest('.modal'));">초기화</button>
+                                    <button type="button" class="btn btn-primary btn-reset-config" onclick="editor.resetBrushConfig(this.form.dataset.brushKey); editor.wcSyncHandler.sync(this.closest('.modal'));">Reset</button>
                                 </div>
                             </div>
                         </form>

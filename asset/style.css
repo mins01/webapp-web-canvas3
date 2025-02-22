@@ -285,6 +285,7 @@
 }
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
   max-height: 70svh;
+  min-height: 50svh;
 }
 
 
@@ -310,3 +311,8 @@
   object-fit: contain;
   background-image: url(bg.gif);
 }
+
+
+
+/* ui-input-stepper */
+.btn-stepper{ width: 3em;}
