@@ -40,8 +40,10 @@ export default class Brush extends Layer{
     }
 
     setBrushConfig(conf){
-        // Object.assign(this.brushConfig,conf)
         this.brushConfig.assignFrom(conf)
+    }
+    resetBrushConfig(){
+        this.brushConfig.reset()
     }
 
     createRadialGradient(ctx,x0, y0, r0, x1, y1, r1){

@@ -996,7 +996,7 @@
                         </div>
                     </div>
                     <div class="modal-body brush-config">
-                        <form name="formBrushConfig" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brush.brushConfig" >
+                        <form name="formBrushConfig" data-brush-key="brush" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush.brushConfig" >
                             <div class="d-flex flex-column gap-2">
                                 <div>
                                     <div class="form-label mb-0">size</div>
@@ -1133,7 +1133,87 @@
                                         <option value="penTilt">penTilt(기울기)</option>
                                     </select>
                                 </div>
+                                <hr class="my-1">
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-primary btn-reset-config" onclick="editor.resetBrushConfig(this.form.dataset.brushKey); editor.wcSyncHandler.sync(this.closest('.modal'));">초기화</button>
+                                </div>
                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-brush1-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush1 config</span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <form name="formBrush1Config" data-brush-key="brush1" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush1.brushConfig" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-brush2-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush2 config</span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="brush2" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <form name="formBrush2Config" data-brush-key="brush2" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush2.brushConfig" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-brush3-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush3 config</span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="brush3" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <form name="formBrush3Config" data-brush-key="brush3" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush3.brushConfig" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Eraser config</span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
+                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
+                            <canvas id="eraser" is="wc-brush" width="5" height="5"></canvas>
+                        </div>
+                    </div>
+                    <div class="modal-body brush-config">
+                        <form name="formEraserConfig" data-brush-key="eraser" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.eraser.brushConfig" >
                         </form>
                     </div>
                 </div>
@@ -1141,93 +1221,14 @@
         </div>
         <script>
             {
-                [3,2].forEach((v,idx)=>{
-                    WcHelper. cloneModalBrushConfig(v,idx)
-                })
+                // 브러시(지우개용 브러시 포함) 설정용 form 의 내용을 복사한다.
+                WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush2Config);
+                WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush3Config);
+                WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
             }
         </script>
 
-        <div class="modal fade" id="modal-eraser-config"  aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> Eraser config</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body brush-preview pb-0" style="flex:0 0 auto;">
-                        <div class="brush-wrap text-center d-flex justify-content-center align-items-center mx-auto" style="height: 200px;">
-                            <canvas id="eraser1" is="wc-brush" width="5" height="5"></canvas>
-                        </div>
-                    </div>
-                    <div class="modal-body brush-config">
-                        <form name="formEraserConfig" action="" oninput="editor.setEraserConfig(Wc.HtmlUtil.formToObject(this)); return false" data-wc-sync-form="editor.brushEraser.brushConfig">
-                            <div class="d-flex flex-column gap-1">
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >Size</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                                        <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >roundness(원형율)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >angle(각도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >hardness(경도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                        <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >opacity(불투명도)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text" >spacing(간격)</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                                        <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-stepper"data-stepper="up">+</button>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-text" >flattenOpacity(불투명하게)</span>
-                                    <select class="form-select " name="flattenOpacity" >
-                                        <option selected value="false">NO</option>
-                                        <option value="true">YES</option>
-                                    </select>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            WcHelper.copyFormBrushConfigToFormEraserConfig()
-        </script>
+        
 
 
         <div class="modal fade" id="modal-color-palette"  aria-hidden="true">

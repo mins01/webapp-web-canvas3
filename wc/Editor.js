@@ -21,7 +21,7 @@ export default class Editor{
     brush1 = null;
     brush2 = null;
     brush3 = null;
-    brushEraser = null;
+    eraser1 = null;
     editorConfig = null;
     modalHandler = null;
     temp = null
@@ -75,11 +75,12 @@ export default class Editor{
 
     initConfigs(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'));
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),1);
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),2);
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),3);
-        this.setEraserConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'));
+
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'),'brush');
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),'brush1');
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),'brush2');
+        this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),'brush3');
+        this.setBrushConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'),'eraser');
     }
 
     setEditorConfig(conf){
@@ -110,26 +111,35 @@ export default class Editor{
         this.textConfig.assignFrom(conf);
         this.document?.setTextConfig(this.textConfig.toObject());
     }
-    setBrushConfig(conf,brushIdx=0){        
-        let brush = [this?.brush,this?.brush1,this?.brush2,this?.brush3][brushIdx];
-        let key = ['brushConfig','brush1Config','brush2Config','brush3Config'][brushIdx];
+    setBrushConfig(conf,brushKey='0'){
+        let brush = this?.[brushKey];
+        let key = brushKey+'Config';
         if(brush){
             brush?.setBrushConfig(conf);
+            if(brushKey.startsWith('eraser')) brush.contextConfig.foreColor='#666'
             brush.flush();
             localStorage.setItem(key,JSON.stringify(brush.brushConfig))
-            // console.log('x',JSON.stringify(this.brush.brushConfig));
-            
         }
     }
-    setEraserConfig(conf){
-        if(this?.brushEraser){
-            this.brushEraser?.setBrushConfig(conf);
-            this.brushEraser.contextConfig.foreColor='#666'
-            this.brushEraser.flush();
-            localStorage.setItem('eraserConfig',JSON.stringify(this.brushEraser.brushConfig))
-            // console.log('x',JSON.stringify(this.brushEraser.brushConfig));
+    resetBrushConfig(brushKey='0'){
+        let brush = this?.[brushKey];
+        let key = brushKey+'Config';
+        if(brush){
+            brush?.resetBrushConfig();
+            if(brushKey.startsWith('eraser')) brush.contextConfig.foreColor='#666'
+            brush.flush();
+            localStorage.setItem(key,JSON.stringify(brush.brushConfig))
         }
     }
+    // setEraserConfig(conf){
+    //     if(this?.eraser){
+    //         this.eraser?.setBrushConfig(conf);
+    //         this.eraser.contextConfig.foreColor='#666'
+    //         this.eraser.flush();
+    //         localStorage.setItem('eraserConfig',JSON.stringify(this.eraser.brushConfig))
+    //         // console.log('x',JSON.stringify(this.eraser.brushConfig));
+    //     }
+    // }
     
     
     

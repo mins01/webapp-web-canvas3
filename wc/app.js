@@ -62,16 +62,16 @@ const brush3 = globalThis.brush3 = document.querySelector('#brush3');
 brush3.contextConfig.foreColor="#f00"
 brush3.size = 10
 brush3.flush();
-const eraser1 = globalThis.eraser1 = document.querySelector('#eraser1');
-eraser1.contextConfig.foreColor="#f00"
-eraser1.size = 10
-eraser1.flush();
+const eraser = globalThis.eraser = document.querySelector('#eraser');
+eraser.contextConfig.foreColor="#f00"
+eraser.size = 10
+eraser.flush();
 
 editor.brush = globalThis.brush0 =  brush0
 // editor.brush1 = brush1
 editor.brush2 = brush2
 editor.brush3 = brush3
-editor.brushEraser = globalThis.eraser1 = eraser1
+editor.eraser = globalThis.eraser = eraser
 
 
 //-- new document
@@ -122,5 +122,5 @@ if(globalThis?.Wg2Uploder??false){
 
 import WcSyncHandler from "./lib/WcSyncHandler.js";
 Wc.WcSyncHandler = WcSyncHandler;
-const wcSyncHandler = globalThis.wcSyncHandler = new WcSyncHandler();
+const wcSyncHandler = globalThis.wcSyncHandler = editor.wcSyncHandler = new WcSyncHandler();
 wcSyncHandler.addEventListener();

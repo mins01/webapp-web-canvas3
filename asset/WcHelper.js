@@ -1,30 +1,9 @@
 class WcHelper{
-  // modal-brush-config 를 복사해서 1,2,3 만든다
-  static cloneModalBrushConfig(v,idx){
-    const modalBrushConfig = document.querySelector('#modal-brush-config');
-    const id = `modal-brush${v}-config`;
-    const cloneModalBrushConfig = modalBrushConfig.cloneNode(true);
-    const modalConfigTitle = cloneModalBrushConfig.querySelector('.modal-config-title');
-    modalConfigTitle.textContent = `Brush${v} config`
-    const canvas = cloneModalBrushConfig.querySelector('canvas');
-    canvas.removeAttribute('id')
-    canvas.id = `brush${v}`;
-    const f = cloneModalBrushConfig.querySelector('form');
-    cloneModalBrushConfig.id = id;
-    f.name +=v
-    f.removeAttribute('oninput')
-    f.oninput = function(event){
-        editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),v); return false
-    }
-    f.dataset.wcSyncForm = `editor.brush${v}.brushConfig`;
-    modalBrushConfig.after(cloneModalBrushConfig)
-  }
-
-  static copyFormBrushConfigToFormEraserConfig(){
-    const f1 = window.document.formBrushConfig;
-    const f2 = window.document.formEraserConfig;
-    f2.innerHTML = '';
-    f2.append(f1.firstElementChild.cloneNode(true));
+  static cloneModalBrushConfigForm(from,to){
+    to.innerHTML = '';
+    [...from.children].forEach((child)=>{
+      to.append(child.cloneNode(true));
+    })
   }
 
   // document의 zoom 화면에 맞추기

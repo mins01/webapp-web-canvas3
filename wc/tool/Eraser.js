@@ -8,7 +8,7 @@ export default class Eraser extends Brush{
         // this.x0 = null;
         // this.y0 = null;
         this.name = 'Eraser';
-        this.brush = this.editor.brushEraser;
+        this.brush = this.editor.eraser;
     }
 
     // start(){
