@@ -45,6 +45,27 @@ export default class HtmlUtil{
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
+
+    static saveAsCanvas(canvas,type='png',filename = null){
+        if(!canvas){return false;}
+        if(filename===null){ filename = canvas.name }
+        filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        if(filename.length==0) filename = Date.now();
+        if(filename != canvas.name){ canvas.name = filename; }
+
+        console.log('saveAsCanvas',filename);
+
+        let ext = '';
+        let mimetype = null;
+        if(type==='png'){
+            ext = 'png';
+            mimetype = 'image/png';
+            const cb = (blob)=>{ this.saveAsFile(blob, filename+'.'+ext , mimetype); }
+            canvas.toBlob(cb,mimetype)
+        }else{
+            console.error('지원되지 않는 타입')
+        }
+    }
     static asyncLoadFile(file){
         return new Promise((resolve,reject)=>{
             const reader = new FileReader();

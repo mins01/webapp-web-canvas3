@@ -803,77 +803,110 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-0">
-                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
-                                <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                            <div class="d-flex flex-wrap gap-1">
+                                <div>
+                                    <div class="form-label mb-0">zoom</div>
+                                    <div class="d-flex flex-row gap-1">
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-label mb-0">posion</div>
+                                    <div class="d-flex flex-row gap-1">
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-label mb-0">resize</div>
+                                    <div class="d-flex flex-row gap-1">
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-label mb-0">export</div>
+                                    <div class="d-flex flex-row gap-1">
+                                        <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
+                                    </div>
+                                </div>
+
                             </div>
                             <hr>
-                            <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
-                                if(editor.temp?.selectedLayer){
-                                    const layer = editor.temp.selectedLayer
-                                    layer.resize(this.width.value,this.height.value);
-                                    layer.flush();
-                                    editor.document.layers.ready();
-                                    editor.document.history.save();
-                                } return false"
-                                data-wc-sync-form="editor.temp.selectedLayer"
-                                >
-                                <div class="input-group">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
-                                    <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
-                                    <span class="input-group-text" >X</span>
-                                    <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
-                                    <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
-                                </div>
-                            </form>
-                            <hr>
-                            <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action=""
-                                xoninput="
-                                if(this.closest('.modal')?.layer){
-                                    const layer = this.closest('.modal')?.layer
-                                    layer.zoom=parseFloat(this.zoom.value);
-                                    layer.flush();
-                                    editor.document.layers.ready();
-                                }"
-                                onchange="this.oninput(event); editor.document.history.save(); return false;"
-                                oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
-                                data-wc-sync-form="editor.temp.selectedLayer"
-                                >
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Alpha</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                        <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
+                            <div class="d-flex flex-column gap-1 ">
+                                <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
+                                    if(editor.temp?.selectedLayer){
+                                        const layer = editor.temp.selectedLayer
+                                        layer.resize(this.width.value,this.height.value);
+                                        layer.flush();
+                                        editor.document.layers.ready();
+                                        editor.document.history.save();
+                                    } return false"
+                                    data-wc-sync-form="editor.temp.selectedLayer"
+                                    >
+                                    <div>
+                                        <div class="form-label mb-0">size</div>
+                                        <div class="input-group">
+                                            <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                                            <span class="input-group-text" >X</span>
+                                            <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                                            <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                </div>
-
-                                <div class="input-group ui-input-stepper">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Zoom</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                        <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                </form>
+                                <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action=""
+                                    xoninput="
+                                    if(this.closest('.modal')?.layer){
+                                        const layer = this.closest('.modal')?.layer
+                                        layer.zoom=parseFloat(this.zoom.value);
+                                        layer.flush();
+                                        editor.document.layers.ready();
+                                    }"
+                                    onchange="this.oninput(event); editor.document.history.save(); return false;"
+                                    oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
+                                    data-wc-sync-form="editor.temp.selectedLayer"
+                                    >
+                                    <div>
+                                        <div class="form-label mb-0">alpha</div>
+                                        <div class="input-group ui-input-stepper">
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                            <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                                <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
+                                            </div>
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                </div>
-
-                                <div class="input-group  ui-input-stepper">
-                                    <span class="input-group-text justify-content-center" style="width:6em" >Angle</span>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
-                                        <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                    <div>
+                                        <div class="form-label mb-0">zoom</div>
+                                        <div class="input-group ui-input-stepper">
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                            <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                                <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                            </div>
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                </div>
+                                    <div>
+                                        <div class="form-label mb-0">angle</div>
+                                        <div class="input-group  ui-input-stepper">
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                            <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                                <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                            </div>
+                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-label mb-0">angle</div>
+                                        <div class="input-group w-100">
+                                            <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                            <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                            <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                            <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
+                                        </div>
+                                    </div>
 
-                                <div class="input-group w-100">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                                    <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
-                                    <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                                    <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                </div>
-                            </form>
+    
+                                </form>
+                            </div>
     
                         </div>
                     </div>
