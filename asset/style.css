@@ -224,19 +224,23 @@
 
 .layer-box{
   user-select: none;
-  border:1px dashed #eee;
+  border:1px solid #eee;
 }
 .layer-box.active{
-  border:1px dashed #333;
+  /* border:1px dashed #333; */
   background-color: #eee;
+}
+.layer-box-preview{
+  width:56px
 }
 .layer-box-preview canvas{
   display: block;
-  margin:4px;
+  margin:4px auto;
   max-height: 3em;
   max-width: 3em;
   object-fit: contain;
   background-image: url(bg.gif);
+  outline: 1px solid #999;
 }
 .layer-box[data-wc-layer-visible='true'] .on-visible,
 .layer-box[data-wc-layer-visible='false'] .no-visible{
