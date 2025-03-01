@@ -54,4 +54,22 @@ class WcHelper{
 
     }    
   }
+
+
+
+
+  static newForTest(editor){
+    const document = editor.newDocument(300,400);
+    let layer = new Wc.Layer(60,80);
+    layer.fill('#f00')
+    layer.left = 200;
+    layer.top = 30;
+    
+
+    document.layers.add(layer,false,true)
+    
+
+    document.history.clear();
+    document.history.save('new document');
+  }
 }

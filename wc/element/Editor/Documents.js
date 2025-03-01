@@ -44,7 +44,8 @@ export default class Documents extends SelectableArray{
   create(width,height){
     const document = new Document(width,height);
     document.layers[0].fill('#fff')
-    document.addEmptyLayer();
+    const layer = document.addEmptyLayer();
+    layer.postionCenterCenter()
     this.add(document);
     return document;
   }

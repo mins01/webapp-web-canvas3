@@ -339,6 +339,7 @@ export default class Editor{
         // document.layers[0].fill('#fff')
         // document.addEmptyLayer();
         // this.documents.add(document);
+        return this.document;
     }
     previewDocument(){
         if(this?.document){
@@ -391,7 +392,10 @@ export default class Editor{
 
 
 
-
+    ready(){
+        this.readyLayer();
+        this?.tool?.ready();
+    }
     readyLayer(){
         console.log('Editor.readyLayer()')
         const document = this.document
@@ -461,7 +465,7 @@ export default class Editor{
             UiInputStepper.syncDataValue(layerCompositeOperation)
         }
 
-        this?.tool?.ready();
+       
 
     }
 
