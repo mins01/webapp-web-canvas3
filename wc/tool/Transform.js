@@ -34,8 +34,8 @@ export default class Transform extends BaseTool{
 
         let [leftC,topC] =this.getPageXyFromDocumentXy(drawLayer.left+drawLayer.width/2,drawLayer.top+drawLayer.height/2)
         
-        this.utt.left = leftC - drawLayer.width/2*mul;
-        this.utt.top = topC - drawLayer.height/2*mul;
+        this.utt.left = Math.round(leftC - drawLayer.width/2*mul);
+        this.utt.top = Math.round(topC - drawLayer.height/2*mul);
         
         this.utt.width = drawLayer.width*mul
         this.utt.height = drawLayer.height*mul
@@ -115,8 +115,8 @@ export default class Transform extends BaseTool{
 
 
         ctx.save();
-        drawLayer.left = left;
-        drawLayer.top = top;
+        drawLayer.left = Math.round(left);
+        drawLayer.top = Math.round(top);
         drawLayer.width = width;
         drawLayer.height = height;
         
