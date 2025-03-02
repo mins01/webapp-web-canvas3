@@ -421,6 +421,8 @@ export default class Editor{
             const size = layerBoxNode.querySelector('.layer-box-detail-size');
             const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
             const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
+            layerBox.dataset.flipX = layer.flipX;
+            layerBox.dataset.flipY = layer.flipY;
 
             label.textContent = layer.constructor.name
             size.textContent = layer.width+'x'+layer.height

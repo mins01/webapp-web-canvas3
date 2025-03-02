@@ -694,13 +694,13 @@
                                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                                 </div>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
+                                <button type="button" class="btn btn-primary" onclick="if(!confirm('Remove?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
                             </div>
                             <div class="d-flex justify-content-end gap-1 flex-fill">
                                 <div class="col">
-                                    <div class="form-label mb-0">composite</div>
+                                    <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                                     <select name="compositeOperation" id="layer-composite-operation" class="form-select"
                                     oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
                                     data-wc-sync-from="editor.document.layer.compositeOperation"
@@ -734,7 +734,7 @@
                                     </select>
                                 </div>                                
                                 <div class="col">
-                                    <div class="form-label mb-0">alpha</div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> alpha</div>
                                     <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
                                         <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
                                             oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
@@ -763,9 +763,9 @@
                                                 <div>
                                                     <div class="layer-box-detail-label"></div>
                                                 </div>
-                                                <small class="d-flex flex-wrap gap-3 row-gap-1">
+                                                <small class="d-flex flex-wrap gap-2 row-gap-1">
                                                     <div class="d-flex gap-1">
-                                                        <div>Size</div>
+                                                        <div><i class="bi bi-bounding-box"></i></div>
                                                         <div class="layer-box-detail-size"></div>
                                                     </div>
                                                     <div class="d-flex gap-1">
@@ -773,8 +773,12 @@
                                                         <div class="layer-box-detail-zoom"></div>
                                                     </div>
                                                     <div class="d-flex gap-1">
-                                                        <div><i class="bi bi-at"></i></div>
+                                                        <div><i class="bi bi-transparency"></i></div>
                                                         <div class="layer-box-detail-alpha"></div>
+                                                    </div>
+                                                    <div class="d-flex gap-1 icons icons-d-none icon-flips">
+                                                        <div class="icon icon-flip-x"><i class="bi bi-symmetry-vertical"></i></div>
+                                                        <div class="icon icon-flip-y"><i class="bi bi-symmetry-horizontal"></i></div>
                                                     </div>
                                                 </small>
                                             </div>
@@ -810,7 +814,7 @@
             },{once:true})
         </script>
 
-        <div class="modal fade opacity-50" id="modal-layer-config"  aria-hidden="true">
+        <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">

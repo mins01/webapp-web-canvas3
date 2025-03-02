@@ -226,6 +226,9 @@
   user-select: none;
   border:1px solid #eee;
 }
+.icons-d-none .icon{display: none;}
+.layer-box[data-flip-x="-1"] .icon-flip-x{ display: block;}
+.layer-box[data-flip-y="-1"] .icon-flip-y{ display: block;}
 .layer-box.active{
   /* border:1px dashed #333; */
   background-color: #eee;
@@ -290,6 +293,7 @@
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
   max-height: 70svh;
   min-height: 50svh;
+  opacity: 0.75;
 }
 
 
