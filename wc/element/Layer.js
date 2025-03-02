@@ -5,7 +5,7 @@ import Canvas from "./Canvas.js"
 export default class Layer extends Canvas{
 
     static get keys(){
-        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom','visible'])
+        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom','visible','flipX','flipY'])
     }
     static defineCustomElements(name='wc-layer'){
         super.defineCustomElements(name);
@@ -22,6 +22,8 @@ export default class Layer extends Canvas{
     #left;
     #top;
     #zoom;
+    #flipX;
+    #flipY;
     #visible;
     visibleByTool = true; // 강제로 숨긴다. (외부에서 설정하지 마라, 툴에서 제어한다.)
     constructor(w=null,h=null){
@@ -32,6 +34,8 @@ export default class Layer extends Canvas{
         this.compositeOperation = 'source-over';
         this.alpha = 1;
         this.zoom = 1;
+        this.flipX = 1;
+        this.flipY = 1;
         this.visible = true;
         this.angle = 0;
         this.visibleByTool = true;
@@ -43,6 +47,10 @@ export default class Layer extends Canvas{
     set top(v){ this.#top = parseFloat(v); this.setAttribute('top',this.#top) }
     get zoom(){ return this.#zoom; }
     set zoom(v){ this.#zoom = parseFloat(v); this.setAttribute('zoom',this.#zoom) }
+    get flipX(){ return this.#flipX; }
+    set flipX(v){ this.#flipX = parseFloat(v); this.setAttribute('flipX',this.#flipX) }
+    get flipY(){ return this.#flipY; }
+    set flipY(v){ this.#flipY = parseFloat(v); this.setAttribute('flipY',this.#flipY) }
     get visible(){ return this.#visible; }
     set visible(v){ 
         this.#visible = v==='true'?true:(v==='false')?false:(!!v);

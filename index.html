@@ -819,27 +819,36 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column flex-wrap gap-0">
-                            <div class="d-flex flex-wrap gap-1">
+                            <div class="d-flex flex-wrap gap-3">
                                 <div>
-                                    <div class="form-label mb-0">zoom</div>
+                                    <div class="form-label mb-0"><i class="bi bi-zoom-in"></i> Zoom</div>
                                     <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">ZOOM:100%</button>
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">100%</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">posion</div>
+                                    <div class="form-label mb-0"><i class="bi bi-sticky"></i> Posion</div>
                                     <div class="d-flex flex-row gap-1">
                                         <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">resize</div>
+                                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
                                     <div class="d-flex flex-row gap-1">
                                         <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">export</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrow-clockwise"></i> Rotation</div>
+                                    <div class="d-flex flex-row gap-1">
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=0;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">0°</button>
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">90°</button>
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=180;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">180°</button>
+                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=-90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">270°</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-label mb-0"><i class="bi bi-filetype-png"></i> Export</div>
                                     <div class="d-flex flex-row gap-1">
                                         <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
                                     </div>

@@ -157,11 +157,15 @@ export default class Document extends Layer{
             ctx.globalCompositeOperation = targetLayer.compositeOperation
             ctx.globalAlpha = targetLayer.alpha
             ctx.translate(targetLayer.left, targetLayer.top)
-            if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
+            if(targetLayer.zoom !== 1){
+                ctx.scale(targetLayer.zoom,targetLayer.zoom); 
+            }
             ctx.translate(targetLayer.width/2, targetLayer.height/2)
+            ctx.scale(targetLayer.flipX,targetLayer.flipY);
             if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
             ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
             if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
+                
                 ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
             }
             ctx.translate(-targetLayer.left, -targetLayer.top)
