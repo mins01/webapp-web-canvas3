@@ -64,6 +64,7 @@ class WcHelper{
     layer.fill('#f00')
     layer.left = 200;
     layer.top = 30;
+    layer.ctx.fillRect(10,10,10,10);
     
 
     document.layers.add(layer,false,true)

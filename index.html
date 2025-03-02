@@ -810,7 +810,7 @@
             },{once:true})
         </script>
 
-        <div class="modal fade" id="modal-layer-config"  aria-hidden="true">
+        <div class="modal fade opacity-50" id="modal-layer-config"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -868,7 +868,7 @@
                                     data-wc-sync-form="editor.temp.selectedLayer"
                                     >
                                     <div>
-                                        <div class="form-label mb-0">size</div>
+                                        <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
                                         <div class="input-group">
                                             <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
                                             <span class="input-group-text" >X</span>
@@ -890,7 +890,7 @@
                                     data-wc-sync-form="editor.temp.selectedLayer"
                                     >
                                     <div>
-                                        <div class="form-label mb-0">alpha</div>
+                                        <div class="form-label mb-0"><i class="bi bi-transparency"></i> Alpha</div>
                                         <div class="input-group ui-input-stepper">
                                             <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                             <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
@@ -900,7 +900,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="form-label mb-0">zoom</div>
+                                        <div class="form-label mb-0"><i class="bi bi-zoom-in"></i>  Zoom</div>
                                         <div class="input-group ui-input-stepper">
                                             <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                             <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
@@ -910,7 +910,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="form-label mb-0">angle</div>
+                                        <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> Angle</div>
                                         <div class="input-group  ui-input-stepper">
                                             <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                             <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
@@ -919,8 +919,24 @@
                                             <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                         </div>
                                     </div>
+                                    <div class="d-flex gap-1">
+                                        <div class="col">
+                                            <div class="form-label mb-0"><i class="bi bi-symmetry-vertical"></i> Flip X</div>
+                                            <select name="flipX" class="form-select" >
+                                                <option value="1">Normal</option>
+                                                <option value="-1">Flip X</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-label mb-0"><i class="bi bi-symmetry-horizontal"></i> Flip Y</div>
+                                            <select name="flipY" class="form-select" >
+                                                <option value="1">Normal</option>
+                                                <option value="-1">Flip Y</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <div class="form-label mb-0">angle</div>
+                                        <div class="form-label mb-0"><i class="bi bi-sticky"></i> Posion</div>
                                         <div class="input-group w-100">
                                             <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
                                             <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
