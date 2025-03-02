@@ -293,9 +293,11 @@
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
   max-height: 70svh;
   min-height: 50svh;
-  opacity: 0.75;
+  opacity: 0.90;
 }
-
+.modal:where(#modal-layers,#modal-layer-config,#modal-document-config){
+  /* --bs-modal-bg:rgba(255,255,255,0.8) */
+}
 
 
 

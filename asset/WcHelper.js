@@ -55,6 +55,9 @@ class WcHelper{
     }    
   }
 
+  static onresize = (event)=>{
+    editor?.tool?.activate()
+  }
 
 
 

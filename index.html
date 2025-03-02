@@ -157,6 +157,7 @@
     <script src="asset/WcHelper.js"></script>
     <script>
         window.addEventListener('paste',WcHelper.onpaste)
+        window.addEventListener('resize',WcHelper.onresize)
     </script>
     <script type="module" src="wc/app.js"></script>
     <script>
@@ -199,7 +200,7 @@
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
 
                     </div>
-                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette"></i></button>
+                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <!-- <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-propeties'); this.blur()"><i class="bi bi-sliders2"></i></button> -->
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-setting"><i class="bi bi-gear"></i></button>
@@ -380,7 +381,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-column gap-1">
+                        <div class="d-flex flex-column gap-3">
                             <button type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-file-earmark-image"></i> Document</button>
                         </div>
                     </div>
@@ -441,7 +442,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-column gap-1 p-1">
+                        <div class="d-flex flex-column gap-3 p-1">
                             <form action="" onsubmit="editor.saveDocument('png',this.filename.value);return false;">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
@@ -474,7 +475,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-column gap-1 p-1">
+                        <div class="d-flex flex-column gap-3 p-1">
                             
                             <form action="" onsubmit="editor.uploadDocument('png',this.filename.value);return false;">
                                 <div class="input-group">
@@ -518,7 +519,7 @@
                     </div>
                     <div class="modal-body">
                         <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
-                            <div class="d-flex flex-column gap-1">
+                            <div class="d-flex flex-column gap-3">
                                 <div>
                                     <div class="input-group input-group-lg">
                                         <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
@@ -687,7 +688,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pb-0" style="flex:0 0 auto">
-                        <div class="d-flex flex-column gap-1">
+                        <div class="d-flex flex-column gap-3">
                             <div class="d-flex justify-content-end gap-1">
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-plus-circle"></i></button>
@@ -748,9 +749,9 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="d-flex flex-column gap-1" style="max-height: max-content; height: 100%;">
+                        <div class="d-flex flex-column gap-3" style="max-height: max-content; height: 100%;">
 
-                            <div class="d-flex flex-column gap-1">
+                            <div class="d-flex flex-column gap-3">
                                 <template id="template-layer-box" >
                                     <div class="layer-box d-flex gap-1 align-items-center p-1" role="button">
                                         <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
@@ -788,7 +789,7 @@
                                         </button>
                                     </div>
                                 </template>
-                                <div class="layer-box-container d-flex flex-column gap-1">
+                                <div class="layer-box-container d-flex flex-column gap-3">
 
                                 </div>
                             </div>
@@ -821,138 +822,136 @@
                         <h2 class="modal-title fs-4"><i class="bi bi-layers-half"></i> Layer</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body border-bottom"  style="flex:0 0 auto;">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-zoom-in"></i> Zoom</div>
+                                <div class="d-flex flex-row gap-1">
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">100%</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
+                                <div class="d-flex flex-row gap-1">
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
+                                <div class="d-flex flex-row gap-1">
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrow-clockwise"></i> Rotation</div>
+                                <div class="d-flex flex-row gap-1">
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=0;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">0°</button>
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">90°</button>
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=180;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">180°</button>
+                                    <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=-90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">270°</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-filetype-png"></i> Export</div>
+                                <div class="d-flex flex-row gap-1">
+                                    <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
                     <div class="modal-body">
-                        <div class="d-flex flex-column flex-wrap gap-0">
-                            <div class="d-flex flex-wrap gap-3">
+                        <div class="d-flex flex-column gap-3 ">
+                            <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
+                                if(editor.temp?.selectedLayer){
+                                    const layer = editor.temp.selectedLayer
+                                    layer.resize(this.width.value,this.height.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                    editor.document.history.save();
+                                } return false"
+                                data-wc-sync-form="editor.temp.selectedLayer"
+                                >
                                 <div>
-                                    <div class="form-label mb-0"><i class="bi bi-zoom-in"></i> Zoom</div>
-                                    <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.zoom=1;editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">100%</button>
+                                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
+                                    <div class="input-group">
+                                        <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                                        <span class="input-group-text" >X</span>
+                                        <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                                        <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-3" action=""
+                                xoninput="
+                                if(this.closest('.modal')?.layer){
+                                    const layer = this.closest('.modal')?.layer
+                                    layer.zoom=parseFloat(this.zoom.value);
+                                    layer.flush();
+                                    editor.document.layers.ready();
+                                }"
+                                onchange="this.oninput(event); editor.document.history.save(); return false;"
+                                oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
+                                data-wc-sync-form="editor.temp.selectedLayer"
+                                >
+                                <div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> Alpha</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                            <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0"><i class="bi bi-sticky"></i> Posion</div>
-                                    <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.postionCenterCenter();editor.temp.selectedLayer.flush();editor.saveHistory(); wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
+                                    <div class="form-label mb-0"><i class="bi bi-zoom-in"></i>  Zoom</div>
+                                    <div class="input-group ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
+                                            <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
-                                    <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                    <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> Angle</div>
+                                    <div class="input-group  ui-input-stepper">
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
+                                            <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <div class="col">
+                                        <div class="form-label mb-0"><i class="bi bi-symmetry-vertical"></i> Flip X</div>
+                                        <select name="flipX" class="form-select" >
+                                            <option value="1">Normal</option>
+                                            <option value="-1">Flip X</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-label mb-0"><i class="bi bi-symmetry-horizontal"></i> Flip Y</div>
+                                        <select name="flipY" class="form-select" >
+                                            <option value="1">Normal</option>
+                                            <option value="-1">Flip Y</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0"><i class="bi bi-arrow-clockwise"></i> Rotation</div>
-                                    <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=0;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">0°</button>
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">90°</button>
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=180;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">180°</button>
-                                        <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=-90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">270°</button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="form-label mb-0"><i class="bi bi-filetype-png"></i> Export</div>
-                                    <div class="d-flex flex-row gap-1">
-                                        <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
+                                    <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                                        <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
+                                        <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                                        <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
                                     </div>
                                 </div>
 
-                            </div>
-                            <hr>
-                            <div class="d-flex flex-column gap-1 ">
-                                <form name="form_layer_resize" class="flex-fill" action="" onsubmit="
-                                    if(editor.temp?.selectedLayer){
-                                        const layer = editor.temp.selectedLayer
-                                        layer.resize(this.width.value,this.height.value);
-                                        layer.flush();
-                                        editor.document.layers.ready();
-                                        editor.document.history.save();
-                                    } return false"
-                                    data-wc-sync-form="editor.temp.selectedLayer"
-                                    >
-                                    <div>
-                                        <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
-                                        <div class="input-group">
-                                            <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
-                                            <span class="input-group-text" >X</span>
-                                            <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
-                                            <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <form name="form_layer_zoom" class="flex-fill d-flex flex-column gap-1" action=""
-                                    xoninput="
-                                    if(this.closest('.modal')?.layer){
-                                        const layer = this.closest('.modal')?.layer
-                                        layer.zoom=parseFloat(this.zoom.value);
-                                        layer.flush();
-                                        editor.document.layers.ready();
-                                    }"
-                                    onchange="this.oninput(event); editor.document.history.save(); return false;"
-                                    oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
-                                    data-wc-sync-form="editor.temp.selectedLayer"
-                                    >
-                                    <div>
-                                        <div class="form-label mb-0"><i class="bi bi-transparency"></i> Alpha</div>
-                                        <div class="input-group ui-input-stepper">
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                            <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                                <input type="range" class="form-range m-0 d-block"name="alpha"  min="0" max="1" value="1" step="0.01" >
-                                            </div>
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-label mb-0"><i class="bi bi-zoom-in"></i>  Zoom</div>
-                                        <div class="input-group ui-input-stepper">
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                            <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
-                                                <input class="form-range d-block" type="range" name="zoom" placeholder="zoom" step="0.01" min="0" max="3" >
-                                            </div>
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> Angle</div>
-                                        <div class="input-group  ui-input-stepper">
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                                            <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
-                                                <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
-                                            </div>
-                                            <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex gap-1">
-                                        <div class="col">
-                                            <div class="form-label mb-0"><i class="bi bi-symmetry-vertical"></i> Flip X</div>
-                                            <select name="flipX" class="form-select" >
-                                                <option value="1">Normal</option>
-                                                <option value="-1">Flip X</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-label mb-0"><i class="bi bi-symmetry-horizontal"></i> Flip Y</div>
-                                            <select name="flipY" class="form-select" >
-                                                <option value="1">Normal</option>
-                                                <option value="-1">Flip Y</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-label mb-0"><i class="bi bi-sticky"></i> Posion</div>
-                                        <div class="input-group w-100">
-                                            <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                                            <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000">
-                                            <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                                            <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
-                                        </div>
-                                    </div>
 
-    
-                                </form>
-                            </div>
-    
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -991,26 +990,28 @@
                         <h2 class="modal-title fs-4"><i class="bi bi-file-earmark-image"></i> Document</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="d-flex flex-column flex-wrap gap-1">
+                    <div class="modal-body border-bottom"  style="flex:0 0 auto;">
+                        <div class="d-flex flex-wrap gap-3">
                             <div>
-                                <div class="form-label mb-0">zoom</div>
+                                <div class="form-label mb-0"><i class="bi bi-zoom-in"></i> Zoom</div>
                                 <div class="d-flex flex-row gap-1 justify-content-start flex-wrap">
-                                    <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> 100%</button>
-                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Auto</button>
-                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Width</button>
-                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-zoom-in"></i> Fit Height</button>
+                                    <button class="btn btn-primary" onclick="editor.document.zoom=1;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">100%</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit();wcSyncHandler.sync(this.closest('.modal'))">Fit Auto</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('width');wcSyncHandler.sync(this.closest('.modal'))">Fit Width</button>
+                                    <button class="btn btn-primary" onclick="WcHelper.wcAppZoomFit('height');wcSyncHandler.sync(this.closest('.modal'))">Fit Height</button>
                                 </div>
                             </div>
                             <div>
-                                <div class="form-label mb-0">position</div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Position</div>
                                 <div>
-                                    <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-arrows-move"></i> CENTER</button>
+                                    <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
                                 </div>
                                 
                             </div>
-                            
-                            <hr class="my-1">
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column gap-3">
                             <form name="form_document_resize" class="flex-fill" action="" onsubmit="
                                 if(editor?.document){
                                     editor.document.resize(this.width.value,this.height.value);
@@ -1021,7 +1022,7 @@
                                 data-wc-sync-form="editor.document"
                                 >
                                 <div>
-                                    <div class="form-label mb-0">size</div>
+                                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> size</div>
                                     <div class="input-group">
                                         <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
                                         <span class="input-group-text" >X</span>
@@ -1030,13 +1031,13 @@
                                     </div>
                                 </div>
                             </form>
-                            <form  class="d-flex flex-column gap-1" action=""
+                            <form  class="d-flex flex-column gap-3" action=""
                                 x-onchange="this.oninput(event); editor.document.history.save(); return false;"
                                 oninput="if(editor?.document){ const document = editor.document; Object.assign(document,Wc.HtmlUtil.formToObject(this));document.flush(); }"
                                 data-wc-sync-form="editor.document"
                                 >
                                 <div>
-                                    <div class="form-label mb-0">zoom</div>
+                                    <div class="form-label mb-0"><i class="bi bi-zoom-in"></i> Zoom</div>
                                     <div class="input-group ui-input-stepper" >
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
@@ -1046,7 +1047,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">angle</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> Angle</div>
                                     <div class="input-group ui-input-stepper" >
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  onchange="editor.document.history.save()">
@@ -1056,7 +1057,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">postion</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Position</div>
                                     <div class="d-flex gap-1">
                                         <div class="col">
                                             <div class="form-label mb-0">left</div>
@@ -1086,15 +1087,36 @@
                         <h2 class="modal-title fs-4"><i class="bi bi-bounding-box"></i> Transform</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="d-flex flex-column flex-wrap gap-0">
-                            <div class="d-flex flex-row gap-1 justify-content-center flex-wrap">
-                                <button class="btn btn-primary" onclick="editor.tool.confirm();wcSyncHandler.sync(this.closest('.modal'))">Confirm</button>
-                                <button class="btn btn-primary" onclick="editor.tool.cancel();wcSyncHandler.sync(this.closest('.modal'))">Cancel</button>
-                                <button class="btn btn-primary" onclick="editor.tool.center();wcSyncHandler.sync(this.closest('.modal'))">Center</button>
+                    <div class="modal-body border-bottom">
+                        <div class="d-flex flex-wrap gap-3">
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-primary" onclick="editor.tool.confirm();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-check"></i> Confirm</button>
+                                    <button class="btn btn-warning" onclick="editor.tool.cancel();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-x"></i> Cancel</button>
+                                </div>                                
                             </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-primary" onclick="editor.tool.center();wcSyncHandler.sync(this.closest('.modal'))">Center</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-primary" onclick="let layer = editor?.document?.layer;if(!layer){return} layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">ADJUST SIZE TO DOCUMENT</button>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-column flex-wrap gap-3">
+                            
                             <hr>
-                            <form  class="d-flex flex-column gap-1" action=""
+                            <form  class="d-flex flex-column gap-3" action=""
                                 
                                 data-wc-sync-form="editor.document.drawLayer"
                                 >
@@ -1134,9 +1156,9 @@
                     </div>
                     <div class="modal-body brush-config">
                         <form name="formBrushConfig" data-brush-key="brush" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush.brushConfig" >
-                            <div class="d-flex flex-column gap-2">
+                            <div class="d-flex flex-column gap-3">
                                 <div>
-                                    <div class="form-label mb-0">size</div>
+                                    <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
@@ -1146,7 +1168,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">roundness(원형율)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> Roundness(원형율)</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1156,7 +1178,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">angle(각도)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> Angle(각도)</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
@@ -1166,7 +1188,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">hardness(경도)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-vignette"></i> Hardness(경도)</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0">
@@ -1176,7 +1198,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">opacity(불투명도)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1186,7 +1208,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">spacing(간격)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-border-style"></i> Spacing(간격)</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1196,7 +1218,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">flattenOpacity(균일투명도)</div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlattenOpacity(균일투명도)</div>
                                     <div class="input-group">
                                         <select class="form-select " name="flattenOpacity" >
                                             <option selected value="false">NO</option>
@@ -1206,14 +1228,14 @@
                                 </div>
                                 <hr class="my-1">
                                 <div>
-                                    <div class="form-label mb-0">sizeControl</div>
+                                    <div class="form-label mb-0"><i class="bi bi-border-width"></i> SizeControl</div>
                                     <select class="form-select " name="sizeControl" >
                                         <option selected value="off">OFF</option>
                                         <option value="penPressure">penPressure</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">mininumSizeRatio</div>
+                                    <div class="form-label mb-0"><i class="bi bi-border-width"></i> MininumSizeRatio</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1224,14 +1246,14 @@
                                 </div>
                                 <hr class="my-1">
                                 <div>
-                                    <div class="form-label mb-0">opacityControl</div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> OpacityControl</div>
                                     <select class="form-select " name="opacityControl" >
                                         <option selected value="off">OFF</option>
                                         <option value="penPressure">penPressure</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">mininumOpacity</div>
+                                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> MininumOpacity</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1242,7 +1264,7 @@
                                 </div>
                                 <hr class="my-1">
                                 <div>
-                                    <div class="form-label mb-0">roundnessControl</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> RoundnessControl</div>
                                     <div class="input-group">
                                         <select class="form-select " name="roundnessControl" >
                                             <option selected value="off">OFF</option>
@@ -1252,7 +1274,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-label mb-0">mininumRoundness</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> MninumRoundness</div>
                                     <div class="input-group ui-input-stepper">
                                         <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                         <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
@@ -1263,7 +1285,7 @@
                                 </div>
                                 <hr class="my-1">
                                 <div>
-                                    <div class="form-label mb-0">angleControl</div>
+                                    <div class="form-label mb-0"><i class="bi bi-arrow-90deg-right"></i> AngleControl</div>
                                     <select class="form-select " name="angleControl" >
                                         <option selected value="off">OFF</option>
                                         <!-- <option value="penPressure">penPressure</option> -->
@@ -1272,7 +1294,7 @@
                                 </div>
                                 <hr class="my-1">
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-primary btn-reset-config" onclick="editor.resetBrushConfig(this.form.dataset.brushKey); editor.wcSyncHandler.sync(this.closest('.modal'));">Reset</button>
+                                    <button type="button" class="btn btn-primary btn-reset-config" onclick="editor.resetBrushConfig(this.form.dataset.brushKey); editor.wcSyncHandler.sync(this.closest('.modal'));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                                 </div>
                             </div>
                         </form>
@@ -1341,7 +1363,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Eraser config</span></h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-eraser"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Eraser config</span></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
