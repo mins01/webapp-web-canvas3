@@ -246,7 +246,25 @@
                     <div class="wc-app-menu wc-app-menu-tool-propety  d-flex gap-1 px-1 py-1 justify-content-center mx-auto me-0">
                         <!-- 오른쪽하단 버튼 위치 -->
                     </div>
-
+                </div>
+                <div class="container px-0 d-flex justify-content-center">
+                    <div class="only-shown only-shown-tool-Transform my-1">
+                        <div class="d-flex gap-3">
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-primary" onclick="editor.tool.confirm();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-check"></i> Confirm</button>
+                                    <button class="btn btn-warning" onclick="editor.tool.cancel();wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-x"></i> Cancel</button>
+                                </div>                                
+                            </div>
+                            <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-primary" onclick="editor.tool.center();wcSyncHandler.sync(this.closest('.modal'))">Center</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="wc-editor" class="wc-editor wc-app-body debug-box">

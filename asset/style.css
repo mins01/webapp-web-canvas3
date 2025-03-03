@@ -51,7 +51,9 @@
   z-index: 10;
   pointer-events: none;
   overflow: hidden;
-  
+}
+.wc-app-footer button{
+  pointer-events:all;
 }
 
 
@@ -107,9 +109,7 @@
   width: max-content;
   border-radius: 5px 5px 0 0;
 }
-.wc-app-menu-undo > *{
-  pointer-events: all;
-}
+
 
 
 
