@@ -32,6 +32,12 @@ export default class Layers extends SelectableArray{
         const layer = new Layer(document.width,document.height)
         this.add(layer);
     }
+    cloneLayer(layer=null){
+        const document = this.document
+        if(!layer) layer = document.layer;
+        const newLayer = layer.clone();
+        this.add(newLayer);
+    }
     add(layer,withoutHistory=false){
         const document = this.document
         layer.parent = document;

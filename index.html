@@ -709,13 +709,16 @@
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex justify-content-end gap-1">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-plus-circle"></i></button>
+                                    <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i></button>
+                                    <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();"><i class="bi bi-copy"></i></button>
                                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                                 </div>
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="if(!confirm('Remove?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
+                                <button type="button" class="btn btn-danger" onclick="if(!confirm('Remove?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
+                                    <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-end gap-1 flex-fill">
                                 <div class="col">
@@ -980,7 +983,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-4"><i class="bi bi-layers-half"></i> <i class="bi bi-plus-circle"></i> Insert layer</h1>
+                        <h2 class="modal-title fs-4"><i class="bi bi-layers-half"></i><i class="bi bi-file-plus"></i> Insert layer</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
