@@ -18,6 +18,11 @@ export default class Document extends Layer{
     frame = null;
     constructor(w=null,h=null){
         super(w,h);
+
+        const d = new Date();
+        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
+        this.name = 'Document-'+[ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
+
         // this.layers = new SelectableArray();
         this.layers = new Layers()
         this.history = new History(this,20);

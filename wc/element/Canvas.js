@@ -34,8 +34,10 @@ class Canvas extends HTMLCanvasElement{
         if(this.id === undefined || this.id === '') this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+rand;
         
         const d = new Date();
-        this.name = [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
-        
+        // this.name = [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
+        this.name = `Canvas-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`;
+
+
         this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
         this.contextConfig = new Context2dConfig();
 

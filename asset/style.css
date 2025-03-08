@@ -225,6 +225,8 @@
 .layer-box{
   user-select: none;
   border:1px solid #eee;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 .icons-d-none .icon{display: none;}
 .layer-box[data-flip-x="-1"] .icon-flip-x{ display: block;}
@@ -234,7 +236,7 @@
   background-color: #eee;
 }
 .layer-box-preview{
-  width:56px
+  padding:0 4px;
 }
 .layer-box-preview canvas{
   display: block;
@@ -258,7 +260,6 @@
   width: 2rem;
   padding:4px;
 }
-
 
 
 

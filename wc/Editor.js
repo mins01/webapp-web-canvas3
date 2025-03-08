@@ -417,14 +417,16 @@ export default class Editor{
             const eye = layerBoxNode.querySelector('.layer-box-eye');
             const config = layerBoxNode.querySelector('.layer-box-config');
 
-            const label = layerBoxNode.querySelector('.layer-box-detail-label');
+            // const label = layerBoxNode.querySelector('.layer-box-detail-label');
+            const name = layerBoxNode.querySelector('.layer-box-detail-name');
             const size = layerBoxNode.querySelector('.layer-box-detail-size');
             const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
             const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
             layerBox.dataset.flipX = layer.flipX;
             layerBox.dataset.flipY = layer.flipY;
 
-            label.textContent = layer.constructor.name
+            // label.textContent = layer.constructor.name
+            name.textContent = layer.name
             size.textContent = layer.width+'x'+layer.height
             zoom.textContent = Math.floor(layer.zoom*100)+'%'
             alpha.textContent = Math.floor(layer.alpha*100)+'%'
