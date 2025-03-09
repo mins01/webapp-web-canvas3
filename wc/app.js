@@ -122,9 +122,9 @@ wcSyncHandler.addEventListener();
 
 
 
-//-- AutoSaver
-import AutoSaver from './lib/AutoSaver.js';
-Wc.AutoSaver = AutoSaver
-const autoSave = new AutoSaver(editor,60*1000*5); //5분에 한번씩 저장함
+//-- AutoSave
+import AutoSave from './lib/AutoSave.js';
+Wc.AutoSave = AutoSave
+const autoSave = new AutoSave(editor,60*1000*5); //5분에 한번씩 저장함
 Wc.autoSave = autoSave
 autoSave.activate();
