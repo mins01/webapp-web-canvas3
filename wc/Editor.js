@@ -311,8 +311,9 @@ export default class Editor{
         if(file.name.match(/wc3\.json$/)){
             HtmlUtil.asyncLoadFile(file).then((text)=>{
                 const conf = JSON.parse(text);
-                const document = Document.importFrom(conf)
-                this.documents.add(document);
+                // const document = Document.importFrom(conf)
+                // this.documents.add(document);
+                this.loadJson(conf)
             })
         }else if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
@@ -325,6 +326,14 @@ export default class Editor{
             }
             image.src = imageURL;
         }
+    }
+    loadDocumentJson(json){
+        this.closeDocument();
+        this.loadJson(json);
+    }
+    loadJson(json){
+        const document = Document.importFrom(json)
+        this.documents.add(document);
     }
     closeDocument(){
         if(this.document){

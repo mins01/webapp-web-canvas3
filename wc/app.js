@@ -114,13 +114,17 @@ if(globalThis?.Wg2Uploder??false){
 
 
 
-
-
-
-
-
-
+//-- UI sync
 import WcSyncHandler from "./lib/WcSyncHandler.js";
 Wc.WcSyncHandler = WcSyncHandler;
 const wcSyncHandler = globalThis.wcSyncHandler = editor.wcSyncHandler = new WcSyncHandler();
 wcSyncHandler.addEventListener();
+
+
+
+//-- AutoSaver
+import AutoSaver from './lib/AutoSaver.js';
+Wc.AutoSaver = AutoSaver
+const autoSave = new AutoSaver(editor,60*1000*5); //5분에 한번씩 저장함
+Wc.autoSave = autoSave
+autoSave.activate();
