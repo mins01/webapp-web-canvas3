@@ -69,6 +69,7 @@ export default class Brush extends Layer{
         const size = Math.max(1,parseFloat(brushConfig.size));       
         const shape = brushConfig.shape;
         
+        this.margin = Math.ceil((Math.hypot(size,size) - size) / 2);
 
         shapeCanvas.width = size + this.margin * 2;
         shapeCanvas.height = size + this.margin * 2;
