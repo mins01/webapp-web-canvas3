@@ -70,7 +70,7 @@ class BrushConfig extends BaseConfig{
         this.opacityControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this.mininumOpacity = 0.25; //최소 불투명도
         this.flow = 1; // 하나의 투명도
-        this.flowJitter = 0
+        this.flowJitter = 0 // 구현 안했네.. 뭐하는거지?
         this.flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
 
         // color
