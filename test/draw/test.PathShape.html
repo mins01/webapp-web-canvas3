@@ -115,6 +115,17 @@
                 const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
                 ctx.save();
                 ctx.beginPath();
+                PathShape.square(ctx,50, 75, 200,150);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+                out.append(c)
+            }
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                ctx.beginPath();
                 PathShape.roundRect(ctx,25, 10, 100,50,10);
                 ctx.fill();
                 ctx.stroke();
@@ -137,6 +148,39 @@
 
                 ctx.beginPath();
                 PathShape.roundRect(ctx,175, 150, 100,50,[{x:10,y:20},{x:20,y:30},{x:30,y:40},{x:40,y:50}]);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.restore();
+                out.append(c)
+            }
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,25, 10, 50, 10);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,175, 10, 50,{x:10,y:20});
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,25, 80, 50,[10,20]);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,175, 80, 50,[10,20,30]);
+                ctx.fill();
+                ctx.stroke();
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,25, 150, 50,[10,20,30,40]);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                PathShape.roundSquare(ctx,175, 150, 50,[{x:10,y:20},{x:20,y:30},{x:30,y:40},{x:40,y:50}]);
                 ctx.fill();
                 ctx.stroke();
                 

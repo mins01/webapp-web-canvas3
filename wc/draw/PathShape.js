@@ -25,7 +25,14 @@ export default class PathShape{
   static roundRect(ctx,x, y, width, height, radii){
     ctx.roundRect(x, y, width, height, radii);
   }
+  static square(ctx,x, y, width, radii){
+    ctx.rect(x, y, width, width);
+  }
+  static roundSquare(ctx,x, y, width, radii){
+    ctx.roundRect(x, y, width, width, radii);
+  }
 
+  
   
   static equilateralPolygon(ctx, x, y, radius, points , startAngle = 0) {
     if (points < 3) return;  // 다각형의 변 개수는 최소 3이어야 합니다 (삼각형부터 시작)
