@@ -2,6 +2,7 @@ import BaseConfig from "./BaseConfig.js"
 
 class BrushConfig extends BaseConfig{
     // 브러시 모양: Brush Tip Shape
+    shape = 'circle'; //원
     size = 5; //크기 px . diameter
     angle = 0; //각도 0~1
     roundness = 1; // 원형율
@@ -48,6 +49,7 @@ class BrushConfig extends BaseConfig{
     
     reset(){
         // 브러시 모양: Brush Tip Shape
+        this.shape = 'circle'; //원
         this.size = 5; //크기 px . diameter
         this.angle = 0; //각도 deg 
         this.roundness = 1; // 원형율

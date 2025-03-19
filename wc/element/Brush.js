@@ -64,14 +64,16 @@ export default class Brush extends Layer{
 
     applyShapeCanvas(){
         const brushConfig = this.brushConfig;
-        const shape = this.shapeCanvas;
-        const ctx = shape.ctx;
+        const shapeCanvas = this.shapeCanvas;
+        const ctx = shapeCanvas.ctx;
         const size = Math.max(1,parseFloat(brushConfig.size));       
+        const shape = brushConfig.shape;
+        
 
-        shape.width = size + this.margin * 2;
-        shape.height = size + this.margin * 2;
+        shapeCanvas.width = size + this.margin * 2;
+        shapeCanvas.height = size + this.margin * 2;
         const r = size/2;
-        const x = shape.width/2;
+        const x = shapeCanvas.width/2;
         const y = x;
 
         this.contextConfig.assignTo(ctx,true);
@@ -83,7 +85,15 @@ export default class Brush extends Layer{
         // ctx.imageSmoothingEnabled = false;
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        PathShape.circle(ctx,x,y,r)
+        if(shape=='circle'){
+            PathShape.circle(ctx,x,y,r);
+        }else if(shape=='square'){
+            PathShape.rect(ctx,this.margin,this.margin,size,size);
+        }else{
+            PathShape.circle(ctx,x,y,r);
+            console.error(`This shape(${shape}) is not supported.`);
+        }
+        
         ctx.closePath();
         ctx.fill()
         // ctx.stroke()
