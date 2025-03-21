@@ -78,11 +78,45 @@ class WcHelper{
   }
 
 
-  static syncModalBrushPreviewCanvas(f){
+  static syncModalBrushPreviewCanvas(f,isEraser=false){
     const modal = f.closest('.modal');
-    const brushPreviewCanvas = modal.querySelector('.brush-preview-canvas');
+    const preview = modal.querySelector('.brush-preview-canvas');
     const brush = modal.querySelector('canvas[is="wc-brush"]');
-    brushPreviewCanvas.clear();
-    brush.drawOnLine(brushPreviewCanvas.ctx,Math.ceil(brushPreviewCanvas.width*0.1),Math.ceil(brushPreviewCanvas.height*0.4),Math.ceil(brushPreviewCanvas.width*0.9),Math.ceil(brushPreviewCanvas.height*0.6));
+    const size = brush.brushConfig.size
+    preview.ctx.save()
+    preview.clear();
+    if(isEraser){
+      preview.fill('#ffffff')
+      preview.ctx.globalCompositeOperation = 'destination-out';
+    }
+
+
+    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,100)
+                  .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
+    // console.log(points)
+    let remainInterval = 0;
+    let p = points[0]
+    brush.dot(preview.ctx,p.x,p.y);
+    for(let i=1,m=points.length;i<m;i++){
+      let p1 = points[i];
+      remainInterval = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,remainInterval);
+      p = p1;
+    }
+    // brush.drawOnLine(preview.ctx,Math.ceil(size/2)+10,Math.ceil(preview.height*0.4),Math.ceil(preview.width-size/2)-10,Math.ceil(preview.height*0.6));
+    preview.ctx.restore()
+
   }
+
+  static getSShapePoints(h, k, width, height, steps = 100) {
+    const points = [];
+    
+    for (let i = 0; i <= steps; i++) {
+        const t = (i / steps) * Math.PI * 2 - Math.PI; // -π에서 π까지 변화
+        const x = h + (width / 2) * t / Math.PI; // x 위치 조정
+        const y = k + (height / 2) * Math.sin(t); // S 곡선 생성
+        points.push({ x, y });
+    }
+
+    return points;
+}
 }

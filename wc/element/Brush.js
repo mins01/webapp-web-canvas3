@@ -85,19 +85,19 @@ export default class Brush extends Layer{
         // ctx.imageSmoothingEnabled = false;
         
         
-        if(shape=='circle'){
-            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            PathShape.circle(ctx,x,y,r);
-            ctx.closePath();
-            ctx.fill()
-        }else if(shape=='square'){
+        if(shape=='square' || size==1){
             const diagonal  = Math.hypot(size,size);
             const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, Math.ceil(diagonal/2));
             ctx.fillStyle = gradient;
             ctx.beginPath();
             PathShape.rect(ctx,this.margin,this.margin,size,size);
+            ctx.closePath();
+            ctx.fill()
+        }else if(shape=='circle'){
+            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            PathShape.circle(ctx,x,y,r);
             ctx.closePath();
             ctx.fill()
         }else{
@@ -158,6 +158,7 @@ export default class Brush extends Layer{
             const o = Math.round(brushConfig.opacity*255);           
             Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,170)
         }
+        this.dispatchEvent( new CustomEvent("draw", { }) );
     }
 
     /**
