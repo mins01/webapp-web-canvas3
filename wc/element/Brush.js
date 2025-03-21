@@ -80,23 +80,37 @@ export default class Brush extends Layer{
         this.contextConfig.assignTo(ctx,true);
         // console.log(ctx.fillStyle);
 
-        const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
         ctx.save();
         ctx.globalAlpha = parseFloat(this.flow)
         // ctx.imageSmoothingEnabled = false;
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
+        
+        
         if(shape=='circle'){
+            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
             PathShape.circle(ctx,x,y,r);
+            ctx.closePath();
+            ctx.fill()
         }else if(shape=='square'){
+            const diagonal  = Math.hypot(size,size);
+            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, Math.ceil(diagonal/2));
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
             PathShape.rect(ctx,this.margin,this.margin,size,size);
+            ctx.closePath();
+            ctx.fill()
         }else{
+            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
             PathShape.circle(ctx,x,y,r);
+            ctx.closePath();
+            ctx.fill()
             console.error(`This shape(${shape}) is not supported.`);
         }
         
-        ctx.closePath();
-        ctx.fill()
+        
         // ctx.stroke()
         ctx.restore();
     }
@@ -142,7 +156,7 @@ export default class Brush extends Layer{
         if(brushConfig.flattenOpacity){
             const c = jsColor.Color.from(ctx.fillStyle);
             const o = Math.round(brushConfig.opacity*255);           
-            Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,1)
+            Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,170)
         }
     }
 
