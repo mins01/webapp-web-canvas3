@@ -76,4 +76,13 @@ class WcHelper{
     document.history.clear();
     document.history.save('new document');
   }
+
+
+  static syncModalBrushPreviewCanvas(f){
+    const modal = f.closest('.modal');
+    const brushPreviewCanvas = modal.querySelector('.brush-preview-canvas');
+    const brush = modal.querySelector('canvas[is="wc-brush"]');
+    brushPreviewCanvas.clear();
+    brush.drawOnLine(brushPreviewCanvas.ctx,Math.ceil(brushPreviewCanvas.width*0.1),Math.ceil(brushPreviewCanvas.height*0.4),Math.ceil(brushPreviewCanvas.width*0.9),Math.ceil(brushPreviewCanvas.height*0.6));
+  }
 }
