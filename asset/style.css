@@ -301,7 +301,9 @@
 
 
 
-
+.bg-gif{
+  background-image: url(bg.gif);
+}
 
 
 
