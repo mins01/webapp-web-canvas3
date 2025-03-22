@@ -1,9 +1,9 @@
 export default class DrawText{
 
-    static draw(ctx,textConfig,text,w,h,x,y,lineHeight=null,padding=0){
+    static draw(ctx,text,w,h,x,y,lineHeight=null,padding=0){
         if(lineHeight===null){ lineHeight = ctx.lineHeight??parseInt(ctx.font,10)??8; }
         let textLines = this.textToLines(ctx,text,w-(padding*2),h-(padding*2),lineHeight);
-        this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2),lineHeight);
+        this.drawTextLines(ctx,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2),lineHeight);
     }
 
     static textToLines(ctx,text,w,h,lineHeight=null){
@@ -35,7 +35,7 @@ export default class DrawText{
         return lines;
     }
 
-    static drawTextLines(ctx,textConfig,lines,x,y,w,h,lineHeight=null){
+    static drawTextLines(ctx,lines,x,y,w,h,lineHeight=null){
         ctx.save();
         if(lineHeight===null){ lineHeight = ctx.lineHeight??parseInt(ctx.font,10)??8; }
         // const linesH = lineHeight*lines.length;       

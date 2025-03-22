@@ -66,6 +66,7 @@
         Wc.HtmlUtil.objectToForm(textlayer.textConfig,document.form_textConfig)
 
         Wc.HtmlUtil.objectToForm(textlayer,document.form_layerConfig)
+        Wc.HtmlUtil.objectToForm(textlayer,document.form_text)
 
         
         UiInputStepper.initDataValue()
@@ -86,11 +87,23 @@
         <div class="card-body">
           <h4 class="card-title">Text</h4>
           <div class="bg-gif d-flex justify-content-center align-items-center" >
-            <canvas id="textlayer" is="wc-textlayer" width="300" height="300"></canvas>
+            <canvas id="textlayer" is="wc-textlayer" width="600" height="300" style="max-width: 100%;"></canvas>
           </div>
         </div>
       </div>
     </div>
+    <div class="my-3">
+      <div class="card">
+        <div class="card-body">
+          <form name="form_text" action="" oninput="textlayer.setText(this.text.value);textlayer.draw();">
+            <div>
+              <div class="form-text mb-0">Text</div>
+              <textarea name="text" rows="5" class="form-control"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>    
     <div class="my-3">
       <div class="card">
         <div class="card-body">

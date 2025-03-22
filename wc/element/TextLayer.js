@@ -49,16 +49,16 @@ export default class TextLayer extends Layer{
 
         
         //== for debug
-        ctx.save();
-        ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)*2;       
-        ctx.strokeStyle = '#ccbbaa80';
-        ctx.fillStyle = '#aabbcc80';
+        // ctx.save();
+        // ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)*2;       
+        // ctx.strokeStyle = '#ccbbaa80';
+        // ctx.fillStyle = '#aabbcc80';
         
-        ctx.beginPath();
-        ctx.rect(0, 0, this.width,this.height);        
-        if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
-        ctx.closePath();
-        ctx.restore();
+        // ctx.beginPath();
+        // ctx.rect(0, 0, this.width,this.height);        
+        // if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
+        // ctx.closePath();
+        // ctx.restore();
         //== for debug
 
 
@@ -72,7 +72,7 @@ export default class TextLayer extends Layer{
         if(this.text?.length){
             const lineHeightPx = CssLengthUtil.pxBasedOnFontSize(this.textConfig.lineHeight,fontSize);
             const paddingPx = CssLengthUtil.pxBasedOnFontSize(this.textConfig.textPadding,fontSize);
-            DrawText.draw(ctx,this.textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
+            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
                 lineHeightPx,paddingPx
             );
         }        
