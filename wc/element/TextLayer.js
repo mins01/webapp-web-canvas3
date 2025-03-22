@@ -69,10 +69,11 @@ export default class TextLayer extends Layer{
 
         let {fontSize} = CssFontUtil.parse(ctx.font);        
 
-        if(this.text?.length){            
-            DrawText.draw(ctx,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
-                CssLengthUtil.pxBasedOnFontSize(this.textConfig.lineHeight,fontSize),
-                CssLengthUtil.pxBasedOnFontSize(this.textConfig.textPadding,fontSize)
+        if(this.text?.length){
+            const lineHeightPx = CssLengthUtil.pxBasedOnFontSize(this.textConfig.lineHeight,fontSize);
+            const paddingPx = CssLengthUtil.pxBasedOnFontSize(this.textConfig.textPadding,fontSize);
+            DrawText.draw(ctx,this.textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0,
+                lineHeightPx,paddingPx
             );
         }        
         // ctx.restore();

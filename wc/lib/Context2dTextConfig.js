@@ -34,7 +34,6 @@ class Context2dTextConfig extends BaseConfig{
     letterSpacingUnit = "px";
     textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
     wordSpacing = "0px"; //20250107. 사파리에서 지원 안됨.
-    
 
     constructor(ctx=null){
         const proxyConfig = {
@@ -111,7 +110,7 @@ class Context2dTextConfig extends BaseConfig{
         this.fontSize = "10px"; //px 만 지원하자. 우선은...
         // this.fontSizeNumber = "10"; //px 만 지원하자. 우선은...
         // this.fontSizeUnit = "px"; //px 만 지원하자. 우선은...
-        this.textColor = "#000";
+        this.textColor = "#000000";
         this.textPadding = "0px";
         // this.textPaddingNumber = "0";
         // this.textPaddingUnit = "px";

@@ -37,16 +37,39 @@
     <meta property="og:type" content="website">
 
     <!-- //meta og -->
+
+    <link rel="stylesheet" href="third_party/ui-input-stepper/ui-input-stepper.css">
+    <script src="third_party/ui-input-stepper/UiInputStepper.js"></script>
+    <script>
+        UiInputStepper.addEventListener();
+        window.addEventListener('load',(event)=>{
+            UiInputStepper.initDataValue()
+        })
+    </script>
+
     <script type="module">
+      
+      import HtmlUtil from "./wc/lib/HtmlUtil.js"
       import TextLayer from "./wc/element/textLayer.js";
       TextLayer.defineCustomElements();
+      globalThis.Wc = {HtmlUtil , TextLayer}
+      
 
 
       window.addEventListener('load',(evnet)=>{
         const textlayer = window.textlayer = document.querySelector('#textlayer')
         textlayer.textConfig.textPaddingNumber = 20;
-        textlayer.setText('xxxxx\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy');
+        textlayer.textConfig.fontSizeNumber = 20;
+        textlayer.setText('ABCDXYAV\n한글은 잘 되나요? 잘 되겠죠?\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy');
         textlayer.draw();
+       
+        Wc.HtmlUtil.objectToForm(textlayer.textConfig,document.form_textConfig)
+
+        Wc.HtmlUtil.objectToForm(textlayer,document.form_layerConfig)
+
+        
+        UiInputStepper.initDataValue()
+
       })
     </script>
     <link rel="stylesheet" href="./asset/style.css">
@@ -61,15 +84,177 @@
     <div class="my-3">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Title</h4>
+          <h4 class="card-title">Text</h4>
           <div class="bg-gif d-flex justify-content-center align-items-center" >
             <canvas id="textlayer" is="wc-textlayer" width="300" height="300"></canvas>
           </div>
         </div>
       </div>
-      
+    </div>
+    <div class="my-3">
+      <div class="card">
+        <div class="card-body">
+          <form name="form_textConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" oninput="textlayer.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));textlayer.draw();" onchange="this.oninput(event);">
+            <div>
+              <div class="form-text mb-0">색상</div>
+              <div><input type="color" class="form-control form-control-color w-100" name="textColor" value="#000000"></div>
+            </div>
+            <div>
+              <div class="form-text mb-0">fontStyle</div>
+              <select name="fontStyle" class="form-select">
+                <option value="normal">normal</option>
+                <option value="italic">italic</option>
+              </select>
+            </div>
+            <div>
+              <div class="form-text mb-0">fontWeight</div>
+              <select name="fontWeight" class="form-select">
+                <option value="normal">normal</option>
+                <option value="bold">bold</option>
+                <!-- <option value="bolder">bolder</option> -->
+                <!-- <option value="lighter">lighter</option> -->
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400 (normal)</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700 (bold)</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+              </select>
+            </div>
+            <div>
+              <div class="form-text mb-0">fontSize(px)</div>
+              <div class="input-group ui-input-stepper">
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                    <input type="range" class="form-range d-block" name="fontSizeNumber" min="1" max="200" step="1"  value="10">
+                </div>
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+            </div>
+            <div>
+              <div class="form-text mb-0">lineHeight(em)</div>
+              <div class="input-group ui-input-stepper">
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                <div class="form-control ui-input-stepper-data-value" data-value-suffix="em" >
+                    <input type="range" class="form-range d-block" name="lineHeightNumber" min="0.1" max="5" step="0.1"  value="1.5">
+                </div>
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+            </div>
+            <div>
+              <div class="form-text mb-0">fontFamily</div>
+              <select name="fontFamily" class="form-select">
+                <option value="sans-serif">sans-serif (기본 글꼴)</option>
+                <option value="serif">serif</option>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Lucida Console">Lucida Console</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Impact">Impact</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Palatino Linotype">Palatino Linotype</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+                <option value="monospace">monospace</option>
+                <option value="cursive">cursive</option>
+                <option value="fantasy">fantasy</option>
+              </select>
+            </div>
+            <div>
+              <div class="form-text mb-0">textPadding</div>
+              <div class="input-group ui-input-stepper">
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                    <input type="range" class="form-range d-block" name="textPaddingNumber" min="-100" max="100" step="1"  value="0">
+                </div>
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+              <input type="hidden" name="textPaddingUnit" value="px">
+            </div>
+            <div>
+              <div class="form-text mb-0">textAlign</div>
+              <select name="textAlign" class="form-select">
+                <option value="start">start</option>
+                <option value="end">end</option>
+                <option value="left">left</option>
+                <option value="center">center</option>
+                <option value="right">right</option>
+              </select>
+            </div>
+            <div>
+              <div class="form-text mb-0">direction</div>
+              <select name="direction" class="form-select">
+                <option value="ltr">Left to Right (기본값)</option>
+                <option value="rtl">Right to Left (아랍어, 히브리어 등)</option>
+              </select>
+            </div>
+            <div>
+              <div class="form-text mb-0">fontKerning(자동 자간 조정)</div>
+              <select name="fontKerning" class="form-select">
+                <option value="auto">auto (기본값)</option>
+                <option value="normal">normal</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+            <!-- fontStretch 지원 안되나? 나중에 다시 테스트해보자  -->
+            <!-- fontVariantCaps 지원 안할꺼라 -->
+            <div>
+              <div class="form-text mb-0">letterSpacing</div>
+              <div class="input-group ui-input-stepper">
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                    <input type="range" class="form-range d-block" name="letterSpacingNumber" min="-50" max="50" step="0.1"  value="0">
+                </div>
+                <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+              <div class="form-text text-end">* 사파리 브라우저 지원 안함</div>
+            </div>
+
+            
+
+            
+
+            
+
+            
+
+           
+          </form>
+        </div>
+      </div>
     </div>
 
+    <div class="my-3">
+      <div class="card">
+        <div class="card-body">
+          <form name="form_layerConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" 
+              onsubmit="
+                if(textlayer){
+                    const layer = textlayer
+                    layer.resize(this.width.value,this.height.value);
+                    layer.flush();
+                } return false">
+                <div>
+                  <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
+                  <div class="input-group">
+                      <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                      <span class="input-group-text" >X</span>
+                      <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                      <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                  </div>
+                </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
   
