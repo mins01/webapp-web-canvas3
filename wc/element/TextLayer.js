@@ -5,12 +5,14 @@ import DrawText from '../draw/DrawText.js';
 import CssLengthUtil from "../lib/CssLengthUtil.js";
 import CssFontUtil from "../lib/CssFontUtil.js";
 import Context2dTextConfig from "../lib/Context2dTextConfig.js";
+import LayerKind from "../lib/LayerKind.js";
 
 export default class TextLayer extends Layer{
     static get keys(){
         return super.keys.concat(['textConfig', 'text'])
     }
 
+    kind = LayerKind.TEXT;
     textConfig = null;
     text = '';
     constructor(w=null,h=null){

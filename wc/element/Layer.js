@@ -1,6 +1,7 @@
 // WcLayer를 wc/element/Canvas로 변경
 
 import Canvas from "./Canvas.js"
+import LayerKind from "../lib/LayerKind.js";
 
 export default class Layer extends Canvas{
 
@@ -10,7 +11,11 @@ export default class Layer extends Canvas{
     static defineCustomElements(name='wc-layer'){
         super.defineCustomElements(name);
     }
+
     
+    kind = LayerKind.NORMAL; 
+    
+
     // x = null;
     // y = null;
     // left = null;

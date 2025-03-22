@@ -5,12 +5,14 @@ import History from "./Document/History.js";
 import Canvas from "./Canvas.js";
 import Layer from "./Layer.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
+import LayerKind from "../lib/LayerKind.js";
 
 export default class Document extends Layer{
     static get keys(){
         return super.keys.concat(['layers'])
     }
 
+    kind = LayerKind.GROUP;
     layers = null;
     history = null;
     drawLayer = null;
