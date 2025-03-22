@@ -16,13 +16,16 @@ export default class HtmlUtil{
         return obj;
     }
     static objectToForm(object,form){
-        for(let k in object){
-            if(form.elements?.[k] !== undefined){
-                form.elements[k].value = object[k].toString(); //checkbox 에선 에러날꺼다.
+        for(let k in form.elements){
+            if(object?.[k] !== undefined){
+                console.log(form.elements?.[k],object[k].toString());
+                
+                
                 if(form.elements[k] instanceof RadioNodeList){
                     const checked = [...form.elements[k]].find((el)=>{return el.checked})
                     // if(checked){ checked.dispatchEvent(new Event('change',{bubbles:true,cancelable:true})) }
                 }else{
+                    form.elements[k].value = object[k].toString(); //checkbox 에선 에러날꺼다.
                     // form.elements[k].dispatchEvent(new Event('change',{bubbles:true,cancelable:true}))
                 }
             }
