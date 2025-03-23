@@ -17,10 +17,8 @@ export default class HtmlUtil{
     }
     static objectToForm(object,form){
         for(let k in form.elements){
-            if(object?.[k] !== undefined){
-                console.log(form.elements?.[k],object[k].toString());
-                
-                
+            if(object?.[k]??false){
+                // console.log(k,form.elements?.[k],object[k].toString());                
                 if(form.elements[k] instanceof RadioNodeList){
                     const checked = [...form.elements[k]].find((el)=>{return el.checked})
                     // if(checked){ checked.dispatchEvent(new Event('change',{bubbles:true,cancelable:true})) }

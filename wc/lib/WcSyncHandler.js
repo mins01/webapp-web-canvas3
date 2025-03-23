@@ -69,13 +69,14 @@ export default class WcSyncHandler{
     // console.log('v',v);
     if(v===null){ return; }
 
-    if(v?.toObject){
-      HtmlUtil.objectToForm(v.toObject(),form)
-    }if(v?.toJSON){
-      HtmlUtil.objectToForm(v.toJSON(),form)
-    }else{
-      HtmlUtil.objectToForm({...v},form)
-    }
+    // if(v?.toObject){
+    //   HtmlUtil.objectToForm(v.toObject(),form)
+    // }if(v?.toJSON){
+    //   HtmlUtil.objectToForm(v.toJSON(),form)
+    // }else{
+    //   HtmlUtil.objectToForm({...v},form)
+    // }
+    HtmlUtil.objectToForm(v,form)
     
   }
 }
