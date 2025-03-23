@@ -21,6 +21,11 @@ export default class TextLayer extends Layer{
 
         this.textConfig = new Context2dTextConfig();
         this.text = '';
+        // this.name = '';// 자동으로 설정됨
+
+        // 테스트용 데이터
+        this.text ="Test TextLayer\nHello canvas!"
+        this.flush();
     }
     static defineCustomElements(name='wc-textlayer'){
         super.defineCustomElements(name);

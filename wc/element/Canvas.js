@@ -18,6 +18,10 @@ class Canvas extends HTMLCanvasElement{
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
     }
+    static getDefaultName(prefix){
+        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
+        return `${prefix}-${rand}`;
+    }
 
 
     name = null;
@@ -35,7 +39,8 @@ class Canvas extends HTMLCanvasElement{
         
         const d = new Date();
         // this.name = [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
-        this.name = `Canvas-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`;
+        // this.name = `Canvas-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`;
+        this.name = this.constructor.getDefaultName(this.constructor.name);
 
 
         this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');

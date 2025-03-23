@@ -33,8 +33,7 @@ export default class Layer extends Canvas{
     visibleByTool = true; // 강제로 숨긴다. (외부에서 설정하지 마라, 툴에서 제어한다.)
     constructor(w=null,h=null){
         super(w,h);
-        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
-        this.name = `Layer-${rand}`;
+        // this.name = '';// 자동으로 설정됨
         
         this.left = 0;
         this.top = 0;

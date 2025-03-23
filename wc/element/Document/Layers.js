@@ -27,9 +27,17 @@ export default class Layers extends SelectableArray{
             this?.document?.editor?.tool?.activate()
         }
     }
-    addLayer(){
+    addLayer(layerClass=null){
         const document = this.document
-        const layer = new Layer(document.width,document.height)
+        if(!layerClass) layerClass = 'Layer';
+        if(!Wc?.[layerClass]??null){
+            throw new Error(`${layerClass}이 없습니다.`);
+        }
+        const layer = new Wc[layerClass](document.width,document.height)
+
+        if(!layer){
+            throw new Error("지정된 레이어 클래스가 없습니다.");
+        }
         this.add(layer);
     }
     cloneLayer(layer=null){
