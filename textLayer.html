@@ -92,7 +92,7 @@
         </div>
       </div>
     </div>
-    <div class="my-3">
+    <!-- <div class="my-3">
       <div class="card">
         <div class="card-body">
           <form name="form_text" action="" oninput="textlayer.setText(this.text.value);textlayer.draw();">
@@ -103,10 +103,17 @@
           </form>
         </div>
       </div>
-    </div>    
+    </div>     -->
     <div class="my-3">
       <div class="card">
         <div class="card-body">
+          <form name="form_text" action="" oninput="textlayer.setText(this.text.value);textlayer.draw();">
+            <div>
+              <div class="form-text mb-0">Text</div>
+              <textarea name="text" rows="5" class="form-control"></textarea>
+            </div>
+          </form>
+          <hr>
           <form name="form_textConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" oninput="textlayer.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));textlayer.draw();" onchange="this.oninput(event);">
             <div>
               <div class="form-text mb-0">색상</div>

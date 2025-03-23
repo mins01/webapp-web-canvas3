@@ -188,6 +188,7 @@
                         <div class="only-shown only-shown-tool-Brush2"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></div>
                         <div class="only-shown only-shown-tool-Brush3"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></div>
                         <div class="only-shown only-shown-tool-Eraser"><i class="bi bi-eraser"></i></div>
+                        <div class="only-shown only-shown-tool-Text"><i class="bi bi-alphabet-uppercase"></i></div>
                         <div class="only-shown only-shown-tool-Spuit"><i class="bi bi-eyedropper"></i></div>
                         <div class="only-shown only-shown-tool-Transform"><i class="bi bi-bounding-box"></i></div>
                         <div class="only-shown only-shown-tool-Move"><i class="bi bi-arrows-move"></i></div>
@@ -201,6 +202,8 @@
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush3" data-bs-toggle="modal" data-bs-target="#modal-brush3-config"><i class="bi bi-sliders"></i></button>
 
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
+
+                        <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Text"  data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-sliders"></i></i></button>
 
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Spuit" disabled><i class="bi bi-sliders"></i></i></button>
 
@@ -225,9 +228,9 @@
                             <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></button></label>
                             <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></button></label>
     
-    
-    
                             <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
+
+                            <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-alphabet-uppercase"></i></button></label>
                             
                             <label role="button" title="tool Spuit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Spuit" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eyedropper"></i></button></label>
     
@@ -598,7 +601,163 @@
         </div>
 
 
+
+
         <div class="modal fade" id="modal-text-config"  aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-4"><i class="bi bi-alphabet-uppercase"></i> Text</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="form_text" action="" 
+                            oninput="editor?.document?.layer?.setText(this.text.value);editor?.document?.layer?.flush();"
+                            data-wc-sync-form="editor.document.layer"
+                            >
+                            <div>
+                                <div class="form-text mb-0">Text</div>
+                                <textarea name="text" rows="5" class="form-control"></textarea>
+                            </div>
+                        </form>
+                        <hr>
+                        <form name="form_textConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));" 
+                            oninput="editor?.document?.layer?.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));editor?.document?.layer?.flush();" onchange="this.oninput(event);"
+                            data-wc-sync-form="editor.document.layer.textConfig"
+                            >
+                            <div>
+                                <div class="form-text mb-0">색상</div>
+                                <div><input type="color" class="form-control form-control-color w-100" name="textColor" value="#000000"></div>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">fontStyle</div>
+                                <select name="fontStyle" class="form-select">
+                                    <option value="normal">normal</option>
+                                    <option value="italic">italic</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">fontWeight</div>
+                                <select name="fontWeight" class="form-select">
+                                    <option value="normal">normal</option>
+                                    <option value="bold">bold</option>
+                                    <!-- <option value="bolder">bolder</option> -->
+                                    <!-- <option value="lighter">lighter</option> -->
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                    <option value="300">300</option>
+                                    <option value="400">400 (normal)</option>
+                                    <option value="500">500</option>
+                                    <option value="600">600</option>
+                                    <option value="700">700 (bold)</option>
+                                    <option value="800">800</option>
+                                    <option value="900">900</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">fontSize(px)</div>
+                                <div class="input-group ui-input-stepper">
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                                        <input type="range" class="form-range d-block" name="fontSizeNumber" min="1" max="200" step="1"  value="10">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">lineHeight(em)</div>
+                                <div class="input-group ui-input-stepper">
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="em" >
+                                        <input type="range" class="form-range d-block" name="lineHeightNumber" min="0.1" max="5" step="0.1"  value="1.5">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">fontFamily</div>
+                                <select name="fontFamily" class="form-select">
+                                    <option value="sans-serif">sans-serif (기본 글꼴)</option>
+                                    <option value="serif">serif</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Verdana">Verdana</option>
+                                    <option value="Helvetica">Helvetica</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Courier New">Courier New</option>
+                                    <option value="Lucida Console">Lucida Console</option>
+                                    <option value="Trebuchet MS">Trebuchet MS</option>
+                                    <option value="Impact">Impact</option>
+                                    <option value="Comic Sans MS">Comic Sans MS</option>
+                                    <option value="Tahoma">Tahoma</option>
+                                    <option value="Palatino Linotype">Palatino Linotype</option>
+                                    <option value="Garamond">Garamond</option>
+                                    <option value="Brush Script MT">Brush Script MT</option>
+                                    <option value="monospace">monospace</option>
+                                    <option value="cursive">cursive</option>
+                                    <option value="fantasy">fantasy</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">textPadding</div>
+                                <div class="input-group ui-input-stepper">
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                                        <input type="range" class="form-range d-block" name="textPaddingNumber" min="-100" max="100" step="1"  value="0">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                                <input type="hidden" name="textPaddingUnit" value="px">
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">textAlign</div>
+                                <select name="textAlign" class="form-select">
+                                    <option value="start">start</option>
+                                    <option value="end">end</option>
+                                    <option value="left">left</option>
+                                    <option value="center">center</option>
+                                    <option value="right">right</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">direction</div>
+                                <select name="direction" class="form-select">
+                                    <option value="ltr">Left to Right (기본값)</option>
+                                    <option value="rtl">Right to Left (아랍어, 히브리어 등)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div class="form-text mb-0">fontKerning(자동 자간 조정)</div>
+                                <select name="fontKerning" class="form-select">
+                                    <option value="auto">auto (기본값)</option>
+                                    <option value="normal">normal</option>
+                                    <option value="none">none</option>
+                                </select>
+                            </div>
+                            <!-- fontStretch 지원 안되나? 나중에 다시 테스트해보자  -->
+                            <!-- fontVariantCaps 지원 안할꺼라 -->
+                            <div>
+                                <div class="form-text mb-0">letterSpacing</div>
+                                <div class="input-group ui-input-stepper">
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                                        <input type="range" class="form-range d-block" name="letterSpacingNumber" min="-50" max="50" step="0.1"  value="0">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                                <div class="form-text text-end">* 사파리 브라우저 지원 안함</div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="modal-text-config-bak"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">

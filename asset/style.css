@@ -120,7 +120,7 @@
 .wc-app[data-tool="Hand"] .only-shown-tool-Hand{display: block;}
 .wc-app[data-tool="Transform"] .only-shown-tool-Transform{display: block;}
 .wc-app[data-tool="Spuit"] .only-shown-tool-Spuit{display: block;}
-
+.wc-app[data-tool="Text"] .only-shown-tool-Text{display: block;}
 
 
 
