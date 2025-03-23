@@ -64,17 +64,20 @@ export default class Spuit extends BaseTool{
     pick(x0,y0){
         super.draw(...arguments);
         const document = this.document;
-        const layer = this.layer;
-        const drawLayer = this.drawLayer;
-        const ctx = layer.ctx;
+        // const layer = this.layer;
+        // const drawLayer = this.drawLayer;
+        // const ctx = layer.ctx;
         
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        // if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
         
         // 레이어 기준으로 좌표 재계산
-        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        // const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
         // console.log(lx0,ly0);
+        
+        const [lx0,ly0] = this.getXyInDocument(x0,y0)
         const imageData = document.ctx.getImageData(lx0,ly0,1,1);
         const [r, g, b, a] = imageData.data; // RGBA 값 추출
+        console.log(lx0,ly0,r, g, b, a);
 
         this.color.set(r, g, b);
         // console.log(this.color);
