@@ -24,7 +24,7 @@ class Context2dTextConfig extends BaseConfig{
     paddingNumber = "0";
     paddingUnit = "px";
     textAlign = "start";
-    textBaseline = "alphabetic";
+    textBaseline = "alphabetic"; //lineHeight 기준으로 위치하게 됨. 이 설정은 의미가 없음.
     direction = "ltr";
     fontKerning = "auto";
     fontStretch = "normal";
