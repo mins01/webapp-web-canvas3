@@ -89,17 +89,26 @@ class Context2dTextConfig extends BaseConfig{
     set lineHeight(v){ 
         const r = CssLengthUtil.parse(v); this.lineHeightNumber = r.number; this.lineHeightUnit = r.unit;
     }
+    get lineHeightPx(){
+        return CssLengthUtil.pxBasedOnFontSize(this.lineHeight,this.fontSize);
+    }
     get textPadding(){
         return this.textPaddingNumber+this.textPaddingUnit;
     }
     set textPadding(v){ 
         const r = CssLengthUtil.parse(v); this.textPaddingNumber = r.number; this.textPaddingUnit = r.unit; 
     }
+    get textPaddingPx(){
+        return CssLengthUtil.pxBasedOnFontSize(this.textPadding,this.fontSize);
+    }
     get letterSpacing(){
         return this.letterSpacingNumber+this.letterSpacingUnit;
     }
     set letterSpacing(v){ 
         const r = CssLengthUtil.parse(v); this.letterSpacingNumber = r.number; this.letterSpacingUnit = r.unit; 
+    }
+    get letterSpacingPx(){
+        return CssLengthUtil.pxBasedOnFontSize(this.letterSpacing,this.fontSize);
     }
     
 

@@ -625,20 +625,21 @@
                             oninput="editor?.document?.layer?.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));editor?.document?.layer?.flush();" onchange="this.oninput(event);"
                             data-wc-sync-form="editor.document.layer.textConfig"
                             >
-                            <div>
-                                <div class="form-text mb-0">색상</div>
-                                <div><input type="color" class="form-control form-control-color w-100" name="textColor" value="#000000"></div>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">fontStyle</div>
-                                <select name="fontStyle" class="form-select">
+                            <div class="grid-auto-fit-260px gap-3">
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-palette"></i> Color</div>
+                                  <div><input type="color" class="form-control form-control-color w-100" name="textColor" value="#000000"></div>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-type-italic"></i> fontStyle</div>
+                                  <select name="fontStyle" class="form-select">
                                     <option value="normal">normal</option>
                                     <option value="italic">italic</option>
-                                </select>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">fontWeight</div>
-                                <select name="fontWeight" class="form-select">
+                                  </select>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-type-bold"></i> fontWeight</div>
+                                  <select name="fontWeight" class="form-select">
                                     <option value="normal">normal</option>
                                     <option value="bold">bold</option>
                                     <!-- <option value="bolder">bolder</option> -->
@@ -652,31 +653,31 @@
                                     <option value="700">700 (bold)</option>
                                     <option value="800">800</option>
                                     <option value="900">900</option>
-                                </select>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">fontSize(px)</div>
-                                <div class="input-group ui-input-stepper">
+                                  </select>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-plus-slash-minus"></i> fontSize(px)</div>
+                                  <div class="input-group ui-input-stepper">
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
                                         <input type="range" class="form-range d-block" name="fontSizeNumber" min="1" max="200" step="1"  value="10">
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                  </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">lineHeight(em)</div>
-                                <div class="input-group ui-input-stepper">
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-distribute-vertical"></i> lineHeight(em)</div>
+                                  <div class="input-group ui-input-stepper">
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="em" >
                                         <input type="range" class="form-range d-block" name="lineHeightNumber" min="0.1" max="5" step="0.1"  value="1.5">
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                  </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">fontFamily</div>
-                                <select name="fontFamily" class="form-select">
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-type"></i> fontFamily</div>
+                                  <select name="fontFamily" class="form-select">
                                     <option value="sans-serif">sans-serif (기본 글꼴)</option>
                                     <option value="serif">serif</option>
                                     <option value="Arial">Arial</option>
@@ -696,57 +697,58 @@
                                     <option value="monospace">monospace</option>
                                     <option value="cursive">cursive</option>
                                     <option value="fantasy">fantasy</option>
-                                </select>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">textPadding</div>
-                                <div class="input-group ui-input-stepper">
+                                  </select>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-distribute-horizontal"></i> textPadding</div>
+                                  <div class="input-group ui-input-stepper">
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
                                         <input type="range" class="form-range d-block" name="textPaddingNumber" min="-100" max="100" step="1"  value="0">
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                  </div>
+                                  <input type="hidden" name="textPaddingUnit" value="px">
                                 </div>
-                                <input type="hidden" name="textPaddingUnit" value="px">
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">textAlign</div>
-                                <select name="textAlign" class="form-select">
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-text-center"></i> textAlign</div>
+                                  <select name="textAlign" class="form-select">
                                     <option value="start">start</option>
                                     <option value="end">end</option>
                                     <option value="left">left</option>
                                     <option value="center">center</option>
                                     <option value="right">right</option>
-                                </select>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">direction</div>
-                                <select name="direction" class="form-select">
+                                  </select>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-signpost-split"></i> direction</div>
+                                  <select name="direction" class="form-select">
                                     <option value="ltr">Left to Right (기본값)</option>
                                     <option value="rtl">Right to Left (아랍어, 히브리어 등)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <div class="form-text mb-0">fontKerning(자동 자간 조정)</div>
-                                <select name="fontKerning" class="form-select">
+                                  </select>
+                                </div>
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-alphabet"></i> fontKerning(자동 자간 조정)</div>
+                                  <select name="fontKerning" class="form-select">
                                     <option value="auto">auto (기본값)</option>
                                     <option value="normal">normal</option>
                                     <option value="none">none</option>
-                                </select>
-                            </div>
-                            <!-- fontStretch 지원 안되나? 나중에 다시 테스트해보자  -->
-                            <!-- fontVariantCaps 지원 안할꺼라 -->
-                            <div>
-                                <div class="form-text mb-0">letterSpacing</div>
-                                <div class="input-group ui-input-stepper">
+                                  </select>
+                                </div>
+                                <!-- fontStretch 지원 안되나? 나중에 다시 테스트해보자  -->
+                                <!-- fontVariantCaps 지원 안할꺼라 -->
+                                <div>
+                                  <div class="form-label mb-0"><i class="bi bi-distribute-horizontal"></i> letterSpacing</div>
+                                  <div class="input-group ui-input-stepper">
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
                                         <input type="range" class="form-range d-block" name="letterSpacingNumber" min="-50" max="50" step="0.1"  value="0">
                                     </div>
                                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                  </div>
+                                  <div class="form-text text-end">* 사파리 브라우저 지원 안함</div>
                                 </div>
-                                <div class="form-text text-end">* 사파리 브라우저 지원 안함</div>
-                            </div>
+                              </div>
                             
                         </form>
                     </div>
