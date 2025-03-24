@@ -84,8 +84,8 @@ class Context2dConfig extends BaseConfig{
 
 // enumerable. 열거가능처리.
 // [
-//     // 'font','fontSize','lineHeight','textPadding',
-//     // 'lineHeightPx','textPaddingPx',
+//     // 'font','fontSize','lineHeight','padding',
+//     // 'lineHeightPx','paddingPx',
 //     // 'letterSpacing',
 //     'fillAfterStroke','disableStroke','disableFill'].forEach((v)=>{
 // 	const d = Object.getOwnPropertyDescriptor(Context2dConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dConfig.prototype,v,d);   

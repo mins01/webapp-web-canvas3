@@ -1,7 +1,7 @@
 export default class DrawText{
 
     static draw(ctx,textConfig,text,w,h,x,y){
-        const padding = textConfig.textPaddingPx;
+        const padding = textConfig.paddingPx;
         let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2),h-(padding*2));
         this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2));
     }

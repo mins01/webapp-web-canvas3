@@ -61,7 +61,7 @@
 
       window.addEventListener('load',(evnet)=>{
         const textlayer = window.textlayer = document.querySelector('#textlayer')
-        textlayer.textConfig.textPaddingNumber = 20;
+        textlayer.textConfig.paddingNumber = 20;
         textlayer.textConfig.fontSizeNumber = 20;
         textlayer.setText('ABCDXYAV\n한글은 잘 되나요? 잘 되겠죠?\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy\nyyyyyy');
         textlayer.draw();
@@ -193,15 +193,15 @@
                 </select>
               </div>
               <div>
-                <div class="form-label mb-0"><i class="bi bi-distribute-horizontal"></i> textPadding</div>
+                <div class="form-label mb-0"><i class="bi bi-distribute-horizontal"></i> padding</div>
                 <div class="input-group ui-input-stepper">
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                   <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                      <input type="range" class="form-range d-block" name="textPaddingNumber" min="-100" max="100" step="1"  value="0">
+                      <input type="range" class="form-range d-block" name="paddingNumber" min="-100" max="100" step="1"  value="0">
                   </div>
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
-                <input type="hidden" name="textPaddingUnit" value="px">
+                <input type="hidden" name="paddingUnit" value="px">
               </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-text-center"></i> textAlign</div>

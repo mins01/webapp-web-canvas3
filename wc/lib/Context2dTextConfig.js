@@ -20,9 +20,9 @@ class Context2dTextConfig extends BaseConfig{
     //-- font
 
     textColor = "#000000";
-    // textPadding = "0px";
-    textPaddingNumber = "0";
-    textPaddingUnit = "px";
+    // padding = "0px";
+    paddingNumber = "0";
+    paddingUnit = "px";
     textAlign = "start";
     textBaseline = "alphabetic";
     direction = "ltr";
@@ -37,9 +37,9 @@ class Context2dTextConfig extends BaseConfig{
 
     constructor(ctx=null){
         const proxyConfig = {
-            number:['fontSizeNumber','lineHeightNumber','textPaddingNumber','letterSpacingNumber',],
+            number:['fontSizeNumber','lineHeightNumber','paddingNumber','letterSpacingNumber',],
             boolean:null,
-            keys:['font','fontStretch','lineHeight','textColor','textPadding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing',]
+            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing',]
         }
         const proxy = super(proxyConfig);
         proxy.reset();
@@ -92,14 +92,14 @@ class Context2dTextConfig extends BaseConfig{
     get lineHeightPx(){
         return CssLengthUtil.pxBasedOnFontSize(this.lineHeight,this.fontSize);
     }
-    get textPadding(){
-        return this.textPaddingNumber+this.textPaddingUnit;
+    get padding(){
+        return this.paddingNumber+this.paddingUnit;
     }
-    set textPadding(v){ 
-        const r = CssLengthUtil.parse(v); this.textPaddingNumber = r.number; this.textPaddingUnit = r.unit; 
+    set padding(v){ 
+        const r = CssLengthUtil.parse(v); this.paddingNumber = r.number; this.paddingUnit = r.unit; 
     }
-    get textPaddingPx(){
-        return CssLengthUtil.pxBasedOnFontSize(this.textPadding,this.fontSize);
+    get paddingPx(){
+        return CssLengthUtil.pxBasedOnFontSize(this.padding,this.fontSize);
     }
     get letterSpacing(){
         return this.letterSpacingNumber+this.letterSpacingUnit;
@@ -120,9 +120,9 @@ class Context2dTextConfig extends BaseConfig{
         // this.fontSizeNumber = "10"; //px 만 지원하자. 우선은...
         // this.fontSizeUnit = "px"; //px 만 지원하자. 우선은...
         this.textColor = "#000000";
-        this.textPadding = "0px";
-        // this.textPaddingNumber = "0";
-        // this.textPaddingUnit = "px";
+        this.padding = "0px";
+        // this.paddingNumber = "0";
+        // this.paddingUnit = "px";
         this.textAlign = "start";
         this.lineHeight = "1.5em"
         // this.lineHeightNumber = "1.5";
@@ -148,7 +148,7 @@ class Context2dTextConfig extends BaseConfig{
 
 
 // enumerable. 열거가능처리. proxy의 keys 에서 처리함
-// ['font','fontSize','lineHeight','textPadding', 'letterSpacing',].forEach((v)=>{
+// ['font','fontSize','lineHeight','padding', 'letterSpacing',].forEach((v)=>{
 // 	const d = Object.getOwnPropertyDescriptor(Context2dTextConfig.prototype,v); d.enumerable=true; Object.defineProperty(Context2dTextConfig.prototype,v,d);   
 // })
 

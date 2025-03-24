@@ -57,7 +57,7 @@ export default class TextLayer extends Layer{
         
         //== for debug
         // ctx.save();
-        // ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.textPadding,this.contextConfig.fontSize)*2;       
+        // ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.padding,this.contextConfig.fontSize)*2;       
         // ctx.strokeStyle = '#ccbbaa80';
         // ctx.fillStyle = '#aabbcc80';
         
