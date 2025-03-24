@@ -41,9 +41,23 @@ export default class DrawText{
         const verticalAlign = textConfig?.verticalAlign??'top';
         const linesH = lineHeight * lines.length;
         
+
+        let maxfontBoundingBoxAscent = 0;
+        let maxFontBoundingBoxDescent = 0;
+        lines.forEach((line) => {
+            const textMetrics = ctx.measureText(line);
+            const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent ??0; //폰트의 baseline 기준 상단 높이 
+            if(maxfontBoundingBoxAscent < fontBoundingBoxAscent ){ maxfontBoundingBoxAscent = fontBoundingBoxAscent ; }
+            const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
+            if(maxFontBoundingBoxDescent < fontBoundingBoxDescent){ maxFontBoundingBoxDescent = fontBoundingBoxDescent; }
+        });
+        const maxFontHeight = maxfontBoundingBoxAscent + maxFontBoundingBoxDescent;
+        const marginAscent = (lineHeight-maxFontHeight)/2;
+
         let x1 = x;
-        let y1 = y+lineHeight;
-        // let y1 = y;
+        // let y1 = y+lineHeight;
+        let y1 = y + marginAscent + maxfontBoundingBoxAscent; // 이 계산으로 textBaseline 에 상관 없이 lineHeight 기준으로 위치 하게 됨
+        // console.log(lineHeight , maxFontHeight , marginAscent,maxfontBoundingBoxAscent);
 
         if(verticalAlign=='top'){
             
@@ -73,22 +87,10 @@ export default class DrawText{
             }
         }
         
-        let maxfontBoundingBoxAscent = 0;
-        let maxFontBoundingBoxDescent = 0;
-        lines.forEach((line) => {
-            const textMetrics = ctx.measureText(line);
-            const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
-            if(maxFontBoundingBoxDescent < fontBoundingBoxDescent){ maxFontBoundingBoxDescent = fontBoundingBoxDescent; }
-            const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent ??0; //폰트의 baseline 기준 상단 높이 
-            if(maxfontBoundingBoxAscent < fontBoundingBoxAscent ){ maxfontBoundingBoxAscent = fontBoundingBoxAscent ; }
-        });
-        const maxFontHeight = maxfontBoundingBoxAscent + maxFontBoundingBoxDescent;
-        const marginAscent = (lineHeight-maxFontHeight)/2;
+
 
         lines.forEach((line) => {
-            ctx.fillText(line, x1, y1 - marginAscent );
-            // console.log(line, x1, y1, marginAscent );
-            
+            ctx.fillText(line, x1, y1  );
             y1+=lineHeight
         });
         ctx.restore();
