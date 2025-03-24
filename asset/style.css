@@ -121,6 +121,7 @@
 .wc-app[data-tool="Transform"] .only-shown-tool-Transform{display: block;}
 .wc-app[data-tool="Spuit"] .only-shown-tool-Spuit{display: block;}
 .wc-app[data-tool="Text"] .only-shown-tool-Text{display: block;}
+.wc-app[data-tool="Text"] .only-hidden-tool-Text{display: none;}
 
 
 

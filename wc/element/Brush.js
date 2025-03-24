@@ -158,7 +158,7 @@ export default class Brush extends Layer{
             const o = Math.round(brushConfig.opacity*255);           
             Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,170)
         }
-        this.dispatchEvent( new CustomEvent("draw", { }) );
+        this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     }
 
     /**

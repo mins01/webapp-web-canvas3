@@ -54,32 +54,16 @@ export default class TextLayer extends Layer{
         const ctx = this.ctx;
         this.ctx.clearRect(0,0,this.width,this.height);
 
-        
-        //== for debug
-        // ctx.save();
-        // ctx.lineWidth = CssLengthUtil.pxBasedOnFontSize(this.contextConfig.padding,this.contextConfig.fontSize)*2;       
-        // ctx.strokeStyle = '#ccbbaa80';
-        // ctx.fillStyle = '#aabbcc80';
-        
-        // ctx.beginPath();
-        // ctx.rect(0, 0, this.width,this.height);        
-        // if(ctx.fillAfterStroke??true){ ctx.fill(); ctx.stroke(); }else{ ctx.stroke(); ctx.fill(); }
-        // ctx.closePath();
-        // ctx.restore();
-        //== for debug
-
-
         // ctx.save();
         this.contextConfig.assignTo(ctx,true);
         this.textConfig.assignTo(ctx);
-
-
-        let {fontSize} = CssFontUtil.parse(ctx.font);        
+        // let {fontSize} = CssFontUtil.parse(ctx.font);        
 
         if(this.text?.length){
             const textConfig = this.textConfig;            
             DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 );
-        }        
-        // ctx.restore();
+        }
+
+        this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     }
 }

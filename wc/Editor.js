@@ -15,6 +15,7 @@ import Document from "./element/Document.js";
 
 import EditorConfig from "./lib/EditorConfig.js";
 import Layer from "./element/Layer.js";
+import LayerKind from "./lib/LayerKind.js";
 
 export default class Editor{
     brush = null;
@@ -100,16 +101,22 @@ export default class Editor{
             }
         })
 
-        
-        if(window.document.querySelector('#btn-palette')){
-            window.document.querySelector('#btn-palette').style.backgroundColor = this.contextConfig.foreColor
-        }
-        
+        document.querySelectorAll('.wc-bg-foreColor').forEach(el=>{
+            el.style.backgroundColor = this.contextConfig.foreColor
+        })
     }
     setTextConfig(conf){
+        if(this.document.layer.kind != LayerKind.TEXT){
+            return;
+        }
         // Object.assign(this.textConfig,conf);        
-        this.textConfig.assignFrom(conf);
-        this.document?.setTextConfig(this.textConfig.toObject());
+        // this.textConfig.assignFrom(conf);
+        // this.document?.setTextConfig(this.textConfig.toObject());
+        this.document.layer.textConfig.assignFrom(conf)
+        this.document.layer.flush();
+        document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
+            el.style.backgroundColor = this.document.layer.textConfig.textColor
+        })
     }
     setBrushConfig(conf,brushKey='0'){
         let brush = this?.[brushKey];

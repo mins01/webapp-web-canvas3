@@ -98,58 +98,13 @@ export default class Text extends BaseTool{
 
         drawLayer.flush()
     }
-
-    // textToLines(text,w,h){
-    //     const ctx = this.drawLayer.ctx;
-    //     const lineHeight = ctx.lineHeight??parseInt(ctx.font,10)??8;
-
-    //     const lines = [];
-    //     let chars = [...text];
-    //     // console.log(chars);
-        
-
-    //     let line = '';
-    //     let h1 = lineHeight;
-    //     chars.forEach(ch => {
-    //         if(h1>h){
-    //             return
-    //         }else if(ch==='\n'){
-    //             lines.push(line);
-    //             h1+=lineHeight;
-    //             line = '';
-    //         }else if(ctx.measureText(line+ch).width <= w){
-    //             line += ch;
-    //         }else{
-    //             lines.push(line);
-    //             h1+=lineHeight;
-    //             line = ch;
-    //         }
-    //     });
-    //     if(h1>h){}
-    //     else if(line !== ''){ 
-    //         lines.push(line); 
-    //         h1+=lineHeight; 
-    //     }
-    //     return lines;
-    // }
-    // drawTextLines(lines,x,y){
-    //     const ctx = this.drawLayer.ctx;
-    //     const lineHeight = ctx.lineHeight??parseInt(ctx.font,10)??8;
-        
-        
-        
-    //     let x1 = x;
-    //     let y1 = y+lineHeight;
-    //     console.log(lineHeight,x1,y1);
-
-    //     lines.forEach((line,index) => {
-    //         console.log(line,x1,y1);
-            
-    //         ctx.fillStyle = "black";
-    //         ctx.fillText(line, x1, y1);
-    //         y1+=lineHeight
-    //     });
-    // }
+	ready(){
+        const textColor = this?.layer?.textConfig?.textColor??'#000000'
+        globalThis.window.document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
+            el.style.backgroundColor = textColor
+        })
+        super.ready();
+	}
 
 
 }
