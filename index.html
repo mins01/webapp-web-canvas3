@@ -196,19 +196,18 @@
             <div class="wc-app-header">
                 <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
-                    <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="button" onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur()">
-                        <div class="only-shown only-shown-tool-Brush"><i class="bi bi-brush"></i></div>
-                        <!-- <div class="only-shown only-shown-tool-Brush1"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">1</sub></div> -->
-                        <div class="only-shown only-shown-tool-Brush2"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></div>
-                        <div class="only-shown only-shown-tool-Brush3"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></div>
-                        <div class="only-shown only-shown-tool-Eraser"><i class="bi bi-eraser"></i></div>
-                        <div class="only-shown only-shown-tool-Text"><i class="bi bi-alphabet-uppercase"></i></div>
-                        <div class="only-shown only-shown-tool-Spuit"><i class="bi bi-eyedropper"></i></div>
-                        <div class="only-shown only-shown-tool-Transform"><i class="bi bi-bounding-box"></i></div>
-                        <div class="only-shown only-shown-tool-Move"><i class="bi bi-arrows-move"></i></div>
-                        <div class="only-shown only-shown-tool-Hand"><i class="bi bi-hand-index"></i></div>
-
-                    </button>
+                    <div onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur();">
+                        <div class="only-shown only-shown-tool-Brush"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i></button></div>
+                        <!-- <div class="only-shown only-shown-tool-Brush1 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></div> -->
+                        <div class="only-shown only-shown-tool-Brush2 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></div>
+                        <div class="only-shown only-shown-tool-Brush3 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></div>
+                        <div class="only-shown only-shown-tool-Eraser"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eraser"></i></button></div>
+                        <div class="only-shown only-shown-tool-Text"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-alphabet-uppercase"></i></button></div>
+                        <div class="only-shown only-shown-tool-Spuit"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eyedropper"></i></button></div>
+                        <div class="only-shown only-shown-tool-Transform"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-bounding-box"></i></button></div>
+                        <div class="only-shown only-shown-tool-Move"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-arrows-move"></i></button></div>
+                        <div class="only-shown only-shown-tool-Hand"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-hand-index"></i></button></div>
+                    </div>
                     <div>
                         <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
                         <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush1" data-bs-toggle="modal" data-bs-target="#modal-brush1-config"><i class="bi bi-sliders"></i></button> -->
@@ -232,7 +231,7 @@
                         <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
                     </div>
                     <div class="only-shown only-shown-tool-Text">
-                        <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor position-relative" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i><div class="position-absolute bottom-0" style="left:0;right:0;"><i class="bi bi-alphabet-uppercase" style="color: #fff;"></i></div></button>
+                        <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor position-relative" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;" onclick="cpForeColor.setPreview(editor?.document?.layer?.textConfig?.textColor??'#000000')"><i class="bi bi-palette" style="color: #fff;"></i><div class="position-absolute bottom-0" style="left:0;right:0;"><i class="bi bi-alphabet-uppercase" style="color: #fff;"></i></div></button>
                     </div>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
                     <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-setting"><i class="bi bi-gear"></i></button>
@@ -243,9 +242,9 @@
                             <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
                             <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
                             <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
-                            <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">1</sub></button></label> -->
-                            <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">2</sub></button></label>
-                            <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i><sub style="margin-left:-0.5em">3</sub></button></label>
+                            <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></label> -->
+                            <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
+                            <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
     
                             <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);wcApp.dataset.tool=this.value"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
 
