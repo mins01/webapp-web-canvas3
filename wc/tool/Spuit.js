@@ -38,12 +38,13 @@ export default class Spuit extends BaseTool{
     onpointerup(event){
         this.brush.pointerEvent = event;
 
-        globalThis.cpForeColor.set(this.color.toHex())
+        // globalThis.cpForeColor.set(this.color.toHex())
+        globalThis.cpForeColor.setPreview(this.color.toHex())
         globalThis.modalHandler.get('modal-color-palette').show()
 
-        const obj = {'foreColor':this.color.toHex()}
-        this.editor.setContextConfig(obj);
-        localStorage.setItem('foreColor',this.color.toHex())
+        // const obj = {'foreColor':this.color.toHex()}
+        // this.editor.setContextConfig(obj);
+        // localStorage.setItem('foreColor',this.color.toHex())
 
         return super.onpointerup(event);
     }
@@ -81,7 +82,7 @@ export default class Spuit extends BaseTool{
 
         this.color.set(r, g, b);
         // console.log(this.color);
-        window.document.querySelector('#btn-palette').style.backgroundColor = this.color.toHex()
+        // window.document.querySelector('#btn-palette').style.backgroundColor = this.color.toHex()
     }
 
 
