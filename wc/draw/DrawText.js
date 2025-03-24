@@ -43,6 +43,7 @@ export default class DrawText{
         
         let x1 = x;
         let y1 = y+lineHeight;
+        // let y1 = y;
 
         if(verticalAlign=='top'){
             
@@ -71,10 +72,23 @@ export default class DrawText{
                 x1 = x+w;
             }
         }
-        const textMetrics = ctx.measureText(lines[0]);
-        const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
+        
+        let maxfontBoundingBoxAscent = 0;
+        let maxFontBoundingBoxDescent = 0;
         lines.forEach((line) => {
-            ctx.fillText(line, x1, y1-fontBoundingBoxDescent);
+            const textMetrics = ctx.measureText(line);
+            const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
+            if(maxFontBoundingBoxDescent < fontBoundingBoxDescent){ maxFontBoundingBoxDescent = fontBoundingBoxDescent; }
+            const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent ??0; //폰트의 baseline 기준 상단 높이 
+            if(maxfontBoundingBoxAscent < fontBoundingBoxAscent ){ maxfontBoundingBoxAscent = fontBoundingBoxAscent ; }
+        });
+        const maxFontHeight = maxfontBoundingBoxAscent + maxFontBoundingBoxDescent;
+        const marginAscent = (lineHeight-maxFontHeight)/2;
+
+        lines.forEach((line) => {
+            ctx.fillText(line, x1, y1 - marginAscent );
+            // console.log(line, x1, y1, marginAscent );
+            
             y1+=lineHeight
         });
         ctx.restore();
