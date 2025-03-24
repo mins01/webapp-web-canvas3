@@ -38,9 +38,19 @@ export default class DrawText{
     static drawTextLines(ctx,textConfig,lines,x,y,w,h){
         ctx.save();
         const lineHeight = textConfig.lineHeightPx; 
+        const verticalAlign = textConfig?.verticalAlign??'top';
+        const linesH = lineHeight * lines.length;
         
         let x1 = x;
         let y1 = y+lineHeight;
+
+        if(verticalAlign=='top'){
+            
+        }else if(verticalAlign=='bottom'){
+            y1 += h-linesH
+        }else if(verticalAlign=='middle'){
+            y1 += Math.round((h-linesH)/2)
+        }
         
         if(ctx.textAlign=='center'){
             x1 = x+(w / 2);
@@ -61,8 +71,10 @@ export default class DrawText{
                 x1 = x+w;
             }
         }
+        const textMetrics = ctx.measureText(lines[0]);
+        const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
         lines.forEach((line) => {
-            ctx.fillText(line, x1, y1);
+            ctx.fillText(line, x1, y1-fontBoundingBoxDescent);
             y1+=lineHeight
         });
         ctx.restore();

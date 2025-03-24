@@ -35,11 +35,13 @@ class Context2dTextConfig extends BaseConfig{
     textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
     wordSpacing = "0px"; //20250107. 사파리에서 지원 안됨.
 
+    verticalAlign = "top"; //top, middle, bottom
+
     constructor(ctx=null){
         const proxyConfig = {
             number:['fontSizeNumber','lineHeightNumber','paddingNumber','letterSpacingNumber',],
             boolean:null,
-            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing',]
+            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing','verticalAlign']
         }
         const proxy = super(proxyConfig);
         proxy.reset();
@@ -137,6 +139,7 @@ class Context2dTextConfig extends BaseConfig{
         // this.letterSpacingUnit = "px";
         this.textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
+        this.verticalAlign = "top";
     }
 
     assignTo(context){
