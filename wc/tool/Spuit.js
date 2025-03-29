@@ -53,7 +53,7 @@ export default class Spuit extends BaseTool{
         const [lx0,ly0] = this.getXyInDocument(x0,y0)
         const imageData = document.ctx.getImageData(lx0,ly0,1,1);
         const [r, g, b, a] = imageData.data; // RGBA 값 추출
-        console.log(lx0,ly0,r, g, b, a);
+        // console.log(lx0,ly0,r, g, b, a);
         this.color.set(r, g, b);
     }
 
