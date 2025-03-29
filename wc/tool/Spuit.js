@@ -7,7 +7,7 @@ export default class Spuit extends BaseTool{
     color = null;
     constructor(editor){
         super(editor);
-        this.name = 'Brush';
+        this.name = 'Spuit';
         this.brush = this.editor.brush;
         this.color = new Color()
     }
@@ -39,8 +39,8 @@ export default class Spuit extends BaseTool{
         this.brush.pointerEvent = event;
 
         // globalThis.cpForeColor.set(this.color.toHex())
-        globalThis.cpForeColor.setPreview(this.color.toHex())
         globalThis.modalHandler.get('modal-color-palette').show()
+        globalThis.cpForeColor.setPreview(this.color.toHex())
 
         // const obj = {'foreColor':this.color.toHex()}
         // this.editor.setContextConfig(obj);
