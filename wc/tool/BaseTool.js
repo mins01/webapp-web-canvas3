@@ -15,7 +15,7 @@ export default class BaseTool {
 	// y = null;
 	x1 = null;
 	y1 = null;
-	
+	able = true; //툴 사용가능 상태
 	
 	constructor(editor){
 		this.editor = editor;
@@ -51,6 +51,7 @@ export default class BaseTool {
 		this.init();
 		this.ready();
 		this?.document?.flush();
+		this.editor.dispatchEvent(new CustomEvent('wc.tool.activate',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:this.name, tool:this } }));
 	}
 
 	/** 
@@ -58,17 +59,20 @@ export default class BaseTool {
 	 */
 	inactivate(){
 		console.log('tool-inactivate',this.name);
+		this.editor.dispatchEvent(new CustomEvent('wc.tool.inactivate',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:this.name, tool:this } }));
 	}
 
 	/** 추가적인 확정 동작이 필요할 경우 호출 */
 	confirm(){
 		console.log('tool-confirm',this.name);
+		this.editor.dispatchEvent(new CustomEvent('wc.tool.confirm',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:this.name, tool:this } }));
 	}
 
 	/** 동작 취소가 필요할 경우 호출. 초기화 시킨다. */
 	cancel(){
 		console.log('tool-cancel',this.name);
 		this.downAt = null;
+		this.editor.dispatchEvent(new CustomEvent('wc.tool.cancel',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:this.name, tool:this } }));
 	}
 
 

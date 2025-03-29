@@ -2,11 +2,12 @@ import BaseTool from './BaseTool.js';
 import DrawText from '../draw/DrawText.js';
 
 import CssLengthUtil from '../lib/CssLengthUtil.js';
+import LayerKind from '../lib/LayerKind.js';
 
 export default class Text extends BaseTool{
     constructor(editor){
         super(editor);
-        this.name = 'text';
+        this.name = 'Text';
         this.editor = editor;
 
         // this.x0 = null;
@@ -19,6 +20,22 @@ export default class Text extends BaseTool{
         super.start();
         this.ready();
     }
+
+	/** 
+	 * 활성화 : 툴이 선택 되면
+	 */
+	activate(){
+		super.activate();
+        if(this.layer.kind != LayerKind.TEXT){
+            console.log(`Only text layer are supported. (${this.layer.kind})`);
+            this.able = false;
+        }else{
+            this.able = true;
+        }
+        console.log();
+	}
+
+
     onpointerdown(event){
         super.onpointerdown(event);
         // const [x,y] = this.getXyFromEvent(event);

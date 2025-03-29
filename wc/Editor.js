@@ -512,4 +512,11 @@ export default class Editor{
         this.utt.left =layer.left
         this.utt.top =layer.top
     }
+
+
+
+
+    dispatchEvent(customEvent){
+        return this.target.dispatchEvent(customEvent,{})
+    }
 }
