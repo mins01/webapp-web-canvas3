@@ -46,34 +46,38 @@ export default class BaseTool {
 	/** 
 	 * 활성화 : 툴이 선택 되면
 	 */
-	activate(){
-		console.log('tool-activate:',this.name);
+	activate(cb=null){
 		this.init();
 		this.ready();
+		if(cb){ cb(); }
 		this?.document?.flush();
 		this.editor.dispatchEvent('wc.tool.activate', { toolName:this.name, tool:this } );
+		console.log('tool-activate:',this.name);
 	}
 
 	/** 
 	 * 비활성화 : 다른 툴이 활성화 되면
 	 */
-	inactivate(){
-		console.log('tool-inactivate',this.name);
+	inactivate(cb=null){
+		if(cb){ cb(); }
 		this.editor.dispatchEvent('wc.tool.inactivate', { toolName:this.name, tool:this } );
+		console.log('tool-inactivate',this.name);
 
 	}
 
 	/** 추가적인 확정 동작이 필요할 경우 호출 */
-	confirm(){
-		console.log('tool-confirm',this.name);
+	confirm(cb=null){
+		if(cb){ cb(); }
 		this.editor.dispatchEvent('wc.tool.confirm', { toolName:this.name, tool:this } );
+		console.log('tool-confirm',this.name);
 	}
 
 	/** 동작 취소가 필요할 경우 호출. 초기화 시킨다. */
-	cancel(){
-		console.log('tool-cancel',this.name);
+	cancel(cb=null){
+		if(cb){ cb(); }
 		this.downAt = null;
 		this.editor.dispatchEvent('wc.tool.cancel', { toolName:this.name, tool:this } );
+		console.log('tool-cancel',this.name);
 	}
 
 

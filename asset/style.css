@@ -333,3 +333,14 @@
 
 /* ui-input-stepper */
 .btn-stepper{ width: 3em;}
+
+
+.wc-app[data-tool-enable="true"] .only-enable-tool-enable,
+.wc-app[data-tool-enable="true"] .group-only-enable-tool-enable > *{
+
+}
+.wc-app[data-tool-enable="false"] .only-enable-tool-enable,
+.wc-app[data-tool-enable="false"] .group-only-enable-tool-enable > *{
+  filter: grayscale(0.8);
+  pointer-events: none;
+}
