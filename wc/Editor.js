@@ -516,7 +516,8 @@ export default class Editor{
 
 
 
-    dispatchEvent(customEvent){
-        return this.target.dispatchEvent(customEvent,{})
+    dispatchEvent(event,detail=null){       
+        const ce = (event instanceof CustomEvent)?event:(new CustomEvent(event,{detail,bubbles:true,cancelable:true,composed:true,}));
+        return this.target.dispatchEvent(ce)
     }
 }

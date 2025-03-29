@@ -23,19 +23,20 @@ export default class Tools extends SelectableMap{
         if(this.tool){ this.tool.inactivate(); }
         if(!this.has(toolName)){
             this.load(toolName).then(()=>{
-                console.log('selected tool: '+toolName);
+                
                 this.toolName = toolName;
                 super.select(toolName);
+                this.editor.dispatchEvent('wc.tools.load', { toolName:toolName, tool:this.tool } );
                 if(this.tool){
+                    this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                     this.tool.activate();
-                    this.editor.dispatchEvent(new CustomEvent('wc.tools.select',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:toolName, tool:this.tool } }));
                 }
             }).catch(e=>{console.error(e)});
         }else{
             super.select(toolName);
             if(this.tool){
+                this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                 this.tool.activate();
-                this.editor.dispatchEvent(new CustomEvent('wc.tools.select',{ bubbles:true,cancelable:true,composed:true, detail: { toolName:toolName, tool:this.tool } }));
             } 
         }
     }

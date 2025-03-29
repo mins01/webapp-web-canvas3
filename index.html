@@ -193,6 +193,7 @@
 
             document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
         })
+        window.addEventListener('wc.tools.load',event=>{ console.log(event.type,event.detail); })
         window.addEventListener('wc.tools.select',event=>{ console.log(event.type,event.detail); })
         window.addEventListener('wc.tool.activate',event=>{ console.log(event.type,event.detail); })
         window.addEventListener('wc.tool.inactivate',event=>{ console.log(event.type,event.detail); })
