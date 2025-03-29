@@ -25,14 +25,14 @@ export default class Text extends BaseTool{
 	 * 활성화 : 툴이 선택 되면
 	 */
 	activate(){
-		super.activate();
+		
         if(this.layer.kind != LayerKind.TEXT){
             console.log(`Only text layer are supported. (${this.layer.kind})`);
-            this.able = false;
+            this.enable = false;
         }else{
-            this.able = true;
+            this.enable = true;
         }
-        console.log();
+        super.activate();
 	}
 
 

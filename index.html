@@ -198,6 +198,7 @@
         window.addEventListener('wc.tool.activate',event=>{ 
             console.log(event.type,event.detail); 
             wcApp.dataset.tool = event.detail.toolName;
+            wcApp.dataset.toolEnable = event.detail.tool.enable;
         })
         window.addEventListener('wc.tool.inactivate',event=>{ console.log(event.type,event.detail); })
         window.addEventListener('wc.tool.confirm',event=>{ console.log(event.type,event.detail); })

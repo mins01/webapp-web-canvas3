@@ -15,7 +15,7 @@ export default class BaseTool {
 	// y = null;
 	x1 = null;
 	y1 = null;
-	able = true; //툴 사용가능 상태
+	enable = true; //툴 사용가능 상태
 	
 	constructor(editor){
 		this.editor = editor;
