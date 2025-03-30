@@ -344,3 +344,10 @@
   filter: grayscale(0.8);
   pointer-events: none;
 }
+
+.wc-app[data-tool-enable="true"] .only-display-tool-enable{
+
+}
+.wc-app[data-tool-enable="false"] .only-display-tool-enable{
+  display: none;
+}

@@ -2,6 +2,7 @@ import BaseTool from './BaseTool.js';
 
 export default class Transform extends BaseTool{
     utt = null;
+    targetLayer = null;
     constructor(editor){
         super(editor);
         this.name = 'Transform';
@@ -21,24 +22,26 @@ export default class Transform extends BaseTool{
 
     ready(){
         super.ready();
+        this.targetLayer = this.document.drawLayer;
         this.readyUtt();
         this.draw();
+        
     }
 
     readyUtt(){
         const document = this.document
-        const documentRect = this.documentRect;
+        // const documentRect = this.documentRect;
         // const layer = this.document.layer;
-        const drawLayer = this.document.drawLayer;
-        const mul = document.zoom*drawLayer.zoom
+        const targetLayer = this.targetLayer;
+        const mul = document.zoom*targetLayer.zoom
 
-        let [leftC,topC] =this.getPageXyFromDocumentXy(drawLayer.left+drawLayer.width/2,drawLayer.top+drawLayer.height/2)
+        let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
         
-        this.utt.left = Math.round(leftC - drawLayer.width/2*mul);
-        this.utt.top = Math.round(topC - drawLayer.height/2*mul);
+        this.utt.left = Math.round(leftC - targetLayer.width/2*mul);
+        this.utt.top = Math.round(topC - targetLayer.height/2*mul);
         
-        this.utt.width = drawLayer.width*mul
-        this.utt.height = drawLayer.height*mul
+        this.utt.width = targetLayer.width*mul
+        this.utt.height = targetLayer.height*mul
 
     }
 
@@ -74,11 +77,11 @@ export default class Transform extends BaseTool{
 
 
 
-    onmoveend(){
+    onuttmove(){
         this.draw()
         
     }
-    onresizeend(){
+    onuttresize(){
         this.draw()
     }
     draw(){

@@ -326,10 +326,18 @@
                 <!-- <div class="wc-frame">
                     <canvas id="wc-document" class="wc-document" width="300" height="300" is="wc-document"></canvas>
                 </div> -->
-                <ui-transform-tool id="utt01" class="custom-01 only-shown only-shown-tool-Transform" resizable moveable  width="100" height="100" left="10" top="10" >
-                    <div class="text-center">
-                        TRANSFORM<br>
-                        <i class="bi bi-bounding-box"></i>
+                <ui-transform-tool id="utt01" class="custom-01 only-shown only-shown-tool-Transform only-shown-tool-Text only-display-tool-enable" resizable moveable  width="100" height="100" left="10" top="10" >
+                    <div class="only-shown only-shown-tool-Transform">
+                        <div class="text-center">
+                            TRANSFORM<br>
+                            <i class="bi bi-bounding-box"></i>
+                        </div>
+                    </div>
+                    <div class="only-shown only-shown-tool-Text">
+                        <div class="text-center">
+                            TEXT<br>
+                            <i class="bi bi-alphabet-uppercase"></i>
+                        </div>
                     </div>
                 </ui-transform-tool>
                 <script>
@@ -344,14 +352,28 @@
                             const utt = event.target
                             event.stopPropagation();
                             event.preventDefault();
-                            editor?.tool?.onmoveend()
+                            editor?.tool?.onuttmove()
                         })
                         utt01.addEventListener('utt-resize',(event)=>{
                             const utt = event.target
                             event.stopPropagation();
                             event.preventDefault();
-                            editor?.tool?.onresizeend()
+                            editor?.tool?.onuttresize()
                         })
+
+                        utt01.addEventListener('utt-move-end',(event)=>{ 
+                            const utt = event.target
+                            event.stopPropagation();
+                            event.preventDefault();
+                            editor?.tool?.onuttmoveend()
+                        })
+                        utt01.addEventListener('utt-resize-end',(event)=>{ 
+                            const utt = event.target
+                            event.stopPropagation();
+                            event.preventDefault();
+                            editor?.tool?.onuttresizeend()
+                        })
+
 
                     }
                 </script>

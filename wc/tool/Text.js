@@ -5,6 +5,9 @@ import CssLengthUtil from '../lib/CssLengthUtil.js';
 import LayerKind from '../lib/LayerKind.js';
 
 export default class Text extends BaseTool{
+    utt = null;
+    targetLayer = null;
+
     constructor(editor){
         super(editor);
         this.name = 'Text';
@@ -13,12 +16,29 @@ export default class Text extends BaseTool{
         // this.x0 = null;
         // this.y0 = null;
         this.text= null;
+
+        this.utt = editor.utt;
     }
 
 
     start(){
         super.start();
         this.ready();
+    }
+
+    ready(){
+        const textColor = this?.layer?.textConfig?.textColor??'#000000'
+        const disabled = !(this?.layer?.textConfig??false)
+        globalThis.window.document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
+            el.style.backgroundColor = textColor
+            el.disabled = disabled;
+        })
+
+        super.ready();
+        this.targetLayer = this.document.layer;
+        this.readyUtt();
+        this.draw();
+        
     }
 
 	/** 
@@ -35,6 +55,23 @@ export default class Text extends BaseTool{
             if(cb) cb();
         });
 	}
+
+    readyUtt(){
+        const document = this.document
+        // const documentRect = this.documentRect;
+        // const layer = this.document.layer;
+        const targetLayer = this.targetLayer;
+        const mul = document.zoom*targetLayer.zoom
+
+        let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
+        
+        this.utt.left = Math.round(leftC - targetLayer.width/2*mul);
+        this.utt.top = Math.round(topC - targetLayer.height/2*mul);
+        
+        this.utt.width = targetLayer.width*mul
+        this.utt.height = targetLayer.height*mul
+
+    }
 
 
     onpointerdown(event){
@@ -55,9 +92,10 @@ export default class Text extends BaseTool{
         // this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     end(){
-        super.end();
-        // this.ready();
-
+        if(super.end()===false){return false;}
+        // this.document.history.save(`Tool.${this.constructor.name}`);
+        this.document.history.save(`Tool.${this.constructor.name}`);
+        this.ready();
     }
     input(event){
         super.input(event);
@@ -73,19 +111,60 @@ export default class Text extends BaseTool{
     
 
     draw(x0,y0,x1,y1){
+        const utt = this.utt;
+        const document = this.document
+        const documentRect = this.documentRect;
+        const layer = this.document.layer
+        const targetLayer = this.targetLayer
+        const mul = document.zoom / targetLayer.zoom
+        const ctx = targetLayer.ctx
+
+
+        let docCenterX = (documentRect.right + documentRect.left) / 2
+		let docCenterY = (documentRect.bottom + documentRect.top) / 2
+
+        let leftUttC = utt.left + utt.width/2;
+        let topUttC = utt.top + utt.height/2;
+        // console.log(leftUttC, utt.width/2);
+
+        [leftUttC,topUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
+
+
+        let [leftLC,topLC] = this.getDocumentXyFromPageXy(leftUttC,topUttC);
+        let width = utt.width / mul;      
+        let height = utt.height / mul;
+
+        let left = leftLC - width/2;
+        let top =  topLC - height/2;
+
+        ctx.save();
+        targetLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
+        targetLayer.top = Math.floor(top);
+        targetLayer.width = Math.floor(width);
+        targetLayer.height = Math.floor(height);
+
+        ctx.restore();
+        targetLayer.flush();
+
         super.draw(...arguments);
         
     }
-	ready(){
-        const textColor = this?.layer?.textConfig?.textColor??'#000000'
-        const disabled = !(this?.layer?.textConfig??false)
-        globalThis.window.document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
-            el.style.backgroundColor = textColor
-            el.disabled = disabled;
-        })
 
-        super.ready();
-	}
+
+    onuttmove(){
+        this.draw()
+    }
+    onuttresize(){
+        this.draw()
+    }
+    onuttmoveend(){
+        this.draw()
+        this.document.history.save(`Tool.${this.constructor.name}`);
+    }
+    onuttresizeend(){
+        this.draw()
+        this.document.history.save(`Tool.${this.constructor.name}`);
+    }
 
 
 }
