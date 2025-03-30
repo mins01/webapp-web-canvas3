@@ -37,6 +37,9 @@ export default class Documents extends SelectableArray{
     setTimeout(()=>{
       frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
       frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
+
+      document.history.clear();
+      document.history.save('new document');
     },10)
     this.editor?.tool?.activate();
   }
