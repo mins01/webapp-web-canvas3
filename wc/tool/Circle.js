@@ -55,7 +55,7 @@ export default class Rectangle extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = drawLayer.ctx;
 
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
         const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));

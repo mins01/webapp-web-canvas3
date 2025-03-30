@@ -51,7 +51,7 @@ export default class EraserPen extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = layer.ctx;
         
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
 
         ctx.save();
         this.prepareLayer(ctx);

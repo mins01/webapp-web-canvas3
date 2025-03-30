@@ -52,7 +52,7 @@ export default class Pen extends BaseTool{
         // const ctx = layer.ctx;
         const ctx = drawLayer.ctx;
         
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
 
         drawLayer.clear();
         ctx.save();

@@ -1,3 +1,4 @@
+import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class Brush extends BaseTool{
@@ -14,6 +15,22 @@ export default class Brush extends BaseTool{
         this.brush.ready()        
         this.ready()
     }
+
+    /** 
+     * 활성화 : 툴이 선택 되면
+     */
+    activate(cb=null){        
+        super.activate(()=>{
+            if(this.layer.kind != LayerKind.NORMAL){
+                console.warn(`Only normal layer are supported. (${this.layer.kind})`);
+                this.enable = false;
+            }else{
+                this.enable = true;
+            }
+            if(cb) cb();
+        });
+    }
+
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
         this.brush.pointerEvent = event;
@@ -57,7 +74,7 @@ export default class Brush extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = layer.ctx;
         
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
 
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
@@ -82,7 +99,7 @@ export default class Brush extends BaseTool{
         const drawLayer = this.drawLayer;
         const ctx = layer.ctx;
         
-        if(!layer.drawable){ console.log('drawable',layer.drawable); return; }
+        if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
         
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
