@@ -30,11 +30,18 @@ export default class Layers extends SelectableArray{
     }
     addLayer(layerClass=null){
         const document = this.document
+        const editor = document.editor;
         if(!layerClass) layerClass = 'Layer';
         if(!Wc?.[layerClass]??null){
             throw new Error(`${layerClass}이 없습니다.`);
         }
         const layer = new Wc[layerClass](document.width,document.height)
+
+
+        if(layerClass=='TextLayer'){
+            layer.textConfig.textColor = editor.contextConfig.foreColor
+        }
+
 
         if(!layer){
             throw new Error("지정된 레이어 클래스가 없습니다.");
