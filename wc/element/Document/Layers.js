@@ -108,6 +108,8 @@ export default class Layers extends SelectableArray{
                 let module = Wc?.[layerConf.__class__]
                 if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
                 const layer = module.importFrom(layerConf);
+                console.log(layerConf);
+                
                 // this.document.add(layer);
                 this.add(layer,true);
             });

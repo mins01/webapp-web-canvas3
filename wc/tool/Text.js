@@ -34,6 +34,7 @@ export default class Text extends BaseTool{
             el.disabled = disabled;
         })
 
+        if(disabled){ return false;}
         super.ready();
         this.targetLayer = this.document.layer;
         this.readyUtt();

@@ -77,6 +77,22 @@ class WcHelper{
     document.history.save('new document');
   }
 
+  static newForTest2(editor){
+    const document = editor.newDocument(300,400);
+    let layer = new Wc.Layer(60,80);
+    layer.fill('#f00')
+    layer.left = 200;
+    layer.top = 30;
+    layer.ctx.fillRect(10,10,10,10);
+    
+
+    document.layers.add(layer,false,true)
+    document.layers.addLayer('TextLayer');
+    
+
+    document.history.clear();
+    document.history.save('new document');
+  }
 
   static syncModalBrushPreviewCanvas(f,isEraser=false){
     const modal = f.closest('.modal');
