@@ -17,7 +17,7 @@ export default class Layers extends SelectableArray{
         this.document.readyLayer();
     }
     select(index,withoutHistory=false){
-        if(this.selectedIndex != index){           
+        if(this.selectedIndex != index){
             this?.document?.editor?.tool?.inactivate()
             const r = super.select(index);
             if(!withoutHistory){
@@ -25,6 +25,7 @@ export default class Layers extends SelectableArray{
                 this.document.history.save('Layers.select',true);
             }
             this?.document?.editor?.tool?.activate()
+            this?.document?.editor?.dispatchEvent('wc.document.layers.select', {layers:this,layer:this.selected} );
         }
     }
     addLayer(layerClass=null){
