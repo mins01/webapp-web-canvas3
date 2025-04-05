@@ -38,9 +38,11 @@ export default class Layers extends SelectableArray{
         const layer = new Wc[layerClass](document.width,document.height)
 
 
-        if(layerClass=='TextLayer'){
-            layer.textConfig.textColor = editor.contextConfig.foreColor
-        }
+        // if(layerClass=='TextLayer'){
+        //     // console.log(layer.textConfig.textColor);
+            
+        //     layer.textConfig.textColor = editor.contextConfig.foreColor
+        // }
 
 
         if(!layer){

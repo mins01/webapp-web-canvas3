@@ -1274,7 +1274,7 @@
                               <div class="form-text mb-0">Insert Layer</div>
                               <div class="d-flex gap-3">
                                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i> Normal Layer</button>
-                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer('TextLayer');editor?.document?.layer.flush();"><i class="bi bi-file-text"></i> Text layer</button>
+                                <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer('TextLayer');editor?.document?.layer?.textConfig?.textColor = editor.contextConfig.foreColor; editor?.document?.layer.flush();"><i class="bi bi-file-text"></i> Text layer</button>
                               </div>
                             </div>
                             <hr>
