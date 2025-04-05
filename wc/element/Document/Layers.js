@@ -47,6 +47,7 @@ export default class Layers extends SelectableArray{
             throw new Error("지정된 레이어 클래스가 없습니다.");
         }
         this.add(layer);
+        return layer;
     }
     cloneLayer(layer=null){
         const document = this.document

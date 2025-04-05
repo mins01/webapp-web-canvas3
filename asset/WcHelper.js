@@ -87,7 +87,12 @@ class WcHelper{
     
 
     document.layers.add(layer,false,true)
-    document.layers.addLayer('TextLayer');
+    layer = document.layers.addLayer('TextLayer');
+    layer = document.layers.addLayer('TextLayer');
+    layer.left = 50;
+    layer.top = 50;
+    layer.flush();
+    document?.layers.cloneLayer();
     
 
     document.history.clear();

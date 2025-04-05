@@ -113,6 +113,8 @@ export default class Editor{
         // this.textConfig.assignFrom(conf);
         // this.document?.setTextConfig(this.textConfig.toObject());
         this.document.layer.textConfig.assignFrom(conf)
+        console.log(this.document.layer,this.document.layer.textConfig);
+        
         this.document.layer.flush();
         document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
             el.style.backgroundColor = this.document.layer.textConfig.textColor
