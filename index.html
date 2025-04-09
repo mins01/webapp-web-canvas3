@@ -1856,7 +1856,8 @@
                                 WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
                                 window.addEventListener('load',(event)=>{
                                   // 브러시가 draw 하면 미리보기를 다시 그린다.
-                                  editor.brush.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
+                                  editor.brush.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); console.log(event.target.brushConfig,event.target,editor.brush);
+                                   })
                                   editor.brush2.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
                                   editor.brush3.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
                                   editor.eraser.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target,true); })

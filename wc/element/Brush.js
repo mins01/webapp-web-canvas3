@@ -121,15 +121,12 @@ export default class Brush extends Layer{
         const ctx = this.ctx;
         const size = Math.max(1,parseFloat(brushConfig.size));
 
+        this.applyShapeCanvas(); // 브러시 모양 재적용
+
         this.width = size + this.margin * 2;
         this.height = size + this.margin * 2;
-        
-        
         this.contextConfig.disableStroke = true;
         this.contextConfig.assignTo(ctx,true);
-
-        this.applyShapeCanvas()
-
 
         // const dw = this.width;
         const dw = this.width * brushConfig.scaleX;

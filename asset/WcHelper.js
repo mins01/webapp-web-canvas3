@@ -104,6 +104,7 @@ class WcHelper{
     const preview = modal.querySelector('.brush-preview-canvas');
     const brush = modal.querySelector('canvas[is="wc-brush"]');
     const size = brush.brushConfig.size
+
     preview.ctx.save()
     preview.clear();
     if(isEraser){
