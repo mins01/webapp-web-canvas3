@@ -15,22 +15,22 @@ class BrushConfig extends BaseConfig{
     // 모양: Shape Dynamics
     sizeJitter = 0; //크기 지터
     sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumSizeRatio = 0.25; //최소 크기
+    mininumSizeRatio = 0.1; //최소 크기
     angleJitter = 0; //각도 지터
     angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
     roundnessJitter = 0; // 이거 구현 힘드네..  나중에 하자.
     
     
     roundnessControl = 'off'; // @deprecated 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumRoundness = 0.25; //@deprecated 최소 크기
+    mininumRoundness = 0.1; //@deprecated 최소 크기
 
     scaleYControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumScaleY = 0.25; //최소 크기
+    mininumScaleY = 0.1; //최소 크기
     // transfer
     opacity = 1; // 전체적 불투명도
     opacityJitter = 0
     opacityControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumOpacity = 0.25; //최소 불투명도
+    mininumOpacity = 0.1; //최소 불투명도
     flow = 1; // 하나의 투명도 // 이거 어떻게 할지 모르겠다. 나중에 다시보자.
     flowJitter = 0
     flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
@@ -69,22 +69,22 @@ class BrushConfig extends BaseConfig{
         // 모양: Shape Dynamics
         this.sizeJitter = 0; //크기 지터
         this.sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumSizeRatio = 0.25; //최소 크기
+        this.mininumSizeRatio = 0.1; //최소 크기
         this.angleJitter = 0; //각도 지터
         this.angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this.roundnessJitter = 0;
         
         // this.roundnessControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...        
-        // this.mininumRoundness = 0.25; //최소 크기
+        // this.mininumRoundness = 0.1; //최소 크기
         
         this.scaleYControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumScaleY = 0.25; //최소 크기
+        this.mininumScaleY = 0.1; //최소 크기
 
         // transfer
         this.opacity = 1; // 전체적 불투명도
         this.opacityJitter = 0
         this.opacityControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumOpacity = 0.25; //최소 불투명도
+        this.mininumOpacity = 0.1; //최소 불투명도
         this.flow = 1; // 하나의 투명도
         this.flowJitter = 0 // 구현 안했네.. 뭐하는거지?
         this.flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
