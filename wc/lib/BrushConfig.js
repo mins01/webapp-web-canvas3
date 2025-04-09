@@ -5,7 +5,9 @@ class BrushConfig extends BaseConfig{
     shape = 'circle'; //원
     size = 5; //크기 px . diameter
     angle = 0; //각도 0~1
-    roundness = 1; // 원형율
+    roundness = 1; // 원형율 @deprecated . Please use scaleX, scaleY
+    scaleX = 1; // 너비 배율
+    scaleY = 1; // 높이 배율
     flipX = false; //x 뒤집기. 사용안할 예정
     flipY = false; //y 뒤집기. 사용안할 예정
     hardness = 1; // 경도
@@ -17,8 +19,13 @@ class BrushConfig extends BaseConfig{
     angleJitter = 0; //각도 지터
     angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
     roundnessJitter = 0; // 이거 구현 힘드네..  나중에 하자.
-    roundnessControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumRoundness = 0.25; //최소 크기
+    
+    
+    roundnessControl = 'off'; // @deprecated 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+    mininumRoundness = 0.25; //@deprecated 최소 크기
+
+    scaleYControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+    mininumScaleY = 0.25; //최소 크기
     // transfer
     opacity = 1; // 전체적 불투명도
     opacityJitter = 0
@@ -39,7 +46,7 @@ class BrushConfig extends BaseConfig{
 
     constructor(){
         const proxyConfig = {
-            number:['size','angle','roundness','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter'],
+            number:['size','angle','roundness','scaleX','sacleY','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter'],
             boolean:['flipX','flipY','flattenOpacity',],
         }
         const proxy = super(proxyConfig);
@@ -52,7 +59,9 @@ class BrushConfig extends BaseConfig{
         this.shape = 'circle'; //원
         this.size = 5; //크기 px . diameter
         this.angle = 0; //각도 deg 
-        this.roundness = 1; // 원형율
+        this.roundness = 1; // 원형율 @deprecated .  Please use scaleX, scaleY
+        this.scaleX = 1; // 너비 배율
+        this.scaleY = 1; // 높이 배율
         this.flipX = false; //x 뒤집기. 사용안할 예정
         this.flipY = false; //y 뒤집기. 사용안할 예정
         this.hardness = 1; // 경도
@@ -64,8 +73,13 @@ class BrushConfig extends BaseConfig{
         this.angleJitter = 0; //각도 지터
         this.angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this.roundnessJitter = 0;
-        this.roundnessControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumRoundness = 0.25; //최소 크기
+        
+        // this.roundnessControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...        
+        // this.mininumRoundness = 0.25; //최소 크기
+        
+        this.scaleYControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+        this.mininumScaleY = 0.25; //최소 크기
+
         // transfer
         this.opacity = 1; // 전체적 불투명도
         this.opacityJitter = 0

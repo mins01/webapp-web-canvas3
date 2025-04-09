@@ -131,11 +131,13 @@ export default class Brush extends Layer{
         this.applyShapeCanvas()
 
 
-        const dw = this.width;
-        const dh = this.height * brushConfig.roundness;
+        // const dw = this.width;
+        const dw = this.width * brushConfig.scaleX;
+        // const dh = this.height * brushConfig.roundness;
+        const dh = this.height * brushConfig.scaleY;
         // const dx = 0 - this.margin;
         // const dy = (this.height-dh)/2 - this.margin;
-        const dx = 0
+        const dx = (this.width-dw)/2;
         const dy = (this.height-dh)/2;
 
         // const tx = Math.floor(this.width/2) + this.margin;
@@ -227,14 +229,25 @@ export default class Brush extends Layer{
             }
         }
 
-        const roundnessControl = brushConfig.roundnessControl
-        if(roundnessControl==='off'){ // 아무 설정이 없을 경우
+        // const roundnessControl = brushConfig.roundnessControl
+        // if(roundnessControl==='off'){ // 아무 설정이 없을 경우
 
-        }else if(pointerEvent && roundnessControl==='penTilt'){
+        // }else if(pointerEvent && roundnessControl==='penTilt'){
+        //     const altitudeAngle = pointerEvent.altitudeAngle;
+        //     if(pointerEvent.pointerType=='pen' && brushConfig.mininumRoundness < 1){
+        //         const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mininumRoundness); ctx.scale(1,v)
+        //         // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mininumRoundness);
+        //     }
+        // }
+        
+        const scaleYControl = brushConfig.scaleYControl
+        if(scaleYControl==='off'){ // 아무 설정이 없을 경우
+
+        }else if(pointerEvent && scaleYControl==='penTilt'){
             const altitudeAngle = pointerEvent.altitudeAngle;
-            if(pointerEvent.pointerType=='pen' && brushConfig.mininumRoundness < 1){
-                const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mininumRoundness); ctx.scale(1,v)
-                // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mininumRoundness);
+            if(pointerEvent.pointerType=='pen' && brushConfig.mninumScaleY < 1){
+                const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
+                // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mninumScaleY);
             }
         }
 

@@ -109,7 +109,9 @@
             const b1 = globalThis.b1 = document.querySelector('.b1');
             b1.contextConfig.foreColor="#cc00cc";
             b1.brushConfig.size = 150;
-            b1.brushConfig.roundness = 0.4
+            // b1.brushConfig.roundness = 0.4
+            b1.brushConfig.scaleX = 1
+            b1.brushConfig.scaleY = 0.4
             b1.brushConfig.angle = -0.25;
             b1.brushConfig.sizeJitter = 1;
             b1.brushConfig.angleJitter = 1;
@@ -199,7 +201,7 @@
                         <div class="d-flex flex-column gap-3">
                             <div class="grid-auto-fit-260px gap-3">
                               <div>
-                                <div class="form-label mb-0"><i class="bi bi-circle"></i> Shape(모양)</div>
+                                <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
                                 <select name="shape" class="form-select">
                                   <option value="circle">circle(원)</option>
                                   <option value="square">square(정사각형)</option>
@@ -215,12 +217,33 @@
                                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
                               </div>
+                              <!-- @deprecated
                               <div>
                                 <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> Roundness(원형율)</div>
                                 <div class="input-group ui-input-stepper">
                                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                                   <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
                                     <input type="range" class="form-range d-block" name="roundness" placeholder="roundness" step="0.01" min="0" max="1" value="1" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div> -->
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                    <input type="range" class="form-range d-block" name="scaleX" placeholder="scaleX" step="0.01" min="0" max="1" value="1" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-collapse"></i> SacleY(높이 배율)</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                    <input type="range" class="form-range d-block" name="scaleY" placeholder="scaleY" step="0.01" min="0" max="1" value="1" >
                                   </div>
                                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
@@ -311,16 +334,18 @@
                                 </div>
                               </div>
                               <hr class="my-1">
+
+                              <!-- @deprecated
                               <div>
                                 <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> RoundnessControl</div>
                                 <div class="input-group">
                                   <select class="form-select " name="roundnessControl" >
                                     <option selected value="off">OFF</option>
-                                    <!-- <option value="penPressure">penPressure</option> -->
                                     <option value="penTilt">penTilt</option>
                                   </select>
                                 </div>
-                              </div>
+                              </div> -->
+                              <!-- @deprecated
                               <div>
                                 <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> MninumRoundness</div>
                                 <div class="input-group ui-input-stepper">
@@ -330,7 +355,29 @@
                                   </div>
                                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
+                              </div> -->
+
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> ScaleYControl</div>
+                                <div class="input-group">
+                                  <select class="form-select " name="scaleYControl" >
+                                    <option selected value="off">OFF</option>
+                                    <!-- <option value="penPressure">penPressure</option> -->
+                                    <option value="penTilt">penTilt</option>
+                                  </select>
+                                </div>
                               </div>
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> MninumScaleY</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                    <input type="range" class="form-range d-block" name="mninumScaleY" placeholder="mninumScaleY" step="0.01" min="0" max="1" value="1" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div>
+
                               <hr class="my-1">
                               <div>
                                 <div class="form-label mb-0"><i class="bi bi-radar"></i> AngleControl</div>
