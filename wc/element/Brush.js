@@ -101,13 +101,23 @@ export default class Brush extends Layer{
             ctx.closePath();
             ctx.fill()
         }else{
-            if((shape[0]??'')=='#'){
+            if((shape[0]??'')=='#'){ // 이미지 DOM 관련
                 const brushShapeImage = globalThis.document.querySelector(shape);
                 if(!brushShapeImage || !this.isDrawableElement(brushShapeImage)){
                     console.error(`BrushShapeImage(${shape}) not found.`);
                     return false;
                 }
                 ctx.drawImage(brushShapeImage, this.margin,this.margin,size,size);
+                
+                ctx.globalCompositeOperation = "source-in";
+                const diagonal  = Math.hypot(size,size);
+                const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, Math.ceil(diagonal/2));
+                ctx.fillStyle = gradient;
+               
+                ctx.beginPath();
+                PathShape.rect(ctx,this.margin,this.margin,size,size);
+                ctx.closePath();
+                ctx.fill()
 
             }else{ //failback
                 const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
@@ -337,6 +347,8 @@ export default class Brush extends Layer{
           el instanceof HTMLVideoElement ||
           el instanceof HTMLCanvasElement ||
           el instanceof ImageBitmap ||
+          el instanceof ImageData ||              // raw pixel data
+          el instanceof SVGImageElement ||          // <image> in inline SVG (limited support)
           (typeof OffscreenCanvas !== 'undefined' && el instanceof OffscreenCanvas)
         );
       }
