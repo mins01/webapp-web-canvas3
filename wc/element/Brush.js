@@ -101,13 +101,24 @@ export default class Brush extends Layer{
             ctx.closePath();
             ctx.fill()
         }else{
-            const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            PathShape.circle(ctx,x,y,r);
-            ctx.closePath();
-            ctx.fill()
-            console.error(`This shape(${shape}) is not supported.`);
+            if((shape[0]??'')=='#'){
+                const brushShapeImage = globalThis.document.querySelector(shape);
+                if(!brushShapeImage || !this.isDrawableElement(brushShapeImage)){
+                    console.error(`BrushShapeImage(${shape}) not found.`);
+                    return false;
+                }
+                ctx.drawImage(brushShapeImage, this.margin,this.margin,size,size);
+
+            }else{ //failback
+                const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                PathShape.circle(ctx,x,y,r);
+                ctx.closePath();
+                ctx.fill()
+                console.error(`This shape(${shape}) is not supported.`);
+            }
+            
         }
         
         
@@ -313,4 +324,20 @@ export default class Brush extends Layer{
         }
 
     }
+
+
+
+
+
+
+
+    isDrawableElement(el) {
+        return (
+          el instanceof HTMLImageElement ||
+          el instanceof HTMLVideoElement ||
+          el instanceof HTMLCanvasElement ||
+          el instanceof ImageBitmap ||
+          (typeof OffscreenCanvas !== 'undefined' && el instanceof OffscreenCanvas)
+        );
+      }
 }
