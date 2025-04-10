@@ -1471,12 +1471,12 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrushConfig" data-brush-key="brush" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush.brushConfig" >
+            <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush.brushConfig" >
               <div class="d-flex flex-column gap-3">
                 <div class="grid-auto-fit-260px gap-3">
                   <div>
                     <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
-                    <select name="shape" class="form-select">
+                    <select name="shape" class="form-select shape">
                       <option value="circle">circle(원)</option>
                       <option value="square">square(정사각형)</option>
                     </select>
@@ -1749,7 +1749,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush1Config" data-brush-key="brush1" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush1.brushConfig" >
+            <form name="formBrush1Config" class="form-brush-config" data-brush-key="brush1" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush1.brushConfig" >
             </form>
           </div>
         </div>
@@ -1771,7 +1771,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush2Config" data-brush-key="brush2" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush2.brushConfig" >
+            <form name="formBrush2Config" class="form-brush-config" data-brush-key="brush2" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush2.brushConfig" >
             </form>
           </div>
         </div>
@@ -1793,7 +1793,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush3Config" data-brush-key="brush3" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush3.brushConfig" >
+            <form name="formBrush3Config" class="form-brush-config"  data-brush-key="brush3" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.brush3.brushConfig" >
             </form>
           </div>
         </div>
@@ -1815,7 +1815,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formEraserConfig" data-brush-key="eraser" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.eraser.brushConfig" >
+            <form name="formEraserConfig" class="form-brush-config"  data-brush-key="eraser" action="" oninput="editor.setBrushConfig(Wc.HtmlUtil.formToObject(this),this.dataset.brushKey); return false" data-wc-sync-form="editor.eraser.brushConfig" >
             </form>
           </div>
         </div>
@@ -1860,5 +1860,27 @@
 
   </div>
 
+  <div class="etcs">
+
+    <div id="brush-shapes" class="d-none">
+      <img src="./asset/brush/shape/brush-01.png" id="brush-shape-brush-01"  data-shape-label="브러시-01">
+      <img src="./asset/brush/shape/brush-02.png" id="brush-shape-brush-02"  data-shape-label="브러시-02">
+      <img src="./asset/brush/shape/brush-03.png" id="brush-shape-brush-03"  data-shape-label="브러시-03">
+      <img src="./asset/brush/shape/brush-04.png" id="brush-shape-brush-04"  data-shape-label="브러시-04">
+    </div>
+    <script>
+      window.addEventListener('load',()=>{
+        const shapes = [...document.querySelectorAll('#brush-shapes > *')].map((el)=>{ return el.id?el:null});
+        
+        document.querySelectorAll('.form-brush-config select.shape').forEach((el)=>{
+          shapes.forEach(shape => {
+            el.appendChild(new Option((shape.dataset.shapeLabel??'#'+shape.id),'#'+shape.id,false));
+          });
+        })
+      })
+    </script>
+
+
+  </div>
 </body>
 </html>
