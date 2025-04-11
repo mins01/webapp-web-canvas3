@@ -121,7 +121,7 @@ class WcHelper{
     }
 
 
-    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,1200)
+    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,100)
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
     let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
@@ -129,9 +129,10 @@ class WcHelper{
     let p = points[0]
     brush.ready();
     brush.drawOnDot(preview.ctx,p.x,p.y,pointerEvent);
+    let m2 = points.length/2;
     for(let i=1,m=points.length;i<m;i++){
       let p1 = points[i];
-      let pressure = (i<(m/2)?i:(m/2)-(i-(m/2)))/(m/2);
+      let pressure = (i<m2?i:m-i)/m2;
       // console.log(pressure);
       
       pointerEvent = new PointerEvent('pointerdown',{pressure:pressure});
