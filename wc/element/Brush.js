@@ -328,7 +328,7 @@ export default class Brush extends Layer{
         
         
         if(distance2 < interval){
-            this.lastPointerEvent = {... pointerEvent};
+            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):{};
             return distance2;
             
         }else{
@@ -342,12 +342,10 @@ export default class Brush extends Layer{
                     let x = x0 + t * dx;
                     let y = y0 + t * dy;
                     let pressure = fromPressure + intervalPressure * i
-                    // console.log(i,pressure,fromPressure,toPressure);
 
                     // const brushConfig = {...this.brushConfig};
                     const newPointerEvent = {...pointerEvent};
                     newPointerEvent.pressure = pressure
-                    console.log('newPointerEvent',fromPressure,newPointerEvent.pressure,fromPressure , toPressure);
                     
                     this.dot(ctx,x,y,brushConfig,newPointerEvent,image);
                 }
@@ -366,7 +364,9 @@ export default class Brush extends Layer{
             remainInterval = distance2 % interval;
             this.lastSize = size;
 
-            this.lastPointerEvent = {... pointerEvent};
+            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):{};
+
+            
             return remainInterval;
             
         }

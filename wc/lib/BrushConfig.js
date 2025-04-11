@@ -15,7 +15,7 @@ class BrushConfig extends BaseConfig{
     // 모양: Shape Dynamics
     sizeJitter = 0; //크기 지터
     sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-    mininumSizeRatio = 0.1; //최소 크기
+    mininumSizeRatio = 0.01; //최소 크기
     angleJitter = 0; //각도 지터
     angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
     roundnessJitter = 0; // 이거 구현 힘드네..  나중에 하자.
@@ -69,7 +69,7 @@ class BrushConfig extends BaseConfig{
         // 모양: Shape Dynamics
         this.sizeJitter = 0; //크기 지터
         this.sizeControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumSizeRatio = 0.1; //최소 크기
+        this.mininumSizeRatio = 0.01; //최소 크기
         this.angleJitter = 0; //각도 지터
         this.angleControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
         this.roundnessJitter = 0;
