@@ -37,6 +37,7 @@ export default class Brush extends BaseTool{
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
+        this.brush.ready()
         if(event.pointerType!=='touch'){
             this.drawForDown(this.x0,this.y0)
         }
