@@ -102,9 +102,7 @@ class WcHelper{
   static syncModalBrushPreviewCanvas(f,isEraser=false){
     const modal = f.closest('.modal');
     const preview = modal.querySelector('.brush-preview-canvas');
-    const brush = modal.querySelector('canvas[is="wc-brush"]');
-    console.log(preview.clientWidth);
-    
+    const brush = modal.querySelector('canvas[is="wc-brush"]');    
     preview.width = preview.clientWidth;
     preview.height = preview.clientHeight;
 
@@ -123,12 +121,13 @@ class WcHelper{
     }
 
 
-    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,100)
+    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,1200)
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
     let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
     let remainInterval = 0;
     let p = points[0]
+    brush.ready();
     brush.drawOnDot(preview.ctx,p.x,p.y,pointerEvent);
     for(let i=1,m=points.length;i<m;i++){
       let p1 = points[i];
