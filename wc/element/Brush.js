@@ -188,10 +188,10 @@ export default class Brush extends Layer{
      * @param {number} x 
      * @param {number} y 
      */
-    dot(ctx,x,y){
+    dot(ctx,x,y,brushConfig= this.brushConfig ,pointerEvent = this.pointerEvent ){
         const image = this
-        const brushConfig = this.brushConfig;
-        const pointerEvent = this.pointerEvent
+        // const brushConfig = this.brushConfig;
+        // const pointerEvent = this.pointerEvent
 
         let gx = image.width/2;
         let gy = image.height/2;
@@ -219,6 +219,8 @@ export default class Brush extends Layer{
             }
         }else if(pointerEvent && sizeControl==='penPressure'){
             const pressure = pointerEvent.pressure;
+            console.log(pressure);
+            
             if(pointerEvent.pointerType=='pen'){
                 const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
             }
@@ -323,7 +325,10 @@ export default class Brush extends Layer{
             for (let i = 0; i < steps; i++) {
                 let t = i / steps;
                 let x = x0 + t * dx;
-                let y = y0 + t * dy;   
+                let y = y0 + t * dy;
+                // const brushConfig = {...this.brushConfig};
+                // const pointerEvent = {...this.pointerEvent};
+                // pointerEvent.pressure = 0
                 this.dot(ctx,x,y);
             }
 
