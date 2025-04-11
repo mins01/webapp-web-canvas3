@@ -37,8 +37,8 @@ export default class Brush extends Layer{
         
     }
     ready(){
-        this.pointerEvent = null
-        this.lastPointerEvent = {pressure:0};
+        this.pointerEvent = new PointerEvent('pointerdown',{pressure:0});
+        this.lastPointerEvent = new PointerEvent('pointerdown',{pressure:0});
     }
 
     setBrushConfig(conf){
@@ -192,7 +192,7 @@ export default class Brush extends Layer{
      * @param {BrushConfig|Object} [brushConfig=this.brushConfig] 
      * @param {PointerEvent|Object} [pointerEvent=this.pointerEvent] 
      */
-    dot(ctx,x,y,brushConfig= this.brushConfig ,pointerEvent = this.pointerEvent ,image = this){
+    dot(ctx,x,y,pointerEvent = this.pointerEvent ,brushConfig= this.brushConfig ,image = this){
         // const image = this
         // const brushConfig = this.brushConfig;
         // const pointerEvent = this.pointerEvent
@@ -223,7 +223,7 @@ export default class Brush extends Layer{
             }
         }else if(pointerEvent && sizeControl==='penPressure'){
             const pressure = pointerEvent?.pressure??0.5;
-            // console.log(pressure);
+            // console.log(pressure,pointerEvent);
             const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
             
             // if(pointerEvent.pointerType=='pen'){
@@ -294,7 +294,7 @@ export default class Brush extends Layer{
 
     }
 
-    drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0 , brushConfig= this.brushConfig ,pointerEvent = this.pointerEvent ,image = this) {
+    drawOnLine(ctx,x0, y0, x1, y1 , remainInterval = 0 ,pointerEvent = this.pointerEvent, brushConfig= this.brushConfig  ,image = this) {
         // const image = this
         // const brushConfig = this.brushConfig;
         // const pointerEvent = this.pointerEvent
@@ -328,13 +328,13 @@ export default class Brush extends Layer{
         
         
         if(distance2 < interval){
-            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):{};
+            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
             return distance2;
             
         }else{
             let steps = Math.floor(distance2 / interval);
             if(sizeControl==='penPressure'){ // 부드러운 압력감지의 size변화 처리
-                let fromPressure = this.lastPointerEvent?.pressure??0
+                let fromPressure = this.lastPointerEvent?.pressure??0.5
                 let toPressure = pointerEvent?.pressure??0.5
                 let intervalPressure = (toPressure != fromPressure)?(toPressure - fromPressure)/(steps):0;
                 for (let i = 0; i < steps; i++) {
@@ -344,10 +344,9 @@ export default class Brush extends Layer{
                     let pressure = fromPressure + intervalPressure * i
 
                     // const brushConfig = {...this.brushConfig};
-                    const newPointerEvent = {...pointerEvent};
-                    newPointerEvent.pressure = pressure
+                    const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
                     
-                    this.dot(ctx,x,y,brushConfig,newPointerEvent,image);
+                    this.dot(ctx,x,y,newPointerEvent,brushConfig,image);
                 }
             }else{
                 for (let i = 0; i < steps; i++) {
@@ -357,20 +356,26 @@ export default class Brush extends Layer{
                     // const brushConfig = {...this.brushConfig};
                     // const pointerEvent = {...this.pointerEvent};
                     // pointerEvent.pressure = 0
-                    this.dot(ctx,x,y,brushConfig,pointerEvent,image);
+                    this.dot(ctx,x,y,pointerEvent,brushConfig,image);
                 }
             }
 
             remainInterval = distance2 % interval;
             this.lastSize = size;
 
-            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):{};
+            this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
 
             
             return remainInterval;
             
         }
 
+    }
+    drawOnDot(ctx,x, y ,pointerEvent = this.pointerEvent, brushConfig= this.brushConfig  ,image = this){
+        // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
+        // console.log(pointerEvent);
+        
+        this.dot(ctx,x,y,pointerEvent,brushConfig,image);
     }
 
 

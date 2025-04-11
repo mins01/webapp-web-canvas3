@@ -103,7 +103,17 @@ class WcHelper{
     const modal = f.closest('.modal');
     const preview = modal.querySelector('.brush-preview-canvas');
     const brush = modal.querySelector('canvas[is="wc-brush"]');
+    console.log(preview.clientWidth);
+    
+    preview.width = preview.clientWidth;
+    preview.height = preview.clientHeight;
+
+    this.drawBrushPreviewCanvas(brush,preview,isEraser)
+
+  }
+  static drawBrushPreviewCanvas(brush,preview,isEraser=false){
     const size = brush.brushConfig.size
+    const usedSizeControl = brush.brushConfig.sizeControl != 'off';
 
     preview.ctx.save()
     preview.clear();
@@ -116,17 +126,21 @@ class WcHelper{
     let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/4,100)
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
+    let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
     let remainInterval = 0;
     let p = points[0]
-    brush.dot(preview.ctx,p.x,p.y);
+    brush.drawOnDot(preview.ctx,p.x,p.y,pointerEvent);
     for(let i=1,m=points.length;i<m;i++){
       let p1 = points[i];
-      remainInterval = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,remainInterval);
+      let pressure = (i<(m/2)?i:(m/2)-(i-(m/2)))/(m/2);
+      // console.log(pressure);
+      
+      pointerEvent = new PointerEvent('pointerdown',{pressure:pressure});
+      remainInterval = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,remainInterval,pointerEvent);
       p = p1;
     }
     // brush.drawOnLine(preview.ctx,Math.ceil(size/2)+10,Math.ceil(preview.height*0.4),Math.ceil(preview.width-size/2)-10,Math.ceil(preview.height*0.6));
     preview.ctx.restore()
-
   }
 
   static getSShapePoints(h, k, width, height, steps = 100) {

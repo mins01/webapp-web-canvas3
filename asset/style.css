@@ -351,3 +351,16 @@
 .wc-app[data-tool-enable="false"] .only-display-tool-enable{
   display: none;
 }
+
+
+
+
+
+
+
+
+
+.brush-preview-canvas{
+  width: 100%;
+  height: 100%;
+}

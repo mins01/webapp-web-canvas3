@@ -1833,6 +1833,20 @@
           editor.brush2.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
           editor.brush3.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
           editor.eraser.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target,true); })
+          editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush)},100);console.log('x');
+           })
+          editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush2)},100);})
+          editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush3)},100);})
+          editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true)},100);})
+
+          window.addEventListener('resize', (event)=>{
+            WcHelper.syncModalBrushPreviewCanvas(editor.brush);
+            WcHelper.syncModalBrushPreviewCanvas(editor.brush2);
+            WcHelper.syncModalBrushPreviewCanvas(editor.brush3);
+            WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true);
+          })
+          
+
           WcHelper.syncModalBrushPreviewCanvas(editor.brush);
           WcHelper.syncModalBrushPreviewCanvas(editor.brush2);
           WcHelper.syncModalBrushPreviewCanvas(editor.brush3);
