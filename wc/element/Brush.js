@@ -184,12 +184,14 @@ export default class Brush extends Layer{
     /**
      * Description placeholder
      *
-     * @param {CanvasRenderingContext2D } ctx 
+     * @param {CanvasRenderingContext2D} ctx 
      * @param {number} x 
      * @param {number} y 
+     * @param {BrushConfig|Object} [brushConfig=this.brushConfig] 
+     * @param {PointerEvent|Object} [pointerEvent=this.pointerEvent] 
      */
-    dot(ctx,x,y,brushConfig= this.brushConfig ,pointerEvent = this.pointerEvent ){
-        const image = this
+    dot(ctx,x,y,brushConfig= this.brushConfig ,pointerEvent = this.pointerEvent ,image = this){
+        // const image = this
         // const brushConfig = this.brushConfig;
         // const pointerEvent = this.pointerEvent
 
