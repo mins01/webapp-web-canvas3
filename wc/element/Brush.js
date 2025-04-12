@@ -234,6 +234,8 @@ export default class Brush extends Layer{
             }
         }else if(pointerEvent && opacityControl==='penPressure'){
             const pressure = pointerEvent?.pressure??0.5;
+            // console.log(pressure);
+            
             const v = Math.round(Math.max(pressure, brushConfig.mininumOpacity) * 100); filters.push(`opacity(${v}%)`);            
         }
 
@@ -296,16 +298,12 @@ export default class Brush extends Layer{
         
         
         const sizeControl = brushConfig.sizeControl
+        const opacityControl = brushConfig.opacityControl
         if(sizeControl==='off'){ // 아무 설정이 없을 경우
         }else if(sizeControl==='penPressure'){
-            const pressure = pointerEvent?.pressure??0.5;
+            const pressure =this.lastPointerEvent?.pressure??0.5
             const v = Math.max(pressure, brushConfig.mininumSizeRatio); 
             size *= v;
-            // if(pointerEvent.pointerType=='pen'){
-            //     const v = Math.max(pressure, brushConfig.mininumSizeRatio); 
-            //     size *= v;
-            //     usedPressure = true;
-            // }
         }
         size = Math.max(1,size);
 
@@ -327,17 +325,17 @@ export default class Brush extends Layer{
             
         }else{
             let steps = Math.floor(distance2 / interval);
-            if(sizeControl==='penPressure'){ // 부드러운 압력감지의 size변화 처리
+            if(sizeControl==='penPressure' || opacityControl==='penPressure'){ // 부드러운 압력감지의 변화 처리
+                
                 let fromPressure = this.lastPointerEvent?.pressure??0.5
                 let toPressure = pointerEvent?.pressure??0.5
+
                 let intervalPressure = (toPressure != fromPressure)?(toPressure - fromPressure)/(steps):0;
                 for (let i = 0; i < steps; i++) {
                     let t = i / steps;
                     let x = x0 + t * dx;
                     let y = y0 + t * dy;
                     let pressure = fromPressure + intervalPressure * i
-
-                    // const brushConfig = {...this.brushConfig};
                     const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
                     
                     this.dot(ctx,x,y,newPointerEvent,brushConfig,image);
@@ -347,9 +345,6 @@ export default class Brush extends Layer{
                     let t = i / steps;
                     let x = x0 + t * dx;
                     let y = y0 + t * dy;
-                    // const brushConfig = {...this.brushConfig};
-                    // const pointerEvent = {...this.pointerEvent};
-                    // pointerEvent.pressure = 0
                     this.dot(ctx,x,y,pointerEvent,brushConfig,image);
                 }
             }
