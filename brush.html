@@ -121,7 +121,10 @@
             // b1.brushConfig.hueJitter = 1;
             // b1.brushConfig.saturationJitter = 1;
             // b1.brushConfig.brightnessJitter = 1;
-            b1.brushConfig.sizeControl = 'penPressure';
+            // b1.brushConfig.sizeControl = 'penPressure';
+            b1.brushConfig.opacity = 0.25;
+            b1.brushConfig.spacing = 0.5;
+            b1.brushConfig.opacityControl = 'penPressure';
             b1.flush();
 
             const c1 = globalThis.c1 =  document.querySelector('#c1');

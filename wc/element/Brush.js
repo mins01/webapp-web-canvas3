@@ -225,10 +225,6 @@ export default class Brush extends Layer{
             const pressure = pointerEvent?.pressure??0.5;
             // console.log(pressure,pointerEvent);
             const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
-            
-            // if(pointerEvent.pointerType=='pen'){
-            //     const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
-            // }
         }
 
         const opacityControl = brushConfig.opacityControl
@@ -238,9 +234,7 @@ export default class Brush extends Layer{
             }
         }else if(pointerEvent && opacityControl==='penPressure'){
             const pressure = pointerEvent?.pressure??0.5;
-            if(pointerEvent.pointerType=='pen'){
-                const v = Math.round(Math.max(pressure, brushConfig.mininumOpacity) * 100); filters.push(`opacity(${v}%)`); 
-            }
+            const v = Math.round(Math.max(pressure, brushConfig.mininumOpacity) * 100); filters.push(`opacity(${v}%)`);            
         }
 
         const angleControl = brushConfig.angleControl
@@ -270,7 +264,7 @@ export default class Brush extends Layer{
 
         }else if(pointerEvent && scaleYControl==='penTilt'){
             const altitudeAngle = pointerEvent.azimuthAngle??0;
-            if(pointerEvent.pointerType=='pen' && brushConfig.mninumScaleY < 1){
+            if(brushConfig.mninumScaleY < 1){
                 const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
                 // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mninumScaleY);
             }
