@@ -294,7 +294,7 @@ export default class Brush extends Layer{
     const opacityControl = brushConfig.opacityControl
     if(sizeControl==='off'){ // 아무 설정이 없을 경우
     }else if(sizeControl==='penPressure'){
-      const pressure =this.lastPointerEvent?.pressure??0.5
+      const pressure = ((this.lastPointerEvent?.pressure??0.5)+(pointerEvent?.pressure??0.5)) / 2
       const v = Math.max(pressure, brushConfig.mininumSizeRatio); 
       size *= v;
     }
