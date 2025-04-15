@@ -227,11 +227,15 @@ export default class Document extends Layer{
      */
     toBlob(callback, type, quality){
         if(type==='wc3.json' || type=== 'application/json'){
-            const blob = new Blob([JSON.stringify(this.export(),null,4)])
-            callback(blob);
+            this.toBlobJson(callback, type, quality);
         }else{
             super.toBlob(...arguments)
         }
+    }
+
+    toBlobJson(callback, type, quality){
+        const blob = new Blob([JSON.stringify(this.export(),null,4)])
+        callback(blob);
     }
 
 

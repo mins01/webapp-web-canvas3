@@ -563,22 +563,48 @@
           </div>
           <div class="modal-body">
             <div class="d-flex flex-column gap-3 p-1">
-              <form action="" onsubmit="editor.saveDocument('png',this.filename.value);return false;">
-                <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
-                  <input type="text" class="form-control filename"  name="filename" value="" required  data-wc-sync-from="editor.document.name">
-                  <span class="input-group-text">.png</span>
-                  <button type="submit" class="btn btn-lg btn-primary"> Save </button>
+              <form action="" onsubmit="editor.saveDocument(this.type.value,this.filename.value,this.quality.value);return false;">
+                <input type="hidden" name="type" value="png">
+                <div class="d-flex flex-column gap-3">
+                  <div class="input-group ">
+                    <span class="input-group-text">file name</span>
+                    <input type="text" class="form-control filename"  name="filename" value="" required  data-wc-sync-from="editor.document.name">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-text">quality</span>
+                    <select class="form-select" name="quality">
+                      <option value="1">100</option>
+                      <option value="0.9">90</option>
+                      <option value="0.8">80</option>
+                      <option value="0.7">70</option>
+                      <option value="0.6">60</option>
+                      <option value="0.5">50</option>
+                      <option value="0.4">40</option>
+                      <option value="0.3">30</option>
+                      <option value="0.2">20</option>
+                      <option value="0.1">10</option>
+                      <option value="0">0</option>
+                    </select>
+                  </div>
+                  <div class="d-grid gap-3 " style="grid-template-columns: repeat(2 , 1fr);;">
+                    <div>
+                      <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='png';"> <i class="bi bi-filetype-png"></i> Save .png</button>
+                      <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> quality를 적용할 수 없습니다.</div>
+                    </div>
+                    <div>
+                      <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='jpg';"> <i class="bi bi-filetype-jpg"></i> Save .jpg</button>
+                      <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 손실 압축.</div>
+                    </div>
+                    <div>
+                      <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='webp';"> <i class="bi bi-image"></i> Save .webp</button>
+                      <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 손실 압축. 브라우저 지원 확인 필요</div>
+                    </div>
+                    <div>
+                      <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='wc3.json';"> <i class="bi bi-filetype-json"></i> Save .wc3.json</button>
+                      <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+                    </div>
+                  </div>
                 </div>
-              </form>
-              <form action="" onsubmit="editor.saveDocument('wc3.json',this.filename.value);return false;">
-                <div class="input-group">
-                  <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
-                  <input type="text" class="form-control filename" name="filename" value="" required data-wc-sync-from="editor.document.name">
-                  <span class="input-group-text">.wc3.json</span>
-                  <button type="submit" class="btn btn-lg btn-primary"> Save </button>
-                </div>
-                <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
               </form>
             </div>
           </div>

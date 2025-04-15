@@ -255,15 +255,16 @@ export default class Editor{
      * @param {string} [filename=null] 
      * @returns {boolean} 
      */
-    saveDocument(type='wc3.json',filename=null){
+    saveDocument(type='wc3.json',filename=null,quality=0.5){
         if(!this.document){return false;}
         if(filename===null){ filename = this.document.name }
         filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
         if(filename.length==0) filename = Date.now();
         if(filename != this.document.name){ this.document.name = filename; }
 
-        console.log(filename);
+        quality = parseFloat(quality);
 
+        
         let ext = '';
         let mimetype = null;
         if(type==='wc3.json'){
@@ -276,6 +277,16 @@ export default class Editor{
             mimetype = 'image/png';
             const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
             this.document.toBlob(cb,mimetype)
+        }else if(type==='jpg'){
+            ext = 'jpg';
+            mimetype = 'image/jpeg';
+            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
+            this.document.toBlob(cb,mimetype,quality)
+        }else if(type==='webp'){
+            ext = 'webp';
+            mimetype = 'image/webp';
+            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
+            this.document.toBlob(cb,mimetype,quality)
         }else{
             console.error('지원되지 않는 타입')
         }
