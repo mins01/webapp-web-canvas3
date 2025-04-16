@@ -157,6 +157,19 @@
         }
       })
     })
+    window.addEventListener('beforeunload', function (e) {
+      if(!editor.document){
+        return
+      }
+      // 경고 메시지 설정
+      const message = '변경사항이 저장되지 않을 수 있습니다. 정말 나가시겠습니까?';
+      
+      // 대부분의 브라우저에서는 e.returnValue를 설정해야 경고가 뜹니다.
+      e.preventDefault(); // 일부 브라우저에서 필요
+      e.returnValue = message;
+
+      return message; // 일부 브라우저에서 필요
+    });
   </script>
   <!-- //color palette -->
   <!-- ui-transform-tool -->
