@@ -47,7 +47,7 @@ export default class Text extends BaseTool{
 	 */
 	activate(cb=null){        
         super.activate(()=>{
-            if(this.layer.kind != LayerKind.TEXT){
+            if(!this.layer || this.layer.kind != LayerKind.TEXT){
                 console.warn(`Only text layer are supported. (${this.layer.kind})`);
                 this.enable = false;
             }else{
