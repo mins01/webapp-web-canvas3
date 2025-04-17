@@ -17,7 +17,7 @@ export default class HtmlUtil{
     }
     static objectToForm(object,form){
         for(let k in form.elements){
-            if(object?.[k]??false){
+            if((object?.[k]??false) !== false){
                 // console.log(k,form.elements?.[k],object[k].toString());                
                 if(form.elements[k] instanceof RadioNodeList){
                     const checked = [...form.elements[k]].find((el)=>{return el.checked})
