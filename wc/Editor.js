@@ -193,12 +193,12 @@ export default class Editor{
             }
             if(this.peh.pointers.size===2){
                 // 줌 처리
+                const document = this?.document
+                if(!document){ console.warn('document is not exists'); return;}
                 this.temp.document_zoom = this.document.zoom;
                 const points = Array.from(this.peh.pointers.values());
-                this.temp.touchStartDistance = Math.hypot(
-                    points[1].x - points[0].x,
-                    points[1].y - points[0].y
-                );
+                this.temp.touchStartDistance = Math.hypot( points[1].x - points[0].x, points[1].y - points[0].y );
+                this.temp.documentHypot = Math.hypot( document.width, document.height );
             }
         }
         
@@ -211,12 +211,22 @@ export default class Editor{
         }else if(this.peh.maxPointers >= 2){
             if(this.peh.pointers.size===2){
                 // 줌 처리
-                this.temp.document_zoom = this.document.zoom;
+                const document = this?.document
+                if(!document){ console.warn('document is not exists'); return;}
+                const touchStartDistance = this.temp.touchStartDistance
+                // const baseWidth = Math.min(document.width,document.height)
+                const baseWidth = this.temp.documentHypot;
+                
+
+                // this.temp.document_zoom = this.document.zoom;
                 const points = Array.from(this.peh.pointers.values());
                 const currentDistance = Math.hypot( points[1].x - points[0].x, points[1].y - points[0].y );
-                const scale = Math.round(((currentDistance / this.temp.touchStartDistance) - 1)*100)/1000;
-                const zoom = Math.min(3,Math.max(0.1,this.temp.document_zoom + scale));
+                const moveDistance = currentDistance - touchStartDistance;
+                const scale = moveDistance/baseWidth;
+                // const scale = Math.round(((currentDistance / this.temp.touchStartDistance) - 1)*100)/1000;
+                const zoom = Math.ceil(Math.min(3,Math.max(0.1,this.temp.document_zoom + scale))*100)/100;
                 // console.log(this.document.zoom-zoom,zoom);
+                // console.log('moveDistance',moveDistance,scale,zoom);
                 
                 if(Math.abs(this.document.zoom-zoom)>0.01){
                     this.document.zoom = zoom
