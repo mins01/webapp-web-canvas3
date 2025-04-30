@@ -22,7 +22,7 @@ export default class Editor{
     brush1 = null;
     brush2 = null;
     brush3 = null;
-    eraser1 = null;
+    eraser = null;
     editorConfig = null;
     modalHandler = null;
     temp = null
