@@ -359,7 +359,9 @@
 
 
 
-
+.brush-preview-canvas-wrap{
+  height: 150px;
+}
 .brush-preview-canvas{
   width: 100%;
   height: 100%;
