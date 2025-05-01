@@ -305,6 +305,9 @@
 .grid-auto-fit-260px > hr{
   grid-column: 1 / -1;
 }
+.grid-auto-fit-260px > header{
+  grid-column: 1 / -1;
+}
 
 
 
