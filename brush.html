@@ -467,6 +467,45 @@
                                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                                 </div>
                               </div>
+                              <hr class="my-1">
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Scatter (퍼지는 정도)</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                    <input type="range" class="form-range d-block" name="scatter" placeholder="scatter" step="0.01" min="0" max="3" value="0" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Axes (양축 스캐터링)</div>
+                                <select class="form-select " name="scatterAxes" >
+                                  <option selected value="xy">x축과 y축</option>
+                                  <option value="x">x축</option>
+                                  <option value="y">y축</option>
+                                </select>
+                              </div>
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Count (한 번에 뿌리는 브러시 수)</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" >
+                                    <input type="range" class="form-range d-block" name="scatterCount" placeholder="scatterCount" step="1" min="1" max="10" value="1" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Count Jitter (Count 수 변동)</div>
+                                <div class="input-group ui-input-stepper">
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                                    <input type="range" class="form-range d-block" name="scatterCountJitter" placeholder="scatterCountJitter" step="0.01" min="0" max="3" value="0" >
+                                  </div>
+                                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                                </div>
+                              </div>
                             </div>
                             <hr class="my-1">
                             <div class="text-end">
