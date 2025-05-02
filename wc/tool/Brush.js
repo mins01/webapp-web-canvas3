@@ -34,7 +34,8 @@ export default class Brush extends BaseTool{
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
         this.brush.ready()
-        this.brush.pointerEvent = event;
+        this.brush.pointerEvent = new PointerEvent(event.type, event)
+        this.brush.lastPointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
@@ -86,8 +87,8 @@ export default class Brush extends BaseTool{
         this.prepareLayer(ctx);
         // console.log(lx0,ly0,lx1,ly1);
         // console.log(this.lastEvent);
-
-        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,this.remainInterval)
+        let remainInterval = this.remainInterval
+        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,{remainInterval})
         ctx.restore();
         layer.flush();
 
