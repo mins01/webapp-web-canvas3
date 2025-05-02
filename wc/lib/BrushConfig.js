@@ -40,6 +40,12 @@ class BrushConfig extends BaseConfig{
     saturationJitter = 0;
     brightnessJitter = 0;
 
+    // scatter
+    scatterAmount = 0; // 산란 정도 %
+    scatterAxes = 'x' // 산란 축 , x or xy
+    scatterCount = 1 // 산란 수
+    scatterCountJitter = 0; // 산란 수 jitter
+
     // 기타
     flattenOpacity = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
     
@@ -93,6 +99,12 @@ class BrushConfig extends BaseConfig{
         this.hueJitter = 0;
         this.saturationJitter = 0;
         this.brightnessJitter = 0;
+
+        // scatter
+        this.scatterAmount = 0;
+        this.scatterAxes = 'x'
+        this.scatterCount = 1
+        this.scatterCountJitter = 0;
     }
 
 
