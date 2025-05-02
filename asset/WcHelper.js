@@ -121,7 +121,7 @@ class WcHelper{
     }
 
 
-    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height/2,50)
+    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height - size - 10,Math.floor(preview.width / 5))
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
     let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
