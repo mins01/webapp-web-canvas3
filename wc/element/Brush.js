@@ -208,7 +208,7 @@ export default class Brush extends Layer{
     if(brushConfig.saturationJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.saturationJitter; filters.push(`saturate(${v}%)`); }
     if(brushConfig.brightnessJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.brightnessJitter; filters.push(`brightness(${v}%)`); }
     
-    //-- 그리는 방향
+    //-- 그리는 선의 방향
     ctx.rotate(lineAngle * Math.PI / 180); 
 
 
@@ -378,8 +378,14 @@ export default class Brush extends Layer{
           this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
         }
       }else{
-        const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', pointerEvent);
-        this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
+        for (let i = 0; i < steps; i++) {
+          let t = i / steps;
+          let x = x0 + t * dx;
+          let y = y0 + t * dy;
+          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', pointerEvent);
+          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
+        }
+
       }
       
       remainInterval = distance2 % interval;
