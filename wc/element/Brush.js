@@ -303,8 +303,10 @@ export default class Brush extends Layer{
         if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
         else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
         else if(scatterAxes == 'xy'){
-          const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-          ctx.translate(tv, tv1); 
+          const tAngle = Math.random()*360;
+          ctx.rotate(tAngle * Math.PI / 180); 
+          ctx.translate(tv, 0); 
+          ctx.rotate(-tAngle * Math.PI / 180); 
         }
       }
       ctx.drawImage(image, -gx,-gy,image.width,image.height );
