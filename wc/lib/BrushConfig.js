@@ -42,7 +42,7 @@ class BrushConfig extends BaseConfig{
 
     // scatter
     scatterAmount = 0; // 산란 정도 %
-    scatterAxes = 'x' // 산란 축 , x or xy
+    scatterAxes = 'y' // 산란 축 , x:그리는방향,y:그리는방향의 90도 or xy:x,y랜덤
     scatterCount = 1 // 산란 수
     scatterCountJitter = 0; // 산란 수 jitter
 
@@ -102,7 +102,7 @@ class BrushConfig extends BaseConfig{
 
         // scatter
         this.scatterAmount = 0;
-        this.scatterAxes = 'x'
+        this.scatterAxes = 'y'
         this.scatterCount = 1
         this.scatterCountJitter = 0;
     }

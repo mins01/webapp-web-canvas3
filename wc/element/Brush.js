@@ -191,7 +191,8 @@ export default class Brush extends Layer{
     let {
       pointerEvent = this.pointerEvent, 
       brushConfig= this.brushConfig  ,
-      image = this
+      image = this,
+      lineAngle = 0, //그리는 방향
     } = opts;
     
     let gx = image.width/2;
@@ -207,21 +208,27 @@ export default class Brush extends Layer{
     if(brushConfig.saturationJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.saturationJitter; filters.push(`saturate(${v}%)`); }
     if(brushConfig.brightnessJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.brightnessJitter; filters.push(`brightness(${v}%)`); }
     
+    //-- 그리는 방향
+    ctx.rotate(lineAngle * Math.PI / 180); 
+
+
     
     // pointerType :  "mouse"
     // altitudeAngle :  1.5707963267948966
     // azimuthAngle :  0
     // pressure :  0.5
-    
+    let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈
     const sizeControl = brushConfig.sizeControl
     if(sizeControl==='off'){ // 아무 설정이 없을 경우
       if(brushConfig.sizeJitter > 0 && brushConfig.mininumSizeRatio < 1){
         const v = Math.max(1 - Math.random()*brushConfig.sizeJitter, brushConfig.mininumSizeRatio); ctx.scale(v,v)
+        size*=v; //사이즈 재조정
       }
     }else if(pointerEvent && sizeControl==='penPressure'){
       const pressure = pointerEvent?.pressure??0.5;
       // console.log(pressure,pointerEvent);
       const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
+      size*=v; //사이즈 재조정
     }
     
     const opacityControl = brushConfig.opacityControl
@@ -280,8 +287,29 @@ export default class Brush extends Layer{
     
     
     if(filters.length){ ctx.filter = filters.join(' '); }
-    ctx.drawImage(image, -gx,-gy,image.width,image.height );
+
+    //-- 스케터링
+    const scatterAmount  = brushConfig.scatterAmount;
+    const scatterAxes = brushConfig.scatterAxes;
+    const scatterCount = brushConfig.scatterCount;
+    const scatterCountJitter = brushConfig.scatterCountJitter;
     
+
+    const dotCount = Math.max(1,Math.floor(scatterCount - Math.random()*scatterCount*scatterCountJitter));
+    for(let i=0;i<dotCount;i++){
+      ctx.save()
+      if(scatterAmount>0){ // 스케터링
+        const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+        if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
+        else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
+        else if(scatterAxes == 'xy'){
+          const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+          ctx.translate(tv, tv1); 
+        }
+      }
+      ctx.drawImage(image, -gx,-gy,image.width,image.height );
+      ctx.restore()
+    }
     
     ctx.restore();
     
@@ -321,10 +349,7 @@ export default class Brush extends Layer{
     size = Math.max(1,size);
     
     const lineAngle = this.getAngle(x0,y0,x1,y1);
-    const scatterAmount  = brushConfig.scatterAmount;
-    const scatterAxes = brushConfig.scatterAxes;
-    // console.log('lineAngle',lineAngle);
-    
+   
     const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
     // 선의 길이를 계산
     // let r = size / 2;
@@ -334,19 +359,15 @@ export default class Brush extends Layer{
     let distance2 = distance + remainInterval
     // console.log(distance,remainInterval,distance2,'>=',interval);
     
-    
-    
     if(distance2 < interval){
       this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
       return distance2;
       
     }else{
       let steps = Math.floor(distance2 / interval);
-      if(sizeControl==='penPressure' || opacityControl==='penPressure'){ // 부드러운 압력감지의 변화 처리
-        
+      if(sizeControl==='penPressure' || opacityControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
         let fromPressure = lastPointerEvent?.pressure??0.5
         let toPressure = pointerEvent?.pressure??0.5
-        
         let intervalPressure = (toPressure != fromPressure)?(toPressure - fromPressure)/(steps):0;
         for (let i = 0; i < steps; i++) {
           let t = i / steps;
@@ -354,45 +375,11 @@ export default class Brush extends Layer{
           let y = y0 + t * dy;
           let pressure = fromPressure + intervalPressure * i
           const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
-          
-          if(scatterAmount > 0){            
-            ctx.save()
-            ctx.translate(x, y); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
-            ctx.rotate(lineAngle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
-            ctx.translate(-x, -y); // 중심을 원래 위치로 되돌림
-            const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-            if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
-            else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
-            else if(scatterAxes == 'xy'){
-              const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-              ctx.translate(tv, tv1); 
-            }
-            this.dot(ctx,x ,y,{pointerEvent:newPointerEvent,brushConfig,image});
-            ctx.restore()
-          }else{
-            this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image});
-          }
+          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
         }
       }else{
         const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', pointerEvent);
-
-        if(scatterAmount > 0){            
-          ctx.save()
-          ctx.translate(x, y); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
-          ctx.rotate(lineAngle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
-          ctx.translate(-x, -y); // 중심을 원래 위치로 되돌림
-          const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-          if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
-          else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
-          else if(scatterAxes == 'xy'){
-            const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-            ctx.translate(tv, tv1); 
-          }
-          this.dot(ctx,x ,y,{pointerEvent:newPointerEvent,brushConfig,image});
-          ctx.restore()
-        }else{
-          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image});
-        }
+        this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
       }
       
       remainInterval = distance2 % interval;
