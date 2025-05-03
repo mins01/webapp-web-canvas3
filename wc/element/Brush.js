@@ -361,13 +361,11 @@ export default class Brush extends Layer{
             ctx.rotate(lineAngle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
             ctx.translate(-x, -y); // 중심을 원래 위치로 되돌림
             const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-            if(scatterAxes == 'x'){
-              ctx.translate(tv, 0); // 
-            }else if(scatterAxes == 'y'){
-              ctx.translate(0, tv); // 
-            }else if(scatterAxes == 'xy'){
+            if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
+            else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
+            else if(scatterAxes == 'xy'){
               const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-              ctx.translate(tv, tv1); // 
+              ctx.translate(tv, tv1); 
             }
             this.dot(ctx,x ,y,{pointerEvent:newPointerEvent,brushConfig,image});
             ctx.restore()
@@ -376,11 +374,24 @@ export default class Brush extends Layer{
           }
         }
       }else{
-        for (let i = 0; i < steps; i++) {
-          let t = i / steps;
-          let x = x0 + t * dx;
-          let y = y0 + t * dy;
-          this.dot(ctx,x,y,{pointerEvent,brushConfig,image});
+        const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', pointerEvent);
+
+        if(scatterAmount > 0){            
+          ctx.save()
+          ctx.translate(x, y); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
+          ctx.rotate(lineAngle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
+          ctx.translate(-x, -y); // 중심을 원래 위치로 되돌림
+          const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+          if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
+          else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
+          else if(scatterAxes == 'xy'){
+            const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+            ctx.translate(tv, tv1); 
+          }
+          this.dot(ctx,x ,y,{pointerEvent:newPointerEvent,brushConfig,image});
+          ctx.restore()
+        }else{
+          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image});
         }
       }
       
