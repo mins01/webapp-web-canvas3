@@ -52,7 +52,7 @@ class BrushConfig extends BaseConfig{
 
     constructor(){
         const proxyConfig = {
-            number:['size','angle','roundness','scaleX','sacleY','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter'],
+            number:['size','angle','roundness','scaleX','sacleY','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter','scatterAmount','scatterCount','scatterCountJitter'],
             boolean:['flipX','flipY','flattenOpacity',],
         }
         const proxy = super(proxyConfig);

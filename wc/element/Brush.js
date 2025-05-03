@@ -320,6 +320,10 @@ export default class Brush extends Layer{
     }
     size = Math.max(1,size);
     
+    const lineAngle = this.getAngle(x0,y0,x1,y1);
+    const scatterAmount  = brushConfig.scatterAmount;
+    const scatterAxes = brushConfig.scatterAxes;
+    // console.log('lineAngle',lineAngle);
     
     const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
     // 선의 길이를 계산
@@ -351,7 +355,25 @@ export default class Brush extends Layer{
           let pressure = fromPressure + intervalPressure * i
           const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
           
-          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image});
+          if(scatterAmount > 0){            
+            ctx.save()
+            ctx.translate(x, y); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
+            ctx.rotate(lineAngle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
+            ctx.translate(-x, -y); // 중심을 원래 위치로 되돌림
+            const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+            if(scatterAxes == 'x'){
+              ctx.translate(tv, 0); // 
+            }else if(scatterAxes == 'y'){
+              ctx.translate(0, tv); // 
+            }else if(scatterAxes == 'xy'){
+              const tv1 = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
+              ctx.translate(tv, tv1); // 
+            }
+            this.dot(ctx,x ,y,{pointerEvent:newPointerEvent,brushConfig,image});
+            ctx.restore()
+          }else{
+            this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image});
+          }
         }
       }else{
         for (let i = 0; i < steps; i++) {
@@ -400,5 +422,17 @@ export default class Brush extends Layer{
       el instanceof SVGImageElement ||          // <image> in inline SVG (limited support)
       (typeof OffscreenCanvas !== 'undefined' && el instanceof OffscreenCanvas)
     );
+  }
+
+
+  getAngle(x0, y0, x1, y1) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    let radians = Math.atan2(dy, dx); // -PI ~ PI
+    let degrees = radians * (180 / Math.PI); // 라디안 -> 도
+    if (degrees < 0) {
+      degrees += 360; // 0~360도로 변환
+    }
+    return degrees;
   }
 }
