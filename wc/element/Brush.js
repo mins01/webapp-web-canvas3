@@ -360,7 +360,9 @@ export default class Brush extends Layer{
     // console.log(distance,remainInterval,distance2,'>=',interval);
     
     if(distance2 < interval){
-      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
+      // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
+      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
+      this.remainInterval = distance2
       return distance2;
       
     }else{
@@ -374,7 +376,7 @@ export default class Brush extends Layer{
           let x = x0 + t * dx;
           let y = y0 + t * dy;
           let pressure = fromPressure + intervalPressure * i
-          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', {pressure:pressure});
+          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', {pressure:pressure});
           this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
         }
       }else{
@@ -382,7 +384,7 @@ export default class Brush extends Layer{
           let t = i / steps;
           let x = x0 + t * dx;
           let y = y0 + t * dy;
-          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointerdown', pointerEvent);
+          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', pointerEvent);
           this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
         }
 
@@ -391,7 +393,7 @@ export default class Brush extends Layer{
       remainInterval = distance2 % interval;
       // this.lastSize = size;
       
-      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
+      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
       
       this.remainInterval = remainInterval;
       return remainInterval;

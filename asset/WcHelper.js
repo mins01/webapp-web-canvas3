@@ -111,6 +111,7 @@ class WcHelper{
   }
   static drawBrushPreviewCanvas(brush,preview,isEraser=false){
     const size = brush.brushConfig.size
+    const spacing = brush.brushConfig.spacing
     const usedSizeControl = brush.brushConfig.sizeControl != 'off';
 
     preview.ctx.save()
@@ -121,7 +122,7 @@ class WcHelper{
     }
 
 
-    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height - size - 10,Math.floor(preview.width / 5))
+    let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height - size - 10,Math.floor(preview.width / 5)/spacing)
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
     let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
@@ -134,9 +135,12 @@ class WcHelper{
       let p1 = points[i];
       let pressure = (i<m2?i:m-i)/m2;
       // console.log(pressure);
+      const pointerEvent = new PointerEvent('pointermove',{pressure:pressure});
+      // console.log({x:p1.x,y:p1.y,pressure});
       
-      const pointerEvent = new PointerEvent('pointerdown',{pressure:pressure});
-      brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{pointerEvent});
+      const rm = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{pointerEvent});
+      console.log({rm});
+      
       p = p1;
     }
     preview.ctx.restore()
