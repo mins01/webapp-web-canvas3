@@ -306,9 +306,7 @@ export default class Brush extends Layer{
       brushConfig= this.brushConfig  ,
       image = this
     } = opts;
-    // const image = this
-    // const brushConfig = this.brushConfig;
-    // const pointerEvent = this.pointerEvent
+
     let size = Math.max(1,parseFloat(brushConfig.size));
     
     
@@ -325,7 +323,7 @@ export default class Brush extends Layer{
     
     const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
     // 선의 길이를 계산
-    let r = size / 2;
+    // let r = size / 2;
     let dx = x1 - x0;
     let dy = y1 - y0;
     let distance = Math.sqrt(dx * dx + dy * dy);

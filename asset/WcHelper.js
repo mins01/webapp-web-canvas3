@@ -125,7 +125,7 @@ class WcHelper{
                   .map((el)=>{el.x = Math.round(el.x); el.y=Math.round(el.y); return el});
     // console.log(points)
     let pointerEvent = new PointerEvent('pointerdown',{pressure:0});
-    let remainInterval = 0;
+    
     let p = points[0]
     brush.ready();
     brush.drawOnDot(preview.ctx,p.x,p.y,{pointerEvent});
@@ -136,7 +136,7 @@ class WcHelper{
       // console.log(pressure);
       
       const pointerEvent = new PointerEvent('pointerdown',{pressure:pressure});
-      remainInterval = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{remainInterval,pointerEvent});
+      brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{pointerEvent});
       p = p1;
     }
     preview.ctx.restore()

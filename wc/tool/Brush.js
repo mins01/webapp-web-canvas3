@@ -46,7 +46,7 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
-        this.brush.pointerEvent = event;
+        this.brush.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
@@ -54,7 +54,7 @@ export default class Brush extends BaseTool{
         return;
     }
     onpointerup(event){
-        this.brush.pointerEvent = event;
+        this.brush.pointerEvent = new PointerEvent(event.type, event)
         return super.onpointerup(event);
     }
     end(){
