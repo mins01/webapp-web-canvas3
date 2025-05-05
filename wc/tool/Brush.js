@@ -1,13 +1,16 @@
+import Layer from '../element/Layer.js';
 import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class Brush extends BaseTool{
     remainInterval = 0;
     brush = null;
+    workingLayer = null;
     constructor(editor){
         super(editor);
         this.name = 'Brush';
         this.brush = this.editor.brush;
+        this.workingLayer = new Layer(100,100);
     }
 
     start(){
@@ -15,6 +18,17 @@ export default class Brush extends BaseTool{
         this.brush.ready()        
         this.ready()
     }
+
+    ready(){
+		super.ready();
+        this.workingLayer.parent = this.drawLayer;
+        this.workingLayer.width = this.layer.width;
+        this.workingLayer.height = this.layer.height;
+        // globalThis.document.body.append(this.workingLayer)
+        this.drawLayer.ctx.drawImage(this.layer,0,0)
+        this.drawLayer.flush();
+        
+	}
 
     /** 
      * 활성화 : 툴이 선택 되면
@@ -26,13 +40,21 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
+                this.layer.visibleByTool = false;
             }
             if(cb) cb();
         });
     }
 
+    inactivate(){
+        super.inactivate();
+        this.layer.visibleByTool = true;
+        this.drawLayer.clear();
+    }
+
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
+        this.drawLayer.alpha = this.layer.alpha;        
         this.brush.ready()
         this.brush.pointerEvent = new PointerEvent(event.type, event)
         this.brush.lastPointerEvent = new PointerEvent(event.type, event)
@@ -55,17 +77,33 @@ export default class Brush extends BaseTool{
     }
     onpointerup(event){
         this.brush.pointerEvent = new PointerEvent(event.type, event)
-        this.#mergeLayers();
+        this.#mergeFromWorkingLayer();
+        this.#mergeFromDrawLayer();
         return super.onpointerup(event);
     }
-    #mergeLayers(){
-        const layer = this.document.layer
-        const drawLayer = this.document.drawLayer
-        const ctx = layer.ctx;
+
+    #mergeFromWorkingLayer(){
+        const from = this.workingLayer;
+        const to = this.drawLayer;
+        const ctx = to.ctx;
+        to.clear()
+        ctx.drawImage(this.layer,0,0);
         ctx.save();
-        ctx.globalAlpha = drawLayer.alpha
-        ctx.drawImage(drawLayer,0,0);
-        ctx.restore();
+        ctx.globalAlpha = from.alpha
+        ctx.drawImage(from,0,0);
+        ctx.restore(); 
+        to.flush();
+    }
+    #mergeFromDrawLayer(){
+        const from = this.drawLayer;
+        const to = this.layer;
+        const ctx = to.ctx;
+        to.clear()
+        ctx.save();
+        // ctx.globalAlpha = from.alpha
+        ctx.drawImage(from,0,0);
+        ctx.restore(); 
+        // to.flush();
     }
     end(){
         if(super.end()===false){return false;}
@@ -84,7 +122,7 @@ export default class Brush extends BaseTool{
         const document = this.document;
         // const layer = this.layer;
         // const drawLayer = this.drawLayer;
-        const layer = this.drawLayer;
+        const layer = this.workingLayer;
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
@@ -102,7 +140,8 @@ export default class Brush extends BaseTool{
         this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,{remainInterval})
         ctx.restore();
         layer.flush();
-
+        // drawLayer.flush();
+        this.#mergeFromWorkingLayer();
     }
 
     drawForDown(x0,y0){
@@ -110,7 +149,7 @@ export default class Brush extends BaseTool{
         const document = this.document;
         // const layer = this.layer;
         // const drawLayer = this.drawLayer;
-        const layer = this.drawLayer;
+        const layer = this.workingLayer;
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
@@ -125,6 +164,7 @@ export default class Brush extends BaseTool{
         brush.drawOnDot(ctx,lx0,ly0);
         ctx.restore();
         layer.flush();
+        this.#mergeFromWorkingLayer();
 
     }
 

@@ -160,6 +160,25 @@ export default class Document extends Layer{
             // const ctx = layer.ctx;
             
             let targetLayer = layer
+            // if(index == this.layers.selectedIndex){ // 이 방법 너무 느림!
+            //     const parenttLayer = layer.clone();
+            //     targetLayer = drawLayer;
+            //     const ctx = parenttLayer.ctx;
+            //     ctx.save();
+            //     ctx.globalCompositeOperation = targetLayer.compositeOperation
+            //     // ctx.globalAlpha = targetLayer.alpha //alpha는 무시한다 layer에 종속적으로 동작해야하기 때문
+            //     ctx.translate(targetLayer.left, targetLayer.top)
+            //     if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
+            //     ctx.translate(targetLayer.width/2, targetLayer.height/2)
+            //     if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
+            //     ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
+            //     if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
+            //         ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
+            //     }
+            //     ctx.translate(-targetLayer.left, -targetLayer.top)
+            //     ctx.restore()
+            //     targetLayer = parenttLayer;
+            // }
 
             ctx.save();
             ctx.globalCompositeOperation = targetLayer.compositeOperation
@@ -173,7 +192,6 @@ export default class Document extends Layer{
             if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
             ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
             if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
-                
                 ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
             }
             ctx.translate(-targetLayer.left, -targetLayer.top)
@@ -181,11 +199,12 @@ export default class Document extends Layer{
 
 
             if(index == this.layers.selectedIndex){
-                targetLayer = drawLayer
+                const targetLayer = drawLayer
 
                 ctx.save();
                 ctx.globalCompositeOperation = targetLayer.compositeOperation
                 ctx.globalAlpha = targetLayer.alpha
+                
                 ctx.translate(targetLayer.left, targetLayer.top)
                 if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
                 ctx.translate(targetLayer.width/2, targetLayer.height/2)

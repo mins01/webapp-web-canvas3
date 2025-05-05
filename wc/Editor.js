@@ -437,6 +437,7 @@ export default class Editor{
     }
     readyLayer(){
         console.log('Editor.readyLayer()')
+        this?.tool?.ready();
         const document = this.document
         const modalHandler = this.modalHandler;
 

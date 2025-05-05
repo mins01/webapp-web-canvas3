@@ -158,9 +158,10 @@ class Canvas extends HTMLCanvasElement{
         newCanvas.import(this.export())
         newCanvas.label +=' cloned'
         // newCanvas.setContextConfig(this.getContextConfig());
-        this.ctx.save();
-        newCanvas.ctx.putImageData(this.ctx.getImageData(0,0,this.width,this.height),0,0);
-        this.ctx.restore();
+        newCanvas.ctx.save();
+        newCanvas.ctx.drawImage(this, 0, 0);
+        // newCanvas.ctx.putImageData(this.ctx.getImageData(0,0,this.width,this.height),0,0);
+        newCanvas.ctx.restore();
         return newCanvas;
     }
     resize(width,height){
