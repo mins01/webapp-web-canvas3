@@ -163,7 +163,7 @@ export default class Brush extends Layer{
     ctx.save();
     // ctx.filter = 'hue-rotate(180deg)';
     // ctx.imageSmoothingEnabled = false;
-    ctx.globalAlpha = parseFloat(brushConfig.opacity)        
+    ctx.globalAlpha = parseFloat(brushConfig.flow)        
     ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
     ctx.rotate(brushConfig.angle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
     ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
@@ -172,7 +172,7 @@ export default class Brush extends Layer{
     
     if(brushConfig.flattenOpacity){
       const c = jsColor.Color.from(ctx.fillStyle);
-      const o = Math.round(brushConfig.opacity*255);           
+      const o = Math.round(brushConfig.flow*255);           
       Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,170)
     }
     this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
@@ -231,16 +231,14 @@ export default class Brush extends Layer{
       size*=v; //사이즈 재조정
     }
     
-    const opacityControl = brushConfig.opacityControl
-    if(opacityControl==='off'){ // 아무 설정이 없을 경우
-      if(brushConfig.opacityJitter>0 && brushConfig.mininumOpacity < 1){ 
-        const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.opacityJitter; filters.push(`opacity(${v}%)`); 
+    const flowControl = brushConfig.flowControl
+    if(flowControl==='off'){ // 아무 설정이 없을 경우
+      if(brushConfig.flowJitter>0 && brushConfig.mininumFlow < 1){ 
+        const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.flowJitter; filters.push(`opacity(${v}%)`); 
       }
-    }else if(pointerEvent && opacityControl==='penPressure'){
+    }else if(pointerEvent && flowControl==='penPressure'){
       const pressure = pointerEvent?.pressure??0.5;
-      // console.log(pressure);
-      
-      const v = Math.round(Math.max(pressure, brushConfig.mininumOpacity) * 100); filters.push(`opacity(${v}%)`);            
+      const v = Math.round(Math.max(pressure, brushConfig.mininumFlow) * 100); filters.push(`opacity(${v}%)`);            
     }
     
     const angleControl = brushConfig.angleControl
@@ -341,7 +339,7 @@ export default class Brush extends Layer{
     
     
     const sizeControl = brushConfig.sizeControl
-    const opacityControl = brushConfig.opacityControl
+    const flowControl = brushConfig.flowControl
     if(sizeControl==='off'){ // 아무 설정이 없을 경우
     }else if(sizeControl==='penPressure'){
       const pressure = ((lastPointerEvent?.pressure??0.5)+(pointerEvent?.pressure??0.5)) / 2
@@ -369,7 +367,7 @@ export default class Brush extends Layer{
       
     }else{
       let steps = Math.floor(distance2 / interval);
-      if(sizeControl==='penPressure' || opacityControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
+      if(sizeControl==='penPressure' || flowControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
         let fromPressure = lastPointerEvent?.pressure??0.5
         let toPressure = pointerEvent?.pressure??0.5
         let intervalPressure = (toPressure != fromPressure)?(toPressure - fromPressure)/(steps):0;

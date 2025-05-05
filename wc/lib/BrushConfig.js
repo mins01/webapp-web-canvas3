@@ -34,6 +34,7 @@ class BrushConfig extends BaseConfig{
     flow = 1; // 하나의 투명도 // 이거 어떻게 할지 모르겠다. 나중에 다시보자.
     flowJitter = 0
     flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+    mininumFlow = 0.1; //최소 불투명도
 
     //color
     hueJitter = 0;
@@ -94,6 +95,7 @@ class BrushConfig extends BaseConfig{
         this.flow = 1; // 하나의 투명도
         this.flowJitter = 0 // 구현 안했네.. 뭐하는거지?
         this.flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
+        this.mininumFlow = 0.1; //최소 불투명도
 
         // color
         this.hueJitter = 0;

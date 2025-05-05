@@ -124,7 +124,7 @@
       // b1.brushConfig.sizeControl = 'penPressure';
       b1.brushConfig.opacity = 0.25;
       b1.brushConfig.spacing = 0.5;
-      b1.brushConfig.opacityControl = 'penPressure';
+      b1.brushConfig.flowControl = 'penPressure';
       b1.flush();
       
       const c1 = globalThis.c1 =  document.querySelector('#c1');
@@ -291,11 +291,11 @@
                   </div>
                 </div>
                 <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(스트로크 불투명도)</div>
                   <div class="input-group ui-input-stepper">
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                      <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                      <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
                     </div>
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                   </div>
@@ -339,20 +339,20 @@
                   </div>
                 </div>
                 <hr class="my-1">
-                <header> <h4 class="m-0">Opacity control (via stylus pen)</h4> </header>
+                <header> <h4 class="m-0">Flow control (via stylus pen)</h4> </header>
                 <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> OpacityControl</div>
-                  <select class="form-select " name="opacityControl" >
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlowControl</div>
+                  <select class="form-select " name="flowControl" >
                     <option selected value="off">OFF</option>
                     <option value="penPressure">penPressure</option>
                   </select>
                 </div>
                 <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> MininumOpacity</div>
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> MininumFlow</div>
                   <div class="input-group ui-input-stepper">
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                      <input type="range" class="form-range d-block" name="mininumOpacity" placeholder="mininumOpacity" step="0.01" min="0" max="1" value="1" >
+                      <input type="range" class="form-range d-block" name="mininumFlow" placeholder="mininumFlow" step="0.01" min="0" max="1" value="1" >
                     </div>
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                   </div>
@@ -434,11 +434,11 @@
                   </div>
                 </div>
                 <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> OpacityJitter</div>
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlowJitter</div>
                   <div class="input-group ui-input-stepper">
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                     <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                      <input type="range" class="form-range d-block" name="opacityJitter" placeholder="opacityJitter" step="0.01" min="0" max="1" value="0" >
+                      <input type="range" class="form-range d-block" name="flowJitter" placeholder="flowJitter" step="0.01" min="0" max="1" value="0" >
                     </div>
                     <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                   </div>
