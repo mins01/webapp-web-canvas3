@@ -219,31 +219,38 @@ export default class Brush extends Layer{
     // pressure :  0.5
     let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈
     const sizeControl = brushConfig.sizeControl
-    if(sizeControl==='off'){ // 아무 설정이 없을 경우
-      if(brushConfig.sizeJitter > 0 && brushConfig.mininumSizeRatio < 1){
-        const v = Math.max(1 - Math.random()*brushConfig.sizeJitter, brushConfig.mininumSizeRatio); ctx.scale(v,v)
-        size*=v; //사이즈 재조정
+    {
+      let v = 1;
+      if(sizeControl==='penPressure'){
+        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
+        v *= p;
       }
-    }else if(pointerEvent && sizeControl==='penPressure'){
-      const pressure = pointerEvent?.pressure??0.5;
-      // console.log(pressure,pointerEvent);
-      const v = Math.max(pressure, brushConfig.mininumSizeRatio); ctx.scale(v,v)
-      size*=v; //사이즈 재조정
+      if(brushConfig.sizeJitter > 0){
+        const p = (Math.random() - 0.5) * 2 * brushConfig.sizeJitter;
+        v = Math.min(1,v + v*p);
+      }   
+      if(v != 1){
+        ctx.scale(v,v)
+      }
+      size = size*v;
     }
+
     
     // flow 제어
     const flowControl = brushConfig.flowControl
-    let v = brushConfig.flow;
-    if(flowControl==='penPressure'){
-      const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
-      v *= p;
-    }
-    if(brushConfig.flowJitter > 0){
-      const p = (Math.random() - 0.5) * 2 * brushConfig.flowJitter;
-      v = Math.min(1,v + v*p);
-    }   
-    if(v != 1){
-      filters.push(`opacity(${v*100}%)`); 
+    {
+      let v = brushConfig.flow;
+      if(flowControl==='penPressure'){
+        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
+        v *= p;
+      }
+      if(brushConfig.flowJitter > 0){
+        const p = (Math.random() - 0.5) * 2 * brushConfig.flowJitter;
+        v = Math.min(1,v + v*p);
+      }   
+      if(v != 1){
+        filters.push(`opacity(${v*100}%)`); 
+      }
     }
 
     
