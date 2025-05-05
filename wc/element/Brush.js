@@ -222,7 +222,7 @@ export default class Brush extends Layer{
     {
       let v = 1;
       if(sizeControl==='penPressure'){
-        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
+        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumSizeRatio) ;
         v *= p;
       }
       if(brushConfig.sizeJitter > 0){
