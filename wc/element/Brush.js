@@ -163,17 +163,20 @@ export default class Brush extends Layer{
     ctx.save();
     // ctx.filter = 'hue-rotate(180deg)';
     // ctx.imageSmoothingEnabled = false;
+    
+
     ctx.globalAlpha = parseFloat(brushConfig.flow)        
     ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
     ctx.rotate(brushConfig.angle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
     ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
+    // ctx.imageSmoothingEnabled = false;
     ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
     ctx.restore();
     
     if(brushConfig.flattenOpacity){
       const c = jsColor.Color.from(ctx.fillStyle);
-      const o = Math.round(brushConfig.flow*255);           
-      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,170)
+      const o = Math.round(brushConfig.flow*255);
+      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,Math.min(170,o))
     }
     this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
   }
