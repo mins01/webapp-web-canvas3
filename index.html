@@ -1572,7 +1572,17 @@
                     </div>
                   </div>
                   <div>
-                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(스트로크 불투명도)</div>
+                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
+                    <div class="input-group ui-input-stepper">
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                      <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                        <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                      </div>
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                    </div>
+                  </div>                
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
                     <div class="input-group ui-input-stepper">
                       <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                       <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >

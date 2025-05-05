@@ -113,6 +113,7 @@ export default class Document extends Layer{
     syncDrawLayer(layer=null){
         if(!layer) layer = this.layer
         if(!layer) return;
+        this.drawLayer.alpha = layer.alpha;
         this.drawLayer.left = layer.left;
         this.drawLayer.top = layer.top;
         this.drawLayer.width = layer.width;

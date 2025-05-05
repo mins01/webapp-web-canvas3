@@ -198,6 +198,12 @@ export default class Brush extends Layer{
     let gx = image.width/2;
     let gy = image.height/2;
     
+    // opacity 적용
+    ctx.canvas.alpha = brushConfig.opacity;
+    if(ctx.canvas.style) ctx.canvas.style.opacity = brushConfig.opacity;
+    // console.log(ctx.canvas.style.opacity);
+    
+
     ctx.save();
     // 중앙으로 이동
     // ctx.translate(x + gx, y + gy);

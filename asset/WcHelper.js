@@ -139,7 +139,7 @@ class WcHelper{
       // console.log({x:p1.x,y:p1.y,pressure});
       
       const rm = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{pointerEvent});
-      console.log({rm});
+      // console.log({rm});
       
       p = p1;
     }

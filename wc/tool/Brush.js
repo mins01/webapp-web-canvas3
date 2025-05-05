@@ -55,7 +55,17 @@ export default class Brush extends BaseTool{
     }
     onpointerup(event){
         this.brush.pointerEvent = new PointerEvent(event.type, event)
+        this.#mergeLayers();
         return super.onpointerup(event);
+    }
+    #mergeLayers(){
+        const layer = this.document.layer
+        const drawLayer = this.document.drawLayer
+        const ctx = layer.ctx;
+        ctx.save();
+        ctx.globalAlpha = drawLayer.alpha
+        ctx.drawImage(drawLayer,0,0);
+        ctx.restore();
     }
     end(){
         if(super.end()===false){return false;}
@@ -72,8 +82,9 @@ export default class Brush extends BaseTool{
     draw(x0,y0,x1,y1){
         super.draw(...arguments);
         const document = this.document;
-        const layer = this.layer;
-        const drawLayer = this.drawLayer;
+        // const layer = this.layer;
+        // const drawLayer = this.drawLayer;
+        const layer = this.drawLayer;
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
@@ -97,8 +108,9 @@ export default class Brush extends BaseTool{
     drawForDown(x0,y0){
         super.draw(...arguments);
         const document = this.document;
-        const layer = this.layer;
-        const drawLayer = this.drawLayer;
+        // const layer = this.layer;
+        // const drawLayer = this.drawLayer;
+        const layer = this.drawLayer;
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }

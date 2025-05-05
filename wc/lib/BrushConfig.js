@@ -88,14 +88,14 @@ class BrushConfig extends BaseConfig{
         this.mininumScaleY = 0.1; //최소 크기
 
         // transfer
-        this.opacity = 1; // 전체적 불투명도
+        this.opacity = 1; // 스트로크(한번에 그어지는 선) 불투명도
         this.opacityJitter = 0
         this.opacityControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumOpacity = 0.1; //최소 불투명도
-        this.flow = 1; // 하나의 투명도
-        this.flowJitter = 0 // 구현 안했네.. 뭐하는거지?
+        this.mininumOpacity = 0.1; //최소 불투명도 Control value
+        this.flow = 1; // 브러시 자국 하나 기준 투명도
+        this.flowJitter = 0 // 브러시 자국 하나 기준
         this.flowControl = 'off'; // 크기 조절. off, fade,  penPressure, penTilt , stylusWheel ...
-        this.mininumFlow = 0.1; //최소 불투명도
+        this.mininumFlow = 0.1; //최소 불투명도  Control value
 
         // color
         this.hueJitter = 0;
