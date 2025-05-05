@@ -231,15 +231,21 @@ export default class Brush extends Layer{
       size*=v; //사이즈 재조정
     }
     
+    // flow 제어
     const flowControl = brushConfig.flowControl
-    if(flowControl==='off'){ // 아무 설정이 없을 경우
-      if(brushConfig.flowJitter>0 && brushConfig.mininumFlow < 1){ 
-        const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.flowJitter; filters.push(`opacity(${v}%)`); 
-      }
-    }else if(pointerEvent && flowControl==='penPressure'){
-      const pressure = pointerEvent?.pressure??0.5;
-      const v = Math.round(Math.max(pressure, brushConfig.mininumFlow) * 100); filters.push(`opacity(${v}%)`);            
+    let v = brushConfig.flow;
+    if(flowControl==='penPressure'){
+      const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
+      v *= p;
     }
+    if(brushConfig.flowJitter > 0){
+      const p = (Math.random() - 0.5) * 2 * brushConfig.flowJitter;
+      v = Math.min(1,v + v*p);
+    }   
+    if(v != 1){
+      filters.push(`opacity(${v*100}%)`); 
+    }
+
     
     const angleControl = brushConfig.angleControl
     if(angleControl==='off'){ // 아무 설정이 없을 경우
