@@ -17,20 +17,35 @@ export default class Eraser extends Brush{
     //     this.ready();
     // }
 
-    draw(x0,y0,x1,y1){
-        const ctx = this.layer.ctx;
-        ctx.save();
-        ctx.globalCompositeOperation = 'destination-out';
-        super.draw(x0,y0,x1,y1)
-        ctx.restore();
-    }
+    // draw(x0,y0,x1,y1){
+    //     const ctx = this.layer.ctx;
+    //     ctx.save();
+    //     ctx.globalCompositeOperation = 'destination-out';
+    //     super.draw(x0,y0,x1,y1)
+    //     ctx.restore();
+    // }
 
-    drawForDown(x0,y0){      
-        // console.log(this.brush );
-        const ctx = this.layer.ctx;
+    // drawForDown(x0,y0){      
+    //     // console.log(this.brush );
+    //     const ctx = this.layer.ctx;
+    //     ctx.save();
+    //     ctx.globalCompositeOperation = 'destination-out';
+    //     super.drawForDown(x0,y0)
+    //     ctx.restore();
+    // }
+
+
+    mergeFromWorkingLayer(){
+        const from = this.workingLayer;
+        const to = this.drawLayer;
+        const ctx = to.ctx;
+        to.clear()
+        ctx.drawImage(this.layer,0,0);
         ctx.save();
         ctx.globalCompositeOperation = 'destination-out';
-        super.drawForDown(x0,y0)
-        ctx.restore();
+        ctx.globalAlpha = from.alpha
+        ctx.drawImage(from,0,0);
+        ctx.restore(); 
+        to.flush();
     }
 }

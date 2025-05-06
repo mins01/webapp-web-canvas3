@@ -77,12 +77,12 @@ export default class Brush extends BaseTool{
     }
     onpointerup(event){
         this.brush.pointerEvent = new PointerEvent(event.type, event)
-        this.#mergeFromWorkingLayer();
-        this.#mergeFromDrawLayer();
+        this.mergeFromWorkingLayer();
+        this.mergeFromDrawLayer();
         return super.onpointerup(event);
     }
 
-    #mergeFromWorkingLayer(){
+    mergeFromWorkingLayer(){
         const from = this.workingLayer;
         const to = this.drawLayer;
         const ctx = to.ctx;
@@ -94,7 +94,7 @@ export default class Brush extends BaseTool{
         ctx.restore(); 
         to.flush();
     }
-    #mergeFromDrawLayer(){
+    mergeFromDrawLayer(){
         const from = this.drawLayer;
         const to = this.layer;
         const ctx = to.ctx;
@@ -142,7 +142,7 @@ export default class Brush extends BaseTool{
         ctx.restore();
         layer.flush();
         // drawLayer.flush();
-        this.#mergeFromWorkingLayer();
+        this.mergeFromWorkingLayer();
     }
 
     drawForDown(x0,y0){
@@ -165,7 +165,7 @@ export default class Brush extends BaseTool{
         brush.drawOnDot(ctx,lx0,ly0);
         ctx.restore();
         layer.flush();
-        this.#mergeFromWorkingLayer();
+        this.mergeFromWorkingLayer();
 
     }
 
