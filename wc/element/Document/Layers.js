@@ -13,8 +13,8 @@ export default class Layers extends SelectableArray{
         super(...elements);
     }
     ready(){ // 변경 작업호 호출하면 문서도 래디 한다.
-        console.log('Layers.readyLayer()')
-        this.document.readyLayer();
+        console.log('Layers.ready()')
+        this.document.ready();
     }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){
@@ -65,10 +65,10 @@ export default class Layers extends SelectableArray{
         document.syncDrawLayer(layer);
         layer.flush();
         document?.editor?.onselectLayer(document.layer);
+
+        this.ready();
         if(!withoutHistory){
-            this.ready();
             this.document.history.save('Layers.add');
-            this?.document?.editor?.tool?.activate()
         }
         return true;
     }

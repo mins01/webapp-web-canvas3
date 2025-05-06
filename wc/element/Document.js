@@ -121,20 +121,24 @@ export default class Document extends Layer{
         this.drawLayer.zoom = layer.zoom;
         this.drawLayer.angle = layer.angle;
     }
+
+
+    ready(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
+        console.log('Document.ready()');
+        this.readyLayer();
+        this?.editor?.ready();
+    }
+
     readyTool(){ // 툴을 사용할 준비
         this.drawLayer.clear();
         this.syncDrawLayer();
         this.sync();
     }
     readyLayer(){ // 레이어 변화후 준비 처리
-        console.log('Document.readyLayer()')
-        this.syncDrawLayer();
-        this.editor?.readyLayer();
+        this.syncDrawLayer();       
     }
     
-    ready(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
-        this.readyLayer();
-    }
+    
 
     
     /** Description placeholder

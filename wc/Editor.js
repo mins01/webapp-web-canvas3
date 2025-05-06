@@ -396,7 +396,7 @@ export default class Editor{
                 URL.revokeObjectURL(imageURL);
                 const layer = Layer.fromImage(image)
                 this.document.add(layer);
-                this.readyLayer()
+                this.ready()
             }
             image.onerror=(event)=>{
                 console.error(event);
@@ -433,12 +433,16 @@ export default class Editor{
 
 
     ready(){
+        console.log('editor.ready()');
+        this.readyEditor();    
+    }
+    readyEditor(){
         this.readyLayer();
-        this?.tool?.ready();
+        this?.tool?.inactivate();
+        this?.tool?.activate();
     }
     readyLayer(){
-        console.log('Editor.readyLayer()')
-        this?.tool?.ready();
+        console.log('editor.readyLayer()')
         const document = this.document
         const modalHandler = this.modalHandler;
 
@@ -482,7 +486,7 @@ export default class Editor{
                 event.stopPropagation()
                 layer.visible = !layer.visible;
                 layer.flush();
-                layer?.parent?.readyLayer();
+                layer?.parent?.ready();
                 layer?.parent?.history.save('layer.visible')
             }
             config.layer = layer;
