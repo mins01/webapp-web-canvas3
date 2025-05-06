@@ -21,7 +21,7 @@ export default class Brush extends BaseTool{
 
     ready(){
 		super.ready();
-        this.workingLayer.parent = this.drawLayer;
+        // this.workingLayer.parent = this.drawLayer;
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         // globalThis.document.body.append(this.workingLayer)
@@ -122,6 +122,7 @@ export default class Brush extends BaseTool{
         const document = this.document;
         // const layer = this.layer;
         // const drawLayer = this.drawLayer;
+        // const layer = this.drawLayer;
         const layer = this.workingLayer;
         const ctx = layer.ctx;
         

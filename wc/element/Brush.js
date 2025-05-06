@@ -202,8 +202,10 @@ export default class Brush extends Layer{
     let gy = image.height/2;
     
     // opacity 적용
-    ctx.canvas.alpha = brushConfig.opacity;
-    if(ctx.canvas.style) ctx.canvas.style.opacity = brushConfig.opacity;
+    if(ctx.canvas.alpha != brushConfig.opacity){
+      ctx.canvas.alpha = brushConfig.opacity;
+      if(ctx.canvas.style) ctx.canvas.style.opacity = brushConfig.opacity;
+    }
     // console.log(ctx.canvas.style.opacity);
     
 
@@ -235,13 +237,13 @@ export default class Brush extends Layer{
         v *= p;
       }
       if(brushConfig.sizeJitter > 0){
-        const p = (Math.random() - 0.5) * 2 * brushConfig.sizeJitter;
-        v = Math.min(1,v + v*p);
+        const p = Math.random() * brushConfig.sizeJitter;
+        v = v - p;
       }   
       if(v != 1){
         ctx.scale(v,v)
+        size = size*v;
       }
-      size = size*v;
     }
 
     
@@ -254,8 +256,8 @@ export default class Brush extends Layer{
         v *= p;
       }
       if(brushConfig.flowJitter > 0){
-        const p = (Math.random() - 0.5) * 2 * brushConfig.flowJitter;
-        v = Math.min(1,v + v*p);
+        const p = Math.random() * brushConfig.flowJitter;
+        v = v - p;
       }   
       if(v != 1){
         filters.push(`opacity(${v*100}%)`); 
@@ -383,7 +385,8 @@ export default class Brush extends Layer{
     
     if(distance2 < interval){
       // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
-      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
+      // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
+      this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
       this.remainInterval = distance2
       return distance2;
       
@@ -406,8 +409,8 @@ export default class Brush extends Layer{
           let t = i / steps;
           let x = x0 + t * dx;
           let y = y0 + t * dy;
-          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', pointerEvent);
-          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
+          // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', pointerEvent);
+          this.dot(ctx,x,y,{pointerEvent:pointerEvent,brushConfig,image,lineAngle});
         }
 
       }
@@ -415,7 +418,8 @@ export default class Brush extends Layer{
       remainInterval = distance2 % interval;
       // this.lastSize = size;
       
-      this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
+      // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
+      this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
       
       this.remainInterval = remainInterval;
       return remainInterval;
