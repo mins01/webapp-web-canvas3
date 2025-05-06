@@ -11,7 +11,7 @@ export default class Brush extends Layer{
   pointerEvent = null
   lastPointerEvent = null
   remainInterval = 0
-  imageBitmap = null;
+  // imageBitmap = null;
   constructor(w=null,h=null){
     super(w,h);
     this.parent = null;
@@ -132,7 +132,7 @@ export default class Brush extends Layer{
     
     // ctx.stroke()
     ctx.restore();
-    createImageBitmap(this).then((v)=>{this.imageBitmap = v});
+    // createImageBitmap(this).then((v)=>{this.imageBitmap = v});
   }
   
   draw(){
@@ -196,8 +196,8 @@ export default class Brush extends Layer{
     let {
       pointerEvent = this.pointerEvent, 
       brushConfig= this.brushConfig  ,
-      // image = this,
-      image = this.imageBitmap,
+      image = this,
+      // image = this.imageBitmap,
       lineAngle = 0, //그리는 방향
     } = opts;
     
