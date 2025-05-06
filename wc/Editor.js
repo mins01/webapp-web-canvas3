@@ -396,6 +396,7 @@ export default class Editor{
                 URL.revokeObjectURL(imageURL);
                 const layer = Layer.fromImage(image)
                 this.document.add(layer);
+                this.readyLayer()
             }
             image.onerror=(event)=>{
                 console.error(event);

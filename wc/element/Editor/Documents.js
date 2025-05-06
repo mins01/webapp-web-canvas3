@@ -40,6 +40,7 @@ export default class Documents extends SelectableArray{
 
       document.history.clear();
       document.history.save('new document');
+      this.editor?.tool?.activate();
     },10)
     this.editor?.tool?.activate();
   }
