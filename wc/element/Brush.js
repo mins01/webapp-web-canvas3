@@ -11,6 +11,7 @@ export default class Brush extends Layer{
   pointerEvent = null
   lastPointerEvent = null
   remainInterval = 0
+  imageBitmap = null;
   constructor(w=null,h=null){
     super(w,h);
     this.parent = null;
@@ -131,6 +132,7 @@ export default class Brush extends Layer{
     
     // ctx.stroke()
     ctx.restore();
+    createImageBitmap(this).then((v)=>{this.imageBitmap = v});
   }
   
   draw(){
@@ -194,7 +196,8 @@ export default class Brush extends Layer{
     let {
       pointerEvent = this.pointerEvent, 
       brushConfig= this.brushConfig  ,
-      image = this,
+      // image = this,
+      image = this.imageBitmap,
       lineAngle = 0, //그리는 방향
     } = opts;
     
@@ -260,7 +263,8 @@ export default class Brush extends Layer{
         v = v - p;
       }   
       if(v != 1){
-        filters.push(`opacity(${v*100}%)`); 
+        // filters.push(`opacity(${v*100}%)`); 
+        ctx.globalAlpha = v;
       }
     }
 
@@ -291,10 +295,10 @@ export default class Brush extends Layer{
     if(scaleYControl==='off'){ // 아무 설정이 없을 경우
       
     }else if(pointerEvent && scaleYControl==='penTilt'){
-      const altitudeAngle = pointerEvent.azimuthAngle??0;
+      const azimuthAngle = pointerEvent.azimuthAngle??0;
       if(brushConfig.mninumScaleY < 1){
-        const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
-        // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mninumScaleY);
+        const v = Math.max(azimuthAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
+        // console.log('azimuthAngle',azimuthAngle,Math.PI,azimuthAngle/(Math.PI/2),v,brushConfig.mninumScaleY);
       }
     }
     
@@ -306,9 +310,8 @@ export default class Brush extends Layer{
     }
     
     
-    
-    
-    if(filters.length){ ctx.filter = filters.join(' '); }
+        
+    if(filters.length > 0){ ctx.filter = filters.join(' '); }
 
     //-- 스케터링
     const scatterAmount  = brushConfig.scatterAmount;
@@ -325,10 +328,10 @@ export default class Brush extends Layer{
         if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
         else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
         else if(scatterAxes == 'xy'){
-          const tAngle = Math.random()*360;
-          ctx.rotate(tAngle * Math.PI / 180); 
+          const tAngle = Math.random()*360 * Math.PI / 180;
+          ctx.rotate(tAngle); 
           ctx.translate(tv, 0); 
-          ctx.rotate(-tAngle * Math.PI / 180); 
+          ctx.rotate(-tAngle); 
         }
       }
       ctx.drawImage(image, -gx,-gy,image.width,image.height );
@@ -391,7 +394,7 @@ export default class Brush extends Layer{
       return distance2;
       
     }else{
-      let steps = Math.floor(distance2 / interval);
+      let steps = Math.floor(distance2 / interval);      
       if(sizeControl==='penPressure' || flowControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
         let fromPressure = lastPointerEvent?.pressure??0.5
         let toPressure = pointerEvent?.pressure??0.5
