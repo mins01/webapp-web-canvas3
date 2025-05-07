@@ -154,7 +154,8 @@ class Canvas extends HTMLCanvasElement{
 
     clone(){
         const newCanvas = new this.constructor(this.width,this.height);
-        newCanvas.import(this.export())       
+        // newCanvas.import(this.export())       
+        newCanvas.ctx.drawImage(this,0,0)
         newCanvas.label +=' cloned'
         return newCanvas;
     }

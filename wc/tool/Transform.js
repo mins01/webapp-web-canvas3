@@ -84,6 +84,9 @@ export default class Transform extends BaseTool{
     onuttresize(){
         this.draw()
     }
+    onuttmoveend(){
+        this.draw()
+    }
     draw(){
         const utt = this.utt;
         const document = this.document
@@ -99,7 +102,7 @@ export default class Transform extends BaseTool{
 
         let leftUttC = utt.left + utt.width/2;
         let topUttC = utt.top + utt.height/2;
-        console.log(leftUttC, utt.width/2);
+        // console.log(leftUttC, utt.width/2);
 
         [leftUttC,topUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
 
