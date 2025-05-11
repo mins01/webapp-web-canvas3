@@ -377,7 +377,10 @@ export default class Brush extends Layer{
     
     const lineAngle = this.getAngle(x0,y0,x1,y1);
    
-    const interval = size * Math.max(0.001,parseFloat(brushConfig.spacing));
+    const interval = Math.max(0.8,size * Math.max(0.001,parseFloat(brushConfig.spacing)));
+    // 최소 1px 정도의 인터벌을 가지게 한다. 너무 작으면 반복이 많아져서 그리는데 끊긴다...
+    
+    
     // 선의 길이를 계산
     // let r = size / 2;
     let dx = x1 - x0;
