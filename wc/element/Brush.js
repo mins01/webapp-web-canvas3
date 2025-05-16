@@ -8,8 +8,6 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Brush extends Layer{
   margin = 2;
-  // pointerEvent = null
-  // lastPointerEvent = null
   remainInterval = 0
   lastPressure = 0.5;
   lastAzimuthAngle = 0;
@@ -34,8 +32,6 @@ export default class Brush extends Layer{
     
   }
   ready(){
-    // this.pointerEvent = new PointerEvent('pointerdown',{pressure:0});
-    // this.lastPointerEvent = new PointerEvent('pointerdown',{pressure:0});
     this.lastPressure = 0.5;
     this.lastAzimuthAngle = 0;
     this.remainInterval = 0;
@@ -198,13 +194,13 @@ export default class Brush extends Layer{
    */
   dot(ctx,x,y,opts={}){
     let {
-      // pointerEvent = this.pointerEvent, 
       pointerType = '', // 포인터타입, mouse, touch, pen. '' 이면 설정 안됨을 뜻함
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
       // lastPressure = this.lastPressure??0.5, // 압력
       // lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위
-      brushConfig= this.brushConfig  ,
+
+      brushConfig= this.brushConfig,
       image = this,
       // image = this.imageBitmap,
       lineAngle = 0, //그리는 방향
@@ -281,7 +277,6 @@ export default class Brush extends Layer{
       if(scaleYControl==='off'){ // 아무 설정이 없을 경우
         
       }else if(scaleYControl==='penTilt' && (pointerType=='pen' || pointerType=='')){
-        // const azimuthAngle = pointerEvent.azimuthAngle??0;
         if(brushConfig.mninumScaleY < 1){
           const v = Math.max(azimuthAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
         }
@@ -353,16 +348,14 @@ export default class Brush extends Layer{
   drawOnLine(ctx,x0, y0, x1, y1 , opts = {}) {
     let {
       remainInterval = this.remainInterval, 
-      // pointerEvent = this.pointerEvent,
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
       lastPressure = this.lastPressure??0.5, // 압력
       lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
 
-      // lastPointerEvent = this.lastPointerEvent, 
       brushConfig= this.brushConfig  ,
-      image = this
+      image = this,
     } = opts;
     // console.log('pressure',pressure);
     
@@ -396,8 +389,6 @@ export default class Brush extends Layer{
     
     if(distance2 < interval){
       // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
-      // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
-      // this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
       this.lastPressure = pressure;
       this.lastAzimuthAngle = azimuthAngle;
       this.remainInterval = distance2
@@ -415,7 +406,6 @@ export default class Brush extends Layer{
           let x = x0 + t * dx;
           let y = y0 + t * dy;
           let pressure = fromPressure + intervalPressure * i
-          // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', {pressure:pressure});
           
           this.dot(ctx,x,y,{brushConfig,image,lineAngle,pressure,azimuthAngle,pointerType});
         }
@@ -424,7 +414,6 @@ export default class Brush extends Layer{
           let t = i / steps;
           let x = x0 + t * dx;
           let y = y0 + t * dy;
-          // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', pointerEvent);
           this.dot(ctx,x,y,{brushConfig,image,lineAngle,pressure,azimuthAngle,pointerType});
         }
 
@@ -432,9 +421,6 @@ export default class Brush extends Layer{
       
       remainInterval = distance2 % interval;
       // this.lastSize = size;
-      
-      // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
-      // this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
       this.lastPressure = pressure;
       this.lastAzimuthAngle = azimuthAngle;
 
@@ -446,17 +432,15 @@ export default class Brush extends Layer{
   }
   drawOnDot(ctx,x, y ,opts = {}){
     let {
-      // pointerEvent = this.pointerEvent, 
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
 
-      brushConfig= this.brushConfig  ,
+      brushConfig= this.brushConfig,
       image = this
     } = opts;
     
     this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle});
-    // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
   }
   
   
