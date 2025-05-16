@@ -8,9 +8,11 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Brush extends Layer{
   margin = 2;
-  pointerEvent = null
-  lastPointerEvent = null
+  // pointerEvent = null
+  // lastPointerEvent = null
   remainInterval = 0
+  lastPressure = 0.5;
+  lastAzimuthAngle = 0;
   // imageBitmap = null;
   constructor(w=null,h=null){
     super(w,h);
@@ -32,8 +34,10 @@ export default class Brush extends Layer{
     
   }
   ready(){
-    this.pointerEvent = new PointerEvent('pointerdown',{pressure:0});
-    this.lastPointerEvent = new PointerEvent('pointerdown',{pressure:0});
+    // this.pointerEvent = new PointerEvent('pointerdown',{pressure:0});
+    // this.lastPointerEvent = new PointerEvent('pointerdown',{pressure:0});
+    this.lastPressure = 0.5;
+    this.lastAzimuthAngle = 0;
     this.remainInterval = 0;
   }
   
@@ -194,12 +198,19 @@ export default class Brush extends Layer{
    */
   dot(ctx,x,y,opts={}){
     let {
-      pointerEvent = this.pointerEvent, 
+      // pointerEvent = this.pointerEvent, 
+      pointerType = '', // 포인터타입, mouse, touch, pen. '' 이면 설정 안됨을 뜻함
+      pressure = 0.5, // 압력
+      azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
+      // lastPressure = this.lastPressure??0.5, // 압력
+      // lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위
       brushConfig= this.brushConfig  ,
       image = this,
       // image = this.imageBitmap,
       lineAngle = 0, //그리는 방향
     } = opts;
+    // console.log(pointerEvent,pressure);
+    
     
     let gx = image.width/2;
     let gy = image.height/2;
@@ -226,87 +237,73 @@ export default class Brush extends Layer{
     ctx.rotate(lineAngle * Math.PI / 180); 
 
 
+    //-- 각도 제어
+    const angleControl = brushConfig.angleControl
+    {
+      if(angleControl==='off'){ // 아무 설정이 없을 경우
+        
+      }else if(angleControl==='penTilt' && (pointerType=='pen' || pointerType=='')){
+        const v = azimuthAngle; //deg
+        ctx.rotate(v)
+      }
+      if(brushConfig.angleJitter > 0){ 
+        const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
+        ctx.rotate(Math.PI * v); 
+      }
+    }
+
     
     // pointerType :  "mouse"
     // altitudeAngle :  1.5707963267948966
     // azimuthAngle :  0
     // pressure :  0.5
-    let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈
+    // let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈 // 사용하는 곳이 없네.
+    //-- size 제어
     const sizeControl = brushConfig.sizeControl
     {
       let v = 1;
-      if(sizeControl==='penPressure'){
-        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumSizeRatio) ;
+      if(sizeControl==='penPressure' && (pointerType=='pen' || pointerType=='')){
+        const p = Math.max(pressure , brushConfig.mininumSizeRatio) ;
         v *= p;
       }
       if(brushConfig.sizeJitter > 0){
         const p = Math.random() * brushConfig.sizeJitter;
-        v = v - p;
+        v *= p;
       }   
       if(v != 1){
         ctx.scale(v,v)
-        size = size*v;
+        // size = size*v;// 사용하는 곳이 없네.
       }
     }
-
+    //-- 높이 제어
+    const scaleYControl = brushConfig.scaleYControl
+    {
+      if(scaleYControl==='off'){ // 아무 설정이 없을 경우
+        
+      }else if(scaleYControl==='penTilt' && (pointerType=='pen' || pointerType=='')){
+        // const azimuthAngle = pointerEvent.azimuthAngle??0;
+        if(brushConfig.mninumScaleY < 1){
+          const v = Math.max(azimuthAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
+        }
+      }
+    }
     
-    // flow 제어
+    //-- flow 제어
     const flowControl = brushConfig.flowControl
     {
       let v = brushConfig.flow;
-      if(flowControl==='penPressure'){
-        const p = Math.max((pointerEvent?.pressure??0.5) , brushConfig.mininumFlow) ;
+      if(flowControl==='penPressure' && (pointerType=='pen' || pointerType=='')){
+        const p = Math.max(pressure , brushConfig.mininumFlow) ;
         v *= p;
       }
       if(brushConfig.flowJitter > 0){
         const p = Math.random() * brushConfig.flowJitter;
-        v = v - p;
-      }   
+        v *= p;
+      }
       if(v != 1){
         // filters.push(`opacity(${v*100}%)`); 
         ctx.globalAlpha = v;
       }
-    }
-
-    
-    const angleControl = brushConfig.angleControl
-    if(angleControl==='off'){ // 아무 설정이 없을 경우
-      
-    }else if(pointerEvent && angleControl==='penTilt'){
-      const azimuthAngle = pointerEvent.azimuthAngle??0;
-      if(pointerEvent.pointerType=='pen'){
-        const v = azimuthAngle; ctx.rotate(azimuthAngle)
-        // console.log('azimuthAngle',azimuthAngle);
-      }
-    }
-    
-    // const roundnessControl = brushConfig.roundnessControl
-    // if(roundnessControl==='off'){ // 아무 설정이 없을 경우
-    
-    // }else if(pointerEvent && roundnessControl==='penTilt'){
-    //     const altitudeAngle = pointerEvent.altitudeAngle;
-    //     if(pointerEvent.pointerType=='pen' && brushConfig.mininumRoundness < 1){
-    //         const v = Math.max(altitudeAngle/(Math.PI/2),brushConfig.mininumRoundness); ctx.scale(1,v)
-    //         // console.log('altitudeAngle',altitudeAngle,Math.PI,altitudeAngle/(Math.PI/2),v,brushConfig.mininumRoundness);
-    //     }
-    // }
-    
-    const scaleYControl = brushConfig.scaleYControl
-    if(scaleYControl==='off'){ // 아무 설정이 없을 경우
-      
-    }else if(pointerEvent && scaleYControl==='penTilt'){
-      const azimuthAngle = pointerEvent.azimuthAngle??0;
-      if(brushConfig.mninumScaleY < 1){
-        const v = Math.max(azimuthAngle/(Math.PI/2),brushConfig.mninumScaleY); ctx.scale(1,v)
-        // console.log('azimuthAngle',azimuthAngle,Math.PI,azimuthAngle/(Math.PI/2),v,brushConfig.mninumScaleY);
-      }
-    }
-    
-    
-    
-    if(brushConfig.angleJitter > 0){ 
-      const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
-      ctx.rotate(Math.PI * v); // 45도 회전 (Math.PI / 4 라디안)
     }
     
     
@@ -356,11 +353,20 @@ export default class Brush extends Layer{
   drawOnLine(ctx,x0, y0, x1, y1 , opts = {}) {
     let {
       remainInterval = this.remainInterval, 
-      pointerEvent = this.pointerEvent, 
-      lastPointerEvent = this.lastPointerEvent, 
+      // pointerEvent = this.pointerEvent,
+      pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
+      pressure = 0.5, // 압력
+      azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
+      lastPressure = this.lastPressure??0.5, // 압력
+      lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
+
+      // lastPointerEvent = this.lastPointerEvent, 
       brushConfig= this.brushConfig  ,
       image = this
     } = opts;
+    // console.log('pressure',pressure);
+    
+
 
     let size = Math.max(1,parseFloat(brushConfig.size));
     
@@ -369,8 +375,7 @@ export default class Brush extends Layer{
     const flowControl = brushConfig.flowControl
     if(sizeControl==='off'){ // 아무 설정이 없을 경우
     }else if(sizeControl==='penPressure'){
-      const pressure = ((lastPointerEvent?.pressure??0.5)+(pointerEvent?.pressure??0.5)) / 2
-      const v = Math.max(pressure, brushConfig.mininumSizeRatio); 
+      const v = Math.max((lastPressure+pressure) / 2, brushConfig.mininumSizeRatio); 
       size *= v;
     }
     size = Math.max(1,size);
@@ -392,23 +397,27 @@ export default class Brush extends Layer{
     if(distance2 < interval){
       // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
       // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
-      this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
+      // this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
+      this.lastPressure = pressure;
+      this.lastAzimuthAngle = azimuthAngle;
       this.remainInterval = distance2
       return distance2;
       
     }else{
       let steps = Math.floor(distance2 / interval);      
       if(sizeControl==='penPressure' || flowControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
-        let fromPressure = lastPointerEvent?.pressure??0.5
-        let toPressure = pointerEvent?.pressure??0.5
+        let fromPressure = lastPressure;
+        let toPressure = pressure;
+        
         let intervalPressure = (toPressure != fromPressure)?(toPressure - fromPressure)/(steps):0;
         for (let i = 0; i < steps; i++) {
           let t = i / steps;
           let x = x0 + t * dx;
           let y = y0 + t * dy;
           let pressure = fromPressure + intervalPressure * i
-          const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', {pressure:pressure});
-          this.dot(ctx,x,y,{pointerEvent:newPointerEvent,brushConfig,image,lineAngle});
+          // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', {pressure:pressure});
+          
+          this.dot(ctx,x,y,{brushConfig,image,lineAngle,pressure,azimuthAngle,pointerType});
         }
       }else{
         for (let i = 0; i < steps; i++) {
@@ -416,7 +425,7 @@ export default class Brush extends Layer{
           let x = x0 + t * dx;
           let y = y0 + t * dy;
           // const newPointerEvent = new PointerEvent(pointerEvent?.type??'pointermove', pointerEvent);
-          this.dot(ctx,x,y,{pointerEvent:pointerEvent,brushConfig,image,lineAngle});
+          this.dot(ctx,x,y,{brushConfig,image,lineAngle,pressure,azimuthAngle,pointerType});
         }
 
       }
@@ -425,8 +434,10 @@ export default class Brush extends Layer{
       // this.lastSize = size;
       
       // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointermove');
-      this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
-      
+      // this.lastPointerEvent = pointerEvent?pointerEvent:new PointerEvent('pointermove');
+      this.lastPressure = pressure;
+      this.lastAzimuthAngle = azimuthAngle;
+
       this.remainInterval = remainInterval;
       return remainInterval;
       
@@ -435,13 +446,17 @@ export default class Brush extends Layer{
   }
   drawOnDot(ctx,x, y ,opts = {}){
     let {
-      pointerEvent = this.pointerEvent, 
+      // pointerEvent = this.pointerEvent, 
+      pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
+      pressure = 0.5, // 압력
+      azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
+
       brushConfig= this.brushConfig  ,
       image = this
     } = opts;
     
-    this.dot(ctx,x,y,{pointerEvent,brushConfig,image});
-    this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
+    this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle});
+    // this.lastPointerEvent = pointerEvent?new PointerEvent(pointerEvent.type, pointerEvent):new PointerEvent('pointerdown');
   }
   
   

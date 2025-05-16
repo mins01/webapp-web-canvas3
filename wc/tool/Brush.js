@@ -6,6 +6,8 @@ export default class Brush extends BaseTool{
     remainInterval = 0;
     brush = null;
     workingLayer = null;
+    pointerEvent = null;
+    lastPointerEvent = null;
     constructor(editor){
         super(editor);
         this.name = 'Brush';
@@ -56,27 +58,28 @@ export default class Brush extends BaseTool{
         if(super.onpointerdown(event)===false){return false;}
         this.drawLayer.alpha = this.layer.alpha;        
         this.brush.ready()
-        this.brush.pointerEvent = new PointerEvent(event.type, event)
-        this.brush.lastPointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
         if(event.pointerType!=='touch'){
             this.drawForDown(this.x0,this.y0)
         }
+        this.lastPointerEvent = this.pointerEvent;
         return;
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
-        this.brush.pointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
+        this.lastPointerEvent = this.pointerEvent;
         this.x0 = x; this.y0 = y;
         return;
     }
     onpointerup(event){
-        this.brush.pointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = new PointerEvent(event.type, event)
         this.mergeFromWorkingLayer();
         this.mergeFromDrawLayer();
         return super.onpointerup(event);
@@ -138,7 +141,8 @@ export default class Brush extends BaseTool{
         // console.log(lx0,ly0,lx1,ly1);
         // console.log(this.lastEvent);
         let remainInterval = this.remainInterval
-        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,{remainInterval})
+        const pointerEvent = this.pointerEvent;
+        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,{remainInterval,pointerType:pointerEvent.pointerType,pressure:pointerEvent.pressure,azimuthAngle:pointerEvent.azimuthAngle})
         ctx.restore();
         layer.flush();
         // drawLayer.flush();
@@ -162,7 +166,8 @@ export default class Brush extends BaseTool{
         ctx.save();
         this.prepareLayer(ctx);
         // console.log(x0,y0,lx0,ly0);
-        brush.drawOnDot(ctx,lx0,ly0);
+        const pointerEvent = this.pointerEvent;
+        brush.drawOnDot(ctx,lx0,ly0,{pointerType:pointerEvent.pointerType,pressure:pointerEvent.pressure,azimuthAngle:pointerEvent.azimuthAngle});
         ctx.restore();
         layer.flush();
         this.mergeFromWorkingLayer();

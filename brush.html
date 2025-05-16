@@ -156,9 +156,9 @@
       
       let remainInterval = 0;
       // const brushConfig = b1.brushConfig;
-      b1.lastPointerEvent = new PointerEvent('init',{pressure:1})
-      const pointerEvent = new PointerEvent('init',{pressure:0})
-      remainInterval = b1.drawOnLine(c1.ctx,b1.width/2,b1.height/2,c1.width-b1.width/2,c1.height-b1.height/2,{remainInterval,pointerEvent})
+      // b1.lastPointerEvent = new PointerEvent('init',{pressure:1})
+      // const pointerEvent = new PointerEvent('init',{pressure:0})
+      remainInterval = b1.drawOnLine(c1.ctx,b1.width/2,b1.height/2,c1.width-b1.width/2,c1.height-b1.height/2,{remainInterval,lastPressure:1,pressure:0})
       
       
       // WcHelper.drawBrushPreviewCanvas(b1,c1)
