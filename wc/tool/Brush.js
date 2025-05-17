@@ -142,12 +142,15 @@ export default class Brush extends BaseTool{
         // console.log(this.lastEvent);
         let remainInterval = this.remainInterval
         const pointerEvent = this.pointerEvent;
+        const lastPointerEvent = this.lastPointerEvent
         this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,
                 {
                     remainInterval,
                     pointerType:pointerEvent.pointerType,
                     pressure:pointerEvent.pressure,
-                    azimuthAngle:pointerEvent.azimuthAngle
+                    azimuthAngle:pointerEvent.azimuthAngle,
+                    lastPressure:lastPointerEvent.pressure,
+                    lastAzimuthAngle:lastPointerEvent.azimuthAngle
                 }
         )
         ctx.restore();
