@@ -280,25 +280,20 @@ export default class Editor{
         let mimetype = null;
         if(type==='wc3.json'){
             ext = 'wc3.json';
-            mimetype = 'application/json';
-            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
-            this.document.toBlob(cb,mimetype)
+            mimetype = 'application/json';            
         }else if(type==='png'){
             ext = 'png';
             mimetype = 'image/png';
-            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
-            this.document.toBlob(cb,mimetype)
         }else if(type==='jpg'){
             ext = 'jpg';
             mimetype = 'image/jpeg';
-            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
-            this.document.toBlob(cb,mimetype,quality)
         }else if(type==='webp'){
             ext = 'webp';
             mimetype = 'image/webp';
-            const cb = (blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype); }
-            this.document.toBlob(cb,mimetype,quality)
-        }else{
+        }
+        if(mimetype){
+            this.document.toBlobAsync(mimetype,quality).then((blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);}).catch(e=>{console.error(e);})
+        }else {
             console.error('지원되지 않는 타입')
         }
         // console.log(ep);  
@@ -336,7 +331,7 @@ export default class Editor{
         }
         // console.log(ep);  
     }    
-    loadDocument(file){
+    async loadDocument(file){
         this.closeDocument();
         // console.log(file);
         if(file.name.match(/wc3\.json$/)){

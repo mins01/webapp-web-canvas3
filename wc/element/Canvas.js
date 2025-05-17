@@ -248,6 +248,17 @@ class Canvas extends HTMLCanvasElement{
         c.ctx.drawImage(image, 0, 0, image.width, image.height);
         return c
     }
+
+
+
+    toBlobAsync(type = 'image/png', quality = 1.0) {
+        return new Promise((resolve, reject) => {
+            this.toBlob(blob => {
+                if (blob) { resolve(blob); } 
+                else { reject(new Error('Error toBlob')); }
+            }, type, quality);
+        });
+    }
 }
 
 

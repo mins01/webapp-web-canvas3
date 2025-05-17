@@ -249,7 +249,7 @@ export default class Document extends Layer{
      * @param {string} type 
      * @param {any} quality 
      */
-    toBlob(callback, type, quality){
+    toBlob(callback, type = 'image/png', quality = 1.0){
         if(type==='wc3.json' || type=== 'application/json'){
             this.toBlobJson(callback, type, quality);
         }else{
@@ -257,9 +257,27 @@ export default class Document extends Layer{
         }
     }
 
-    toBlobJson(callback, type, quality){
+    toBlobJson(callback, type = 'image/png', quality = 1.0){
         const blob = new Blob([JSON.stringify(this.export(),null,4)])
         callback(blob);
+    }
+
+    toBlobJsonAsync(type, quality){
+        return new Promise((resolve, reject) => {
+            this.toBlobJson(blob => {
+                if (blob) { resolve(blob); } 
+                else { reject(new Error('Error toBlob')); }
+            }, type, quality);
+        });
+    }
+
+    toBlobAsync(type = 'image/png', quality = 1.0){
+        if(type==='wc3.json' || type=== 'application/json'){
+            return this.toBlobJsonAsync(...arguments);
+        }else{
+            return super.toBlobAsync(...arguments)
+        }
+        return null;
     }
 
 

@@ -533,7 +533,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]); this.reset() }else{ alert('Select a file(*.wc3.json | image file )')}; return false;" >
+            <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]).then((r)=>{console.log('loadDocument 완료'); }); this.reset() }else{ alert('Select a file(*.wc3.json | image file )')}; return false;" >
               <div class="input-group input-group-lg">
                 <input type="file" class="form-control" name="openfile" accept=".wc3.json,image/*">
               </div>
