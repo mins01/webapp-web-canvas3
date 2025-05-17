@@ -225,22 +225,7 @@ export default class Brush extends Layer{
     // 중앙으로 이동
     // ctx.translate(x + gx, y + gy);
     ctx.translate(x, y);
-    //색상 랜덤
-    const filters = [];
-    if(brushConfig.hueJitter>0){ 
-      const p = (Math.random() * 2 - 1)*brushConfig.hueJitter; 
-      const v = 180 * p; 
-      filters.push(`hue-rotate(${v}deg)`); }
-    if(brushConfig.saturationJitter>0){ 
-      const p = Math.random() * brushConfig.saturationJitter;
-      const v = (1 - p)*100;
-      filters.push(`saturate(${v}%)`); 
-    }
-    if(brushConfig.brightnessJitter>0){ 
-      const p = Math.random() * brushConfig.brightnessJitter;
-      const v = (1 - p)*100;
-      filters.push(`brightness(${v}%)`); 
-    }
+
     
     //-- 그리는 선의 방향
     ctx.rotate(lineAngle * Math.PI / 180); 
@@ -254,10 +239,6 @@ export default class Brush extends Layer{
       }else if(angleControl==='penTilt' && (pointerType=='pen' || pointerType=='')){
         const v = azimuthAngle; //deg
         ctx.rotate(v)
-      }
-      if(brushConfig.angleJitter > 0){ 
-        const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
-        ctx.rotate(Math.PI * v); 
       }
     }
 
@@ -281,7 +262,7 @@ export default class Brush extends Layer{
       }   
       if(v != 1){
         ctx.scale(v,v)
-        size = size*v;// 사용하는 곳이 없네.
+        // size = size*v;// 사용하는 곳이 없네.
       }
     }
     //-- 높이 제어
@@ -304,10 +285,6 @@ export default class Brush extends Layer{
         const p = Math.max(pressure , brushConfig.mininumFlow) ;
         v *= p;
       }
-      if(brushConfig.flowJitter > 0){
-        const p = Math.random() * brushConfig.flowJitter;
-        v *= (1-p);
-      }
       if(v != 1){
         // filters.push(`opacity(${v*100}%)`); 
         ctx.globalAlpha = v;
@@ -315,8 +292,8 @@ export default class Brush extends Layer{
     }
     
     
+    
         
-    if(filters.length > 0){ ctx.filter = filters.join(' '); }
 
     //-- 스케터링
     const scatterAmount  = brushConfig.scatterAmount;
@@ -333,12 +310,14 @@ export default class Brush extends Layer{
         if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
         else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
         else if(scatterAxes == 'xy'){
-          const tAngle = Math.random()*360 * Math.PI / 180;
+          // const tAngle = Math.random()*360 * Math.PI / 180;
+          const tAngle = Math.random() * 2 * Math.PI; //랜덤 라디안
           ctx.rotate(tAngle); 
           ctx.translate(tv, 0); 
           ctx.rotate(-tAngle); 
         }
       }
+      this.applyJitter(ctx,brushConfig); // 지터적용
       ctx.drawImage(image, -gx,-gy,image.width,image.height );
       ctx.restore()
     }
@@ -346,6 +325,45 @@ export default class Brush extends Layer{
     ctx.restore();
     this.counter++
     
+  }
+  applyJitter(ctx,brushConfig){
+    //----------- 지터 적용
+    // 지터 - 크기
+    if(brushConfig.sizeJitter > 0){
+      const p = Math.random() * brushConfig.sizeJitter;
+      const v = (1-p);
+      if(v != 1){
+        ctx.scale(v,v)
+        // size = size*v;// 사용하는 곳이 없네.
+      }
+    }
+    // 지터 - flow
+    if(brushConfig.flowJitter > 0){
+      const p = Math.random() * brushConfig.flowJitter;
+      ctx.globalAlpha *= (1-p);
+    }
+    // 지터 - 각도
+    if(brushConfig.angleJitter > 0){ 
+      const v = (Math.random() * 2 - 1)*brushConfig.angleJitter; 
+      ctx.rotate(Math.PI * v); 
+    }
+    // 지터 - 필터적용
+    const filters = [];
+    if(brushConfig.hueJitter>0){ 
+      const p = (Math.random() * 2 - 1)*brushConfig.hueJitter; 
+      const v = 180 * p; 
+      filters.push(`hue-rotate(${v}deg)`); }
+    if(brushConfig.saturationJitter>0){ 
+      const p = Math.random() * brushConfig.saturationJitter;
+      const v = (1 - p)*100;
+      filters.push(`saturate(${v}%)`); 
+    }
+    if(brushConfig.brightnessJitter>0){ 
+      const p = Math.random() * brushConfig.brightnessJitter;
+      const v = (1 - p)*100;
+      filters.push(`brightness(${v}%)`); 
+    }
+    if(filters.length > 0){ ctx.filter = filters.join(' '); }
   }
   
   /**
