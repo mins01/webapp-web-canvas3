@@ -227,9 +227,20 @@ export default class Brush extends Layer{
     ctx.translate(x, y);
     //색상 랜덤
     const filters = [];
-    if(brushConfig.hueJitter>0){ const v = (Math.floor(Math.random()*361)-180)*brushConfig.hueJitter; filters.push(`hue-rotate(${v}deg)`); }
-    if(brushConfig.saturationJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.saturationJitter; filters.push(`saturate(${v}%)`); }
-    if(brushConfig.brightnessJitter>0){ const v = 100 - (Math.floor(Math.random()*201)-100)*brushConfig.brightnessJitter; filters.push(`brightness(${v}%)`); }
+    if(brushConfig.hueJitter>0){ 
+      const p = (Math.random() * 2 - 1)*brushConfig.hueJitter; 
+      const v = 180 * p; 
+      filters.push(`hue-rotate(${v}deg)`); }
+    if(brushConfig.saturationJitter>0){ 
+      const p = Math.random() * brushConfig.saturationJitter;
+      const v = (1 - p)*100;
+      filters.push(`saturate(${v}%)`); 
+    }
+    if(brushConfig.brightnessJitter>0){ 
+      const p = Math.random() * brushConfig.brightnessJitter;
+      const v = (1 - p)*100;
+      filters.push(`brightness(${v}%)`); 
+    }
     
     //-- 그리는 선의 방향
     ctx.rotate(lineAngle * Math.PI / 180); 
@@ -266,7 +277,7 @@ export default class Brush extends Layer{
       }
       if(brushConfig.sizeJitter > 0){
         const p = Math.random() * brushConfig.sizeJitter;
-        v *= p;
+        v *= (1-p);
       }   
       if(v != 1){
         ctx.scale(v,v)
@@ -295,7 +306,7 @@ export default class Brush extends Layer{
       }
       if(brushConfig.flowJitter > 0){
         const p = Math.random() * brushConfig.flowJitter;
-        v *= p;
+        v *= (1-p);
       }
       if(v != 1){
         // filters.push(`opacity(${v*100}%)`); 
