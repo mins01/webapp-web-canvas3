@@ -9,8 +9,8 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 export default class Brush extends Layer{
   margin = 2;
   remainInterval = 0
-  lastPressure = 0.5;
-  lastAzimuthAngle = 0;
+  // lastPressure = 0.5; // @deprecated 2025-05-17
+  // lastAzimuthAngle = 0; // @deprecated 2025-05-17
   counter = 0;
   // imageBitmap = null;
   constructor(w=null,h=null){
@@ -33,8 +33,8 @@ export default class Brush extends Layer{
     
   }
   ready(){
-    this.lastPressure = 0.5;
-    this.lastAzimuthAngle = 0;
+    // this.lastPressure = 0.5;
+    // this.lastAzimuthAngle = 0;
     this.remainInterval = 0;
     this.counter = 0;
   }
