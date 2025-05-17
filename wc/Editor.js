@@ -341,15 +341,16 @@ export default class Editor{
         }
     }    
     async loadDocument(file){
-        this.closeDocument();
         // console.log(file);
         if(file.name.match(/wc3\.json$/)){
             HtmlUtil.loadJsonFile(file).then((conf)=>{
-                this.loadJson(conf)
+                this.closeDocument();
+                this.loadJson(conf);
             })
         }else if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
             HtmlUtil.loadImageUrl(imageURL).then((image)=>{               
+                this.closeDocument();
                 const document = Document.fromImage(image);
                 this.documents.add(document);
                 URL.revokeObjectURL(imageURL);
@@ -363,6 +364,7 @@ export default class Editor{
     loadJson(json){
         const document = Document.importFrom(json)
         this.documents.add(document);
+        return document;
     }
     closeDocument(){
         if(this.document){

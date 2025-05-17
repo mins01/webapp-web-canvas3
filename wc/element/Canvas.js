@@ -155,8 +155,9 @@ class Canvas extends HTMLCanvasElement{
 
     clone(){
         const newCanvas = new this.constructor(this.width,this.height);
-        // newCanvas.import(this.export())       
-        newCanvas.ctx.drawImage(this,0,0)
+        newCanvas.import(this.snapshot())
+        // newCanvas.import(this.export())
+        // newCanvas.ctx.drawImage(this,0,0)
         newCanvas.label +=' cloned'
         return newCanvas;
     }
@@ -203,6 +204,8 @@ class Canvas extends HTMLCanvasElement{
     export(){
         return this.constructor.export(this);
     }
+
+    // async 비동기로 하지 말자. dataUrl이 있는 경우는 wc3.json으로 저장했을 때 뿐이다. 즉, 그 때 빼고는 전부 동기로 가능하다.
     static import(obj,conf){
         obj.constructor.keys.forEach((k)=>{
             if(conf?.[k] === undefined){return;}
