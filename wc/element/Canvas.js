@@ -1,6 +1,7 @@
 import BaseConfig from "../lib/BaseConfig.js";
 import Context2dConfig from "../lib/Context2dConfig.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
+import HtmlUtil from "../lib/HtmlUtil.js";
 
 class Canvas extends HTMLCanvasElement{
     static context2dOptions = {"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,};
@@ -216,7 +217,7 @@ class Canvas extends HTMLCanvasElement{
             obj.ctx.putImageData(conf?.imageData, 0, 0);
             obj.flush();
         }else if(conf?.dataUrl !== undefined){
-            Context2dUtil.imageFromUrl(conf.dataUrl).then((img)=>{
+            HtmlUtil.loadImageUrl(conf.dataUrl).then((img)=>{
                 obj.ctx.drawImage(img,0,0);
                 obj.flush();
             }).catch((event)=>{

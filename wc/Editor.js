@@ -16,6 +16,7 @@ import Document from "./element/Document.js";
 import EditorConfig from "./lib/EditorConfig.js";
 import Layer from "./element/Layer.js";
 import LayerKind from "./lib/LayerKind.js";
+import Context2dUtil from "./lib/Context2dUtil.js";
 
 export default class Editor{
     brush = null;
@@ -339,22 +340,16 @@ export default class Editor{
         this.closeDocument();
         // console.log(file);
         if(file.name.match(/wc3\.json$/)){
-            HtmlUtil.asyncLoadFile(file).then((text)=>{
-                const conf = JSON.parse(text);
-                // const document = Document.importFrom(conf)
-                // this.documents.add(document);
+            HtmlUtil.loadJsonFile(file).then((conf)=>{
                 this.loadJson(conf)
             })
         }else if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
-            const image = new Image();
-            image.onload=(event)=>{
-                const target = event.target;
-                URL.revokeObjectURL(imageURL);
-                const document = Document.fromImage(target);
+            HtmlUtil.loadImageUrl(imageURL).then((image)=>{               
+                const document = Document.fromImage(image);
                 this.documents.add(document);
-            }
-            image.src = imageURL;
+                URL.revokeObjectURL(imageURL);
+            })
         }
     }
     loadDocumentJson(json){
@@ -390,18 +385,12 @@ export default class Editor{
     insertLayerFromFile(file){
         if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
-            const image = new Image();
-            image.onload=(event)=>{
-                const target = event.target;
-                URL.revokeObjectURL(imageURL);
+            HtmlUtil.loadImageUrl(imageURL).then((image)=>{
                 const layer = Layer.fromImage(image)
                 this.document.add(layer);
                 this.ready()
-            }
-            image.onerror=(event)=>{
-                console.error(event);
-            }
-            image.src = imageURL;
+                URL.revokeObjectURL(imageURL);
+            })
         }else{
             console.error('It is not an image file',file);
         }

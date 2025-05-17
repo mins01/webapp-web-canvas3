@@ -44,19 +44,19 @@ export default class Context2dUtil{
     }
 
     
-    /**
-     * Description placeholder
-     *
-     * @static
-     * @param {string} url url or dataUrl
-     * @returns {*} 
-     */
-    static imageFromUrl(url){
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload=function(event){ resolve(this); }
-            img.onerror=function(event){ reject(event); }
-            img.src = url;
-        });
-    }
+    // /**
+    //  * Description placeholder
+    //  *
+    //  * @static
+    //  * @param {string} url url or dataUrl
+    //  * @returns {*} 
+    //  */
+    // static imageFromUrl(url){
+    //     return new Promise((resolve, reject) => {
+    //         const img = new Image();
+    //         img.onload=function(event){ resolve(event.target); }
+    //         img.onerror=function(event){ reject(event); }
+    //         img.src = url;
+    //     });
+    // }
 }
