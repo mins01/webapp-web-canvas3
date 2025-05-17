@@ -354,8 +354,11 @@ export default class Brush extends Layer{
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
-      lastPressure = this.lastPressure??0.5, // 압력
-      lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
+      // lastPressure = this.lastPressure??0.5, // 압력
+      // lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
+      lastPressure = 0.5, // 압력
+      lastAzimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
+
 
       brushConfig= this.brushConfig  ,
       image = this,
@@ -392,8 +395,8 @@ export default class Brush extends Layer{
     
     if(distance2 < interval){
       // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
-      this.lastPressure = pressure;
-      this.lastAzimuthAngle = azimuthAngle;
+      // this.lastPressure = pressure;
+      // this.lastAzimuthAngle = azimuthAngle;
       this.remainInterval = distance2
       return distance2;
       
@@ -424,10 +427,10 @@ export default class Brush extends Layer{
       
       remainInterval = distance2 % interval;
       // this.lastSize = size;
-      this.lastPressure = pressure;
-      this.lastAzimuthAngle = azimuthAngle;
+      // this.lastPressure = pressure;
+      // this.lastAzimuthAngle = azimuthAngle;
 
-      this.remainInterval = remainInterval;
+      // this.remainInterval = remainInterval;
       return remainInterval;
       
     }
@@ -445,8 +448,8 @@ export default class Brush extends Layer{
     // console.log('drawOnDot',pressure);
 
     this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle});
-    this.lastPressure = pressure;
-    this.lastAzimuthAngle = azimuthAngle;
+    // this.lastPressure = pressure;
+    // this.lastAzimuthAngle = azimuthAngle;
   }
   
   
