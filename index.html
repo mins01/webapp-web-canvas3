@@ -635,7 +635,7 @@
           <div class="modal-body">
             <div class="d-flex flex-column gap-3 p-1">
               
-              <form action="" onsubmit="editor.uploadDocument('png',this.filename.value);return false;">
+              <form action="" onsubmit="editor.uploadDocument('png',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
                   <input type="text" class="form-control filename"  name="filename" value="" required>
@@ -643,7 +643,7 @@
                   <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
                 </div>
               </form>
-              <form action="" onsubmit="editor.uploadDocument('wc3.json',this.filename.value);return false;">
+              <form action="" onsubmit="editor.uploadDocument('wc3.json',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>

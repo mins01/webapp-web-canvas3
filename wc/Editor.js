@@ -334,10 +334,10 @@ export default class Editor{
                 const blob = await this.document.toBlobAsync(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
                 return this.upload(blob, filename+'.'+ext);
             }catch(e){
-                console.error(e);
+                throw new Error(e);
             }
         }else {
-            console.error('지원되지 않는 타입')
+            throw new Error('지원되지 않는 타입');
         }
     }    
     async loadDocument(file){
@@ -515,7 +515,9 @@ export default class Editor{
 
     upload(file,filename){
         console.log('재선언해야함',file,filename);
-        alert('업로드가 지원되지 않는 상태입니다.')
+        // alert('업로드가 지원되지 않는 상태입니다.')
+        throw new Error('업로드가 지원되지 않는 상태입니다.');
+        
         //재선언해야함.
     }
 
