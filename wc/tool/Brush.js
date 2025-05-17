@@ -142,7 +142,14 @@ export default class Brush extends BaseTool{
         // console.log(this.lastEvent);
         let remainInterval = this.remainInterval
         const pointerEvent = this.pointerEvent;
-        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,{remainInterval,pointerType:pointerEvent.pointerType,pressure:pointerEvent.pressure,azimuthAngle:pointerEvent.azimuthAngle})
+        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,
+                {
+                    remainInterval,
+                    pointerType:pointerEvent.pointerType,
+                    pressure:pointerEvent.pressure,
+                    azimuthAngle:pointerEvent.azimuthAngle
+                }
+        )
         ctx.restore();
         layer.flush();
         // drawLayer.flush();
@@ -167,7 +174,11 @@ export default class Brush extends BaseTool{
         this.prepareLayer(ctx);
         // console.log(x0,y0,lx0,ly0);
         const pointerEvent = this.pointerEvent;
-        brush.drawOnDot(ctx,lx0,ly0,{pointerType:pointerEvent.pointerType,pressure:pointerEvent.pressure,azimuthAngle:pointerEvent.azimuthAngle});
+        brush.drawOnDot(ctx,lx0,ly0,{
+            pointerType:pointerEvent.pointerType,
+            pressure:pointerEvent.pressure,
+            azimuthAngle:pointerEvent.azimuthAngle
+        });
         ctx.restore();
         layer.flush();
         this.mergeFromWorkingLayer();

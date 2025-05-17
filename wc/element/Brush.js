@@ -11,6 +11,7 @@ export default class Brush extends Layer{
   remainInterval = 0
   lastPressure = 0.5;
   lastAzimuthAngle = 0;
+  counter = 0;
   // imageBitmap = null;
   constructor(w=null,h=null){
     super(w,h);
@@ -35,6 +36,7 @@ export default class Brush extends Layer{
     this.lastPressure = 0.5;
     this.lastAzimuthAngle = 0;
     this.remainInterval = 0;
+    this.counter = 0;
   }
   
   setBrushConfig(conf){
@@ -205,7 +207,7 @@ export default class Brush extends Layer{
       // image = this.imageBitmap,
       lineAngle = 0, //그리는 방향
     } = opts;
-    // console.log(pointerEvent,pressure);
+    // console.log('dot',pressure);
     
     
     let gx = image.width/2;
@@ -253,7 +255,7 @@ export default class Brush extends Layer{
     // altitudeAngle :  1.5707963267948966
     // azimuthAngle :  0
     // pressure :  0.5
-    // let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈 // 사용하는 곳이 없네.
+    let size = Math.max(1,parseFloat(brushConfig.size)); // 브러시 사이즈
     //-- size 제어
     const sizeControl = brushConfig.sizeControl
     {
@@ -268,7 +270,7 @@ export default class Brush extends Layer{
       }   
       if(v != 1){
         ctx.scale(v,v)
-        // size = size*v;// 사용하는 곳이 없네.
+        size = size*v;// 사용하는 곳이 없네.
       }
     }
     //-- 높이 제어
@@ -331,6 +333,7 @@ export default class Brush extends Layer{
     }
     
     ctx.restore();
+    this.counter++
     
   }
   
@@ -357,7 +360,7 @@ export default class Brush extends Layer{
       brushConfig= this.brushConfig  ,
       image = this,
     } = opts;
-    // console.log('pressure',pressure);
+    // console.log('drawOnLine',this.counter,pressure,lastPressure);
     
 
 
@@ -439,8 +442,11 @@ export default class Brush extends Layer{
       brushConfig= this.brushConfig,
       image = this
     } = opts;
-    
+    // console.log('drawOnDot',pressure);
+
     this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle});
+    this.lastPressure = pressure;
+    this.lastAzimuthAngle = azimuthAngle;
   }
   
   
