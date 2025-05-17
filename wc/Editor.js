@@ -305,7 +305,7 @@ export default class Editor{
      * @param {string} [filename=null] 
      * @returns {boolean} 
      */
-    uploadDocument(type='wc3.json',filename=null){
+    async uploadDocument(type='wc3.json',filename=null,quality=0.5){
         if(!this.document){return false;}
         if(filename===null){ filename = this.document.name }
         filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
@@ -318,18 +318,27 @@ export default class Editor{
         let mimetype = null;
         if(type==='wc3.json'){
             ext = 'wc3.json';
-            mimetype = 'application/json';
-            const cb = (blob)=>{ this.upload(blob, filename+'.'+ext); }
-            this.document.toBlob(cb,mimetype)
+            mimetype = 'application/json';            
         }else if(type==='png'){
             ext = 'png';
             mimetype = 'image/png';
-            const cb = (blob)=>{ this.upload(blob, filename+'.'+ext); }
-            this.document.toBlob(cb,mimetype)
-        }else{
+        }else if(type==='jpg'){
+            ext = 'jpg';
+            mimetype = 'image/jpeg';
+        }else if(type==='webp'){
+            ext = 'webp';
+            mimetype = 'image/webp';
+        }
+        if(mimetype){
+            try{
+                const blob = await this.document.toBlobAsync(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
+                return this.upload(blob, filename+'.'+ext);
+            }catch(e){
+                console.error(e);
+            }
+        }else {
             console.error('지원되지 않는 타입')
         }
-        // console.log(ep);  
     }    
     async loadDocument(file){
         this.closeDocument();
