@@ -379,7 +379,7 @@ export default class Brush extends Layer{
    */
   drawOnLine(ctx,x0, y0, x1, y1 , opts = {}) {
     let {
-      remainInterval = this.remainInterval, 
+      remainInterval = 0, 
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
@@ -420,13 +420,15 @@ export default class Brush extends Layer{
     let dy = y1 - y0;
     let distance = Math.sqrt(dx * dx + dy * dy);
     let distance2 = distance + remainInterval
-    // console.log(distance,remainInterval,distance2,'>=',interval);
+    // console.log(distance,remainInterval,distance2,'>=',interval,{dx , dx , dy , dy},{x0,y0,x1,y1});
     
     if(distance2 < interval){
       // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
       // this.lastPressure = pressure;
       // this.lastAzimuthAngle = azimuthAngle;
-      this.remainInterval = distance2
+      // this.remainInterval = distance2
+ 
+      
       return distance2;
       
     }else{
@@ -460,6 +462,7 @@ export default class Brush extends Layer{
       // this.lastAzimuthAngle = azimuthAngle;
 
       // this.remainInterval = remainInterval;
+
       return remainInterval;
       
     }

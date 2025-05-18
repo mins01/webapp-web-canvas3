@@ -134,6 +134,7 @@ class WcHelper{
     brush.drawOnDot(preview.ctx,p.x,p.y,{pressure});
     lastPressure = pressure
     let m2 = points.length/2;
+    let remainInterval = 0;
     for(let i=1,m=points.length;i<m;i++){
       let p1 = points[i];
       let pressure = (i<m2?i:m-i)/m2;
@@ -141,7 +142,8 @@ class WcHelper{
       // const pointerEvent = new PointerEvent('pointermove',{pressure:pressure});
       // console.log({x:p1.x,y:p1.y,pressure});
       
-      const rm = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{pressure,lastPressure});
+      remainInterval = brush.drawOnLine(preview.ctx,p.x,p.y,p1.x,p1.y,{remainInterval,pressure,lastPressure});
+      
       lastPressure = pressure
       // console.log({rm});
       
