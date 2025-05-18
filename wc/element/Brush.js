@@ -227,8 +227,7 @@ export default class Brush extends Layer{
     ctx.translate(x, y);
 
     
-    //-- 그리는 선의 방향
-    ctx.rotate(lineAngle * Math.PI / 180); 
+    
 
 
     //-- 각도 제어
@@ -236,6 +235,9 @@ export default class Brush extends Layer{
     {
       if(angleControl==='off'){ // 아무 설정이 없을 경우
         
+      }else if(angleControl==='direction'){
+        //-- 그리는 선의 방향
+        ctx.rotate(lineAngle * Math.PI / 180); 
       }else if(angleControl==='penTilt' && (pointerType=='pen' || pointerType=='')){
         const v = azimuthAngle; //deg
         ctx.rotate(v)
