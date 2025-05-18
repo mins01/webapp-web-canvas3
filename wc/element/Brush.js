@@ -308,16 +308,33 @@ export default class Brush extends Layer{
     for(let i=0;i<dotCount;i++){
       ctx.save()
       if(scatterAmount>0){ // 스케터링
-        const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size;
-        if(scatterAxes == 'x'){ ctx.translate(tv, 0); }
-        else if(scatterAxes == 'y'){ ctx.translate(0, tv); }
-        else if(scatterAxes == 'xy'){
-          // const tAngle = Math.random()*360 * Math.PI / 180;
-          const tAngle = Math.random() * 2 * Math.PI; //랜덤 라디안
-          ctx.rotate(tAngle); 
-          ctx.translate(tv, 0); 
-          ctx.rotate(-tAngle); 
-        }
+        // if(angleControl!=='direction') ctx.rotate(lineAngle * Math.PI / 180); 
+        const initLineAngleRad = angleControl!=='direction'?lineAngle * Math.PI / 180:0; // 이동방향 각도
+        // const initLineAngle = 0;
+        const tv = ((Math.random()*scatterAmount)-(scatterAmount/2))*size; // 이동거리
+        
+        // let tAngle = 0;
+        // if(scatterAxes == 'x'){ tAngle = 0; }
+        // else if(scatterAxes == 'y'){ tAngle = Math.PI / 2 }
+        // else if(scatterAxes == 'xy'){
+        //   tAngle = Math.random() * 2 * Math.PI; //랜덤 라디안
+        // }
+        // ctx.rotate(tAngle); 
+        // ctx.translate(tv, 0); 
+        // ctx.rotate(-tAngle);
+
+        //-- 챗GPT 추천. 이쪽이 빠르다네.
+        let angle = 0;
+        if (scatterAxes === 'x') angle = 0;
+        else if (scatterAxes === 'y') angle = Math.PI / 2;
+        else if (scatterAxes === 'xy') angle = Math.random() * 2 * Math.PI;
+
+        let dx = Math.cos(initLineAngleRad + angle) * tv;
+        let dy = Math.sin(initLineAngleRad + angle) * tv;
+
+        ctx.translate(dx, dy);
+
+        // if(angleControl!=='direction') ctx.rotate(-lineAngle * Math.PI / 180); 
       }
       this.applyJitter(ctx,brushConfig); // 지터적용
       ctx.drawImage(image, -gx,-gy,image.width,image.height );
