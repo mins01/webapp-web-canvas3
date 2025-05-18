@@ -8,6 +8,7 @@ export default class Brush extends BaseTool{
     workingLayer = null;
     pointerEvent = null;
     lastPointerEvent = null;
+    tmBuildUp = null;
     constructor(editor){
         super(editor);
         this.name = 'Brush';
@@ -30,6 +31,7 @@ export default class Brush extends BaseTool{
         this.drawLayer.ctx.drawImage(this.layer,0,0)
         this.drawLayer.flush();
         
+        this.stopBuildUp();
 	}
 
     /** 
@@ -66,6 +68,8 @@ export default class Brush extends BaseTool{
             this.drawForDown(this.x0,this.y0)
         }
         this.lastPointerEvent = this.pointerEvent;
+
+        this.startBuildUp();
         return;
     }
     onpointermove(event){
@@ -79,9 +83,11 @@ export default class Brush extends BaseTool{
         return;
     }
     onpointerup(event){
+        this.stopBuildUp();
         this.pointerEvent = new PointerEvent(event.type, event)
         this.mergeFromWorkingLayer();
         this.mergeFromDrawLayer();
+        
         return super.onpointerup(event);
     }
 
@@ -159,6 +165,7 @@ export default class Brush extends BaseTool{
         this.mergeFromWorkingLayer();
     }
 
+    
     drawForDown(x0,y0){
         super.draw(...arguments);
         const document = this.document;
@@ -188,5 +195,23 @@ export default class Brush extends BaseTool{
 
     }
 
+    // 마지막 점 기준으로 다시 찍는다.
+    redrawForDown(){
+        const {x0,y0} = this;
+        if(x0 === null){ console.log(`x0 is null`); return; } 
+        this.drawForDown(x0,y0);
+        
+    }
+
+    // build up 동작
+    startBuildUp(){
+        if(this.brush.brushConfig.buildUpInterval !==0){
+            this.tmBuildUp = setInterval(()=>{ this.redrawForDown() },this.brush.brushConfig.buildUpInterval*1000);
+        }
+    }
+    stopBuildUp(){
+        if(this.tmBuildUp){ clearInterval(this.tmBuildUp); this.tmBuildUp = null; }
+    }
+    
 
 }

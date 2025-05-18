@@ -91,6 +91,10 @@ export default class BaseTool {
 	 * 툴을 사용할 수 있도록 준비 시킴.
 	 */
 	ready(){
+		this.x0 = null;
+		this.y0 = null;
+		this.x1 = null;
+		this.y1 = null;
 		this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
 		this?.document?.readyTool()
 	}
