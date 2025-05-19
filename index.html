@@ -85,7 +85,7 @@
   <script src="/WG2/js/Wg2Uploder.js"></script>
   <!-- <script src="http://mins01.com/WG2/js/Wg2Uploder.js"></script> -->
   <script>
-    if(Wg2Uploder){
+    if(globalThis?.Wg2Uploder??false){
       globalThis.Wg2Uploder = Wg2Uploder;
     }
   </script>
@@ -162,7 +162,7 @@
       })
     })
     window.addEventListener('beforeunload', function (e) {
-      if(!editor.document){
+      if(!editor.document || editor.document.history.length < 2){
         return
       }
       // 경고 메시지 설정
