@@ -375,14 +375,14 @@ export default class Brush extends Layer{
       const v = 180 * p; 
       filters.push(`hue-rotate(${v}deg)`); }
     if(brushConfig.saturationJitter>0){ 
-      const p = Math.random() * brushConfig.saturationJitter;
-      const v = (1 - p)*100;
-      filters.push(`saturate(${v}%)`); 
+      const p = Math.random() * brushConfig.saturationJitter ;
+      const v = (1 - p * 2)*100;
+      filters.push(`saturate(${v}%)`);  // 0% ~ 200%
     }
     if(brushConfig.brightnessJitter>0){ 
       const p = Math.random() * brushConfig.brightnessJitter;
-      const v = (1 - p)*100;
-      filters.push(`brightness(${v}%)`); 
+      const v = (1 + p)*100;
+      filters.push(`brightness(${v}%)`); // 100%~ 200%
     }
     if(filters.length > 0){ ctx.filter = filters.join(' '); }
   }
