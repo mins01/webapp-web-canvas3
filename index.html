@@ -1507,7 +1507,7 @@
           </div>
           <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
             <div class="brush-wrap text-center d-none justify-content-center align-items-center mx-auto" style="height: 200px;">
-              <canvas id="brush0" is="wc-brush" width="5" height="5"></canvas>
+              <canvas id="brush0" is="wc-brush" class="wc-brush" width="5" height="5"></canvas>
             </div>
             <div class="brush-wrap brush-preview-canvas-wrap text-center d-flex justify-content-center align-items-center mx-auto">
               <canvas class="brush-preview-canvas d-block mx-auto" is="wc-canvas" width="400" height="100"></canvas>
@@ -1822,7 +1822,7 @@
           </div>
           <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
             <div class="brush-wrap text-center d-none justify-content-center align-items-center mx-auto" style="height: 200px;">
-              <canvas id="brush1" is="wc-brush" width="5" height="5"></canvas>
+              <canvas id="brush1" is="wc-brush" class="wc-brush" width="5" height="5"></canvas>
             </div>
             <div class="brush-wrap brush-preview-canvas-wrap text-center d-flex justify-content-center align-items-center mx-auto">
               <canvas class="brush-preview-canvas d-block mx-auto" is="wc-canvas" width="400" height="100"></canvas>
@@ -1844,7 +1844,7 @@
           </div>
           <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
             <div class="brush-wrap text-center d-none justify-content-center align-items-center mx-auto" style="height: 200px;">
-              <canvas id="brush2" is="wc-brush" width="5" height="5"></canvas>
+              <canvas id="brush2" is="wc-brush" class="wc-brush" width="5" height="5"></canvas>
             </div>
             <div class="brush-wrap brush-preview-canvas-wrap text-center d-flex justify-content-center align-items-center mx-auto">
               <canvas class="brush-preview-canvas d-block mx-auto" is="wc-canvas" width="400" height="100"></canvas>
@@ -1866,7 +1866,7 @@
           </div>
           <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
             <div class="brush-wrap text-center d-none justify-content-center align-items-center mx-auto" style="height: 200px;">
-              <canvas id="brush3" is="wc-brush" width="5" height="5"></canvas>
+              <canvas id="brush3" is="wc-brush" class="wc-brush" width="5" height="5"></canvas>
             </div>
             <div class="brush-wrap brush-preview-canvas-wrap text-center d-flex justify-content-center align-items-center mx-auto">
               <canvas class="brush-preview-canvas d-block mx-auto" is="wc-canvas" width="400" height="100"></canvas>
@@ -1888,7 +1888,7 @@
           </div>
           <div class="modal-body brush-preview border-bottom" style="flex:0 0 auto;">
             <div class="brush-wrap text-center d-none justify-content-center align-items-center mx-auto" style="height: 200px;">
-              <canvas id="eraser" is="wc-brush" width="5" height="5"></canvas>
+              <canvas id="eraser" is="wc-brush" class="wc-brush" width="5" height="5"></canvas>
             </div>
             <div class="brush-wrap brush-preview-canvas-wrap text-center d-flex justify-content-center align-items-center mx-auto">
               <canvas class="brush-preview-canvas d-block mx-auto" is="wc-canvas" width="400" height="100"></canvas>
@@ -1908,28 +1908,30 @@
         WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush3Config);
         WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
         window.addEventListener('load',(event)=>{
-          // 브러시가 draw 하면 미리보기를 다시 그린다.
-          editor.brush.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
-          editor.brush2.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
-          editor.brush3.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
-          editor.eraser.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target,true); })
-          editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush)},100); })
-          editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush2)},100); })
-          editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush3)},100); })
-          editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true)},100); })
-
-          window.addEventListener('resize', (event)=>{
+          setTimeout(()=>{
+            // 브러시가 draw 하면 미리보기를 다시 그린다.
+            editor.brush.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
+            editor.brush2.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
+            editor.brush3.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target); })
+            editor.eraser.addEventListener('draw',(event)=>{ WcHelper.syncModalBrushPreviewCanvas(event.target,true); })
+            editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush)},100); })
+            editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush2)},100); })
+            editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.brush3)},100); })
+            editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true)},100); })
+  
+            window.addEventListener('resize', (event)=>{
+              WcHelper.syncModalBrushPreviewCanvas(editor.brush);
+              WcHelper.syncModalBrushPreviewCanvas(editor.brush2);
+              WcHelper.syncModalBrushPreviewCanvas(editor.brush3);
+              WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true);
+            })
+            
+  
             WcHelper.syncModalBrushPreviewCanvas(editor.brush);
             WcHelper.syncModalBrushPreviewCanvas(editor.brush2);
             WcHelper.syncModalBrushPreviewCanvas(editor.brush3);
             WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true);
-          })
-          
-
-          WcHelper.syncModalBrushPreviewCanvas(editor.brush);
-          WcHelper.syncModalBrushPreviewCanvas(editor.brush2);
-          WcHelper.syncModalBrushPreviewCanvas(editor.brush3);
-          WcHelper.syncModalBrushPreviewCanvas(editor.eraser,true);
+          },600)
         })
       }
     </script>

@@ -110,7 +110,6 @@
     
     window.addEventListener('load',(event)=>{
       setTimeout(()=>{ // 사파리 호환 작업중
-
         const b1 = globalThis.b1 = document.querySelector('.b1');
         b1.contextConfig.foreColor="#cc00cc";
         b1.brushConfig.size = 50;
@@ -147,7 +146,8 @@
             UiInputStepper.syncDataValue(f[k])
           }
         }
-      },1000)
+
+      },500)
     })
     window.addEventListener('resize',(event)=>{
       redraw();
