@@ -40,53 +40,63 @@ Wc.ModalHandler = ModalHandler;
 import Editor from "./Editor.js";
 
 const editor = globalThis.editor = new Editor(document.querySelector('#wc-editor'));
+
 //-- 모달 핸들러
 const modalHandler = globalThis.modalHandler = new ModalHandler();
 editor.modalHandler = modalHandler;
 editor.modalHandler.collectModals();
 
-// 브러시들
-const brush0 = globalThis.brush0 = document.querySelector('#brush0');
-brush0.contextConfig.foreColor="#f00"
-brush0.size = 10
-brush0.flush();
-// const brush1 = globalThis.brush1 = document.querySelector('#brush1');
-// brush1.contextConfig.foreColor="#f00"
-// brush1.size = 10
-// brush1.flush();
-const brush2 = globalThis.brush2 = document.querySelector('#brush2');
-brush2.contextConfig.foreColor="#f00"
-brush2.size = 10
-brush2.flush();
-const brush3 = globalThis.brush3 = document.querySelector('#brush3');
-brush3.contextConfig.foreColor="#f00"
-brush3.size = 10
-brush3.flush();
-const eraser = globalThis.eraser = document.querySelector('#eraser');
-eraser.contextConfig.foreColor="#f00"
-eraser.size = 10
-eraser.flush();
+globalThis.window.addEventListener('load',(event)=>{
+    setTimeout(()=>{
+        // 브러시들
+        const brush0 = globalThis.brush0 = document.querySelector('#brush0');
+        // brush0.contextConfig.foreColor="#f00"
+        // brush0.size = 10
+        // brush0.flush();
+        // const brush1 = globalThis.brush1 = document.querySelector('#brush1');
+        // brush1.contextConfig.foreColor="#f00"
+        // brush1.size = 10
+        // brush1.flush();
+        const brush2 = globalThis.brush2 = document.querySelector('#brush2');
+        // brush2.contextConfig.foreColor="#f00"
+        // brush2.size = 10
+        // brush2.flush();
+        const brush3 = globalThis.brush3 = document.querySelector('#brush3');
+        // brush3.contextConfig.foreColor="#f00"
+        // brush3.size = 10
+        // brush3.flush();
+        const eraser = globalThis.eraser = document.querySelector('#eraser');
+        // eraser.contextConfig.foreColor="#f00"
+        // eraser.size = 10
+        // eraser.flush();
+        
+        editor.brush = globalThis.brush0 =  brush0
+        // editor.brush1 = brush1
+        editor.brush2 = brush2
+        editor.brush3 = brush3
+        editor.eraser = globalThis.eraser = eraser
+        
+        
+        //-- new document
+        editor.newDocument(300,300);
+        
+        // ui-transform-tool
+        editor.utt = document.querySelector('#utt01');
+        
+        // let divForDebug = document.querySelector('#div-for-debug');
+        
+        const foreColor = localStorage.getItem('foreColor')??'#000000';
+        const obj = {'foreColor':foreColor}
+        editor.setContextConfig(obj)
+        
+        editor.initConfigs();
 
-editor.brush = globalThis.brush0 =  brush0
-// editor.brush1 = brush1
-editor.brush2 = brush2
-editor.brush3 = brush3
-editor.eraser = globalThis.eraser = eraser
+        globalThis.document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
 
+    },1000)
 
-//-- new document
-editor.newDocument(300,300);
-
-// ui-transform-tool
-editor.utt = document.querySelector('#utt01');
-
-// let divForDebug = document.querySelector('#div-for-debug');
-
-const foreColor = localStorage.getItem('foreColor')??'#000000';
-const obj = {'foreColor':foreColor}
-editor.setContextConfig(obj)
-
-editor.initConfigs();
+    
+})
 
 
 
