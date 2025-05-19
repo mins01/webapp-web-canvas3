@@ -7,12 +7,14 @@ import BrushConfig from "../lib/BrushConfig.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Brush extends Layer{
-  margin = 2;
-  remainInterval = 0
+  margin = 4;
+  // remainInterval = 0 // @deprecated 2025-05-18
   // lastPressure = 0.5; // @deprecated 2025-05-17
   // lastAzimuthAngle = 0; // @deprecated 2025-05-17
   counter = 0;
   // imageBitmap = null;
+  shapeCanvas = null;
+  brushConfig = null;
   constructor(w=null,h=null){
     super(w,h);
     this.parent = null;
@@ -35,7 +37,7 @@ export default class Brush extends Layer{
   ready(){
     // this.lastPressure = 0.5;
     // this.lastAzimuthAngle = 0;
-    this.remainInterval = 0;
+    // this.remainInterval = 0;
     this.counter = 0;
   }
   
@@ -69,7 +71,7 @@ export default class Brush extends Layer{
     const size = Math.max(1,parseFloat(brushConfig.size));       
     const shape = brushConfig.shape;
     
-    this.margin = Math.ceil((Math.hypot(size,size) - size) / 2);
+    // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 계산하지 말자. 굳이....
     
     shapeCanvas.width = size + this.margin * 2;
     shapeCanvas.height = size + this.margin * 2;
@@ -151,6 +153,7 @@ export default class Brush extends Layer{
     this.contextConfig.assignTo(ctx,true);
     
     this.applyShapeCanvas(); // 브러시 모양 재적용
+    
     
     // const dw = this.width;
     const dw = this.width * brushConfig.scaleX;
