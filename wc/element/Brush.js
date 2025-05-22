@@ -71,7 +71,7 @@ export default class Brush extends Layer{
     const size = Math.max(1,parseFloat(brushConfig.size));       
     const shape = brushConfig.shape;
     
-    // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 계산하지 말자. 굳이....
+    // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 밖에서 계산한다.
     
     shapeCanvas.width = size + this.margin * 2;
     shapeCanvas.height = size + this.margin * 2;
@@ -146,7 +146,9 @@ export default class Brush extends Layer{
     const size = Math.max(1,parseFloat(brushConfig.size));
     
     
-    
+    // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다.
+    this.margin = Math.ceil(size * 0.25); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다. , (1.5 * size - size) / 2; 대각선의 비율이 1.41 이라서.
+
     this.width = size + this.margin * 2;
     this.height = size + this.margin * 2;
     this.contextConfig.disableStroke = true;
