@@ -37,7 +37,7 @@ export default class Eraser extends Brush{
 
     mergeFromWorkingLayer(){
         const from = this.workingLayer;
-        const to = this.drawLayer;
+        const to = this.drawingLayer;
         const ctx = to.ctx;
         to.clear()
         ctx.drawImage(this.layer,0,0);

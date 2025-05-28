@@ -22,7 +22,7 @@ export default class Transform extends BaseTool{
 
     ready(){
         super.ready();
-        this.targetLayer = this.document.drawLayer;
+        this.targetLayer = this.document.drawingLayer;
         this.readyUtt();
         this.draw();
         
@@ -69,8 +69,8 @@ export default class Transform extends BaseTool{
 
     center(){
         super.ready();
-        const drawLayer = this.document.drawLayer
-        drawLayer.postionCenterCenter();
+        const drawingLayer = this.document.drawingLayer
+        drawingLayer.postionCenterCenter();
         this.readyUtt();       
         this.draw();
     }
@@ -92,9 +92,9 @@ export default class Transform extends BaseTool{
         const document = this.document
         const documentRect = this.documentRect;
         const layer = this.document.layer
-        const drawLayer = this.document.drawLayer
-        const mul = document.zoom / drawLayer.zoom
-        const ctx = drawLayer.ctx
+        const drawingLayer = this.document.drawingLayer
+        const mul = document.zoom / drawingLayer.zoom
+        const ctx = drawingLayer.ctx
 
 
         let docCenterX = (documentRect.right + documentRect.left) / 2
@@ -115,23 +115,23 @@ export default class Transform extends BaseTool{
         let top =  topLC - height/2;
 
         ctx.save();
-        drawLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
-        drawLayer.top = Math.floor(top);
-        drawLayer.width = Math.floor(width);
-        drawLayer.height = Math.floor(height);
+        drawingLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
+        drawingLayer.top = Math.floor(top);
+        drawingLayer.width = Math.floor(width);
+        drawingLayer.height = Math.floor(height);
 
-        ctx.drawImage(layer,0,0,drawLayer.width,drawLayer.height)
+        ctx.drawImage(layer,0,0,drawingLayer.width,drawingLayer.height)
         ctx.restore();
-        drawLayer.flush();
+        drawingLayer.flush();
     }
 
     confirm(){
         super.confirm();
         const layer = this.document.layer
-        const drawLayer = this.document.drawLayer
-        console.log(drawLayer.snapshot());
+        const drawingLayer = this.document.drawingLayer
+        console.log(drawingLayer.snapshot());
         
-        layer.import(drawLayer.snapshot())
+        layer.import(drawingLayer.snapshot())
         this.document.history.save();
         this.ready();
     }

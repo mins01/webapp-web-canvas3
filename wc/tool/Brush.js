@@ -24,12 +24,12 @@ export default class Brush extends BaseTool{
 
     ready(){
 		super.ready();
-        // this.workingLayer.parent = this.drawLayer;
+        // this.workingLayer.parent = this.drawingLayer;
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         // globalThis.document.body.append(this.workingLayer)
-        this.drawLayer.ctx.drawImage(this.layer,0,0)
-        this.drawLayer.flush();
+        this.drawingLayer.ctx.drawImage(this.layer,0,0)
+        this.drawingLayer.flush();
         
         this.stopBuildUp();
 	}
@@ -53,12 +53,12 @@ export default class Brush extends BaseTool{
     inactivate(){
         super.inactivate();
         if(this.layer) this.layer.visibleByTool = true;
-        if(this.drawLayer) this.drawLayer.clear();
+        if(this.drawingLayer) this.drawingLayer.clear();
     }
 
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
-        this.drawLayer.alpha = this.layer.alpha;        
+        this.drawingLayer.alpha = this.layer.alpha;        
         this.brush.ready()
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
@@ -86,14 +86,14 @@ export default class Brush extends BaseTool{
         this.stopBuildUp();
         this.pointerEvent = new PointerEvent(event.type, event)
         this.mergeFromWorkingLayer();
-        this.mergeFromDrawLayer();
+        this.mergeFromDrawingLayer();
         
         return super.onpointerup(event);
     }
 
     mergeFromWorkingLayer(){
         const from = this.workingLayer;
-        const to = this.drawLayer;
+        const to = this.drawingLayer;
         const ctx = to.ctx;
         to.clear()
         ctx.drawImage(this.layer,0,0);
@@ -103,8 +103,8 @@ export default class Brush extends BaseTool{
         ctx.restore(); 
         to.flush();
     }
-    mergeFromDrawLayer(){
-        const from = this.drawLayer;
+    mergeFromDrawingLayer(){
+        const from = this.drawingLayer;
         const to = this.layer;
         const ctx = to.ctx;
         to.clear()
@@ -130,8 +130,8 @@ export default class Brush extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         // const layer = this.layer;
-        // const drawLayer = this.drawLayer;
-        // const layer = this.drawLayer;
+        // const drawingLayer = this.drawingLayer;
+        // const layer = this.drawingLayer;
         const layer = this.workingLayer;
         const ctx = layer.ctx;
         
@@ -161,7 +161,7 @@ export default class Brush extends BaseTool{
         )
         ctx.restore();
         layer.flush();
-        // drawLayer.flush();
+        // drawingLayer.flush();
         this.mergeFromWorkingLayer();
     }
 
@@ -170,7 +170,7 @@ export default class Brush extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         // const layer = this.layer;
-        // const drawLayer = this.drawLayer;
+        // const drawingLayer = this.drawingLayer;
         const layer = this.workingLayer;
         const ctx = layer.ctx;
         

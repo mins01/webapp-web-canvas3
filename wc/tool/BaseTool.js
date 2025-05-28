@@ -8,7 +8,7 @@ export default class BaseTool {
 	document = null;
 	documentRect = null;
 	layer = null;
-	drawLayer = null;
+	drawingLayer = null;
 	x0 = null;
 	y0 = null;
 	// x = null;
@@ -34,7 +34,7 @@ export default class BaseTool {
 
 		this.document = this.editor?.document;
 		this.layer = this?.document?.layer;
-		this.drawLayer = this?.document?.drawLayer;
+		this.drawingLayer = this?.document?.drawingLayer;
 		// if(this.document) this.ready()
 
 		this.x0 = null;

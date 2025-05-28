@@ -15,7 +15,7 @@ export default class Document extends Layer{
     kind = LayerKind.GROUP;
     layers = null;
     history = null;
-    drawLayer = null;
+    drawingLayer = null;
     editor = null;
     frame = null;
     constructor(w=null,h=null){
@@ -31,9 +31,9 @@ export default class Document extends Layer{
         this.layers.document = this;
         this.parent = null;
         // this.syncing = false;
-        this.drawLayer = new Layer(w,h);
-        this.drawLayer.parent = this;
-        // this.drawLayer.setContext2d()
+        this.drawingLayer = new Layer(w,h);
+        this.drawingLayer.parent = this;
+        // this.drawingLayer.setContext2d()
 
         this.editor = null;
 
@@ -60,7 +60,7 @@ export default class Document extends Layer{
         return this.layers.select(index);
         const activeLayer = this.layers.select(index);
         if(index !== null && activeLayer){
-            this.syncDrawLayer(activeLayer);
+            this.syncDrawingLayer(activeLayer);
             this?.editor?.onselectLayer(this.layer);
         }
         return activeLayer;
@@ -91,9 +91,9 @@ export default class Document extends Layer{
         this.layer?.setContextConfig(conf);
         // this.layer?.flush();
         this.layer?.draw();
-        this.drawLayer?.setContextConfig(conf);
-        this.drawLayer?.draw();
-        // this.drawLayer?.flush();
+        this.drawingLayer?.setContextConfig(conf);
+        this.drawingLayer?.draw();
+        // this.drawingLayer?.flush();
         this.flush();
     }
     setTextConfig(conf){
@@ -102,24 +102,24 @@ export default class Document extends Layer{
             // this.layer?.flush();
             this.layer?.draw();
         }
-        if(this?.drawLayer?.textConfig){
-            this.drawLayer?.setTextConfig(conf);
-            // this.drawLayer?.flush();
-            this.drawLayer?.draw();
+        if(this?.drawingLayer?.textConfig){
+            this.drawingLayer?.setTextConfig(conf);
+            // this.drawingLayer?.flush();
+            this.drawingLayer?.draw();
         }
         this.flush();
     }
 
-    syncDrawLayer(layer=null){
+    syncDrawingLayer(layer=null){
         if(!layer) layer = this.layer
         if(!layer) return;
-        this.drawLayer.alpha = layer.alpha;
-        this.drawLayer.left = layer.left;
-        this.drawLayer.top = layer.top;
-        this.drawLayer.width = layer.width;
-        this.drawLayer.height = layer.height;
-        this.drawLayer.zoom = layer.zoom;
-        this.drawLayer.angle = layer.angle;
+        this.drawingLayer.alpha = layer.alpha;
+        this.drawingLayer.left = layer.left;
+        this.drawingLayer.top = layer.top;
+        this.drawingLayer.width = layer.width;
+        this.drawingLayer.height = layer.height;
+        this.drawingLayer.zoom = layer.zoom;
+        this.drawingLayer.angle = layer.angle;
     }
 
 
@@ -130,12 +130,12 @@ export default class Document extends Layer{
     }
 
     readyTool(){ // 툴을 사용할 준비
-        this.drawLayer.clear();
-        this.syncDrawLayer();
+        this.drawingLayer.clear();
+        this.syncDrawingLayer();
         this.sync();
     }
     readyLayer(){ // 레이어 변화후 준비 처리
-        this.syncDrawLayer();       
+        this.syncDrawingLayer();       
     }
     
     
@@ -147,9 +147,9 @@ export default class Document extends Layer{
      */
     apply(){
         // console.log(this.layer);
-        // this.layer.ctx.drawImage(this.drawLayer, 0, 0, this.drawLayer.width, this.drawLayer.height);
+        // this.layer.ctx.drawImage(this.drawingLayer, 0, 0, this.drawingLayer.width, this.drawingLayer.height);
         this.sync();
-        this.syncDrawLayer();
+        this.syncDrawingLayer();
     }
     flush(){
         this?.editor?.onchangeDocument(this);
@@ -157,7 +157,7 @@ export default class Document extends Layer{
     }
     draw(){
         const ctx = this.ctx;
-        const drawLayer = this.drawLayer;
+        const drawingLayer = this.drawingLayer;
         ctx.save();
         ctx.clearRect(0,0,this.width,this.height);
         this.layers.forEach((layer,index)=>{
@@ -166,7 +166,7 @@ export default class Document extends Layer{
             let targetLayer = layer
             // if(index == this.layers.selectedIndex){ // 이 방법 너무 느림!
             //     const parenttLayer = layer.clone();
-            //     targetLayer = drawLayer;
+            //     targetLayer = drawingLayer;
             //     const ctx = parenttLayer.ctx;
             //     ctx.save();
             //     ctx.globalCompositeOperation = targetLayer.compositeOperation
@@ -203,7 +203,7 @@ export default class Document extends Layer{
 
 
             if(index == this.layers.selectedIndex){
-                const targetLayer = drawLayer
+                const targetLayer = drawingLayer
 
                 ctx.save();
                 ctx.globalCompositeOperation = targetLayer.compositeOperation

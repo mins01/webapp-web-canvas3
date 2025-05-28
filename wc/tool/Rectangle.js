@@ -34,7 +34,7 @@ export default class Rectangle extends BaseTool{
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
+        this.layer.merge(this.drawingLayer)
         this.ready();
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
@@ -48,8 +48,8 @@ export default class Rectangle extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
-        const drawLayer = this.drawLayer;
-        const ctx = drawLayer.ctx;
+        const drawingLayer = this.drawingLayer;
+        const ctx = drawingLayer.ctx;
 
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
         // 레이어 기준으로 좌표 재계산
@@ -64,12 +64,12 @@ export default class Rectangle extends BaseTool{
         let w = lx1 - lx0;
         let h = ly1 - ly0;
         
-        drawLayer.clear();
+        drawingLayer.clear();
         ctx.save();
         this.prepareLayer(ctx);
         DrawRectangle.draw(ctx,lx0,ly0,w,h);
         ctx.restore();
-        drawLayer.flush()
+        drawingLayer.flush()
     }
 
 

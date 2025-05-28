@@ -35,7 +35,7 @@ export default class Pen extends BaseTool{
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
+        this.layer.merge(this.drawingLayer)
         this.ready()
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
@@ -48,20 +48,20 @@ export default class Pen extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
-        const drawLayer = this.drawLayer;
+        const drawingLayer = this.drawingLayer;
         // const ctx = layer.ctx;
-        const ctx = drawLayer.ctx;
+        const ctx = drawingLayer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
 
-        drawLayer.clear();
+        drawingLayer.clear();
         ctx.save();
         this.prepareLayer(ctx);
         ctx.canvas.contextConfig.assignTo(ctx);
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 
-        // drawLayer.clear();
+        // drawingLayer.clear();
         const lCoordinates = [];
         for(let i =0,m=this.coordinates.length;i<m;i+=2){
             const x =this.coordinates[i];
@@ -72,8 +72,8 @@ export default class Pen extends BaseTool{
         // DrawLine.drawByCoordinates(ctx,this.coordinates);
         DrawLine.drawByCoordinates(ctx,lCoordinates);
         ctx.restore();
-        drawLayer.flush()
-        // drawLayer.flush()
+        drawingLayer.flush()
+        // drawingLayer.flush()
     }
 
 

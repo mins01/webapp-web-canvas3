@@ -173,7 +173,7 @@ export default class Editor{
     getXYFromEvent(event){
         let doc = this.document;
         let layer = this.document.layer;
-        // let dl = doc.drawLayer;
+        // let dl = doc.drawingLayer;
         // let x = event.x - doc.offsetLeft - dl.x + window.scrollX;
         // let y = event.y - doc.offsetTop - dl.y + window.scrollY;
         // let x = event.x - doc.offsetLeft  + window.scrollX;
@@ -484,7 +484,7 @@ export default class Editor{
         
         layerBoxContainer.innerHTML = '';
 
-        // const layers = [document.drawLayer].concat(document.layers);
+        // const layers = [document.drawingLayer].concat(document.layers);
         const selectedIndex = document.layers.selectedIndex;
         document.layers.forEach((layer,index)=>{
             const layerBoxNode = window.document.importNode(templateLayerBox.content,true);

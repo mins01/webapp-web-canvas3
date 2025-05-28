@@ -35,7 +35,7 @@ export default class EraserPen extends BaseTool{
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
+        this.layer.merge(this.drawingLayer)
         this.ready()
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
@@ -48,7 +48,7 @@ export default class EraserPen extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
-        const drawLayer = this.drawLayer;
+        const drawingLayer = this.drawingLayer;
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
@@ -58,7 +58,7 @@ export default class EraserPen extends BaseTool{
         ctx.canvas.contextConfig.assignTo(ctx);
         ctx.globalCompositeOperation = 'destination-out';
 
-        // drawLayer.clear();
+        // drawingLayer.clear();
         const lCoordinates = [];
         for(let i =0,m=this.coordinates.length;i<m;i+=2){
             const x =this.coordinates[i];
@@ -70,7 +70,7 @@ export default class EraserPen extends BaseTool{
         DrawLine.drawByCoordinates(ctx,lCoordinates);
         ctx.restore();
         layer.flush()
-        // drawLayer.flush()
+        // drawingLayer.flush()
     }
 
 

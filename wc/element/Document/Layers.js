@@ -62,7 +62,7 @@ export default class Layers extends SelectableArray{
         layer.parent = document;
         // if(!noPostionCenterCenter){ layer.postionCenterCenter(); }
         const r = super.add(layer);       
-        document.syncDrawLayer(layer);
+        document.syncDrawingLayer(layer);
         layer.flush();
         document?.editor?.onselectLayer(document.layer);
 

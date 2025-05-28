@@ -30,7 +30,7 @@ export default class Line extends BaseTool{
     }
     end(){
         super.end();
-        this.layer.merge(this.drawLayer)
+        this.layer.merge(this.drawingLayer)
         this.ready()
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
@@ -44,8 +44,8 @@ export default class Line extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
         const layer = this.layer;
-        const drawLayer = this.drawLayer;
-        const ctx = drawLayer.ctx;
+        const drawingLayer = this.drawingLayer;
+        const ctx = drawingLayer.ctx;
 
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
         // 레이어 기준으로 좌표 재계산
@@ -54,11 +54,11 @@ export default class Line extends BaseTool{
 
         ctx.save();
         ctx.canvas.contextConfig.assignTo(ctx);
-        drawLayer.clear();
+        drawingLayer.clear();
         this.prepareLayer(ctx);
         DrawLine.draw(ctx,lx0,ly0,lx1,ly1);
         ctx.restore();
-        drawLayer.flush()
+        drawingLayer.flush()
     }
 
 
