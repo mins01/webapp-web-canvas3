@@ -261,10 +261,6 @@ export default class Editor{
      * Alias of {@link saveDocument}.  
      * Downloads the current document by saving it with the specified type, filename, and quality.
      *
-     * @param {string} [type='wc3.json'] - The type/format to save the document as. Supported types: 'wc3.json', 'png', 'jpg', 'webp'.
-     * @param {string|null} [filename=null] - The desired filename for the saved document. If null, uses the current document's name.
-     * @param {number} [quality=0.5] - (Only for image formats) The quality setting for image compression (from 0.0 to 1.0).
-     * @returns {boolean|Promise<void>} Returns `false` if the document is not available, otherwise returns a promise when saving completes.
      */
     downloadDocument(type='wc3.json',filename=null,quality=0.5){
         return this.saveDocument(type,filename,quality);
