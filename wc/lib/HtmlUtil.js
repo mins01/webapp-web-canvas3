@@ -67,6 +67,12 @@ export default class HtmlUtil{
             console.error('지원되지 않는 타입')
         }
     }
+    static fetchUrl(url){
+        return fetch(url);
+    }
+    static fetchJsonUrl(url){
+        return this.fetchUrl(url).then(response => response.json());
+    }
 
     /**
      * 텍스트 파일을 읽어 문자열로 반환하는 정적 메서드입니다.
@@ -109,6 +115,23 @@ export default class HtmlUtil{
             .then((text)=>{ resolve(JSON.parse( text)); })
             .catch((e)=>{reject(e)})
         })
+    }
+
+    /**
+     * 지정한 URL에서 JSON 데이터를 로드합니다.
+     * 
+     * 이 메서드는 `fetchJsonUrl(url)` 메서드를 호출하는 래퍼 함수입니다.
+     *
+     * @param {string} url - JSON 데이터를 가져올 대상 URL입니다.
+     * @returns {Promise<any>} JSON 데이터를 포함하는 Promise 객체를 반환합니다.
+     */
+    static loadJsonUrl(url){
+        return this.fetchJsonUrl(url).then((obj)=>{
+            if(!obj?.exportVersion){
+                throw new Error("This file is not in WC3 JSON format.");
+            }
+            return obj
+        });
     }
 
     /**

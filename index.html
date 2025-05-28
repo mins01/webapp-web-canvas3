@@ -544,20 +544,20 @@
                   <input type="file" class="form-control" name="openfile" accept=".wc3.json,image/*">
                 </div>
                 <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json 파일이 지원됩니다.</div>
-                <div class="text-end">
+                <div class="text-end my-1">
                   <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
                 </div>
               </form>
             </div>
             <div>
               <div class="form-label m-0"><i class="bi bi-cloud"></i> From URL</div>
-              <form action="" onsubmit="return false;if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]).then((r)=>{console.log('loadDocument 완료'); }); this.reset() }else{ alert('Select a file(*.wc3.json | image file )')}; return false;" >
+              <form action="" onsubmit="if(this.openfile.value.length){ editor.loadDocument(this.openfile.value).then((r)=>{console.log('loadDocument 완료'); }); this.reset() }else{ alert('Select a file(*.wc3.json | image URL )')}; return false;" >
                 <div class="input-group input-group-lg">
-                  <input type="url" class="form-control" name="openfile" placeholder="https://--">
+                  <input type="text" class="form-control" name="openfile" placeholder="https://-- or /--">
                 </div>
                 <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json 파일이 지원됩니다.</div>
-                <div class="form-text text-end"><i class="bi bi-info-circle"></i>개발중</div>
-                <div class="text-end">
+                <div class="form-text text-end"><i class="bi bi-info-circle"></i> 같은 도메인의 URL만 지원합니다.</div>
+                <div class="text-end my-1">
                   <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
                 </div>
               </form>
