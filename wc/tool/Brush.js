@@ -44,7 +44,7 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
-                this.layer.visibleByTool = false;
+                if(this.layer) this.layer.visibleByTool = false;
             }
             if(cb) cb();
         });
@@ -52,8 +52,8 @@ export default class Brush extends BaseTool{
 
     inactivate(){
         super.inactivate();
-        this.layer.visibleByTool = true;
-        this.drawLayer.clear();
+        if(this.layer) this.layer.visibleByTool = true;
+        if(this.drawLayer) this.drawLayer.clear();
     }
 
     onpointerdown(event){

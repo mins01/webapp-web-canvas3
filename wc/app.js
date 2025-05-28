@@ -76,10 +76,7 @@ globalThis.window.addEventListener('load',(event)=>{
         editor.brush3 = brush3
         editor.eraser = globalThis.eraser = eraser
         
-        
-        //-- new document
-        editor.newDocument(300,300);
-        
+
         // ui-transform-tool
         editor.utt = document.querySelector('#utt01');
         
@@ -92,6 +89,26 @@ globalThis.window.addEventListener('load',(event)=>{
         editor.initConfigs();
 
         globalThis.document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
+
+
+
+
+        // 쿼리스트링 확인해서 로드 동작        
+        const params = new URLSearchParams(globalThis.location.search);
+        {
+            const url = params.get('url')
+
+            if(url){
+                editor.loadDocument(url).then(()=>{}).catch(()=>{
+                    // 이미지로드 에러처리
+                    //-- new document
+                    editor.newDocument(300,300);
+                })
+            }else{
+                //-- new document
+                editor.newDocument(300,300);
+            }
+        }
 
     },500)
 

@@ -11,13 +11,13 @@ export default class Transform extends BaseTool{
 
     activate(){
         super.activate();
-        this.layer.visibleByTool = false;
+        if(this.layer) this.layer.visibleByTool = false;
         this.ready();
         this.draw();
     }
     inactivate(){
         super.inactivate();
-        this.layer.visibleByTool = true;
+        if(this.layer) this.layer.visibleByTool = true;
     }
 
     ready(){
