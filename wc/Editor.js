@@ -348,12 +348,10 @@ export default class Editor{
         }
     }    
     async loadDocument(file){
-        console.log(file);
-        
         if(file instanceof File){
-            this.loadDocumentByFile(file); //File 객체로 처리한다.
+            return this.loadDocumentByFile(file); //File 객체로 처리한다.
         }else{
-            this.loadDocumentByUrl(file); //URL 로 처리한다.
+            return this.loadDocumentByUrl(file); //URL 로 처리한다.
         }
     }
     async loadDocumentByFile(file){
@@ -377,18 +375,24 @@ export default class Editor{
         // console.log(file);
         if(url.match(/wc3\.json/)){ // JSON 형식인가?
             return HtmlUtil.loadJsonUrl(url).then((conf)=>{
-                console.log(conf);
-                
                 this.closeDocument();
                 this.loadJson(conf);
-            })
+            }).catch((e)=>{
+                alert(e.message);
+                console.warn(e);
+                throw e;
+            });
         }else{ // 이미지로 보고 진행
             const imageURL = url;
             return HtmlUtil.loadImageUrl(imageURL).then((image)=>{               
                 this.closeDocument();
                 const document = Document.fromImage(image);
                 this.documents.add(document);
-            })
+            }).catch((e)=>{
+                alert(e.message??'An error occurred while loading the image.');
+                console.warn(e);
+                throw e;
+            });
         }
     }
     loadDocumentJson(json){
