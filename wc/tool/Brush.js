@@ -28,7 +28,8 @@ export default class Brush extends BaseTool{
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         // globalThis.document.body.append(this.workingLayer)
-        this.drawingLayer.ctx.drawImage(this.layer,0,0)
+        // this.drawingLayer.ctx.drawImage(this.layer,0,0)
+        this.drawingLayer.import(this.layer.snapshot())
         this.drawingLayer.flush();
         
         this.stopBuildUp();
