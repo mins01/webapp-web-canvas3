@@ -1152,9 +1152,10 @@
         document.getElementById('modal-layers').addEventListener('show.bs.modal', event => {
           editor.ready();
         })
-        document.querySelector('.layer-box-container').addEventListener('draw',(event)=>{
-          editor.ready();
-        })
+        // 현재로썬 draw 이벤트로 반응할 필요가 없다.
+        // document.querySelector('.layer-box-container').addEventListener('draw',(event)=>{
+        //   editor.ready();
+        // })
         
       },{once:true})
     </script>
