@@ -30,6 +30,8 @@ export default class Context2dUtil{
      * @param {number} [minAlpha=1] 
      */
     static flattenOpacity(ctx,r,g,b,a=255,minAlpha=1){
+        console.log('minAlpha',minAlpha);
+        
         const c = ctx.canvas
         const imageData = ctx.getImageData(0,0,c.width,c.height);      
         for(let i=0,m=imageData.data.length;i<m;i+=4){

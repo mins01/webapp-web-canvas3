@@ -201,7 +201,7 @@ export default class Brush extends Layer{
     if(brushConfig.flattenOpacity){
       const c = jsColor.Color.from(ctx.fillStyle);
       const o = Math.floor(brushConfig.flow*255);
-      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,Math.min(1,o))
+      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,o/10)
     }
     this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
   }
