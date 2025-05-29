@@ -78,11 +78,13 @@ export default class Editor{
     initConfigs(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
 
+        // @deprecated
         // this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'),'brush');
         // this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),'brush1');
         // this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),'brush2');
         // this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),'brush3');
         // this.setBrushConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'),'eraser');
+
         this.brush.loadBrushConfig();this.brush.flush();
         // this.brush1.loadBrushConfig();this.brush1.flush();
         this.brush2.loadBrushConfig();this.brush2.flush();
@@ -126,6 +128,8 @@ export default class Editor{
             el.style.backgroundColor = this.document.layer.textConfig.textColor
         })
     }
+
+    // @deprecated
     setBrushConfig(conf,brushKey='0'){
         let brush = this?.[brushKey];
         let key = brushKey+'Config';
@@ -137,6 +141,7 @@ export default class Editor{
             // localStorage.setItem(key,JSON.stringify(brush.brushConfig))
         }
     }
+    // @deprecated
     resetBrushConfig(brushKey='0'){
         let brush = this?.[brushKey];
         let key = brushKey+'Config';
