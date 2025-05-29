@@ -78,11 +78,16 @@ export default class Editor{
     initConfigs(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
 
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'),'brush');
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),'brush1');
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),'brush2');
-        this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),'brush3');
-        this.setBrushConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'),'eraser');
+        // this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'),'brush');
+        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),'brush1');
+        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),'brush2');
+        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),'brush3');
+        // this.setBrushConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'),'eraser');
+        this.brush.loadBrushConfig();this.brush.flush();
+        // this.brush1.loadBrushConfig();this.brush1.flush();
+        this.brush2.loadBrushConfig();this.brush2.flush();
+        this.brush3.loadBrushConfig();this.brush3.flush();
+        this.eraser.loadBrushConfig();this.eraser.flush();
     }
 
     setEditorConfig(conf){
@@ -127,8 +132,9 @@ export default class Editor{
         if(brush){
             brush?.setBrushConfig(conf);
             if(brushKey.startsWith('eraser')) brush.contextConfig.foreColor='#666'
+            brush.saveBrushConfig();
             brush.flush();
-            localStorage.setItem(key,JSON.stringify(brush.brushConfig))
+            // localStorage.setItem(key,JSON.stringify(brush.brushConfig))
         }
     }
     resetBrushConfig(brushKey='0'){
@@ -137,8 +143,9 @@ export default class Editor{
         if(brush){
             brush?.resetBrushConfig();
             if(brushKey.startsWith('eraser')) brush.contextConfig.foreColor='#666'
+            brush.saveBrushConfig();
             brush.flush();
-            localStorage.setItem(key,JSON.stringify(brush.brushConfig))
+            // localStorage.setItem(key,JSON.stringify(brush.brushConfig))
         }
     }
     // setEraserConfig(conf){

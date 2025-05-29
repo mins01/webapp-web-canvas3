@@ -41,6 +41,19 @@ export default class Brush extends Layer{
     this.counter = 0;
   }
   
+
+  // 로컬 스토리지에 설정 저장
+  saveBrushConfig(){
+    if(!this.dataset.brushKey){
+      console.warn('Attribute [data-brush-key] does not exist');
+      return false;
+    }
+    localStorage.setItem(`wc-brush[${this.dataset.brushKey}]-brushconfig`,JSON.stringify(this.brushConfig));
+  }
+  // 로컬 스토리지에 설정 읽어오기
+  loadBrushConfig(){
+    this.setBrushConfig(JSON.parse(localStorage.getItem(`wc-brush[${this.dataset.brushKey}]-brushconfig`)??'{}'));
+  }
   setBrushConfig(conf){
     this.brushConfig.assignFrom(conf)
   }
