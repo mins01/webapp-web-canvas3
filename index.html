@@ -1530,7 +1530,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false"  >
+            <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" onsubmit="return false">
               <div class="d-flex flex-column gap-3">
                 <div class="div-brush-config grid-auto-fit-260px gap-3">
                   <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>                              
@@ -1845,7 +1845,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush1Config" class="form-brush-config" data-brush-key="brush1" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false"  >
+            <form name="formBrush1Config" class="form-brush-config" data-brush-key="brush1" action="" onsubmit="return false">
             </form>
           </div>
         </div>
@@ -1867,7 +1867,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush2Config" class="form-brush-config" data-brush-key="brush2" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false"  >
+            <form name="formBrush2Config" class="form-brush-config" data-brush-key="brush2" action="" onsubmit="return false">
             </form>
           </div>
         </div>
@@ -1889,7 +1889,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formBrush3Config" class="form-brush-config"  data-brush-key="brush3" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false"  >
+            <form name="formBrush3Config" class="form-brush-config"  data-brush-key="brush3" action="" onsubmit="return false">
             </form>
           </div>
         </div>
@@ -1911,7 +1911,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formEraserConfig" class="form-brush-config"  data-brush-key="eraser" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false"  >
+            <form name="formEraserConfig" class="form-brush-config"  data-brush-key="eraser" action="" onsubmit="return false">
             </form>
           </div>
         </div>
@@ -1925,6 +1925,20 @@
         WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
         window.addEventListener('load',(event)=>{
           setTimeout(()=>{
+
+            //---- form -> brush
+            const formToBrush = (f)=>{
+              const brush = WcHelper.getBrushCanvas(f); 
+              brush.setBrushConfig(Wc.HtmlUtil.formToObject(f)); 
+              brush.saveBrushConfig(); 
+              brush.flush();
+            }
+            document.querySelectorAll('.form-brush-config').forEach((f)=>{
+              f.addEventListener('input',(event)=>{
+                formToBrush(event.currentTarget);
+              })
+            })
+            //---- brush -> preview , form
             const previewAndSyncForm = (brush,isEraser=false)=>{
               const container = brush.closest('.brush-config-container')
               WcHelper.syncModalBrushPreviewCanvas(brush,isEraser);
