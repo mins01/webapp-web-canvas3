@@ -96,7 +96,8 @@ export default class Brush extends Layer{
     // console.log(ctx.fillStyle);
     
     ctx.save();
-    ctx.globalAlpha = parseFloat(this.flow)
+    ctx.globalAlpha = parseFloat(brushConfig.flow)
+    
     // ctx.imageSmoothingEnabled = false;
     
     
@@ -199,8 +200,8 @@ export default class Brush extends Layer{
     
     if(brushConfig.flattenOpacity){
       const c = jsColor.Color.from(ctx.fillStyle);
-      const o = Math.round(brushConfig.flow*255);
-      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,Math.min(170,o))
+      const o = Math.floor(brushConfig.flow*255);
+      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,Math.min(1,o))
     }
     this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
   }
