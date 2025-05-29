@@ -146,6 +146,7 @@ import WcSyncHandler from "./lib/WcSyncHandler.js";
 Wc.WcSyncHandler = WcSyncHandler;
 const wcSyncHandler = globalThis.wcSyncHandler = editor.wcSyncHandler = new WcSyncHandler();
 wcSyncHandler.addEventListener();
+Wc.wcSyncHandler = wcSyncHandler;
 
 
 

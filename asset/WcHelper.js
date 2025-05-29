@@ -163,5 +163,8 @@ class WcHelper{
     }
 
     return points;
-}
+  }
+  static getBrushCanvas(el){
+    return el.closest('.brush-config-conteiner').querySelector('.wc-brush')
+  }
 }

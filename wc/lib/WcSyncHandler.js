@@ -13,14 +13,15 @@ export default class WcSyncHandler{
 
 
   sync(target){
-    target.querySelectorAll('[data-wc-sync-from]').forEach(el=> {
+    if(!target){return;}
+    target.querySelectorAll('[data-wc-sync-from]')?.forEach(el=> {
       this.syncFrom(el);
     });
-    target.querySelectorAll('form[data-wc-sync-form]').forEach(form=> {
+    target.querySelectorAll('form[data-wc-sync-form]')?.forEach(form=> {
       this.syncForm(form);
     });
 
-    target.querySelectorAll('.ui-input-stepper input').forEach((input)=>{
+    target.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{
       UiInputStepper.syncDataValue(input);
     })
   }
