@@ -136,7 +136,9 @@
         b1.brushConfig.spacing = 0.5;
         b1.brushConfig.flowControl = 'penPressure';
         b1.flush();
-        
+        b1.addEventListener('draw',(event)=>{
+          redraw()  
+        })
         const c1 = globalThis.c1 =  document.querySelector('#c1');
         redraw()
         
@@ -164,7 +166,7 @@
   </script>
   <script>
     function redraw(){
-      // c1.clear();
+      c1.clear();
       c1.width = c1.clientWidth
       c1.height = c1.clientHeight
       b1.ready();
@@ -221,7 +223,7 @@
           <div class="d-flex flex-wrap gap-1 property-wrap">
             <div>
               <div class="form-label mb-0"><i class="bi bi-palette"></i> 전경색</div>
-              <input type="color" class="form-control form-control-color input-foreColor"  name="foreColor" value="#f40000" oninput="b1.setContextConfig({foreColor:this.value});b1.flush();redraw();  return false" onchange="this.oninput(event); return false">
+              <input type="color" class="form-control form-control-color input-foreColor"  name="foreColor" value="#f40000" oninput="b1.setContextConfig({foreColor:this.value});b1.flush(); return false" onchange="this.oninput(event); return false">
               
             </div>
           </div>
@@ -230,7 +232,7 @@
       <div class="card my-1">
         <div class="card-header">BRUSH PROPERTY</div>
         <div class="card-body">
-          <form name="formBrushConfig" class="form-brush-config" action="" oninput="const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush(); c1.clear();redraw(); return false" >
+          <form name="formBrushConfig" class="form-brush-config" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false" data-wc-sync-form="b1.brushConfig">
             <div class="d-flex flex-column gap-3">
               <div class="div-brush-config grid-auto-fit-260px gap-3">
                 <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>                              
@@ -521,7 +523,7 @@
               </div>
               <hr class="my-1">
               <div class="text-end">
-                <button type="button" class="btn btn-primary btn-reset-config" onclick="WcHelper.getBrushCanvas(this)?.brushConfig?.reset(); wcSyncHandler.sync(this.closest('.modal'));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                <button type="button" class="btn btn-primary btn-reset-config" onclick="{const brush = WcHelper.getBrushCanvas(this); brush.brushConfig.reset(); brush.flush();} wcSyncHandler.sync(this.closest('.brush-config-conteiner'));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
               </div>
             </div>
           </form>
