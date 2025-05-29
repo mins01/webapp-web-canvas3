@@ -1152,6 +1152,9 @@
         document.getElementById('modal-layers').addEventListener('show.bs.modal', event => {
           editor.ready();
         })
+        document.querySelector('.layer-box-container').addEventListener('draw',(event)=>{
+          editor.ready();
+        })
         
       },{once:true})
     </script>
