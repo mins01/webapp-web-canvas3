@@ -20,7 +20,8 @@ export default class HtmlUtil{
             if((object?.[k]??false) !== false){
                 // console.log(k,form.elements?.[k],object[k].toString());                
                 if(form.elements[k] instanceof RadioNodeList){
-                    const checked = [...form.elements[k]].find((el)=>{return el.checked})
+                    // const checked = [...form.elements[k]].find((el)=>{return el.checked})
+                    form.elements[k].value = object[k].toString();
                     // if(checked){ checked.dispatchEvent(new Event('change',{bubbles:true,cancelable:true})) }
                 }else{
                     form.elements[k].value = object[k].toString(); //checkbox 에선 에러날꺼다.

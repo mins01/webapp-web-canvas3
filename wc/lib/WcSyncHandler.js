@@ -14,10 +14,12 @@ export default class WcSyncHandler{
 
   sync(target){
     if(!target){return;}
+    
     target.querySelectorAll('[data-wc-sync-from]')?.forEach(el=> {
       this.syncFrom(el);
     });
     target.querySelectorAll('form[data-wc-sync-form]')?.forEach(form=> {
+      console.log('syncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsync',);
       this.syncForm(form);
     });
 
