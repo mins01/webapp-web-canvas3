@@ -5,6 +5,8 @@ if(!globalThis.Wc) globalThis.Wc = Wc
 
 import HtmlUtil from "./lib/HtmlUtil.js";
 Wc.HtmlUtil = HtmlUtil;
+import BrushConfigurator from "./lib/BrushConfigurator.js";
+Wc.BrushConfigurator = BrushConfigurator;
 
 
 //-- editor.js 생성시작

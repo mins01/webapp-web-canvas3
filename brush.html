@@ -84,9 +84,11 @@
   </style>
   <script src="asset/WcHelper.js"></script>
   <script type="module">
-    import HtmlUtil from "./wc/lib/HtmlUtil.js";
     if(globalThis.Wc===undefined) globalThis.Wc = {}
+    import HtmlUtil from "./wc/lib/HtmlUtil.js";
     globalThis.Wc.HtmlUtil = HtmlUtil;
+    import BrushConfigurator from "./wc/lib/BrushConfigurator.js";
+    globalThis.Wc.BrushConfigurator = BrushConfigurator;
   </script>
   <script type="module">
     import Canvas from "./wc/element/Canvas.js";
@@ -137,10 +139,10 @@
         b1.brushConfig.flowControl = 'penPressure';
         b1.flush();
         b1.addEventListener('draw',(event)=>{
-          redraw()  
+          previewAndSyncForm(b1)  
         })
         const c1 = globalThis.c1 =  document.querySelector('#c1');
-        redraw()
+        
         
         // document.formContextConfig.oninput(event)
         document.querySelector('.input-foreColor').oninput(event)
@@ -157,11 +159,13 @@
         }
 
 
-
+        previewAndSyncForm(b1)
+        b1.addEventListener('draw',(event)=>{ previewAndSyncForm(b1) })
+  
       },500)
     })
     window.addEventListener('resize',(event)=>{
-      redraw();
+      previewAndSyncForm(b1);
     })
   </script>
   <script>
@@ -179,6 +183,14 @@
       
       
       // WcHelper.drawBrushPreviewCanvas(b1,c1)
+    }
+    const previewAndSyncForm = (brush,isEraser=false)=>{
+      redraw();
+      const container = brush.closest('.brush-config-container')
+      // WcHelper.syncModalBrushPreviewCanvas(brush,isEraser);
+      const f = container.querySelector('.form-brush-config')
+      Wc.HtmlUtil.objectToForm(brush.brushConfig,f)
+      container.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{ UiInputStepper.syncDataValue(input); })
     }
   </script>
   
@@ -522,8 +534,16 @@
                 
               </div>
               <hr class="my-1">
-              <div class="text-end">
-                <button type="button" class="btn btn-primary btn-reset-config" onclick="{const brush = WcHelper.getBrushCanvas(this); brush.brushConfig.reset(); brush.flush();} wcSyncHandler.sync(this.closest('.brush-config-container'));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+              <div class="d-flex flex-wrap gap-1 justify-content-end">
+                <button type="button" class="btn btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                <button type="button" class="btn btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Pen</button>
+                <button type="button" class="btn btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> brush</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));"><i class="bi bi-highlighter"></i> Highlighter</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.ballpen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Ball Pen</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.pencil(WcHelper.getBrushCanvas(this));"><i class="bi bi-pencil"></i></i> Pencil</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.dipPen(WcHelper.getBrushCanvas(this));"><i class="bi bi-vector-pen"></i> Dip pen</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.inkBrush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Ink Brush</button>
+                <button type="button" class="btn btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.airbrush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Air Brush</button>
               </div>
             </div>
           </form>
