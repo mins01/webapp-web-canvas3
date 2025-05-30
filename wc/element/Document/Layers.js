@@ -98,6 +98,31 @@ export default class Layers extends SelectableArray{
         return this.move(this.selectedIndex-1)
     }
 
+    mergeDown(){
+        console.log(this.selectedIndex);
+        if(this.selectedIndex===0){
+            alert('No layers available to merge.');
+            return false;
+        }
+        const selectedIndex = this.selectedIndex
+        const fromLayer = this[this.selectedIndex];
+        const toLayer = this[this.selectedIndex-1];
+        console.log(fromLayer,toLayer);
+        
+        toLayer.drawLayer(fromLayer);
+        toLayer.flush();
+        //-- 삭제처리
+        const document = this.document
+        super.remove();
+        // document.flush();
+        this.ready();
+        
+        this.document.history.save('Layers.mergeDown');
+        return true;
+
+        
+    }
+
 
 
     import(conf){

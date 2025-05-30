@@ -1041,11 +1041,15 @@
                   <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                 </div>
                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document.ready();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
-                <button type="button" class="btn btn-danger" onclick="if(!confirm('Remove?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
+                
+                <button type="button" class="btn btn-primary" onclick="editor?.document.layers.mergeDown()"><i class="bi bi-union"></i></button>
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
                   <button type="button" class="btn btn-primary" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
                 </div>
+                <button type="button" class="btn btn-danger" onclick="if(!confirm('Remove?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
+                
+
               </div>
               <div class="d-flex justify-content-end gap-1 flex-fill">
                 <div class="col">
