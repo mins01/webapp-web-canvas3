@@ -86,8 +86,10 @@ export default class Brush extends Layer{
     
     // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 밖에서 계산한다.
     
-    shapeCanvas.width = size + this.margin * 2;
-    shapeCanvas.height = size + this.margin * 2;
+    let tsize = size + this.margin * 2
+    if(tsize%2){ tsize++;}
+    shapeCanvas.width = tsize;
+    shapeCanvas.height = tsize;
     const r = size/2;
     const x = shapeCanvas.width/2;
     const y = x;
@@ -163,25 +165,21 @@ export default class Brush extends Layer{
     // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다.
     this.margin = Math.ceil(size * 0.25); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다. , (1.5 * size - size) / 2; 대각선의 비율이 1.41 이라서.
 
-    this.width = size + this.margin * 2;
-    this.height = size + this.margin * 2;
+    let tsize = Math.round(size + this.margin * 2);
+    this.width = tsize;
+    this.height = tsize;
     this.contextConfig.disableStroke = true;
     this.contextConfig.assignTo(ctx,true);
+    
     
     this.applyShapeCanvas(); // 브러시 모양 재적용
     
     
     // const dw = this.width;
     const dw = this.width * brushConfig.scaleX;
-    // const dh = this.height * brushConfig.roundness;
     const dh = this.height * brushConfig.scaleY;
-    // const dx = 0 - this.margin;
-    // const dy = (this.height-dh)/2 - this.margin;
     const dx = (this.width-dw)/2;
     const dy = (this.height-dh)/2;
-    
-    // const tx = Math.floor(this.width/2) + this.margin;
-    // const ty = Math.floor(this.height/2) + this.margin;
     const tx = this.width/2;
     const ty = this.height/2;
     
@@ -191,16 +189,19 @@ export default class Brush extends Layer{
     
 
     ctx.globalAlpha = parseFloat(brushConfig.flow)        
-    ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
-    ctx.rotate(brushConfig.angle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
-    ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
+    if(brushConfig.angle){
+      ctx.translate(tx, ty); // 회전할 중심(기준점) 설정 (캔버스 중앙으로 이동)
+      ctx.rotate(brushConfig.angle * Math.PI / 180); // 45도 회전 (Math.PI / 4 라디안)
+      ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
+    }
     // ctx.imageSmoothingEnabled = false;
     ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
+    // console.log(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
     ctx.restore();
     
     if(brushConfig.flattenOpacity){
       const c = jsColor.Color.from(ctx.fillStyle);
-      const o = Math.floor(brushConfig.flow*255);
+      const o = Math.round(brushConfig.flow*255);
       Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,o/10)
     }
     this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );

@@ -167,4 +167,15 @@ class WcHelper{
   static getBrushCanvas(el){
     return el.closest('.brush-config-container').querySelector('.wc-brush')
   }
+
+
+  static brushNavTab(navTab){
+   const container = navTab.closest('.brush-nav-container');
+   container.querySelectorAll('.nav-link').forEach((el)=>{
+    el.classList.remove('active');
+   })
+   navTab.classList.add('active');
+   container.dataset.brushTab = navTab.dataset.brushTab
+   
+  }
 }
