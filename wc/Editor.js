@@ -360,6 +360,9 @@ export default class Editor{
         }
     }    
     async loadDocument(file){
+        if(this.document && !confirm('An image document already exists. Do you want to load a new one?')){
+            return false;
+        }
         if(file instanceof File){
             return this.loadDocumentByFile(file); //File 객체로 처리한다.
         }else{
@@ -423,6 +426,9 @@ export default class Editor{
     }
     newDocument(width,height){
         // 다중 document 우선 지원하지 말자.
+        if(this.document && !confirm('An image document already exists. Would you like to create a new one?')){
+            return false;
+        }
         this.closeDocument();
         this.documents.create(width,height);
         // const document = new Document(width,height);

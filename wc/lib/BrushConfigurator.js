@@ -110,7 +110,7 @@ class BrushConfigurator{
   static airbrush(brush){
     brush.brushConfig.reset();
     brush.setBrushConfig(
-      {"shape":"circle","size":20,"angle":0,"roundness":1,"scaleX":0.1,"scaleY":"0.1","flipX":false,"flipY":false,"hardness":1,"spacing":0.1,"sizeJitter":0,"sizeControl":"off","mininumSizeRatio":0.01,"angleJitter":0,"angleControl":"off","roundnessJitter":0,"roundnessControl":"off","mininumRoundness":0.1,"scaleYControl":"off","mininumScaleY":0.1,"opacity":1,"opacityJitter":0,"opacityControl":"off","mininumOpacity":0.1,"flow":1,"flowJitter":0,"flowControl":"off","mininumFlow":"0.1","hueJitter":0,"saturationJitter":0,"brightnessJitter":0,"scatterAmount":1,"scatterAxes":"xy","scatterCount":3,"scatterCountJitter":0,"flattenOpacity":true,"buildUpInterval":0.01}
+      {"shape":"circle","size":20,"angle":0,"roundness":1,"scaleX":0.1,"scaleY":"0.1","flipX":false,"flipY":false,"hardness":1,"spacing":0.1,"sizeJitter":0,"sizeControl":"off","mininumSizeRatio":0.01,"angleJitter":0,"angleControl":"off","roundnessJitter":0,"roundnessControl":"off","mininumRoundness":0.1,"scaleYControl":"off","mininumScaleY":0.1,"opacity":1,"opacityJitter":0,"opacityControl":"off","mininumOpacity":0.1,"flow":0.8,"flowJitter":0,"flowControl":"off","mininumFlow":"0.1","hueJitter":0,"saturationJitter":0,"brightnessJitter":0,"scatterAmount":1,"scatterAxes":"xy","scatterCount":3,"scatterCountJitter":0,"flattenOpacity":true,"buildUpInterval":0.01}
     )
     brush.saveBrushConfig();
     brush.flush();
