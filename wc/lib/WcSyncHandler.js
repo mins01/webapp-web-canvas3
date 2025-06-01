@@ -19,7 +19,6 @@ export default class WcSyncHandler{
       this.syncFrom(el);
     });
     target.querySelectorAll('form[data-wc-sync-form]')?.forEach(form=> {
-      console.log('syncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsyncsync',);
       this.syncForm(form);
     });
 

@@ -158,3 +158,4 @@ Wc.AutoSave = AutoSave
 const autoSave = new AutoSave(editor,60*1000*5); //5분에 한번씩 저장함
 Wc.autoSave = autoSave
 autoSave.activate();
+editor.autoSave = autoSave 

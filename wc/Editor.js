@@ -27,8 +27,10 @@ export default class Editor{
     editorConfig = null;
     modalHandler = null;
     temp = null
-
+    
     utt = null;
+    autoSave = null;
+
     constructor(target){
         this.temp = {}
         this.editorConfig = new EditorConfig()
@@ -311,7 +313,10 @@ export default class Editor{
             mimetype = 'image/webp';
         }
         if(mimetype){
-            this.document.toBlobAsync(mimetype,quality).then((blob)=>{ HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);}).catch(e=>{console.error(e);})
+            this.document.toBlobAsync(mimetype,quality).then((blob)=>{ 
+                HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
+                this.autoSave.autoSave();
+            }).catch(e=>{console.error(e);})
         }else {
             console.error('지원되지 않는 타입')
         }
@@ -351,6 +356,7 @@ export default class Editor{
         if(mimetype){
             try{
                 const blob = await this.document.toBlobAsync(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
+                this.autoSave.autoSave();
                 return this.upload(blob, filename+'.'+ext);
             }catch(e){
                 throw new Error(e);
