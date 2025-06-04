@@ -25,7 +25,7 @@ export default class BaseTool {
 	}
 
 	init(){
-		console.log('BaseTool::init()');
+		console.log(`BaseTool::init() - ${this.constructor.name}`);
 		
 		this.peh = this.editor.peh
 

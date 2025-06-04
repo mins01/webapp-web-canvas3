@@ -41,6 +41,20 @@ export default class TextLayer extends Layer{
         // Object.assign(this.textConfig,conf)
         this.textConfig.assignFrom(conf);
         this.ctx.fillStyle = this.textConfig.textColor;
+        // console.log('textConfig.font',this.textConfig.font,this.textConfig);
+        
+        const font = `${this.textConfig.fontSize} "${this.textConfig.fontFamily}"`;
+        const isLoaded = document.fonts.check(font);
+        console.log('font load check',font,isLoaded);
+        if(!isLoaded){
+            document.fonts.load(font).then((loadedFonts)=>{
+                console.log('font loaded',loadedFonts);
+                this.flush();
+            }).catch((e)=>{
+                console.error(e)
+            });
+        }
+
     }
 
     setText(text){
@@ -61,9 +75,10 @@ export default class TextLayer extends Layer{
 
         if(this.text?.length){
             const textConfig = this.textConfig;            
-            DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 );
+            DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
+        }else{
+            this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
         }
 
-        this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     }
 }

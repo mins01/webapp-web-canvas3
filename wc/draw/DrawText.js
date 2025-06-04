@@ -3,7 +3,7 @@ export default class DrawText{
     static draw(ctx,textConfig,text,w,h,x,y){
         const padding = textConfig.paddingPx;
         let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2),h-(padding*2));
-        this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2));
+        return this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2));
     }
 
     static textToLines(ctx,textConfig,text,w,h){
@@ -36,11 +36,14 @@ export default class DrawText{
     }
 
     static drawTextLines(ctx,textConfig,lines,x,y,w,h){
-        ctx.save();
         const lineHeight = textConfig.lineHeightPx; 
         const verticalAlign = textConfig?.verticalAlign??'top';
         const linesH = lineHeight * lines.length;
         
+        // const fontSize = textConfig?.fontSize??'10px';
+        // const fontFamily = textConfig?.fontFamily??'sans-serif';
+            
+        ctx.save();     
 
         let maxfontBoundingBoxAscent = 0;
         let maxFontBoundingBoxDescent = 0;
@@ -94,5 +97,6 @@ export default class DrawText{
             y1+=lineHeight
         });
         ctx.restore();
+        
     }
 }
