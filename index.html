@@ -746,7 +746,7 @@
               </div>
             </form>
             <hr>
-            <form name="form_textConfig" class="grid-minmax-260px gap-3"
+            <form name="form_textConfig" class=""
               oninput="editor?.document?.layer?.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));editor?.document?.layer?.flush();" onchange="this.oninput(event);"
               data-wc-sync-form="editor.document.layer.textConfig"
               >
@@ -899,131 +899,11 @@
       </div>
     </div>
 
-    <div class="modal fade" id="modal-text-config-bak"  aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-4"><i class="bi bi-alphabet-uppercase"></i> Text</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="" onsubmit="return false;" oninput="if(editor.document.layer){editor.document.layer.flush()}">
-              <h3 class="fs-5">TEXT</h3>
-              <textarea name="" rows="3" class="form-control" oninput="if(editor.document.layer.setText !==undefined){editor.document.layer.setText(this.value);}" onfocus="if(editor.document.layer.text){ this.value=editor.document.layer.text}"></textarea>
-            </form>
-            <hr>
-            <form action="" onsubmit="return false;" oninput="editor.setTextConfig(Wc.HtmlUtil.formToObject(this)); return false" onchange="this.oninput(event); return false">
-              <div class="d-flex flex-wrap gap-1 property-wrap">
-                <div class="input-group">
-                  <span class="input-group-text" >글자색</span>
-                  <input type="color" class="form-control form-control-color"  name="textColor" value="#00ff00">
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >글자크기</span>
-                  <label class="form-control" role="button">
-                    <input type="range" class="form-range d-block" name="fontSizeNumber" value="10" step="1" min="0" max="100">
-                  </label>
-                  <select name="fontSizeUnit" class="form-select" >
-                    <option value="px">px</option>
-                    <!-- <option value="pt">pt</option> -->
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >lineHeight</span>
-                  <label class="form-control" role="button">
-                    <input type="range" class="form-range d-block" name="lineHeightNumber" value="1.5" step="0.1" min="0" max="100">
-                  </label>
-                  <select name="lineHeightUnit" class="form-select" >
-                    <option value="em">em</option>
-                    <option value="px">px</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >fontWeight</span>
-                  <select name="fontWeight" class="form-select" >
-                    <option value="normal">normal</option>
-                    <option value="bold">bold</option>
-                    <option value="bolder">bolder</option>
-                    <option value="lighter">lighter</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
-                    <option value="300">300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
-                    <option value="600">600</option>
-                    <option value="700">700</option>
-                    <option value="800">800</option>
-                    <option value="900">900</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >fontStyle</span>
-                  <select name="fontStyle" class="form-select" style="width: 6em;">
-                    <option value="normal">normal</option>
-                    <option value="italic">italic</option>
-                    <option value="oblique">oblique</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >fontFamily</span>
-                  <select name="fontFamily" class="form-select" style="width: 6em;">
-                    <option value="">Default</option>
-                    <option value="sans-serif">sans-serif</option>
-                    <option value="serif">serif</option>
-                    <option value="monospace">monospace</option>
-                    <option value="Arial, sans-serif">Arial</option>
-                    <option value="Helvetica, sans-serif">Helvetica</option>
-                    <option value="cursive">cursive</option>
-                    <option value="fantasy">fantasy</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >padding</span>
-                  <label class="form-control" role="button">
-                    <input type="range" class="form-range d-block" name="paddingNumber" value="0" step="0.1" min="0" max="100">
-                  </label>
-                  <select name="paddingUnit" class="form-select" >
-                    <option value="px">px</option>
-                    <option value="em">em</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >letterSpacing</span>
-                  <label class="form-control" role="button">
-                    <input type="range" class="form-range d-block" name="letterSpacingNumber" value="0" step="0.1" min="-10" max="10">
-                  </label>
-                  <select name="letterSpacingUnit" class="form-select" >
-                    <option value="px">px</option>
-                    <option value="em">em</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >textAlign</span>
-                  <select name="textAlign" class="form-select" style="width: 6em;">
-                    <option value="left">left</option>
-                    <option value="right">right</option>
-                    <option value="center">center</option>
-                    <option value="start">start</option>
-                    <option value="end">end</option>
-                  </select>
-                </div>
-                <div class="input-group">
-                  <span class="input-group-text" >textBaseline</span>
-                  <select name="textBaseline" class="form-select" style="width: 6em;">
-                    <option value="alphabetic">alphabetic(이걸로 고정하자)</option>
-                    <option value="top">top</option>
-                    <option value="middle">middle</option>
-                    <option value="bottom">bottom</option>
-                    <option value="hanging">hanging</option>
-                    <option value="ideographic">ideographic</option>
-                  </select>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <script>
+      document.getElementById('modal-text-config').addEventListener('show.bs.modal', event => {
+        editor.ready();
+      })
+    </script>
 
     <div class="modal fade" id="modal-layers"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -1320,7 +1200,11 @@
                 <div class="form-text mb-0">Insert Layer</div>
                 <div class="d-flex gap-3">
                   <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i> Normal Layer</button>
-                  <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer('TextLayer');editor?.document?.layer?.textConfig?.textColor = editor.contextConfig.foreColor; editor?.document?.layer.flush();"><i class="bi bi-file-text"></i> Text layer</button>
+                  <button type="button" class="btn btn-primary" 
+                  onclick="
+                  editor?.document?.layers.addLayer('TextLayer');
+                  editor.document.layer.textConfig.textColor = editor.contextConfig.foreColor; 
+                  editor.document.layer.flush();"><i class="bi bi-file-text"></i> Text layer</button>
                 </div>
               </div>
               <hr>
