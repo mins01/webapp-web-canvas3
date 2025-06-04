@@ -39,6 +39,8 @@ export default class Brush extends BaseTool{
      * 활성화 : 툴이 선택 되면
      */
     activate(cb=null){        
+        console.log(this.layer.kind);
+        
         super.activate(()=>{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
                 console.warn(`Only normal layer are supported. (${this.layer.kind})`);
@@ -58,6 +60,7 @@ export default class Brush extends BaseTool{
     }
 
     onpointerdown(event){
+        if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
         this.drawingLayer.alpha = this.layer.alpha;        
         this.brush.ready()

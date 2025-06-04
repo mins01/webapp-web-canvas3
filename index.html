@@ -738,6 +738,7 @@
           <div class="modal-body">
             <form name="form_text" action=""
               oninput="editor?.document?.layer?.setText(this.text.value);editor?.document?.layer?.flush();"
+              onblur="editor.document.history.save('text config')"
               data-wc-sync-form="editor.document.layer"
               >
               <div>
@@ -748,6 +749,7 @@
             <hr>
             <form name="form_textConfig" class=""
               oninput="editor?.document?.layer?.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));editor?.document?.layer?.flush();" onchange="this.oninput(event);"
+              onblur="editor.document.history.save('text config')"
               data-wc-sync-form="editor.document.layer.textConfig"
               >
               <div class="grid-minmax-260px gap-3">
@@ -1204,7 +1206,8 @@
                   onclick="
                   editor?.document?.layers.addLayer('TextLayer');
                   editor.document.layer.textConfig.textColor = editor.contextConfig.foreColor; 
-                  editor.document.layer.flush();"><i class="bi bi-file-text"></i> Text layer</button>
+                  editor.document.layer.flush();
+                  editor.ready();"><i class="bi bi-file-text"></i> Text layer</button>
                 </div>
               </div>
               <hr>

@@ -76,6 +76,7 @@ export default class Text extends BaseTool{
 
 
     onpointerdown(event){
+        if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         super.onpointerdown(event);
         // const [x,y] = this.getXyFromEvent(event);
         // this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;

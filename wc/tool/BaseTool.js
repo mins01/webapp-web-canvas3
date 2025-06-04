@@ -112,6 +112,7 @@ export default class BaseTool {
 	}
 
 	onpointerdown(event){
+		if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
 		this.pointerType = event.pointerType??null;
 		if(!this.downAt) this.downAt = Date.now();
 		if(!this.downAt) return false;
