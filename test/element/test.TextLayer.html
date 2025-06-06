@@ -44,14 +44,11 @@
   <script type="module">
     import TextLayer from '../../wc/element/TextLayer.js';
     TextLayer.defineCustomElements();
+    globalThis.TextLayer = TextLayer;
   </script>
   <script>
     window.addEventListener('load',(event)=>{
-      // document.querySelectorAll('.wc-textlayer').forEach((textLayer)=>{
-      //   textLayer.textConfig.textAlign = 'center';
-      //   textLayer.textConfig.verticalAlign = 'middle';
-      //   textLayer.flush();
-      // })    
+      document.querySelector('#div-append').append(new TextLayer(200,100));
     })
   </script>
 </head>
@@ -87,6 +84,12 @@
           <canvas class="wc-textlayer" is="wc-textlayer" width="200" height="200"
             data-text-config='{"font":"40px/1.5em sans-serif","fontStretch":"normal","lineHeight":"1.5em","textColor":"#cc9900","padding":"0px","textAlign":"center","verticalAlign":"middle"}'
           ></canvas>
+        </div>
+      </div>
+      <div class="rounded border border-1 p-3 text-bg-secondary">
+        <div class="form-label">append(TextLayer)</div>
+        <div id="div-append">
+          
         </div>
       </div>
     </div>
