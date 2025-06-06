@@ -23,8 +23,18 @@ export default class TextLayer extends Layer{
         this.text = '';
         // this.name = '';// 자동으로 설정됨
 
-        // 테스트용 데이터
-        this.text ="Test TextLayer\nHello canvas!"
+        // 기본 텍스트
+        this.text = "Input a string\nin the TextLayer."
+        if(this.dataset.text && this.dataset.text.trim().length){
+            this.text = this.dataset.text
+        }else if(this.textContent && this.textContent.trim().length){
+            this.text = this.textContent
+        }
+        // 기본 textConfig
+        if(this.dataset.textConfig){
+           const objTextConfig = JSON.parse(this.dataset.textConfig);
+            if(objTextConfig){ this.textConfig.assignFrom(objTextConfig); }
+        }
         this.flush();
     }
     static defineCustomElements(name='wc-textlayer'){
