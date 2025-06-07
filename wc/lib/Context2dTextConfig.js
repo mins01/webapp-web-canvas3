@@ -38,13 +38,14 @@ class Context2dTextConfig extends BaseConfig{
     verticalAlign = "top"; //top, middle, bottom
 
     wordBreak = 'normal'; // normal | break-all | keep-all | break-word;
+    overflowWrap = 'normal'; // normal | break-word;
 
 
     constructor(ctx=null){
         const proxyConfig = {
             number:['fontSizeNumber','lineHeightNumber','paddingNumber','letterSpacingNumber',],
             boolean:null,
-            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing','verticalAlign']
+            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing','verticalAlign','wordBreak','overflowWrap']
         }
         const proxy = super(proxyConfig);
         proxy.reset();
@@ -144,6 +145,8 @@ class Context2dTextConfig extends BaseConfig{
         this.wordSpacing = "0px";
         this.verticalAlign = "top";
         this.wordBreak = 'normal';
+        this.overflowWrap = 'normal';
+        
     }
 
     assignTo(context){

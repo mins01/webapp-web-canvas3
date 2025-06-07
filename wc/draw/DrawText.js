@@ -6,13 +6,13 @@ export default class DrawText{
         return this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2));
     }
 
-    static textToLines(ctx,textConfig,text,w,h){
+    static textToLines(ctx,textConfig,text,width,height){
         const lineHeight = textConfig.lineHeightPx;
         // const lines = [];
         // let chars = [...text];
         let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
-        let lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,w);
-        let lineNumber = Math.floor(h/lineHeight)
+        let lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');
+        let lineNumber = Math.floor(height/lineHeight)
         let heightedLines = lines.slice(0,0+lineNumber);
         // console.log(lines);
         return heightedLines;
@@ -90,35 +90,47 @@ export default class DrawText{
         if(wordBreak == 'break-all'){
             const regex = /(.)/ug;
             groups = text.match(regex);
-        }else if(wordBreak == 'keep-all'){
+        }else if(wordBreak == 'keep-all' || wordBreak == 'break-word'){
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F]+)/ug;
             groups = text.match(regex);
         }else{ // (wordBreak == 'normal')
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F])/ug;
             groups = text.match(regex);
         }
-        console.log('groups',wordBreak,groups);
+        // console.log('groups',wordBreak,groups);
         
         return groups;
     }
 
-    static wordBreakGroupToLines(ctx,wordBreakGroup,w){
+    static wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap='normal'){
         let lines = []
         let line = null;
+        console.log(overflowWrap);
+        const pushLines = 
+            overflowWrap=='break-word'
+            ?(line)=>{
+                const currG = this.splitIntoWordBreakGroup(line,'break-all');
+                const currLines = this.wordBreakGroupToLines(ctx,currG,width);
+                lines.push(...currLines);
+            }
+            :(line)=>{
+                lines.push(line);
+            }
+        
         wordBreakGroup.forEach((str,i)=>{
             if(line === null){ line = str; return; } // null 이면 현재 문자열 넣고 다음으로.
             if(str=='\n'){
-                lines.push(line);
+                pushLines(line)
                 line = null;
-            }else if(ctx.measureText(line+str).width > w){
-                lines.push(line);
+            }else if(ctx.measureText(line+str).width > width){
+                pushLines(line)
                 line = str==' '?null:str; // 마지막 빈칸은 그리지 않는다.
             }else{
                 line += str
             }
         })
         if(line.length){
-            lines.push(line);
+            pushLines(line)
         }
         return lines;
     }
