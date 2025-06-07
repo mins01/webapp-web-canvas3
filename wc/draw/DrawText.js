@@ -8,34 +8,18 @@ export default class DrawText{
 
     static textToLines(ctx,textConfig,text,w,h){
         const lineHeight = textConfig.lineHeightPx;
-        const lines = [];
-        let chars = [...text];
-        let line = '';
-        let h1 = lineHeight;
-        chars.forEach(ch => {
-            if(h1>h){
-                return
-            }else if(ch==='\n'){
-                lines.push(line);
-                h1+=lineHeight;
-                line = '';
-            }else if(ctx.measureText(line+ch).width <= w){
-                line += ch;
-            }else{
-                lines.push(line);
-                h1+=lineHeight;
-                line = ch;
-            }
-        });
-        if(h1>h){}
-        else if(line !== ''){ 
-            lines.push(line); 
-            h1+=lineHeight; 
-        }
-        return lines;
+        // const lines = [];
+        // let chars = [...text];
+        let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+        let lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,w);
+        let lineNumber = Math.floor(h/lineHeight)
+        let heightedLines = lines.slice(0,0+lineNumber);
+        // console.log(lines);
+        return heightedLines;
     }
 
     static drawTextLines(ctx,textConfig,lines,x,y,w,h){
+        // return;
         const lineHeight = textConfig.lineHeightPx; 
         const verticalAlign = textConfig?.verticalAlign??'top';
         const linesH = lineHeight * lines.length;
@@ -98,5 +82,44 @@ export default class DrawText{
         });
         ctx.restore();
         
+    }
+
+
+    static splitIntoWordBreakGroup(text,wordBreak='normal'){
+        let groups = null;
+        if(wordBreak == 'break-all'){
+            const regex = /(.)/ug;
+            groups = text.match(regex);
+        }else if(wordBreak == 'keep-all'){
+            const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F]+)/ug;
+            groups = text.match(regex);
+        }else{ // (wordBreak == 'normal')
+            const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F])/ug;
+            groups = text.match(regex);
+        }
+        console.log('groups',wordBreak,groups);
+        
+        return groups;
+    }
+
+    static wordBreakGroupToLines(ctx,wordBreakGroup,w){
+        let lines = []
+        let line = null;
+        wordBreakGroup.forEach((str,i)=>{
+            if(line === null){ line = str; return; } // null 이면 현재 문자열 넣고 다음으로.
+            if(str=='\n'){
+                lines.push(line);
+                line = null;
+            }else if(ctx.measureText(line+str).width > w){
+                lines.push(line);
+                line = str==' '?null:str; // 마지막 빈칸은 그리지 않는다.
+            }else{
+                line += str
+            }
+        })
+        if(line.length){
+            lines.push(line);
+        }
+        return lines;
     }
 }

@@ -37,6 +37,9 @@ class Context2dTextConfig extends BaseConfig{
 
     verticalAlign = "top"; //top, middle, bottom
 
+    wordBreak = 'normal'; // normal | break-all | keep-all | break-word;
+
+
     constructor(ctx=null){
         const proxyConfig = {
             number:['fontSizeNumber','lineHeightNumber','paddingNumber','letterSpacingNumber',],
@@ -140,6 +143,7 @@ class Context2dTextConfig extends BaseConfig{
         this.textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
         this.verticalAlign = "top";
+        this.wordBreak = 'normal';
     }
 
     assignTo(context){

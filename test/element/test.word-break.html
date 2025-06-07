@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>word-break normal 테스트</title>
+<style>
+  .test-box {
+    width: 300px;
+    border: 1px solid #ccc;
+    white-space: normal;
+    word-break: normal;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h2>word-break: normal 테스트</h2>
+
+<div class="test-box" id="test1">
+  Hello world!한글한글한글 한글 한글 This is a test sentence with spaces.
+</div>
+
+<div class="test-box" id="test2">
+  Hello&nbsp;world!한글한글한글 한글 한글 (Non-breaking space between words)
+</div>
+
+<div class="test-box" id="test3">
+  Hello　world!한글한글한글 한글 한글 (IDEOGRAPHIC SPACE, 전각 공백)
+</div>
+
+<div class="test-box" id="test4">
+  Hello&#13;&#10;world!한글한글한글 한글 한글 (Carriage Return + Line Feed)
+</div>
+
+<div class="test-box" id="test5">
+  Hello&#8232;world!한글한글한글 한글 한글 (Line Separator U+2028)
+</div>
+
+<div class="test-box" id="test6">
+  Hello&#9;world!한글한글한글 한글 한글 (Tab character)
+</div>
+
+<div class="test-box" id="test7">
+  Hello\u00A0world!한글한글한글 한글 한글 (Non-breaking space in Unicode)
+</div>
+
+</body>
+</html>
