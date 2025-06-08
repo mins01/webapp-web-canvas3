@@ -737,25 +737,34 @@
           </div>
           <div class="modal-body">
             <form name="form_text" action=""
-              oninput="editor?.document?.layer?.setText(this.text.value);editor?.document?.layer?.flush();"
-              onblur="editor.document.history.save('text config')"
-              data-wc-sync-form="editor.document.layer"
+                xoninput="editor?.document?.layer?.setText(this.text.value);editor?.document?.layer?.flush();"
+                xonblur="editor.document.history.save('text config')"
+                onsubmit="{
+                  const textlayer = editor?.document?.layer
+                  textlayer.setText(this.text.value);
+                  textlayer.flush();
+                  Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
+                  editor.document.history.save('change text');
+                } return false;"
+                data-wc-sync-form="editor.document.layer"
               >
               <div>
                 <div class="form-text mb-0">Text</div>
-                <textarea name="text" rows="5" class="form-control"></textarea>
+                <textarea id="form-text-text" name="text" rows="5" class="form-control" style="height: 200px;"></textarea>
               </div>
             </form>
             <hr>
             <form name="form_textConfig" class=""
-              oninput="
-              /*editor?.document?.layer?.textConfig.assignFrom(Wc.HtmlUtil.formToObject(this));*/
-              editor?.document?.layer.setTextConfig(Wc.HtmlUtil.formToObject(this));
-              editor?.document?.layer?.flush();
-              
+              oninput="{
+                  const textlayer = editor?.document?.layer
+                  textlayer.setTextConfig(Wc.HtmlUtil.formToObject(this));
+                  textlayer.flush();
+                  Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
+                  editor.document.history.save('change text');
+                }              
               " 
               onchange="this.oninput(event);"
-              onblur="editor.document.history.save('text config')"
+              onblur="editor.document.history.save('change text config')"
               data-wc-sync-form="editor.document.layer.textConfig"
               >
               <div class="div-text-config grid-minmax-260px gap-3">
@@ -927,6 +936,8 @@
 
     <script>
       document.getElementById('modal-text-config').addEventListener('show.bs.modal', event => {
+        const textlayer = editor?.document?.layer
+        Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
         editor.ready();
       })
     </script>
