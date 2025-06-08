@@ -14,7 +14,7 @@ export default class DrawText{
         let lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');
         let lineNumber = Math.floor(height/lineHeight)
         let heightedLines = lines.slice(0,0+lineNumber);
-        // console.log(lines);
+        // console.log(heightedLines);
         return heightedLines;
     }
 
@@ -105,7 +105,7 @@ export default class DrawText{
     static wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap='normal'){
         let lines = []
         let line = null;
-        console.log(overflowWrap);
+        // console.log(overflowWrap);
         const pushLines = 
             overflowWrap=='break-word'
             ?(line)=>{
@@ -129,7 +129,7 @@ export default class DrawText{
                 line += str
             }
         })
-        if(line.length){
+        if(line && line.length){
             pushLines(line)
         }
         return lines;

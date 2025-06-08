@@ -154,6 +154,29 @@ class Context2dTextConfig extends BaseConfig{
         context.fillStyle = this.textColor;
     }
 
+    exportToStyleObject(){
+        return {
+            font:this.font,
+            fontSize:this.fontSize,
+            textColor:this.textColor,
+            color:this.textColor,
+            padding:this.padding,
+            textAlign:this.textAlign,
+            lineHeight:this.lineHeight,
+            textBaseline:this.textBaseline,
+            direction:this.direction,
+            // fontKerning:this.fontKerning,
+            // fontStretch:this.fontStretch,
+            // fontVariantCaps:this.fontVariantCaps,
+            letterSpacing:this.letterSpacing,
+            textRendering:this.textRendering,
+            wordSpacing:this.wordSpacing,
+            // verticalAlign:this.verticalAlign,
+            wordBreak:this.wordBreak,
+            overflowWrap:this.overflowWrap,
+        }
+    }
+
 }
 
 
