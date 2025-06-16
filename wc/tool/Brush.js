@@ -39,8 +39,6 @@ export default class Brush extends BaseTool{
      * 활성화 : 툴이 선택 되면
      */
     activate(cb=null){        
-        console.log(this.layer.kind);
-        
         super.activate(()=>{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
                 console.warn(`Only normal layer are supported. (${this.layer.kind})`);
