@@ -1,5 +1,13 @@
 {
  "name": "web-canvas3",
+  "short_name": "wc3",
+  "description": "Web Canvas 3",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#aabbcc",
+  "background_color": "#FFFFFF",
+
  "icons": [
   {
    "src": "asset\/favicon\/android-icon-36x36.png",
