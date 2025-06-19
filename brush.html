@@ -245,7 +245,7 @@
         <div class="card-header">BRUSH PROPERTY</div>
         <div class="card-body">
           <form name="formBrushConfig" class="form-brush-config" action="" oninput="{const brush = WcHelper.getBrushCanvas(this); brush.setBrushConfig(Wc.HtmlUtil.formToObject(this)); brush.saveBrushConfig(); brush.flush();} return false" data-wc-sync-form="b1.brushConfig">
-            <div class="div-brush-config grid-minmax-260px gap-3">
+            <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
               <div>
                 <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
                 <select name="shape" class="form-select shape">
@@ -296,7 +296,7 @@
               </ul>
               <div class="mt-3">
                 <div class="brush-nav-tab" data-brush-tab="brush">
-                  <div class="div-brush-config grid-minmax-260px gap-3">
+                  <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                     <header> <h4 class="m-0">Basic brush</h4> </header>
                     <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                     <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Pen</button>
@@ -315,7 +315,7 @@
                   </div>
                 </div>
                 <div class="brush-nav-tab" data-brush-tab="config">
-                  <div class="div-brush-config grid-minmax-260px gap-3">
+                  <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                     <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
 
 

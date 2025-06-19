@@ -696,7 +696,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
+            <form name="form_new" action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
               <div class="d-flex flex-column gap-3">
                 <div>
                   <div class="input-group input-group-lg">
@@ -711,13 +711,31 @@
                 </div>
                 <hr class="my-1">
                 <div>
-                  <div class="form-label m-0">Template</div>
-                  <div class="d-flex flex-wrap gap-1 p-1">
-                    <button type="button" class="btn btn-primary" onclick="editor.newDocument(300,300);">300x300</button>
-                    <button type="button" class="btn btn-primary" onclick="editor.newDocument(600,800);">600x800</button>
-                    <button type="button" class="btn btn-primary" onclick="editor.newDocument(320,240);">320x240</button>
-                    <button type="button" class="btn btn-primary" onclick="editor.newDocument(640,480);">640x480</button>
-                    
+                  <div class="form-label m-0"><i class="bi bi-square"></i> Square</div>
+                  <div class="grid-auto-fill grid-auto-fill-80px gap-1 p-1">
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=100;this.form.height.value=100;">100x100</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=200;this.form.height.value=200;">200x200</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=300;this.form.height.value=300;">300x300</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=600;this.form.height.value=600;">600x600</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=800;this.form.height.value=800;">800x800</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="form-label m-0"><i class="bi bi-file-image"></i> Portrait</div>
+                  <div class="grid-auto-fill grid-auto-fill-80px gap-1 p-1">
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=300;this.form.height.value=400;">300x400</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=480;this.form.height.value=640;">480x640</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=600;this.form.height.value=800;">600x800</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=768;this.form.height.value=1024;">768x1024</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="form-label m-0"><i class="bi bi-card-image"></i> Landscape</div>
+                  <div class="grid-auto-fill grid-auto-fill-80px gap-1 p-1">
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=400;this.form.height.value=300;">400x300</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=640;this.form.height.value=480;">640x480</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=800;this.form.height.value=600;">800x600</button>
+                    <button type="button" class="btn btn-primary" onclick="this.form.width.value=1024;this.form.height.value=768;">1024x768</button>
                   </div>
                 </div>
                 
@@ -767,7 +785,7 @@
               onblur="editor.document.history.save('change text config')"
               data-wc-sync-form="editor.document.layer.textConfig"
               >
-              <div class="div-text-config grid-minmax-260px gap-3">
+              <div class="div-text-config grid-auto-fill grid-auto-fill-260px gap-3">
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-palette"></i> Color</div>
                   <label class="input-group" role="button" for="btn-palette-textColor">
@@ -1463,7 +1481,7 @@
           </div>
           <div class="modal-body brush-config">
             <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" onsubmit="return false">
-              <div class="div-brush-config grid-minmax-260px gap-3">
+              <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
                   <select name="shape" class="form-select shape">
@@ -1514,7 +1532,7 @@
                 </ul>
                 <div class="mt-3">
                   <div class="brush-nav-tab" data-brush-tab="brush">
-                    <div class="div-brush-config grid-minmax-260px gap-3">
+                    <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                       <header> <h4 class="m-0">Basic brush</h4> </header>
                       <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Pen</button>
@@ -1533,7 +1551,7 @@
                     </div>
                   </div>
                   <div class="brush-nav-tab" data-brush-tab="config">
-                    <div class="div-brush-config grid-minmax-260px gap-3">
+                    <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                       <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
 
 
