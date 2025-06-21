@@ -87,6 +87,9 @@ export default class Transform extends BaseTool{
     onuttmoveend(){
         this.draw()
     }
+    onuttresizeend(){
+        this.draw()
+    }
     draw(){
         const utt = this.utt;
         const document = this.document
