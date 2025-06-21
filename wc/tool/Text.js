@@ -7,6 +7,7 @@ import LayerKind from '../lib/LayerKind.js';
 export default class Text extends BaseTool{
     utt = null;
     targetLayer = null;
+    orignalSnapshot = null;
 
     constructor(editor){
         super(editor);
@@ -37,6 +38,7 @@ export default class Text extends BaseTool{
         if(disabled){ return false;}
         super.ready();
         this.targetLayer = this.document.layer;
+        this.orignalSnapshot = this.document.layer.snapshot()
         this.readyUtt();
         this.draw();
         
@@ -55,6 +57,15 @@ export default class Text extends BaseTool{
             }
             if(cb) cb();
         });
+	}
+    inactivate(cb=null){
+        super.inactivate(()=>{
+            if(this.enable){
+                this.targetLayer.import(this.orignalSnapshot); // 되돌린다.
+            }
+            if(cb) cb();
+        });
+
 	}
 
     readyUtt(){
@@ -153,6 +164,28 @@ export default class Text extends BaseTool{
     }
 
 
+
+
+    confirm(cb=null){       
+        super.confirm(()=>{
+            this.document.history.save('tool text confirm');
+            this.ready();
+            this.orignalSnapshot = this.document.layer.snapshot()
+            if(cb) cb();
+        });
+    }
+
+    cancel(cb=null){
+        super.cancel(()=>{
+            this.document.layer.import(this.orignalSnapshot);      
+            if(cb) cb();
+        });
+	}
+
+
+
+
+
     onuttmove(){
         this.draw()
     }
@@ -161,11 +194,11 @@ export default class Text extends BaseTool{
     }
     onuttmoveend(){
         this.draw()
-        this.document.history.save(`Tool.${this.constructor.name}`);
+        // this.document.history.save(`Tool.${this.constructor.name}`);
     }
     onuttresizeend(){
         this.draw()
-        this.document.history.save(`Tool.${this.constructor.name}`);
+        // this.document.history.save(`Tool.${this.constructor.name}`);
     }
 
 

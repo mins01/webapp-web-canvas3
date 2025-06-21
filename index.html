@@ -349,6 +349,17 @@
               
             </div>
           </div>
+          <div class="only-shown only-shown-tool-Text my-1">
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
+                  <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
+                </div>
+              </div>              
+            </div>
+          </div>
         </div>
       </div>
       <div id="wc-editor" class="wc-editor wc-app-body debug-box">
@@ -754,15 +765,24 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <div class="d-flex flex-wrap gap-3">
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
+                  <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
+                </div>
+              </div>
+            </div>
+            <hr>
             <form name="form_text" action=""
                 xoninput="editor?.document?.layer?.setText(this.text.value);editor?.document?.layer?.flush();"
                 xonblur="editor.document.history.save('text config')"
-                onsubmit="{
+                oninput="{
                   const textlayer = editor?.document?.layer
                   textlayer.setText(this.text.value);
                   textlayer.flush();
                   Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
-                  editor.document.history.save('change text');
                 } return false;"
                 data-wc-sync-form="editor.document.layer"
               >
@@ -778,11 +798,10 @@
                   textlayer.setTextConfig(Wc.HtmlUtil.formToObject(this));
                   textlayer.flush();
                   Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
-                  editor.document.history.save('change text');
                 }              
               " 
               onchange="this.oninput(event);"
-              onblur="editor.document.history.save('change text config')"
+              
               data-wc-sync-form="editor.document.layer.textConfig"
               >
               <div class="div-text-config grid-auto-fill grid-auto-fill-260px gap-3">
@@ -956,7 +975,7 @@
       document.getElementById('modal-text-config').addEventListener('show.bs.modal', event => {
         const textlayer = editor?.document?.layer
         Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
-        editor.ready();
+        // editor.ready();
       })
     </script>
 
@@ -1439,29 +1458,26 @@
             <div class="d-flex flex-column flex-wrap gap-3">
               
               <hr>
-              <form  class="d-flex flex-column gap-3" action=""
+              <form  class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.document.drawingLayer" >
+                <div class="input-group w-100">
+                  <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
+                  <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000" oninput="editor.document.drawingLayer.width = this.value; editor.tool.readyUtt(); editor.tool.draw();">
+                  <span class="input-group-text" >X</span>
+                  <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000" oninput="editor.document.drawingLayer.height = this.value; editor.tool.readyUtt(); editor.tool.draw();">
+                  <!-- <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button> -->
+                </div>
+                <div class="input-group">
+                  <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
+                  <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000" oninput="editor.document.drawingLayer.left = this.value; editor.tool.readyUtt(); editor.tool.draw();">
+                  <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
+                  <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000" oninput="editor.document.drawingLayer.top = this.value; editor.tool.readyUtt(); editor.tool.draw();">
+                </div>
+              </form>
               
-              data-wc-sync-form="editor.document.drawingLayer"
-              >
-              <div class="input-group w-100">
-                <span class="input-group-text justify-content-center" style="width:6em" >Size</span>
-                <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000" oninput="editor.document.drawingLayer.width = this.value; editor.tool.readyUtt(); editor.tool.draw();">
-                <span class="input-group-text" >X</span>
-                <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000" oninput="editor.document.drawingLayer.height = this.value; editor.tool.readyUtt(); editor.tool.draw();">
-                <!-- <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button> -->
-              </div>
-              <div class="input-group">
-                <span class="input-group-text justify-content-center" style="width:4em" >Left</span>
-                <input class="form-control" type="number" name="left" placeholder="left" min="-10000" max="10000" oninput="editor.document.drawingLayer.left = this.value; editor.tool.readyUtt(); editor.tool.draw();">
-                <span class="input-group-text justify-content-center" style="width:4em" >Top</span>
-                <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000" oninput="editor.document.drawingLayer.top = this.value; editor.tool.readyUtt(); editor.tool.draw();">
-              </div>
-            </form>
-            
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
 
     <div class="modal modal-xl fade" id="modal-brush-config"  aria-hidden="true">
