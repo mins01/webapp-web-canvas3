@@ -26,6 +26,7 @@
   background-color: #00000080;
 
   z-index: 5;
+  touch-action: none;
 }
 .wc-app, .wc-app * , .modals , .modals *{
   scrollbar-width: thin;
