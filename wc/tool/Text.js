@@ -77,8 +77,8 @@ export default class Text extends BaseTool{
 
         let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
         
-        this.utt.left = Math.round(leftC - targetLayer.width/2*mul);
-        this.utt.top = Math.round(topC - targetLayer.height/2*mul);
+        this.utt.left = Math.ceil(leftC - targetLayer.width/2*mul); //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
+        this.utt.top = Math.ceil(topC - targetLayer.height/2*mul);
         
         this.utt.width = targetLayer.width*mul
         this.utt.height = targetLayer.height*mul
