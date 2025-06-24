@@ -18,7 +18,7 @@ export default class DrawText{
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');    
         }
-        console.log(textConfig.whiteSpace);
+        // console.log(textConfig.whiteSpace);
         
         
         let lineNumber = Math.floor(height/lineHeight)
