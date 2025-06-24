@@ -39,7 +39,7 @@ class Context2dTextConfig extends BaseConfig{
 
     wordBreak = 'normal'; // normal | break-all | keep-all | break-word;
     overflowWrap = 'normal'; // normal | break-word;
-    whiteSpace = 'break-spaces'; // normal (자동줄바꿈+공백압축O) | nowrap(줄바꿈X+공백압축O) | pre(줄바꿈O+공백압축X) | pre-wrap(자동줄바꿈+줄바꿈O+공백압축X+끝의공백사라짐)   | pre-line(자동줄바꿈+줄바꿈O+공백압축O) | break-spaces(자동줄바꿈+줄바꿈O+공백압축X+끝의공백유지) (이게 기본)
+    whiteSpace = 'break-spaces'; // break-spaces(자동줄바꿈+줄바꿈O+공백압축X+끝의공백유지) (이게 기본) | pre(줄바꿈O+공백압축X)    |이 뒤로는 지원 안함 normal (자동줄바꿈+공백압축O) | nowrap(줄바꿈X+공백압축O) |  | pre-wrap(자동줄바꿈+줄바꿈O+공백압축X+끝의공백사라짐)   | pre-line(자동줄바꿈+줄바꿈O+공백압축O) | 
 
 
 

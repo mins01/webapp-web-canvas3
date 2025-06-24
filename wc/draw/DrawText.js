@@ -10,8 +10,17 @@ export default class DrawText{
         const lineHeight = textConfig.lineHeightPx;
         // const lines = [];
         // let chars = [...text];
-        let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
-        let lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');
+        let lines = [];
+        if(textConfig.whiteSpace=='pre'){ //자동 줄바꿈 안함!
+            lines = text.split(/\r?\n/);
+
+        }else{ //자동 줄바꿈처리.
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');    
+        }
+        console.log(textConfig.whiteSpace);
+        
+        
         let lineNumber = Math.floor(height/lineHeight)
         let heightedLines = lines.slice(0,0+lineNumber);
         // console.log(heightedLines);
