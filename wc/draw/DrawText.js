@@ -11,12 +11,36 @@ export default class DrawText{
         // const lines = [];
         // let chars = [...text];
         let lines = [];
-        if(textConfig.whiteSpace=='pre'){ //자동 줄바꿈 안함!
+        if(textConfig.whiteSpace=='nowrap'){ // 줄바꿈 금지.
+            lines = [text.replace(/\r?\n/g,'').replace(/\s+/g,' ')];
+        }else if(textConfig.whiteSpace=='pre'){ //공백과 줄바꿈 유지, 자동 줄바꿈 안함!
             lines = text.split(/\r?\n/);
 
+        }else if(textConfig.whiteSpace=='pre-wrap'){ // 공백과 줄바꿈 유지, 자동 줄바꿈 허용
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            console.log(wordBreakGroup);
+            const ignoreWhiteSpaceWidth = true; //
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);
+            console.log(lines); // 공백합치기 하자.
+            // lines = lines.filter((line,i,lines)=>{
+            //     if(i==0){return true;}
+            //     if(/^[ \t\v\f]+$/.test(line) && !/\r?\n$/.test(lines[i-1])){ // 공백으로만 되어있다면 무시된다. (앞의 줄이 공백으로 끝나야한다)
+            //         return false;
+            //     }
+            //     return true;
+            // })
+            // for(let i=1,m=lines.length;i<m;k++){// 2번째 줄 부터 앞의 공백을 제거하기
+            //     if(i>0){return}
+            //     lines[i] = lines[i].replace(/^\s+/g,'');
+            // }
+            
+            
         }else{ //자동 줄바꿈처리.
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            console.log(wordBreakGroup);
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');    
+            console.log(lines);
+
         }
         // console.log(textConfig.whiteSpace);
         
@@ -93,7 +117,17 @@ export default class DrawText{
         
     }
 
-
+    /**
+     * 주어진 텍스트를 word-break 규칙에 따라 분리된 문자열 그룹으로 나눕니다.
+     *
+     * @param {string} text - 분할할 대상 문자열입니다.
+     * @param {'normal'|'break-all'|'keep-all'|'break-word'} [wordBreak='normal'] - 텍스트 줄바꿈 기준 설정입니다.
+     *   - `'break-all'`: 모든 문자 단위로 분할합니다.
+     *   - `'keep-all'` 또는 `'break-word'`: 공백과 단어, 비ASCII 등을 기준으로 분할합니다.
+     *   - `'normal'`: 일반적인 줄바꿈 규칙에 따라 분할합니다.
+     * @param {boolean} [groupedWhiteSpace=false] - true이면 연속된 공백(스페이스, 탭 등)을 하나의 그룹으로 처리합니다.
+     * @returns {string[] | null} - 분할된 문자열 그룹 배열. 입력값이 빈 문자열이면 null이 반환될 수 있습니다.
+     */
     static splitIntoWordBreakGroup(text,wordBreak='normal'){
         let groups = null;
         if(wordBreak == 'break-all'){
@@ -102,7 +136,7 @@ export default class DrawText{
         }else if(wordBreak == 'keep-all' || wordBreak == 'break-word'){
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F]+)/ug;
             groups = text.match(regex);
-        }else{ // (wordBreak == 'normal')
+        }else{ // (wordBreak == 'normal')            
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F])/ug;
             groups = text.match(regex);
         }
@@ -111,7 +145,20 @@ export default class DrawText{
         return groups;
     }
 
-    static wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap='normal'){
+    /**
+     * 주어진 단어 그룹(wordBreakGroup)을 캔버스 컨텍스트(ctx)를 사용해 주어진 폭(width) 안에
+     * 여러 줄로 나누어 반환합니다.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 텍스트 측정을 위한 2D 캔버스 컨텍스트.
+     * @param {string[]} wordBreakGroup - 단어 또는 문자열 조각들의 배열.
+     * @param {number} width - 한 줄에 허용되는 최대 너비(픽셀).
+     * @param {'normal'|'break-word'} [overflowWrap='normal'] - 넘침 시 줄바꿈 처리 방식.
+     *   - 'normal': 넘칠 경우 줄바꿈하지 않고 한 줄 유지.
+     *   - 'break-word': 단어 단위가 아닌 문자 단위까지 쪼개어 줄바꿈함.
+     * @param {boolean} [ignoreWhiteSpaceWidth=false] - 공백 문자열에 대해서 너비 측정을 무시할지 여부.
+     * @returns {string[]} - 주어진 너비 안에 맞게 나누어진 텍스트 줄들의 배열.
+     */
+    static wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap='normal',ignoreWhiteSpaceWidth=false){
         let lines = []
         let line = null;
         // console.log(overflowWrap);
@@ -119,7 +166,7 @@ export default class DrawText{
             overflowWrap=='break-word'
             ?(line)=>{
                 const currG = this.splitIntoWordBreakGroup(line,'break-all');
-                const currLines = this.wordBreakGroupToLines(ctx,currG,width);
+                const currLines = this.wordBreakGroupToLines(ctx,currG,width,overflowWrap,ignoreWhiteSpaceWidth);
                 lines.push(...currLines);
             }
             :(line)=>{
@@ -131,6 +178,8 @@ export default class DrawText{
             if(str=='\n'){
                 pushLines(line)
                 line = null;
+            }else if(ignoreWhiteSpaceWidth && /^[ \t\v\f]+$/.test(str)){ // 전체 공백인 경우
+                line += str
             }else if(ctx.measureText(line+str).width > width){
                 pushLines(line)
                 line = str==' '?null:str; // 마지막 빈칸은 그리지 않는다.

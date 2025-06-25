@@ -135,7 +135,7 @@
         const textlayer = window.textlayer = document.querySelector('#textlayer')
         textlayer.textConfig.paddingNumber = 20;
         textlayer.textConfig.fontSizeNumber = 20;
-        textlayer.setText('ABCDXYAV\n한글은 잘 되나요? 잘 되겠죠?\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM');
+        textlayer.setText('ABCDXYAV\n한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM');
         textlayer.draw();
 
         document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
@@ -356,6 +356,9 @@
                   <!-- <option value="normal">normal (기본값)(이거 써야하나.. keep-all 이 좋을 듯)</option> -->
                   <option value="break-spaces">break-spaces (최대한 자동 줄바꿈)</option>
                   <option value="pre">pre (자동 줄바꿈 없음)</option>
+                  <option value="pre-wrap">pre-wrap (줄바꿈+자동줄바꿈+뒷공백제거)</option>
+                  <option value="nowrap">nowrap (줄바꿈금기+공백압축)</option>
+                  
                 </select>
               </div>
               <div>
