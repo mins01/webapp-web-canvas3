@@ -11,36 +11,28 @@ export default class DrawText{
         // const lines = [];
         // let chars = [...text];
         let lines = [];
-        if(textConfig.whiteSpace=='nowrap'){ // 줄바꿈 금지.
-            lines = [text.replace(/\r?\n/g,'').replace(/\s+/g,' ')];
-        }else if(textConfig.whiteSpace=='pre'){ //공백과 줄바꿈 유지, 자동 줄바꿈 안함!
+        const whiteSpace = textConfig.whiteSpace
+        if(whiteSpace=='normal'){ // 공백압축+줄바꿈금지+자동줄바꿈
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal')
+            const ignoreWhiteSpaceWidth = false; //공백도 글자처림
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth); 
+        }else if(whiteSpace=='nowrap'){ // 공백압축+줄바꿈금지
+            lines = [text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' ')];
+        }else if(whiteSpace=='pre'){ // 공백유지+줄바꿈허용+공백도글자(공백도 줄바꿈 함)
             lines = text.split(/\r?\n/);
 
-        }else if(textConfig.whiteSpace=='pre-wrap'){ // 공백과 줄바꿈 유지, 자동 줄바꿈 허용
+        }else if(whiteSpace=='pre-wrap'){ // 공백유지+줄바꿈허용+자동줄바꿈+뒷공백유지(공백은 줄바꿈 안함)
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
-            console.log(wordBreakGroup);
-            const ignoreWhiteSpaceWidth = true; //
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);
-            console.log(lines); // 공백합치기 하자.
-            // lines = lines.filter((line,i,lines)=>{
-            //     if(i==0){return true;}
-            //     if(/^[ \t\v\f]+$/.test(line) && !/\r?\n$/.test(lines[i-1])){ // 공백으로만 되어있다면 무시된다. (앞의 줄이 공백으로 끝나야한다)
-            //         return false;
-            //     }
-            //     return true;
-            // })
-            // for(let i=1,m=lines.length;i<m;k++){// 2번째 줄 부터 앞의 공백을 제거하기
-            //     if(i>0){return}
-            //     lines[i] = lines[i].replace(/^\s+/g,'');
-            // }
-            
-            
-        }else{ //자동 줄바꿈처리.
+            const ignoreWhiteSpaceWidth = true; //공백너비 체크 없음. 줄 뒤에 무조건 붙임.
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
+        }else if(whiteSpace=='pre-line'){ // 공백압축+줄바꿈허용+자동줄바꿈
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal') //공백을 압축후 처리한다.
+            const ignoreWhiteSpaceWidth = false; //공백도 글자처림
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
+        }else{  // break-spaces  // 공백유지+줄바꿈허용+자동줄바꿈+공백도글자(공백도 줄바꿈 함)
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
-            console.log(wordBreakGroup);
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal');    
-            console.log(lines);
-
+            const ignoreWhiteSpaceWidth = false; //공백도 글자처림
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }
         // console.log(textConfig.whiteSpace);
         
@@ -165,8 +157,8 @@ export default class DrawText{
         const pushLines = 
             overflowWrap=='break-word'
             ?(line)=>{
-                const currG = this.splitIntoWordBreakGroup(line,'break-all');
-                const currLines = this.wordBreakGroupToLines(ctx,currG,width,overflowWrap,ignoreWhiteSpaceWidth);
+                const currGroup = this.splitIntoWordBreakGroup(line,'break-all');
+                const currLines = this.wordBreakGroupToLines(ctx,currGroup,width,overflowWrap,ignoreWhiteSpaceWidth);
                 lines.push(...currLines);
             }
             :(line)=>{

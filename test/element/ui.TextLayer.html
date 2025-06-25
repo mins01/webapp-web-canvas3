@@ -135,7 +135,7 @@
         const textlayer = window.textlayer = document.querySelector('#textlayer')
         textlayer.textConfig.paddingNumber = 20;
         textlayer.textConfig.fontSizeNumber = 20;
-        textlayer.setText('ABCDXYAV\n한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM');
+        textlayer.setText('ABCDXYAV                                                                            \n한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM\nyyyYYYmmmmMMM');
         textlayer.draw();
 
         document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
@@ -178,7 +178,7 @@
         <div class="card-body">
           <h4 class="card-title">Text</h4>
           <div class="bg-gif d-flex justify-content-center align-items-center" >
-            <canvas id="textlayer" is="wc-textlayer" width="600" height="300" style="max-width: 100%;"></canvas>
+            <canvas id="textlayer" is="wc-textlayer" width="300" height="300" style="max-width: 100%;"></canvas>
           </div>
         </div>
       </div>
@@ -198,7 +198,8 @@
           >
             <div>
               <div class="form-label mb-0"><i class="bi bi-card-text"></i> Text</div>
-              <textarea id="form-text-text" name="text" rows="5" class="form-control" style="height: 200px;"></textarea>
+              <textarea id="form-text-text" name="text" rows="5" class="form-control mx-auto" style="height: 200px;"></textarea>
+
               <div class="text-end my-1">
                 <button class="btn btn-primary" type="submit">확인</button>
               </div>
@@ -356,8 +357,10 @@
                   <!-- <option value="normal">normal (기본값)(이거 써야하나.. keep-all 이 좋을 듯)</option> -->
                   <option value="break-spaces">break-spaces (최대한 자동 줄바꿈)</option>
                   <option value="pre">pre (자동 줄바꿈 없음)</option>
-                  <option value="pre-wrap">pre-wrap (줄바꿈+자동줄바꿈+뒷공백제거)</option>
-                  <option value="nowrap">nowrap (줄바꿈금기+공백압축)</option>
+                  <option value="pre-wrap">pre-wrap (줄바꿈+자동줄바꿈+뒷공백유지)</option>
+                  <option value="pre-line">pre-line (줄바꿈+자동줄바꿈+공백압축)</option>
+                  <option value="nowrap">nowrap (줄바꿈금지+공백압축)</option>
+                  <option value="normal">normal (줄바꿈금지+공백압축+자동줄바꿈)</option>
                   
                 </select>
               </div>

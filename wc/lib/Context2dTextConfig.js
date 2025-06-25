@@ -177,6 +177,7 @@ class Context2dTextConfig extends BaseConfig{
             // verticalAlign:this.verticalAlign,
             wordBreak:this.wordBreak,
             overflowWrap:this.overflowWrap,
+            whiteSpace:this.whiteSpace,
         }
     }
 
