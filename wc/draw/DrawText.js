@@ -56,8 +56,10 @@ export default class DrawText{
 
         let maxfontBoundingBoxAscent = 0;
         let maxFontBoundingBoxDescent = 0;
+        const textMetricsForLines = [];
         lines.forEach((line) => {
             const textMetrics = ctx.measureText(line);
+            textMetricsForLines.push(textMetrics);
             const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent ??0; //폰트의 baseline 기준 상단 높이 
             if(maxfontBoundingBoxAscent < fontBoundingBoxAscent ){ maxfontBoundingBoxAscent = fontBoundingBoxAscent ; }
             const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
@@ -100,9 +102,32 @@ export default class DrawText{
         }
         
 
+        // normal과 pre-line과 pre-wrap : 뒷 공백은 계산안함. => 즉, 글자 부분만 그려짐.
+        // pre, nowrap 는 공백도 영역을 차지한다. 하지만 center나 right로 해도 해당 너비까지만 그려지고 끝.=> left나 center나 right나 모양이 같다.
+        // break-space 는 공백도 줄바꿈이기에 이미 줄 바꿈 되어있으므로, 너비를 넘어가지 않는다. 하지만 공백도 크기를 가진다 => 즉, 해당 공백포함 너비 기준으로 정렬된다. (보통은 약간의 오차로 정렬 변경에 차이를 보임)
+        
+        // break-space 는 따로 처리하지 않는다.
+        // normal과 pre-line과 pre-wrap 는 trim 처리
+        // pre, nowrap 는 너비가 넘어가면 시작부분에서 그려지게.
 
-        lines.forEach((line) => {
-            ctx.fillText(line, x1, y1  );
+
+        const whiteSpace = textConfig.whiteSpace??'break-space';
+        lines.forEach((line,i) => {
+            const textMetrics = textMetricsForLines[i];
+            // console.log(`[${line}]`,textMetrics);
+            
+
+            
+            if(w < textMetrics.width){
+                // console.log('넘침',x);
+                const t = ctx.textAlign;
+                ctx.textAlign='left'
+                ctx.fillText(line, x, y1  );
+                ctx.textAlign=t;
+            }else{
+                ctx.fillText(line, x1, y1  );
+            }
+
             y1+=lineHeight
         });
         ctx.restore();
