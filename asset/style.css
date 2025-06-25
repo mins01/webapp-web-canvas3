@@ -290,12 +290,17 @@
   align-items: flex-end;
 }
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog .modal-content{
-  max-height: 70svh;
+  /* max-height: 70svh; */
   min-height: 50svh;
   opacity: 0.90;
 }
 .modal:where(#modal-layers,#modal-layer-config,#modal-document-config){
   /* --bs-modal-bg:rgba(255,255,255,0.8) */
+}
+@media (min-width: 768px) {
+  .modal:where(#modal-layers,#modal-layer-config,#modal-document-config) > .modal-dialog{
+    margin-right: 10px;
+  }
 }
 
 
