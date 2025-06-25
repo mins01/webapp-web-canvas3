@@ -27,7 +27,7 @@ export default class DrawText{
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }else if(whiteSpace=='pre-line'){ // 공백압축+줄바꿈허용+자동줄바꿈
             let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal') //공백을 압축후 처리한다.
-            const ignoreWhiteSpaceWidth = false; //공백도 글자처림
+            const ignoreWhiteSpaceWidth = true; //공백너비 체크 없음. 줄 뒤에 무조건 붙임. // pre-line이라서 1개의 공백까지만 유지됨
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }else{  // break-spaces  // 공백유지+줄바꿈허용+자동줄바꿈+공백도글자(공백도 줄바꿈 함)
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
