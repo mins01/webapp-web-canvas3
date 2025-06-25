@@ -3,7 +3,7 @@ export default class DrawText{
     static draw(ctx,textConfig,text,w,h,x,y){
         const padding = textConfig.paddingPx;
         let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2),h-(padding*2));
-        return this.drawTextLines(ctx,textConfig,textLines,x+padding,y+padding,w-(padding*2),h-(padding*2));
+        return this.drawTextLines(ctx,textConfig,textLines,w-(padding*2),h-(padding*2),x+padding,y+padding);
     }
 
     static textToLines(ctx,textConfig,text,width,height){
@@ -43,7 +43,7 @@ export default class DrawText{
         return heightedLines;
     }
 
-    static drawTextLines(ctx,textConfig,lines,x,y,w,h){
+    static drawTextLines(ctx,textConfig,lines,w,h,x,y){
         // return;
         const lineHeight = textConfig.lineHeightPx; 
         const verticalAlign = textConfig?.verticalAlign??'top';
@@ -121,9 +121,16 @@ export default class DrawText{
             if(w < textMetrics.width){
                 // console.log('넘침',x);
                 const t = ctx.textAlign;
-                ctx.textAlign='left'
-                ctx.fillText(line, x, y1  );
+                if(ctx.direction == 'rtl'){ //오른쪽에서 왼쪽시
+                    x1 = x+w;
+                    ctx.textAlign='right'
+                    ctx.fillText(line, x+w, y1  );
+                }else{
+                    ctx.textAlign='left'
+                    ctx.fillText(line, x, y1  );
+                }
                 ctx.textAlign=t;
+                
             }else{
                 ctx.fillText(line, x1, y1  );
             }
