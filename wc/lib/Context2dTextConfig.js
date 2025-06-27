@@ -37,8 +37,9 @@ class Context2dTextConfig extends BaseConfig{
 
     verticalAlign = "top"; //top, middle, bottom
 
-    wordBreak = 'normal'; // normal | break-all | keep-all | break-word;
-    overflowWrap = 'normal'; // normal | break-word;
+    // 최대한 자동 줄 바꿈이 되도록 설정한다.
+    wordBreak = 'break-all'; // normal | break-all | keep-all | break-word;
+    overflowWrap = 'break-word'; // normal | break-word;
     whiteSpace = 'break-spaces'; // break-spaces(자동줄바꿈+줄바꿈O+공백압축X+끝의공백유지) (이게 기본) | pre(줄바꿈O+공백압축X)    |이 뒤로는 지원 안함 normal (자동줄바꿈+공백압축O) | nowrap(줄바꿈X+공백압축O) |  | pre-wrap(자동줄바꿈+줄바꿈O+공백압축X+끝의공백사라짐)   | pre-line(자동줄바꿈+줄바꿈O+공백압축O) | 
     //whiteSpace 는 break-spaces 로 고정하자. 답이 없다.
 
@@ -146,8 +147,8 @@ class Context2dTextConfig extends BaseConfig{
         this.textRendering = "optimizeLegibility"; // auto,optimizeSpeed,optimizeLegibility,geometricPrecision
         this.wordSpacing = "0px";
         this.verticalAlign = "top";
-        this.wordBreak = 'normal';
-        this.overflowWrap = 'normal';
+        this.wordBreak = 'break-all';
+        this.overflowWrap = 'break-word';
         this.whiteSpace = 'break-spaces';
         
     }

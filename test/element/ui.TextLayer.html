@@ -136,6 +136,7 @@
         textlayer.textConfig.paddingNumber = 20;
         textlayer.textConfig.fontSizeNumber = 20;
         textlayer.setText('ABCDXYAV                                                                            \n한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?한글은 잘 되나요? 잘 되겠죠?\nyyyYYYmmmmMMM');
+        // textlayer.setText('a\nB\nC');
         textlayer.draw();
 
         document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
@@ -146,6 +147,9 @@
 
         Wc.HtmlUtil.objectToForm(textlayer,document.form_layerConfig)
         Wc.HtmlUtil.objectToForm(textlayer,document.form_text)
+        document.querySelector('#text-frame-content').textContent =  textlayer.text
+        document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
+        Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
 
         
         UiInputStepper.initDataValue()
@@ -178,7 +182,7 @@
         <div class="card-body">
           <h4 class="card-title">Text</h4>
           <div class="bg-gif d-flex justify-content-center align-items-center" >
-            <canvas id="textlayer" is="wc-textlayer" width="300" height="300" style="max-width: 100%;"></canvas>
+            <canvas id="textlayer" is="wc-textlayer" width="300" height="200" style="max-width: 100%;"></canvas>
           </div>
         </div>
       </div>
@@ -188,9 +192,10 @@
         <div class="card-body">
           <form name="form_text" action="" 
             oninput="
-              textlayer.setText(this.text.value);
-              textlayer.draw();
-              Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
+              textlayer.setText(document.querySelector('#text-frame-content').textContent);
+              textlayer.flush();
+              document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
+              Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
               " 
             onsubmit="
               this.oninput();
@@ -198,7 +203,17 @@
           >
             <div>
               <div class="form-label mb-0"><i class="bi bi-card-text"></i> Text</div>
-              <textarea id="form-text-text" name="text" rows="5" class="form-control mx-auto" style="height: 200px;"></textarea>
+              <!-- <textarea id="form-text-text" name="text" rows="5" class="form-control mx-auto" style="height: 200px;"></textarea> -->
+
+              <div class="form-control mx-auto p-0" style="height: 200px;">
+                <div class="text-frame" id="text-frame">
+                  <div class="text-frame-inner">
+                    <div class="content" id="text-frame-content" contenteditable="plaintext-only"></div>
+                  </div>
+                </div>
+              </div>
+              
+              
 
               <div class="text-end my-1">
                 <button class="btn btn-primary" type="submit">확인</button>
@@ -210,7 +225,8 @@
             oninput="
               textlayer.setTextConfig(Wc.HtmlUtil.formToObject(this));
               textlayer.flush();
-              Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
+              document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
+              Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
             " 
             onchange="this.oninput(event);">
             <div class="div-text-config grid-auto-fill grid-auto-fill-260px gap-3">

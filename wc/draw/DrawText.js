@@ -14,7 +14,6 @@ export default class DrawText{
         const whiteSpace = textConfig.whiteSpace
         if(whiteSpace=='normal'){ // 공백압축+줄바꿈금지+자동줄바꿈
             let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal')
-            console.log(wordBreakGroup);
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth); 
         }else if(whiteSpace=='nowrap'){ // 공백압축+줄바꿈금지
@@ -32,8 +31,6 @@ export default class DrawText{
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }else{  // break-spaces  // 공백유지+줄바꿈허용+자동줄바꿈+공백도글자(공백도 줄바꿈 함)
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
-            console.log(wordBreakGroup);
-            
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }
@@ -167,7 +164,7 @@ export default class DrawText{
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F])/ug;
             groups = text.match(regex);
         }
-        console.log('groups',text,wordBreak,groups);
+        // console.log('groups',wordBreak,`[${text}]`,groups);
         
         return groups;
     }
@@ -194,6 +191,8 @@ export default class DrawText{
             ?(line)=>{
                 const currGroup = this.splitIntoWordBreakGroup(line,'break-all');
                 const currLines = this.wordBreakGroupToLines(ctx,currGroup,width,'normal',ignoreWhiteSpaceWidth);
+                // console.log('currLines',currLines,'currGroup',currGroup);
+                
                 lines.push(...currLines);
             }
             :(line)=>{
@@ -201,13 +200,19 @@ export default class DrawText{
             }
         
         wordBreakGroup.forEach((str,i)=>{
-            if(line === null){ line = str; return; } // null 이면 현재 문자열 넣고 다음으로.
+            if(line === null){ 
+                if(str=='\n'){  lines.push(''); return;} // 맨 처음이 줄 바꿈이면
+                line = str;  return; 
+            } // null 이면 현재 문자열 넣고 다음으로.
+            
+            
             if(str=='\n'){
                 pushLines(line)
+                // lines.push(line);
                 line = null;
             }else if(ignoreWhiteSpaceWidth && /^[ \t\v\f]+$/.test(str)){ // 전체 공백인 경우
                 line += str
-            }else if(ctx.measureText(line+str).width > width){
+            }else if(ctx.measureText(line+str).width > width){             
                 pushLines(line)
                 line = str==' '?null:str; // 마지막 빈칸은 그리지 않는다.
             }else{

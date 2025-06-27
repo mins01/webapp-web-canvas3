@@ -408,3 +408,25 @@
 .brush-nav-container[data-brush-tab="config"] .brush-nav-tab[data-brush-tab="config"]{
   display: block;
 }
+
+
+
+.text-frame{
+  /* outline: 1px dashed #abc; */
+  width:100%;height: 100%;
+}
+.text-frame-inner{
+  width:100%;height: 100%;
+  contain: strict;
+}
+.text-frame .content{
+  width: 100%;
+  min-height: 100%;
+  height:auto;
+  white-space: break-spaces;
+
+  padding: 0px !important;
+}
+.text-frame .content:focus{
+  outline: none;
+}
