@@ -190,7 +190,7 @@ export default class DrawText{
             overflowWrap=='break-word'
             ?(line)=>{
                 const currGroup = this.splitIntoWordBreakGroup(line,'break-all');
-                const currLines = this.wordBreakGroupToLines(ctx,currGroup,width,overflowWrap,ignoreWhiteSpaceWidth);
+                const currLines = this.wordBreakGroupToLines(ctx,currGroup,width,'normal',ignoreWhiteSpaceWidth);
                 lines.push(...currLines);
             }
             :(line)=>{
