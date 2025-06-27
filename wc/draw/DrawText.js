@@ -14,6 +14,7 @@ export default class DrawText{
         const whiteSpace = textConfig.whiteSpace
         if(whiteSpace=='normal'){ // 공백압축+줄바꿈금지+자동줄바꿈
             let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal')
+            console.log(wordBreakGroup);
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth); 
         }else if(whiteSpace=='nowrap'){ // 공백압축+줄바꿈금지
@@ -31,6 +32,8 @@ export default class DrawText{
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }else{  // break-spaces  // 공백유지+줄바꿈허용+자동줄바꿈+공백도글자(공백도 줄바꿈 함)
             let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            console.log(wordBreakGroup);
+            
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }
@@ -155,7 +158,7 @@ export default class DrawText{
     static splitIntoWordBreakGroup(text,wordBreak='normal'){
         let groups = null;
         if(wordBreak == 'break-all'){
-            const regex = /(.)/ug;
+            const regex = /(.)/usg;
             groups = text.match(regex);
         }else if(wordBreak == 'keep-all' || wordBreak == 'break-word'){
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F]+)/ug;
@@ -164,7 +167,7 @@ export default class DrawText{
             const regex = /(\r?\n|[ \t\v\f]|[!-~]+|[^\x00-\x7F])/ug;
             groups = text.match(regex);
         }
-        // console.log('groups',wordBreak,groups);
+        console.log('groups',text,wordBreak,groups);
         
         return groups;
     }
