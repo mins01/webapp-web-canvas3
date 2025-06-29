@@ -432,7 +432,7 @@ export default class Editor{
     }
     newDocument(width,height){
         // 다중 document 우선 지원하지 말자.
-        if(this.document && !confirm('An image document already exists. Would you like to create a new one?')){
+        if(this.document && editor.document.history.length > 2 && !confirm('An image document already exists. Would you like to create a new one?')){
             return false;
         }
         this.closeDocument();
