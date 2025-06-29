@@ -82,9 +82,6 @@ export default class Document extends Layer{
     }
     move(index){
         return this.layers.move(index);
-        // this.flush();
-        // this?.editor?.onselectLayer(this.layer);
-        // return true;
     }
 
     setContextConfig(conf){
@@ -104,7 +101,6 @@ export default class Document extends Layer{
         }
         if(this?.drawingLayer?.textConfig){
             this.drawingLayer?.setTextConfig(conf);
-            // this.drawingLayer?.flush();
             this.drawingLayer?.draw();
         }
         this.flush();
@@ -146,8 +142,6 @@ export default class Document extends Layer{
      * @deprecated 대신 readyTool()를 하자. 
      */
     apply(){
-        // console.log(this.layer);
-        // this.layer.ctx.drawImage(this.drawingLayer, 0, 0, this.drawingLayer.width, this.drawingLayer.height);
         this.sync();
         this.syncDrawingLayer();
     }
@@ -168,43 +162,12 @@ export default class Document extends Layer{
             if(targetLayer.visibleByTool){
                 this.drawLayer(targetLayer);
             }
-            // ctx.save();
-            // ctx.globalCompositeOperation = targetLayer.compositeOperation
-            // ctx.globalAlpha = targetLayer.alpha
-            // ctx.translate(targetLayer.left, targetLayer.top)
-            // if(targetLayer.zoom !== 1){
-            //     ctx.scale(targetLayer.zoom,targetLayer.zoom); 
-            // }
-            // ctx.translate(targetLayer.width/2, targetLayer.height/2)
-            // ctx.scale(targetLayer.flipX,targetLayer.flipY);
-            // if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
-            // ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
-            // if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
-            //     ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
-            // }
-            // ctx.translate(-targetLayer.left, -targetLayer.top)
-            // ctx.restore()
-
 
             if(index == this.layers.selectedIndex){
                 const targetLayer = drawingLayer
                 if(targetLayer.visibleByTool){
                     this.drawLayer(targetLayer);
-                }
-                // ctx.save();
-                // ctx.globalCompositeOperation = targetLayer.compositeOperation
-                // ctx.globalAlpha = targetLayer.alpha
-                
-                // ctx.translate(targetLayer.left, targetLayer.top)
-                // if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
-                // ctx.translate(targetLayer.width/2, targetLayer.height/2)
-                // if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
-                // ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
-                // if(targetLayer.visible && targetLayer.visibleByTool && targetLayer.width && targetLayer.height){
-                //     ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
-                // }
-                // ctx.translate(-targetLayer.left, -targetLayer.top)
-                // ctx.restore()                
+                }    
             }
 
         })
