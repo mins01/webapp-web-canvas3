@@ -74,8 +74,8 @@ export default class Transform extends BaseTool{
 
     center(){
         super.ready();
-        const drawingLayer = this.document.drawingLayer
-        drawingLayer.postionCenterCenter();
+        // const drawingLayer = this.document.drawingLayer
+        this.targetLayer.postionCenterCenter();
         this.readyUtt();       
         this.draw();
     }
