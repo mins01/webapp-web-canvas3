@@ -3,6 +3,7 @@ import BaseTool from './BaseTool.js';
 export default class Transform extends BaseTool{
     utt = null;
     targetLayer = null;
+    orignalSnapshot = null
     constructor(editor){
         super(editor);
         this.name = 'Transform';
@@ -11,18 +12,22 @@ export default class Transform extends BaseTool{
 
     activate(){
         super.activate();
-        if(this.layer) this.layer.visibleByTool = false;
+        // if(this.layer) this.layer.visibleByTool = false;
         this.ready();
         this.draw();
     }
     inactivate(){
+        this.targetLayer.import(this.orignalSnapshot);
         super.inactivate();
-        if(this.layer) this.layer.visibleByTool = true;
+        // if(this.layer) this.layer.visibleByTool = true;
+
     }
 
     ready(){
         super.ready();
-        this.targetLayer = this.document.drawingLayer;
+        // this.targetLayer = this.document.drawingLayer;
+        this.targetLayer = this.document.layer;
+        this.orignalSnapshot = this.targetLayer.snapshot()
         this.readyUtt();
         this.draw();
         
@@ -96,6 +101,7 @@ export default class Transform extends BaseTool{
         const documentRect = this.documentRect;
         const layer = this.document.layer
         const drawingLayer = this.document.drawingLayer
+        const targetLayer = this.targetLayer
         const mul = document.zoom / drawingLayer.zoom
         const ctx = drawingLayer.ctx
 
@@ -118,23 +124,28 @@ export default class Transform extends BaseTool{
         let top =  topLC - height/2;
 
         ctx.save();
-        drawingLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
-        drawingLayer.top = Math.floor(top);
-        drawingLayer.width = Math.floor(width);
-        drawingLayer.height = Math.floor(height);
+        this.targetLayer.import(this.orignalSnapshot);
+        this.targetLayer.resize(Math.floor(width),Math.floor(height))
+        targetLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
+        targetLayer.top = Math.floor(top);
+        
 
-        ctx.drawImage(layer,0,0,drawingLayer.width,drawingLayer.height)
+        // targetLayer.width = Math.floor(width);
+        // targetLayer.height = Math.floor(height);
+
+        // ctx.drawImage(layer,0,0,targetLayer.width,targetLayer.height)
         ctx.restore();
-        drawingLayer.flush();
+        targetLayer.flush();
     }
 
     confirm(){
         super.confirm();
         const layer = this.document.layer
-        const drawingLayer = this.document.drawingLayer
-        console.log(drawingLayer.snapshot());
+        // const drawingLayer = this.document.drawingLayer
+        // console.log(drawingLayer.snapshot());
         
-        layer.import(drawingLayer.snapshot())
+        // layer.import(drawingLayer.snapshot())
+        this.orignalSnapshot = this.targetLayer.snapshot()        
         this.document.history.save();
         this.ready();
     }
