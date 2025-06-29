@@ -9,6 +9,8 @@ export default class Brush extends BaseTool{
     pointerEvent = null;
     lastPointerEvent = null;
     tmBuildUp = null;
+    targetLayer = null
+    orignalSnapshot = null
     constructor(editor){
         super(editor);
         this.name = 'Brush';
@@ -29,8 +31,9 @@ export default class Brush extends BaseTool{
         this.workingLayer.height = this.layer.height;
         // globalThis.document.body.append(this.workingLayer)
         // this.drawingLayer.ctx.drawImage(this.layer,0,0)
-        this.drawingLayer.import(this.layer.snapshot())
-        this.drawingLayer.flush();
+        this.targetLayer = this.drawingLayer;
+        this.targetLayer.import(this.layer.snapshot())
+        this.targetLayer.flush();
         
         this.stopBuildUp();
 	}
@@ -45,8 +48,8 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
-                if(this.layer) this.layer.visibleByTool = false;
             }
+            if(this.layer) this.layer.visibleByTool = false;            
             if(cb) cb();
         });
     }
@@ -54,13 +57,13 @@ export default class Brush extends BaseTool{
     inactivate(){
         super.inactivate();
         if(this.layer) this.layer.visibleByTool = true;
-        if(this.drawingLayer) this.drawingLayer.clear();
+        if(this.targetLayer) this.targetLayer.clear();
     }
 
     onpointerdown(event){
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
-        this.drawingLayer.alpha = this.layer.alpha;        
+        this.targetLayer.alpha = this.layer.alpha;        
         this.brush.ready()
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
@@ -95,7 +98,7 @@ export default class Brush extends BaseTool{
 
     mergeFromWorkingLayer(){
         const from = this.workingLayer;
-        const to = this.drawingLayer;
+        const to = this.targetLayer;
         const ctx = to.ctx;
         to.clear()
         ctx.drawImage(this.layer,0,0);
@@ -106,7 +109,7 @@ export default class Brush extends BaseTool{
         to.flush();
     }
     mergeFromDrawingLayer(){
-        const from = this.drawingLayer;
+        const from = this.targetLayer;
         const to = this.layer;
         const ctx = to.ctx;
         to.clear()
