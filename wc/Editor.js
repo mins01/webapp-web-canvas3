@@ -495,8 +495,8 @@ export default class Editor{
     }
     readyEditor(){
         this.readyLayer();
-        this?.tool?.inactivate();
-        this?.tool?.activate();
+        // this?.tool?.inactivate();
+        // this?.tool?.activate();
     }
     readyLayer(){
         console.log('editor.readyLayer()')

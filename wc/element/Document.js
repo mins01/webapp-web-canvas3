@@ -107,6 +107,7 @@ export default class Document extends Layer{
     }
 
     syncDrawingLayer(layer=null){
+        return false; // 더 이상 쓰지 말자
         if(!layer) layer = this.layer
         if(!layer) return;
         this.drawingLayer.alpha = layer.alpha;

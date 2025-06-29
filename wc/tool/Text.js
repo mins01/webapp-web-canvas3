@@ -38,7 +38,7 @@ export default class Text extends BaseTool{
         if(disabled){ return false;}
         super.ready();
         this.targetLayer = this.document.layer;
-        this.orignalSnapshot = this.document.layer.snapshot()
+        this.orignalSnapshot = this.targetLayer.snapshot()
         this.readyUtt();
         this.draw();
         
@@ -170,14 +170,14 @@ export default class Text extends BaseTool{
         super.confirm(()=>{
             this.document.history.save('tool text confirm');
             this.ready();
-            this.orignalSnapshot = this.document.layer.snapshot()
+            this.orignalSnapshot = this.targetLayer.snapshot()
             if(cb) cb();
         });
     }
 
     cancel(cb=null){
         super.cancel(()=>{
-            this.document.layer.import(this.orignalSnapshot);      
+            this.targetLayer.import(this.orignalSnapshot);      
             if(cb) cb();
         });
 	}
