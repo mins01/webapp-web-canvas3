@@ -259,6 +259,14 @@
   padding:4px;
 }
 
+.layer-kind{
+  display: none;
+}
+.layer-box[data-kind="normal"] .layer-kind[data-kind="normal"],
+.layer-box[data-kind="text"] .layer-kind[data-kind="text"]{
+  display: block;
+
+}
 
 
 

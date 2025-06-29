@@ -1100,7 +1100,11 @@
                     <button class="btn layer-box-content text-start flex-fill d-flex gap-1 align-items-center p-0 m-0" style="min-width: 0">
                       <div class="layer-box-preview">canvas</div>
                       <div class="layer-box-detail  flex-fill" style="min-width: 0;">
-                        <div>
+                        <div class="d-flex gap-1" >
+                          <div>
+                            <i class="bi bi-file-image layer-kind" data-kind="normal" ></i>
+                            <i class="bi bi-file-text layer-kind"  data-kind="text"></i>
+                          </div>
                           <div class="layer-box-detail-name text-truncate"></div>
                         </div>
                         <small class="d-flex flex-wrap gap-2 row-gap-1">
@@ -1304,9 +1308,9 @@
           <div class="modal-body">
             <form action="" onsubmit="if(this.openfile.files.length){ editor.insertLayerFromFile(this.openfile.files[0]); this.reset() }else{ alert('Select a file(image file)')}; return false;" >
               <div>
-                <div class="form-text mb-0">Insert Layer</div>
+                <div class="form-label mb-0"><i class="bi bi-file-plus"></i> Insert Layer</div>
                 <div class="d-flex gap-3">
-                  <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i> Normal Layer</button>
+                  <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-image"></i> Normal Layer</button>
                   <button type="button" class="btn btn-primary" 
                   onclick="
                   editor?.document?.layers.addLayer('TextLayer');

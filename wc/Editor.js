@@ -526,6 +526,7 @@ export default class Editor{
             const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
             layerBox.dataset.flipX = layer.flipX;
             layerBox.dataset.flipY = layer.flipY;
+            layerBox.dataset.kind = layer.kind;
 
             // label.textContent = layer.constructor.name
             name.textContent = layer.name
