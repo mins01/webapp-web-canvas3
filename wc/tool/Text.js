@@ -13,11 +13,7 @@ export default class Text extends BaseTool{
         super(editor);
         this.name = 'Text';
         this.editor = editor;
-
-        // this.x0 = null;
-        // this.y0 = null;
         this.text= null;
-
         this.utt = editor.utt;
     }
 
@@ -70,8 +66,6 @@ export default class Text extends BaseTool{
 
     readyUtt(){
         const document = this.document
-        // const documentRect = this.documentRect;
-        // const layer = this.document.layer;
         const targetLayer = this.targetLayer;
         const mul = document.zoom*targetLayer.zoom
 
@@ -89,24 +83,15 @@ export default class Text extends BaseTool{
     onpointerdown(event){
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         super.onpointerdown(event);
-        // const [x,y] = this.getXyFromEvent(event);
-        // this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
-        // this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     onpointermove(event){
         super.onpointermove(event);
-        // const [x,y] = this.getXyFromEvent(event);
-        // this.x1 = x; this.y1 = y;
-        // this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     onpointerup(event){
         super.onpointerup(event);
-        // const [x,y] = this.getXYForLayer(event);
-        // this.draw(this.x0,this.y0,this.x1,this.y1);
     }
     end(){
         if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
     }
@@ -194,11 +179,9 @@ export default class Text extends BaseTool{
     }
     onuttmoveend(){
         this.draw()
-        // this.document.history.save(`Tool.${this.constructor.name}`);
     }
     onuttresizeend(){
         this.draw()
-        // this.document.history.save(`Tool.${this.constructor.name}`);
     }
 
 

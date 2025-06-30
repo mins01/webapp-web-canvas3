@@ -35,8 +35,6 @@ export default class Transform extends BaseTool{
 
     readyUtt(){
         const document = this.document
-        // const documentRect = this.documentRect;
-        // const layer = this.document.layer;
         const targetLayer = this.targetLayer;
         const mul = document.zoom*targetLayer.zoom
 
@@ -66,15 +64,21 @@ export default class Transform extends BaseTool{
     end(){
         
     }
+
+    confirm(){
+        super.confirm();
+        const layer = this.document.layer
+        this.orignalSnapshot = this.targetLayer.snapshot()        
+        this.document.history.save(`Tool.${this.constructor.name}`);
+        this.ready();
+    }
     cancel(){
         super.cancel();
-        // this.document.history.reload();
         this.activate();
     }
 
     center(){
         super.ready();
-        // const drawingLayer = this.document.drawingLayer
         this.targetLayer.postionCenterCenter();
         this.readyUtt();       
         this.draw();
@@ -99,19 +103,14 @@ export default class Transform extends BaseTool{
         const utt = this.utt;
         const document = this.document
         const documentRect = this.documentRect;
-        const layer = this.document.layer
-        const drawingLayer = this.document.drawingLayer
         const targetLayer = this.targetLayer
-        const mul = document.zoom / drawingLayer.zoom
-        const ctx = drawingLayer.ctx
-
+        const mul = document.zoom / targetLayer.zoom
 
         let docCenterX = (documentRect.right + documentRect.left) / 2
 		let docCenterY = (documentRect.bottom + documentRect.top) / 2
 
         let leftUttC = utt.left + utt.width/2;
         let topUttC = utt.top + utt.height/2;
-        // console.log(leftUttC, utt.width/2);
 
         [leftUttC,topUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
 
@@ -123,32 +122,16 @@ export default class Transform extends BaseTool{
         let left = leftLC - width/2;
         let top =  topLC - height/2;
 
-        ctx.save();
         this.targetLayer.import(this.orignalSnapshot);
         this.targetLayer.resize(Math.floor(width),Math.floor(height))
         targetLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
         targetLayer.top = Math.floor(top);
         
 
-        // targetLayer.width = Math.floor(width);
-        // targetLayer.height = Math.floor(height);
-
-        // ctx.drawImage(layer,0,0,targetLayer.width,targetLayer.height)
-        ctx.restore();
         targetLayer.flush();
     }
 
-    confirm(){
-        super.confirm();
-        const layer = this.document.layer
-        // const drawingLayer = this.document.drawingLayer
-        // console.log(drawingLayer.snapshot());
-        
-        // layer.import(drawingLayer.snapshot())
-        this.orignalSnapshot = this.targetLayer.snapshot()        
-        this.document.history.save();
-        this.ready();
-    }
+
 
  
 }
