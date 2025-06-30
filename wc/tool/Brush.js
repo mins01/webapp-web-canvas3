@@ -27,18 +27,23 @@ export default class Brush extends BaseTool{
     ready(){
 		super.ready();
         // this.workingLayer.parent = this.drawingLayer;
+        if(!this.layer){
+            return false;
+        }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         // globalThis.document.body.append(this.workingLayer)
         // this.drawingLayer.ctx.drawImage(this.layer,0,0)
         this.targetLayer = this.document.layer;
         this.orignalSnapshot = this.targetLayer.snapshot()
-
+        
+        
         // this.targetLayer = this.drawingLayer;
         // this.targetLayer.import(this.layer.snapshot())
         // this.targetLayer.flush();
-        
         this.stopBuildUp();
+        
+        
 	}
 
     /** 
@@ -47,7 +52,7 @@ export default class Brush extends BaseTool{
     activate(cb=null){        
         super.activate(()=>{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
-                console.warn(`Only normal layer are supported. (${this.layer.kind})`);
+                console.warn(`Only normal layer are supported. (${this?.layer?.kind})`);
                 this.enable = false;
             }else{
                 this.enable = true;
