@@ -58,12 +58,6 @@ export default class Document extends Layer{
 
     select(index=null){
         return this.layers.select(index);
-        const activeLayer = this.layers.select(index);
-        if(index !== null && activeLayer){
-            this.syncDrawingLayer(activeLayer);
-            this?.editor?.onselectLayer(this.layer);
-        }
-        return activeLayer;
     }
     // active(index=null){
     //     alert('active');
@@ -128,11 +122,11 @@ export default class Document extends Layer{
 
     readyTool(){ // 툴을 사용할 준비
         this.drawingLayer.clear();
-        this.syncDrawingLayer();
+        // this.syncDrawingLayer();
         this.sync();
     }
     readyLayer(){ // 레이어 변화후 준비 처리
-        this.syncDrawingLayer();       
+        // this.syncDrawingLayer();       
     }
     
     
@@ -144,7 +138,7 @@ export default class Document extends Layer{
      */
     apply(){
         this.sync();
-        this.syncDrawingLayer();
+        // this.syncDrawingLayer();
     }
     flush(){
         this?.editor?.onchangeDocument(this);

@@ -83,16 +83,19 @@ class WcHelper{
     layer.fill('#f00')
     layer.left = 200;
     layer.top = 30;
-    layer.ctx.fillRect(10,10,10,10);
-    
+    layer.ctx.fillRect(10,10,10,10);  
 
-    document.layers.add(layer,false,true)
-    layer = document.layers.addLayer('TextLayer');
-    layer = document.layers.addLayer('TextLayer');
+    document.layers.add(layer,true)
+    layer = new Wc.TextLayer(document.width,document.height)
+    document.layers.add(layer,true)
+    layer = new Wc.TextLayer(document.width,document.height)
     layer.left = 50;
     layer.top = 50;
     layer.flush();
-    document?.layers.cloneLayer();
+    document.layers.add(layer,true)
+    layer = layer.clone();
+    document.layers.add(layer,true)
+   
     
 
     document.history.clear();

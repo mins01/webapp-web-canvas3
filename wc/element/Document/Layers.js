@@ -28,7 +28,7 @@ export default class Layers extends SelectableArray{
             this?.document?.editor?.dispatchEvent('wc.document.layers.select', {layers:this,layer:this.selected} );
         }
     }
-    addLayer(layerClass=null){
+    addLayer(layerClass=null,withoutHistory=false){
         const document = this.document
         const editor = document.editor;
         if(!layerClass) layerClass = 'Layer';
@@ -37,30 +37,29 @@ export default class Layers extends SelectableArray{
         }
         const layer = new Wc[layerClass](document.width,document.height)
 
-
-        // if(layer?.textConfig && this.document?.editor){
-        //     layer.textConfig.textColor = this.document.editor.contextConfig.foreColor;
-        // }
-
-
         if(!layer){
             throw new Error("지정된 레이어 클래스가 없습니다.");
         }
-        this.add(layer);
+        this?.document?.editor?.tool?.inactivate()
+        this.add(layer,withoutHistory);
+        this?.document?.editor?.tool?.activate()
+
         return layer;
     }
-    cloneLayer(layer=null){
+    cloneLayer(layer=null,withoutHistory=false){
         const document = this.document
         if(!layer) layer = document.layer;
         const newLayer = layer.clone();
-        this.add(newLayer);
+        this?.document?.editor?.tool?.inactivate()
+        this.add(newLayer,withoutHistory);
+        this?.document?.editor?.tool?.activate()
     }
     add(layer,withoutHistory=false){
         const document = this.document
         layer.parent = document;
         // if(!noPostionCenterCenter){ layer.postionCenterCenter(); }
-        const r = super.add(layer);       
-        document.syncDrawingLayer(layer);
+        const r = super.add(layer);
+        // document.syncDrawingLayer(layer);
         layer.flush();
         document?.editor?.onselectLayer(document.layer);
 
@@ -72,9 +71,11 @@ export default class Layers extends SelectableArray{
     }
     remove(){
         if(this.length===1){ throw new Error("Must be at least one layer."); }
+        this?.document?.editor?.tool?.inactivate()
         const document = this.document
         super.remove();
         document.flush();
+        this?.document?.editor?.tool?.activate()
         this.ready();
         this.document.history.save('Layers.remove');
         return true;
@@ -102,6 +103,8 @@ export default class Layers extends SelectableArray{
             alert('No layers available to merge.');
             return false;
         }
+        this?.document?.editor?.tool?.inactivate()
+
         const selectedIndex = this.selectedIndex
         const fromLayer = this[this.selectedIndex];
         const toLayer = this[this.selectedIndex-1];
@@ -113,6 +116,8 @@ export default class Layers extends SelectableArray{
         const document = this.document
         super.remove();
         // document.flush();
+        this?.document?.editor?.tool?.activate()
+
         this.ready();
         
         this.document.history.save('Layers.mergeDown');
