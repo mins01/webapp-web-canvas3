@@ -7,6 +7,7 @@ class EraserConfig extends BrushConfig{
     constructor(){
         const r = super();
         delete this.compositeOperation;
+        return r;
     }
     get compositeOperation(){
         return 'destination-out'; // 지우개는 이 모드로 고정!
