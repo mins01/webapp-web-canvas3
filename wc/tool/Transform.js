@@ -25,7 +25,6 @@ export default class Transform extends BaseTool{
 
     ready(){
         super.ready();
-        // this.targetLayer = this.document.drawingLayer;
         this.targetLayer = this.document.layer;
         this.orignalSnapshot = this.targetLayer.snapshot()
         this.readyUtt();

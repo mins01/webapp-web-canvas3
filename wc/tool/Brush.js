@@ -117,10 +117,6 @@ export default class Brush extends BaseTool{
 
     draw(x0,y0,x1,y1){
         super.draw(...arguments);
-        const document = this.document;
-        // const layer = this.layer;
-        // const drawingLayer = this.drawingLayer;
-        // const layer = this.drawingLayer;
         const layer = this.workingLayer;
         const ctx = layer.ctx;
         
@@ -150,16 +146,12 @@ export default class Brush extends BaseTool{
         )
         ctx.restore();
         layer.flush();
-        // drawingLayer.flush();
         this.mergeFromWorkingLayer();
     }
 
     
     drawForDown(x0,y0){
         super.draw(...arguments);
-        const document = this.document;
-        // const layer = this.layer;
-        // const drawingLayer = this.drawingLayer;
         const layer = this.workingLayer;
         const ctx = layer.ctx;
         

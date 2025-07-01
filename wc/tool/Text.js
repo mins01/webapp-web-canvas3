@@ -102,7 +102,6 @@ export default class Text extends BaseTool{
 
     commit(){
         super.commit();
-        this.layer.merge(this.drawingLayer)
         this.ready();
         this.document.history.save(`Tool.${this.constructor.name}`);
     }
