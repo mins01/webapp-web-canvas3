@@ -119,10 +119,15 @@ class WcHelper{
 
     preview.ctx.save()
     preview.clear();
+    
+    
+    
     if(isEraser){
       preview.fill('#ffffff')
-      preview.ctx.globalCompositeOperation = 'destination-out';
+      // preview.ctx.globalCompositeOperation = 'destination-out';
     }
+    preview.ctx.globalCompositeOperation = brush.brushConfig.compositeOperation
+    console.log(brush.brushConfig.compositeOperation);
 
 
     let points = this.getSShapePoints(preview.width/2, preview.height/2, (preview.width) - size - 10, preview.height - size - 10,Math.floor(preview.width / 5)/spacing)

@@ -1568,9 +1568,12 @@
                       <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Pen</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softPen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Soft Pen</button>
-
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Brush</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softBrush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Soft Brush</button>
+
+                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Eraser</button>
+                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Soft Eraser</button>
+                      
                       <hr class="my-1">
                       <header> <h4 class="m-0">Art brush</h4> </header>
                       <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));"><i class="bi bi-highlighter"></i> Highlighter</button>
@@ -1584,7 +1587,7 @@
                   <div class="brush-nav-tab" data-brush-tab="config">
                     <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                       <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
-                      <div>
+                      <div class="brush-composite-operation-wrap">
                         <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
                         <!-- compositeOperation 는 tool에서 사용된다. -->
                         <select name="compositeOperation" class="form-select">

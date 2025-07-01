@@ -6,7 +6,14 @@ class EraserConfig extends BrushConfig{
     compositeOperation = 'destination-out'; // source-over,  source-in,  source-out,  source-atop,  destination-over,  destination-in,  destination-out,  destination-atop,  lighter,  copy,  xor,  multiply,  screen,  overlay,  darken,  lighten,  color-dodge,  color-burn,  hard-light,  soft-light,  difference,  exclusion,  hue,  saturation,  color,  luminosity
     reset(){
         super.reset();
-        this.compositeOperation = 'destination-out';
+        // this.compositeOperation = 'destination-out';
+        delete this.compositeOperation;
+    }
+    get compositeOperation(){
+        return 'destination-out'; // 지우개는 이 모드로 고정!
+    }
+    set compositeOperation(v){
+        
     }
 }
 
