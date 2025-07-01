@@ -443,79 +443,59 @@
           </div>
           <div class="modal-body border-bottom">
             <h5>File</h5>
-            <div class="row g-1">
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new">
-                  <div class="fs-4"><i class="bi bi-file-earmark-plus"></i></div>
-                  <div>NEW</div>
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-open">
-                  <div class="fs-4"><i class="bi bi-folder2-open"></i></div>
-                  <div>OPEN</div>
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-download">
-                  <div class="fs-4"><i class="bi bi-file-earmark-arrow-down"></i></div>
-                  <div>DOWNLOAD</div>
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-upload">
-                  <div class="fs-4"><i class="bi bi-cloud-upload"></i></div>
-                  <div>UPLOAD</div>
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.previewDocument()">
-                  <div class="fs-4"><i class="bi bi-image"></i></div>
-                  <div>PREVIEW</div>
-                </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" onclick="editor.closeDocument()">
-                  <div class="fs-4"><i class="bi bi-x-circle"></i></div>
-                  <div>CLOSE</div>
-                </button>
-              </div>
+            <div class="d-grid gap-1 grid-columns-3">
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-new">
+                <div class="fs-4"><i class="bi bi-file-earmark-plus"></i></div>
+                <div class="text-truncate">NEW</div>
+              </button>
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-open">
+                <div class="fs-4"><i class="bi bi-folder2-open"></i></div>
+                <div class="text-truncate">OPEN</div>
+              </button>
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-download">
+                <div class="fs-4"><i class="bi bi-file-earmark-arrow-down"></i></div>
+                <div class="text-truncate">DOWNLOAD</div>
+              </button>
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-file-upload">
+                <div class="fs-4"><i class="bi bi-cloud-upload"></i></div>
+                <div class="text-truncate">UPLOAD</div>
+              </button>
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" onclick="editor.previewDocument()">
+                <div class="fs-4"><i class="bi bi-image"></i></div>
+                <div class="text-truncate">PREVIEW</div>
+              </button>
+              <button type="button" class="w-100 min-w-0 btn btn-lg btn-primary" onclick="editor.closeDocument()">
+                <div class="fs-4"><i class="bi bi-x-circle"></i></div>
+                <div class="text-truncate">CLOSE</div>
+              </button>
             </div>
-            <hr>
+          </div>
+          <div class="modal-body border-bottom">
+            <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))" data-wc-sync-form="editor.editorConfig">
+              <h5>Input mode</h5>
+              <div class="d-grid gap-1 grid-columns-4">
+                <label class=" min-w-0" role="button"><input class="btn-check" type="radio" name="inputMode" value="all" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><div class="text-truncate">ALL</div></button></label>
+                <label class=" min-w-0" role="button"><input class="btn-check" type="radio" name="inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><div class="text-truncate">pen</div></button></label>
+                <label class=" min-w-0" role="button"><input class="btn-check" type="radio" name="inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><div class="text-truncate">touch</div></button></label>
+                <label class=" min-w-0" role="button"><input class="btn-check" type="radio" name="inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><div class="text-truncate">mouse</div></button></label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-body">
             <h5>Etc</h5>
-            <div class="row g-1">
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#modal-autosave">
+            <div class="d-grid gap-1 grid-columns-4">
+                <button type="button" class="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-autosave">
                   <div class="fs-4"><i class="bi bi-robot"></i></div>
                   <div>Auto Save</div>
                 </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-warning" onclick="WcHelper.newForTest(editor)">
+                <button type="button" class="w-100 btn btn-warning" onclick="WcHelper.newForTest(editor)">
                   <div class="fs-4"><i class="bi bi-emoji-smile-upside-down"></i></div>
                   <div>For Test</div>
                 </button>
-              </div>
-              <div class="col-6">
-                <button type="button" class="w-100 btn btn-lg btn-warning" onclick="WcHelper.newForTest2(editor)">
+                <button type="button" class="w-100 btn btn-warning" onclick="WcHelper.newForTest2(editor)">
                   <div class="fs-4"><i class="bi bi-emoji-smile-upside-down"></i></div>
                   <div>For Test2</div>
                 </button>
-              </div>
-            </div>
-            
-          </div>
-          <div class="modal-body">
-            <div class="d-flex flex-column gap-3">
-              <form action="" onsubmit="return false" onchange="editor.setEditorConfig(Wc.HtmlUtil.formToObject(this))" data-wc-sync-form="editor.editorConfig">
-                <h5>Input mode</h5>
-                <div class="row g-1">
-                  <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="all" checked ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-asterisk"></i><br> ALL</button></label>
-                  <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="pen" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-pencil-square"></i><br> pen</button></label>
-                  <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="touch" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-hand-index"></i><br> touch</button></label>
-                  <label class="col-3" role="button"><input class="btn-check" type="radio" name="inputMode" value="mouse" ><button class="w-100 btn btn-outline-primary pe-none"><i class="bi bi-mouse2"></i><br> mouse</button></label>
-                </div>
-              </form>
             </div>
           </div>
         </div>

@@ -3,3 +3,11 @@
 .flex-1{
   flex:1 1 0 !important
 }
+
+.d-grid.grid-columns-2{ grid-template-columns: repeat(2 , 1fr) }
+.d-grid.grid-columns-3{ grid-template-columns: repeat(3 , 1fr) }
+.d-grid.grid-columns-4{ grid-template-columns: repeat(4 , 1fr) }
+.d-grid.grid-columns-5{ grid-template-columns: repeat(5 , 1fr) }
+.d-grid.grid-columns-6{ grid-template-columns: repeat(6 , 1fr) }
+
+.min-w-0{ min-width: 0;}
