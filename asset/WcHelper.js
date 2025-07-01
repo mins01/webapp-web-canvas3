@@ -105,7 +105,7 @@ class WcHelper{
   static syncModalBrushPreviewCanvas(f,isEraser=false){
     const modal = f.closest('.modal');
     const preview = modal.querySelector('.brush-preview-canvas');
-    const brush = modal.querySelector('canvas[is="wc-brush"]');    
+    const brush = modal.querySelector('canvas[is="wc-brush"],canvas[is="wc-eraser"]');    
     preview.width = preview.clientWidth;
     preview.height = preview.clientHeight;
 

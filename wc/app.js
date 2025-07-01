@@ -17,6 +17,7 @@ import TextLayer from "./element/TextLayer.js";
 import RectangleLayer from "./element/RectangleLayer.js";
 import EllipseLayer from "./element/EllipseLayer.js";
 import Brush from "./element/Brush.js";
+import Eraser from "./element/Eraser.js";
 
 Canvas.defineCustomElements();
 Layer.defineCustomElements();
@@ -25,6 +26,7 @@ TextLayer.defineCustomElements();
 RectangleLayer.defineCustomElements();
 EllipseLayer.defineCustomElements();
 Brush.defineCustomElements();
+Eraser.defineCustomElements();
 
 Wc.Canvas = Canvas;
 Wc.Layer = Layer;

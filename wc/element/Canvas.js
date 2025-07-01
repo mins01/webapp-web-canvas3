@@ -18,6 +18,7 @@ class Canvas extends HTMLCanvasElement{
     static defineCustomElements(name='wc-canvas'){
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
+        console.log('namenamename',name);
     }
     static getDefaultName(prefix){
         const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
