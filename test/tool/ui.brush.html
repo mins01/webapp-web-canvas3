@@ -183,7 +183,7 @@
       remainInterval = b1.drawOnLine(c1.ctx,b1.width/2,b1.height/2,c1.width-b1.width/2,c1.height-b1.height/2,{remainInterval,lastPressure:1,pressure:0})
 
       const ctx = c2.ctx;
-      c2.fill('#808080')
+      c2.fill('#ffffff')
       ctx.save();
       ctx.globalCompositeOperation = b1.brushConfig.compositeOperation;
       ctx.drawImage(c1,0,0)
@@ -207,7 +207,7 @@
     <div class="sticky-top bg-white">
       <div class="container my-3" >
         <div class="row">
-          <div class="col-6">
+          <div class="col-4">
             <div class="card my-1">
               <div class="card-header">brush</div>
               <div class="card-body" style="background-color: #fff; min-height: 200px;">
@@ -215,12 +215,22 @@
               </div>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-4">
             <div class="card my-1">
               <div class="card-header">drawOnLine</div>
               <div class="card-body" style="background-color: #eef;">
                 <div>
                   <canvas id="c1" class=" d-block mx-auto" is="wc-canvas" width="300" height="200" style="width: 100%; height: 100%;"></canvas>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card my-1">
+              <div class="card-header">draw</div>
+              <div class="card-body" style="background-color: #efe;">
+                <div>
                   <canvas id="c2" class=" d-block mx-auto" is="wc-canvas" width="300" height="200" style="width: 100%; height: 100%;"></canvas>
                 </div>
                 <div class="mt-1">
@@ -296,7 +306,7 @@
             <div class="brush-nav-container mt-3" data-brush-tab="brush">
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <button type="button" class="nav-link active" data-brush-tab="brush" onclick="WcHelper.brushNavTab(this)" >Brush</button>
+                  <button type="button" class="nav-link active" data-brush-tab="brush" onclick="WcHelper.brushNavTab(this)" >Brushes</button>
                 </li>
                 <li class="nav-item">
                   <button type="button" class="nav-link" data-brush-tab="config" onclick="WcHelper.brushNavTab(this)" >Config</button>
@@ -329,7 +339,7 @@
                   <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                     <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
                     <div class="brush-composite-operation-wrap">
-                      <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
+                      <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                       <!-- compositeOperation 는 tool에서 사용된다. -->
                       <select name="compositeOperation" class="form-select">
                         <option value="source-over">source-over</option>

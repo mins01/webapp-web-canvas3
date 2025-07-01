@@ -1555,7 +1555,7 @@
               <div class="brush-nav-container mt-3" data-brush-tab="brush">
                 <ul class="nav nav-tabs">
                   <li class="nav-item">
-                    <button type="button" class="nav-link active" data-brush-tab="brush" onclick="WcHelper.brushNavTab(this)" >Brush</button>
+                    <button type="button" class="nav-link active" data-brush-tab="brush" onclick="WcHelper.brushNavTab(this)" >Brushes</button>
                   </li>
                   <li class="nav-item">
                     <button type="button" class="nav-link" data-brush-tab="config" onclick="WcHelper.brushNavTab(this)" >Config</button>
@@ -1588,7 +1588,7 @@
                     <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                       <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
                       <div class="brush-composite-operation-wrap">
-                        <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
+                        <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                         <!-- compositeOperation 는 tool에서 사용된다. -->
                         <select name="compositeOperation" class="form-select">
                           <option value="source-over">source-over</option>
@@ -1959,7 +1959,7 @@
             </div>
           </div>
           <div class="modal-body brush-config">
-            <form name="formEraserConfig" class="form-brush-config"  data-brush-key="eraser" action="" onsubmit="return false">
+            <form name="formEraserConfig" class="form-brush-config form-eraser-config"  data-brush-key="eraser" action="" onsubmit="return false">
             </form>
           </div>
         </div>

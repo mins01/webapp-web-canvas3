@@ -418,6 +418,19 @@
 }
 
 
+.form-eraser-config .brush-composite-operation-wrap{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
 
 .text-frame{
   /* outline: 1px dashed #abc; */
