@@ -17,23 +17,22 @@ export default class Brush extends Layer{
   brushConfig = null;
   constructor(w=null,h=null){
     super(w,h);
-    this.parent = null;
-    
-    this.brushConfig = new BrushConfig();
-    this.shapeCanvas = new Canvas();
-    this.init();
-    
-    this.draw();
-    
-    
+    this.init();    
   }
   static defineCustomElements(name='wc-brush'){
     super.defineCustomElements(name);
   }
   
   init(){
-    
+    this.parent = null;
+    this.brushConfig = new BrushConfig();
+    this.shapeCanvas = new Canvas();
+    this.draw();
   }
+
+
+
+  
   ready(){
     // this.lastPressure = 0.5;
     // this.lastAzimuthAngle = 0;

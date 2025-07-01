@@ -16,18 +16,12 @@ export default class Eraser extends Brush{
   }
   constructor(w=null,h=null){
     super(w,h);
-    this.parent = null;
-    
-    this.brushConfig = new EraserConfig();
-    this.shapeCanvas = new Canvas();
-    this.init();
-    
-    this.draw();
-    
-    
   }
   
   init(){
-    
+    this.parent = null;
+    this.brushConfig = new EraserConfig();
+    this.shapeCanvas = new Canvas();
+    this.draw();
   }
 }
