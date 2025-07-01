@@ -2,6 +2,7 @@ import BaseConfig from "./BaseConfig.js"
 
 class BrushConfig extends BaseConfig{
     // 브러시 모양: Brush Tip Shape
+    compositeOperation = 'source-over'; // source-over,  source-in,  source-out,  source-atop,  destination-over,  destination-in,  destination-out,  destination-atop,  lighter,  copy,  xor,  multiply,  screen,  overlay,  darken,  lighten,  color-dodge,  color-burn,  hard-light,  soft-light,  difference,  exclusion,  hue,  saturation,  color,  luminosity
     shape = 'circle'; //원
     size = 5; //크기 px . diameter
     angle = 0; //각도 0~1
@@ -65,6 +66,7 @@ class BrushConfig extends BaseConfig{
     }
     
     reset(){
+        this.compositeOperation = 'source-over';
         // 브러시 모양: Brush Tip Shape
         this.shape = 'circle'; //원
         this.size = 5; //크기 px . diameter

@@ -142,6 +142,7 @@
           previewAndSyncForm(b1)
         })
         const c1 = globalThis.c1 =  document.querySelector('#c1');
+        const c2 = globalThis.c2 =  document.querySelector('#c2');
 
 
         // document.formContextConfig.oninput(event)
@@ -181,6 +182,12 @@
       // const pointerEvent = new PointerEvent('init',{pressure:0})
       remainInterval = b1.drawOnLine(c1.ctx,b1.width/2,b1.height/2,c1.width-b1.width/2,c1.height-b1.height/2,{remainInterval,lastPressure:1,pressure:0})
 
+      const ctx = c2.ctx;
+      c2.fill('#808080')
+      ctx.save();
+      ctx.globalCompositeOperation = b1.brushConfig.compositeOperation;
+      ctx.drawImage(c1,0,0)
+      ctx.restore();
 
       // WcHelper.drawBrushPreviewCanvas(b1,c1)
     }
@@ -213,7 +220,8 @@
               <div class="card-header">drawOnLine</div>
               <div class="card-body" style="background-color: #eef;">
                 <div>
-                  <canvas  id="c1" class=" d-block mx-auto" is="wc-canvas" width="300" height="200" style="width: 100%; height: 100%;"></canvas>
+                  <canvas id="c1" class=" d-block mx-auto" is="wc-canvas" width="300" height="200" style="width: 100%; height: 100%;"></canvas>
+                  <canvas id="c2" class=" d-block mx-auto" is="wc-canvas" width="300" height="200" style="width: 100%; height: 100%;"></canvas>
                 </div>
                 <div class="mt-1">
                   <button type="button" class="btn btn-sm btn-primary" onclick="redraw();">redraw</button>
@@ -301,9 +309,12 @@
                     <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
                     <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Pen</button>
                     <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softPen(WcHelper.getBrushCanvas(this));"><i class="bi bi-pen"></i> Soft Pen</button>
-
                     <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Brush</button>
                     <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softBrush(WcHelper.getBrushCanvas(this));"><i class="bi bi-brush"></i> Soft Brush</button>
+
+                    <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Eraser</button>
+                    <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Soft Eraser</button>
+                    
                     <hr class="my-1">
                     <header> <h4 class="m-0">Art brush</h4> </header>
                     <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));"><i class="bi bi-highlighter"></i> Highlighter</button>
@@ -317,7 +328,38 @@
                 <div class="brush-nav-tab" data-brush-tab="config">
                   <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                     <header> <h4 class="m-0">Basic shape (기본 모양)</h4> </header>
-
+                    <div class="brush-composite-operation-wrap">
+                      <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
+                      <!-- compositeOperation 는 tool에서 사용된다. -->
+                      <select name="compositeOperation" class="form-select">
+                        <option value="source-over">source-over</option>
+                        <option value="source-in">source-in</option>
+                        <option value="source-out">source-out</option>
+                        <option value="source-atop">source-atop</option>
+                        <option value="destination-over">destination-over</option>
+                        <option value="destination-in">destination-in</option>
+                        <option value="destination-out">destination-out</option>
+                        <option value="destination-atop">destination-atop</option>
+                        <option value="lighter">lighter</option>
+                        <option value="copy">copy</option>
+                        <option value="xor">xor</option>
+                        <option value="multiply">multiply</option>
+                        <option value="screen">screen</option>
+                        <option value="overlay">overlay</option>
+                        <option value="darken">darken</option>
+                        <option value="lighten">lighten</option>
+                        <option value="color-dodge">color-dodge</option>
+                        <option value="color-burn">color-burn</option>
+                        <option value="hard-light">hard-light</option>
+                        <option value="soft-light">soft-light</option>
+                        <option value="difference">difference</option>
+                        <option value="exclusion">exclusion</option>
+                        <option value="hue">hue</option>
+                        <option value="saturation">saturation</option>
+                        <option value="color">color</option>
+                        <option value="luminosity">luminosity</option>
+                      </select>
+                    </div>
 
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>

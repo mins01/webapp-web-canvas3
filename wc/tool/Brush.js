@@ -96,6 +96,7 @@ export default class Brush extends BaseTool{
         const ctx = to.ctx;
         this.targetLayer.import(this.orignalSnapshot);
         ctx.save();
+        ctx.globalCompositeOperation = this.brush.brushConfig.compositeOperation;        
         ctx.globalAlpha = from.alpha
         ctx.drawImage(from,0,0);
         ctx.restore(); 

@@ -9,6 +9,7 @@ export default class Eraser extends Brush{
         // this.y0 = null;
         this.name = 'Eraser';
         this.brush = this.editor.eraser;
+        if(this.brush) this.brush.brushConfig.compositeOperation = 'destination-out';
     }
 
     // start(){
@@ -35,18 +36,18 @@ export default class Eraser extends Brush{
     // }
 
 
-    mergeFromWorkingLayer(){
-        const from = this.workingLayer;
-        const to = this.targetLayer;
-        const ctx = to.ctx;
-        // to.clear()
-        this.targetLayer.import(this.orignalSnapshot);
-        // ctx.drawImage(this.layer,0,0);
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.save();
-        ctx.globalAlpha = from.alpha
-        ctx.drawImage(from,0,0);
-        ctx.restore(); 
-        to.flush();
-    }
+    // mergeFromWorkingLayer(){
+    //     const from = this.workingLayer;
+    //     const to = this.targetLayer;
+    //     const ctx = to.ctx;
+    //     // to.clear()
+    //     this.targetLayer.import(this.orignalSnapshot);
+    //     // ctx.drawImage(this.layer,0,0);
+    //     ctx.save();
+    //     ctx.globalCompositeOperation = 'destination-out';
+    //     ctx.globalAlpha = from.alpha
+    //     ctx.drawImage(from,0,0);
+    //     ctx.restore(); 
+    //     to.flush();
+    // }
 }
