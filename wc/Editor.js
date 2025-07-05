@@ -568,7 +568,7 @@ export default class Editor{
 
 
 
-        const templater1 = new globalThis.Templater();
+        const templater1 = new Templater();
         templater1.debug = true;
         const {defVars,preparedStr} = templater1.prepare(window.document.querySelector('#template-layer-box2').innerHTML,true);
         // console.log('templater1',templater1);
