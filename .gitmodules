@@ -10,3 +10,6 @@
 [submodule "third_party/ui-transform-tool"]
 	path = third_party/ui-transform-tool
 	url = https://github.com/mins01/ui-transform-tool.git
+[submodule "third_party/js-templater"]
+	path = third_party/js-templater
+	url = https://github.com/mins01/js-templater.git
