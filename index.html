@@ -76,6 +76,12 @@
   
   <!-- //hammer.js -->
   
+
+  <script src="third_party/js-templater/Templater.js"></script>
+  <script>
+    console.log(globalThis.Templater.toString())
+  </script>
+
   <!--  Custom Elements Polyfill. 사용자 정의 요소 폴리필. 사파리에서 is 애드리뷰트 동작안해서 -->
   <!-- https://github.com/ungap/custom-elements -->
   <script src="//unpkg.com/@ungap/custom-elements/es.js"></script>
@@ -1071,6 +1077,10 @@
             <div class="d-flex flex-column gap-3" style="max-height: max-content; height: 100%;">
               
               <div class="d-flex flex-column gap-3">
+                <!-- 
+                  @deprecated #template-layer-box  
+                  @see #template-layer-box2
+                 -->
                 <template id="template-layer-box" >
                   <div class="layer-box d-flex gap-1 align-items-center p-1" role="button">
                     <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
@@ -1099,6 +1109,52 @@
                           <div class="d-flex gap-1">
                             <div><i class="bi bi-transparency"></i></div>
                             <div class="layer-box-detail-alpha"></div>
+                          </div>
+                          <div class="d-flex gap-1 icons icons-d-none icon-flips">
+                            <div class="icon icon-flip-x"><i class="bi bi-symmetry-vertical"></i></div>
+                            <div class="icon icon-flip-y"><i class="bi bi-symmetry-horizontal"></i></div>
+                          </div>
+                        </small>
+                      </div>
+                    </button>
+                    <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config">
+                      <i class="bi bi-sliders"></i>
+                    </button>
+                  </div>
+                </template>
+                <template id="template-layer-box2" >
+                  <div class="layer-box d-flex gap-1 align-items-center p-1 {{selectedIndex == index?'active':''}}" 
+                      data-flip-x="{{layer.flipX}}" 
+                      data-flip-y="{{layer.flipY}}" 
+                      data-kind="{{layer.kind}}" 
+                      data-wc-layer-visible = "{{layer.visible}}"
+                      role="button">
+                    <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
+                      <i class="bi bi-eye on-visible"></i>
+                      <i class="bi bi-eye-slash no-visible"></i>
+                    </button>
+                    <button class="btn layer-box-content text-start flex-fill d-flex gap-1 align-items-center p-0 m-0" style="min-width: 0">
+                      <div class="layer-box-preview">canvas</div>
+                      <div class="layer-box-detail  flex-fill" style="min-width: 0;">
+                        <div class="d-flex gap-1" >
+                          <div>
+                            <i class="bi bi-file-image layer-kind" data-kind="normal" ></i>
+                            <i class="bi bi-file-text layer-kind"  data-kind="text"></i>
+                          </div>
+                          <div class="layer-box-detail-name text-truncate">{{layer?.name}}</div>
+                        </div>
+                        <small class="d-flex flex-wrap gap-2 row-gap-1">
+                          <div class="d-flex gap-1">
+                            <div><i class="bi bi-bounding-box"></i></div>
+                            <div class="layer-box-detail-size">{{layer?.width+'x'+layer?.height}}</div>
+                          </div>
+                          <div class="d-flex gap-1">
+                            <div><i class="bi bi-zoom-in"></i></div>
+                            <div class="layer-box-detail-zoom">{{Math.floor(layer?.zoom*100)+'%'}}</div>
+                          </div>
+                          <div class="d-flex gap-1">
+                            <div><i class="bi bi-transparency"></i></div>
+                            <div class="layer-box-detail-alpha">{{Math.floor(layer?.alpha*100)+'%'}}</div>
                           </div>
                           <div class="d-flex gap-1 icons icons-d-none icon-flips">
                             <div class="icon icon-flip-x"><i class="bi bi-symmetry-vertical"></i></div>

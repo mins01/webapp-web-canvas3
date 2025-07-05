@@ -500,6 +500,7 @@ export default class Editor{
     }
     readyLayer(){
         console.log('editor.readyLayer()')
+
         const document = this.document
         const modalHandler = this.modalHandler;
 
@@ -510,36 +511,75 @@ export default class Editor{
 
         // const layers = [document.drawingLayer].concat(document.layers);
         const selectedIndex = document.layers.selectedIndex;
+
+        // old
+        // document.layers.forEach((layer,index)=>{
+        //     console.log(layer.name);
+            
+        //     const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
+        //     const layerBox = layerBoxNode.querySelector('.layer-box');
+        //     const content = layerBoxNode.querySelector('.layer-box-content');
+        //     const preview = layerBoxNode.querySelector('.layer-box-preview');
+        //     const detail = layerBoxNode.querySelector('.layer-box-detail');
+        //     const eye = layerBoxNode.querySelector('.layer-box-eye');
+        //     const config = layerBoxNode.querySelector('.layer-box-config');
+
+        //     // const label = layerBoxNode.querySelector('.layer-box-detail-label');
+        //     const name = layerBoxNode.querySelector('.layer-box-detail-name');
+        //     const size = layerBoxNode.querySelector('.layer-box-detail-size');
+        //     const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
+        //     const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
+        //     layerBox.dataset.flipX = layer.flipX;
+        //     layerBox.dataset.flipY = layer.flipY;
+        //     layerBox.dataset.kind = layer.kind;
+
+        //     // label.textContent = layer.constructor.name
+        //     name.textContent = layer.name
+        //     size.textContent = layer.width+'x'+layer.height
+        //     zoom.textContent = Math.floor(layer.zoom*100)+'%'
+        //     alpha.textContent = Math.floor(layer.alpha*100)+'%'
+
+        //     if(selectedIndex == index){
+        //         layerBox.classList.add('active')
+        //     }
+        //     content.onclick = (event)=>{
+        //         layer.parent.select(index);
+        //     }
+        //     eye.onclick = (event)=>{
+        //         event.stopPropagation()
+        //         layer.visible = !layer.visible;
+        //         layer.flush();
+        //         layer?.parent?.ready();
+        //         layer?.parent?.history.save('layer.visible')
+        //     }
+        //     config.layer = layer;
+        //     config.onclick = (event)=>{
+        //         this.showModalLayerProperty(layer);
+        //     }   
+        //     layerBox.dataset.wcLayerVisible = layer.visible;
+
+        //     preview.innerHTML = '';
+        //     preview.append(layer);
+        //     layerBoxContainer.prepend(layerBox)
+
+            
+        // })
+
+
+
+
+        const templater1 = new globalThis.Templater();
+        templater1.debug = true;
+        const {defVars,preparedStr} = templater1.prepare(window.document.querySelector('#template-layer-box2').innerHTML,true);
+        // console.log('templater1',templater1);
         document.layers.forEach((layer,index)=>{
-            const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
-            const layerBox = layerBoxNode.querySelector('.layer-box');
-            const content = layerBoxNode.querySelector('.layer-box-content');
-            const preview = layerBoxNode.querySelector('.layer-box-preview');
-            const detail = layerBoxNode.querySelector('.layer-box-detail');
-            const eye = layerBoxNode.querySelector('.layer-box-eye');
-            const config = layerBoxNode.querySelector('.layer-box-config');
-
-            // const label = layerBoxNode.querySelector('.layer-box-detail-label');
-            const name = layerBoxNode.querySelector('.layer-box-detail-name');
-            const size = layerBoxNode.querySelector('.layer-box-detail-size');
-            const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
-            const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
-            layerBox.dataset.flipX = layer.flipX;
-            layerBox.dataset.flipY = layer.flipY;
-            layerBox.dataset.kind = layer.kind;
-
-            // label.textContent = layer.constructor.name
-            name.textContent = layer.name
-            size.textContent = layer.width+'x'+layer.height
-            zoom.textContent = Math.floor(layer.zoom*100)+'%'
-            alpha.textContent = Math.floor(layer.alpha*100)+'%'
-
-            if(selectedIndex == index){
-                layerBox.classList.add('active')
-            }
-            content.onclick = (event)=>{
-                layer.parent.select(index);
-            }
+            console.log(layer.name);
+            const fragment = templater1.toFragment({layer,index,selectedIndex});
+        
+            const preview = fragment.querySelector('.layer-box-preview')
+            preview.innerHTML = '';
+            preview.append(layer);
+            const eye = fragment.querySelector('.layer-box-eye');
             eye.onclick = (event)=>{
                 event.stopPropagation()
                 layer.visible = !layer.visible;
@@ -547,24 +587,27 @@ export default class Editor{
                 layer?.parent?.ready();
                 layer?.parent?.history.save('layer.visible')
             }
+            const content = fragment.querySelector('.layer-box-content');
+            content.onclick = (event)=>{
+                layer.parent.select(index);
+            }
+            const config = fragment.querySelector('.layer-box-config');
             config.layer = layer;
             config.onclick = (event)=>{
                 this.showModalLayerProperty(layer);
             }   
-            layerBox.dataset.wcLayerVisible = layer.visible;
-
-            preview.innerHTML = '';
-            preview.append(layer);
-            layerBoxContainer.prepend(layerBox)
-
             
+            layerBoxContainer.prepend(fragment);
         })
+
 
 
 
         if(this?.document?.layer){
             const layerAlpha = window.document.querySelector('#layer-alpha')
             layerAlpha.value = this?.document?.layer.alpha
+            console.log('this?.document?.layer.alpha');
+            
             UiInputStepper.syncDataValue(layerAlpha)
 
             const layerCompositeOperation = window.document.querySelector('#layer-composite-operation')
