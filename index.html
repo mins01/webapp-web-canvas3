@@ -1004,7 +1004,7 @@
             <div class="d-flex flex-column gap-3">
               <div class="d-flex justify-content-end flex-wrap gap-1">
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-primary" title="AAdd a new layer" onclick="if(!confirm('Add a new layer?')){return;} editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i></button>
+                  <button type="button" class="btn btn-primary" title="Add a new layer" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i></button>
                 <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="if(!confirm('Duplicate layer?')){return;} editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();editor?.document.ready(); "><i class="bi bi-copy"></i></button>  
                   <button type="button" class="btn btn-outline-primary" title="Add another layer" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                 </div>
