@@ -1004,20 +1004,20 @@
             <div class="d-flex flex-column gap-3">
               <div class="d-flex justify-content-end flex-wrap gap-1">
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-primary" title="Add a new layer" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i></button>
-                <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="if(!confirm('Duplicate layer?')){return;} editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();editor?.ready(); "><i class="bi bi-copy"></i></button>  
+                  <button type="button" class="btn btn-primary" title="Add a new layer" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();editor.ready();"><i class="bi bi-file-plus"></i></button>
+                <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="if(!confirm('Duplicate layer?')){return;} editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();editor.ready(); "><i class="bi bi-copy"></i></button>  
                   <button type="button" class="btn btn-outline-primary" title="Add another layer" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                 </div>
 
-                <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.ready();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
+                <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document?.history.save('layer.clear');editor.ready();"><i class="bi bi-eraser-fill"></i></button>
                 
-                <button type="button" class="btn btn-primary" title="Merge down" onclick="if(!confirm('Merge down?')){return;} editor?.document.layers.mergeDown()"><i class="bi bi-union"></i></button>
+                <button type="button" class="btn btn-primary" title="Merge down" onclick="if(!confirm('Merge down?')){return;} editor?.document.layers.mergeDown();editor.ready();"><i class="bi bi-union"></i></button>
                 
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document.layers.moveUp()"><i class="bi bi-layer-forward"></i></button>
-                  <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers.moveDown()"><i class="bi bi-layer-backward"></i></button>
+                  <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document.layers.moveUp();editor.ready();"><i class="bi bi-layer-forward"></i></button>
+                  <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers.moveDown();editor.ready();"><i class="bi bi-layer-backward"></i></button>
                 </div>
-                <button type="button" class="btn btn-danger" title="Delete layer" onclick="if(!confirm('Delete layer?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush()"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-danger" title="Delete layer" onclick="if(!confirm('Delete layer?')){return;} editor?.document?.layers.remove();editor?.document?.layer.flush();editor.ready();"><i class="bi bi-trash"></i></button>
                 
 
               </div>
