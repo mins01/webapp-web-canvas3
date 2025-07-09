@@ -12,9 +12,8 @@ export default class Layers extends SelectableArray{
     constructor(...elements) {
         super(...elements);
     }
-    ready(){ // 변경 작업호 호출하면 문서도 래디 한다.
+    ready(){
         console.log('Layers.ready()')
-        this.document.ready();
     }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){

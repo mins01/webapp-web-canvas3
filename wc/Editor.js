@@ -591,6 +591,7 @@ export default class Editor{
             const content = fragment.querySelector('.layer-box-content');
             content.onclick = (event)=>{
                 layer.parent.select(index);
+                this.ready();
             }
             const config = fragment.querySelector('.layer-box-config');
             config.layer = layer;
