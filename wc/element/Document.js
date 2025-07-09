@@ -116,7 +116,7 @@ export default class Document extends Layer{
 
     ready(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
         console.log('Document.ready()');
-        this.readyLayer();
+        // this.readyLayer();
         this?.editor?.ready();
     }
 

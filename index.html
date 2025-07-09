@@ -1005,11 +1005,11 @@
               <div class="d-flex justify-content-end flex-wrap gap-1">
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary" title="Add a new layer" onclick="editor?.document?.layers.addLayer();editor?.document?.layer.flush();"><i class="bi bi-file-plus"></i></button>
-                <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="if(!confirm('Duplicate layer?')){return;} editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();editor?.document.ready(); "><i class="bi bi-copy"></i></button>  
+                <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="if(!confirm('Duplicate layer?')){return;} editor?.document?.layers.cloneLayer();editor?.document?.layer.flush();editor?.ready(); "><i class="bi bi-copy"></i></button>  
                   <button type="button" class="btn btn-outline-primary" title="Add another layer" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                 </div>
 
-                <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.document.ready();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
+                <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.layer.flush();editor?.ready();editor?.document?.history.save('layer.clear')"><i class="bi bi-eraser-fill"></i></button>
                 
                 <button type="button" class="btn btn-primary" title="Merge down" onclick="if(!confirm('Merge down?')){return;} editor?.document.layers.mergeDown()"><i class="bi bi-union"></i></button>
                 
@@ -1025,7 +1025,7 @@
                 <div class="col">
                   <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                   <select name="compositeOperation" id="layer-composite-operation" class="form-select"
-                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
+                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready()}"
                     x-data-wc-sync-from="editor.document.layer.compositeOperation"
                     >
                     <option value="source-over">source-over</option>
@@ -1060,7 +1060,7 @@
                   <div class="form-label mb-0"><i class="bi bi-transparency"></i> alpha</div>
                   <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
                     <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
-                      oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.document.layers.ready()}"
+                      oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.ready()}"
                       x-data-wc-sync-from="editor.document.layer.alpha"
                       >
                   </div>
@@ -1240,7 +1240,7 @@
                   const layer = editor.temp.selectedLayer
                   layer.resize(this.width.value,this.height.value);
                   layer.flush();
-                  editor.document.layers.ready();
+                  editor.ready();
                   editor.document.history.save();
                 } return false"
                 data-wc-sync-form="editor.temp.selectedLayer"
@@ -1261,10 +1261,10 @@
                   const layer = this.closest('.modal')?.layer
                   layer.zoom=parseFloat(this.zoom.value);
                   layer.flush();
-                  editor.document.layers.ready();
+                  editor.ready();
                 }"
                 onchange="this.oninput(event); editor.document.history.save(); return false;"
-                oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.document.layers.ready(); }"
+                oninput="if(editor.temp?.selectedLayer){ const layer = editor.temp.selectedLayer; Object.assign(layer,Wc.HtmlUtil.formToObject(this));layer.flush();editor.ready(); }"
                 data-wc-sync-form="editor.temp.selectedLayer"
                 >
                 <div>
@@ -1398,7 +1398,7 @@
                 if(editor?.document){
                   editor.document.resize(this.width.value,this.height.value);
                   editor.document.flush();
-                  editor.document.layers.ready();
+                  editor.ready();
                   // editor.document.history.save();
                 } return false"
                 data-wc-sync-form="editor.document"

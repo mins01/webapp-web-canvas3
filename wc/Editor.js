@@ -491,13 +491,14 @@ export default class Editor{
 
     ready(){
         console.log('editor.ready()');
-        this.readyEditor();    
-    }
-    readyEditor(){
+        // this.readyEditor();    
+        this.tool?.ready();
         this.readyLayer();
         // this?.tool?.inactivate();
-        // this?.tool?.activate();
     }
+    // readyEditor(){
+    //     // this?.tool?.activate();
+    // }
     readyLayer(){
         console.log('editor.readyLayer()')
 
