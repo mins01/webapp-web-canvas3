@@ -500,8 +500,10 @@ export default class Editor{
 
     
     // 레이어 정보를 UI 다시 그린다.
+    layerBoxWraps = null;
     syncLayers(){
         console.log('Editor.syncLayers()')
+        if(!this.layerBoxWraps) this.layerBoxWraps=[];
 
         const document = this.document
         const modalHandler = this.modalHandler;
@@ -574,9 +576,25 @@ export default class Editor{
         templater1.debug = true;
         const {defVars,preparedStr} = templater1.prepare(window.document.querySelector('#template-layer-box2').innerHTML,true);
         // console.log('templater1',templater1);
+        this.layerBoxWraps.forEach((el)=>{el.innerHTML=''});
         document.layers.forEach((layer,index)=>{
-            console.log('dom: '+layer.name);
-            const fragment = templater1.toFragment({layer,index,selectedIndex});
+            let layerBoxWrap = null;
+            if(this.layerBoxWraps.length > index){
+                layerBoxWrap = this.layerBoxWraps[index];
+            }else{
+                layerBoxWrap = window.document.createElement('div');
+                this.layerBoxWraps.push(layerBoxWrap);
+            }
+            const id = `layer-box-wrap-${index}`;
+            layerBoxWrap.id = id;
+
+            console.log('dom: '+id);
+            
+
+            const html = templater1.interpolate({layer,index,selectedIndex});
+            const fragment = layerBoxWrap;
+            fragment.innerHTML = html;
+            // const fragment = templater1.toFragment({layer,index,selectedIndex});
         
             const preview = fragment.querySelector('.layer-box-preview')
             preview.innerHTML = '';
