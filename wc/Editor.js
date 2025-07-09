@@ -489,16 +489,16 @@ export default class Editor{
 
 
 
+    // 레이어 등의 변경시 다시 준비시킨다.
+    // ready안에서 flush 하지 마라! flush 는 ready 전에 실행해라.
     ready(){
         console.log('editor.ready()');
-        // this.readyEditor();    
-        this.tool?.ready();
+        this.document.ready();
+        this.tool?.ready(); // 툴의 동작을 다시 준비.
         this.readyLayer();
-        // this?.tool?.inactivate();
     }
-    // readyEditor(){
-    //     // this?.tool?.activate();
-    // }
+
+    
     readyLayer(){
         console.log('editor.readyLayer()')
 

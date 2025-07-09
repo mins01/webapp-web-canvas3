@@ -114,16 +114,9 @@ export default class Document extends Layer{
     }
 
 
-    ready(){ // 문서를 사용할 준비. 레이어의 순서 등이 바뀌면.
+    ready(){
         console.log('Document.ready()');
-        // this.readyLayer();
-        // this?.editor?.ready();
-    }
-
-    
-    // @deprecated
-    readyLayer(){ // 레이어 변화후 준비 처리
-        // this.syncDrawingLayer();       
+        // ready 할 동작이 있다면 이곳에 적자.
     }
     
     flush(){
@@ -131,6 +124,7 @@ export default class Document extends Layer{
         super.flush();
     }
     draw(){
+        console.log('Document.draw()');
         const ctx = this.ctx;
         const drawingLayer = this.drawingLayer;
         ctx.save();
