@@ -120,29 +120,12 @@ export default class Document extends Layer{
         // this?.editor?.ready();
     }
 
-    // @deprecated
-    readyTool(){ // 툴을 사용할 준비
-        // this.drawingLayer.clear();
-        // // this.syncDrawingLayer();
-        // this.sync();
-    }
     
     // @deprecated
     readyLayer(){ // 레이어 변화후 준비 처리
         // this.syncDrawingLayer();       
     }
     
-    
-
-    
-    /** Description placeholder
-     * 
-     * @deprecated 대신 readyTool()를 하자. 
-     */
-    apply(){
-        this.sync();
-        // this.syncDrawingLayer();
-    }
     flush(){
         this?.editor?.onchangeDocument(this);
         super.flush();

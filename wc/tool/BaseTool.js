@@ -96,7 +96,6 @@ export default class BaseTool {
 		this.x1 = null;
 		this.y1 = null;
 		this.documentRect = this?.document?.getBoundingClientRect(); // 캐싱용 위치 정보. 매번 불리면 느려진다.
-		this?.document?.readyTool()
 	}
 
 
