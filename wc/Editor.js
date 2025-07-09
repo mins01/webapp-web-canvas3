@@ -585,8 +585,9 @@ export default class Editor{
                 event.stopPropagation()
                 layer.visible = !layer.visible;
                 layer.flush();
-                layer?.parent?.ready();
+                // layer?.parent?.ready();
                 layer?.parent?.history.save('layer.visible')
+                this.ready();
             }
             const content = fragment.querySelector('.layer-box-content');
             content.onclick = (event)=>{
