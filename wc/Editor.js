@@ -492,15 +492,16 @@ export default class Editor{
     // 레이어 등의 변경시 다시 준비시킨다.
     // ready안에서 flush 하지 마라! flush 는 ready 전에 실행해라.
     ready(){
-        console.log('editor.ready()');
+        console.log('Editor.ready()');
         this.document.ready();
         this.tool?.ready(); // 툴의 동작을 다시 준비.
-        this.readyLayer();
+        this.syncLayers();
     }
 
     
-    readyLayer(){
-        console.log('editor.readyLayer()')
+    // 레이어 정보를 UI 다시 그린다.
+    syncLayers(){
+        console.log('Editor.syncLayers()')
 
         const document = this.document
         const modalHandler = this.modalHandler;
@@ -574,7 +575,7 @@ export default class Editor{
         const {defVars,preparedStr} = templater1.prepare(window.document.querySelector('#template-layer-box2').innerHTML,true);
         // console.log('templater1',templater1);
         document.layers.forEach((layer,index)=>{
-            console.log(layer.name);
+            console.log('dom: '+layer.name);
             const fragment = templater1.toFragment({layer,index,selectedIndex});
         
             const preview = fragment.querySelector('.layer-box-preview')
@@ -605,14 +606,11 @@ export default class Editor{
 
 
 
-
+        // 현재 레이어의 alpha와 composite
         if(this?.document?.layer){
             const layerAlpha = window.document.querySelector('#layer-alpha')
             layerAlpha.value = this?.document?.layer.alpha
-            console.log('this?.document?.layer.alpha');
-            
             UiInputStepper.syncDataValue(layerAlpha)
-
             const layerCompositeOperation = window.document.querySelector('#layer-composite-operation')
             layerCompositeOperation.value = this?.document?.layer.compositeOperation
             UiInputStepper.syncDataValue(layerCompositeOperation)
