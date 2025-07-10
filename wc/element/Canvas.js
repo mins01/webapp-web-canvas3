@@ -182,9 +182,14 @@ class Canvas extends HTMLCanvasElement{
         return this.export();
     }
 
-    async toWithContent(contentType='dataurl'){
+    async exportWithContent(contentType='dataurl'){
         const obj = this;
-        const r = {...obj}
+        // const r = {...obj}
+        const r = obj.toObject()
+        for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다.
+            if(r[k]?.exportWithContent){r[k] = await r[k].exportWithContent(contentType)}
+        }
+
         r.exportVersion = '20250710';
         r.__class__ = obj.constructor.name;
         r.__content_type__ = contentType;
@@ -192,13 +197,19 @@ class Canvas extends HTMLCanvasElement{
         else if(contentType=='snapshot'){ r.__content__ = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height); }
         else if(contentType=='file'){
             // obj.toBlob((blob)=>{ console.log('obj.toBlob');r.__content__ = new File([blob],`${obj.id}.png`,{ type: blob.type, lastModified: Date.now() }) },'image/png'); //비동기라서 밑에 프로미스로
-            r.__content__ = await new Promise(resolve => {
-                obj.toBlob(blob => { const file = new File([blob], `${obj.id}.png`, { type: blob.type, lastModified: Date.now() }); resolve(file); }, 'image/png');
-                console.log('obj.toBlob');
+            r.__content__ = await new Promise((resolve,reject) => {
+                try{
+                    super.toBlob(blob => { console.log('obj.toBlob'); const file = new File([blob], `${obj.id}.png`, { type: blob.type, lastModified: Date.now() }); resolve(file); }, 'image/png');
+                }catch(e){
+                    reject(e)
+                }
+                
             });
         }
         return r;
     }
+
+
 
     export(){
         return this.constructor.export(this);
@@ -291,7 +302,7 @@ class Canvas extends HTMLCanvasElement{
 
     toBlobAsync(type = 'image/png', quality = 1.0) {
         return new Promise((resolve, reject) => {
-            this.toBlob(blob => {
+            super.toBlob(blob => {
                 if (blob) { resolve(blob); } 
                 else { reject(new Error('Error toBlob')); }
             }, type, quality);

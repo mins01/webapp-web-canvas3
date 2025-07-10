@@ -196,7 +196,9 @@ export default class Document extends Layer{
         });
     }
 
-    toBlobAsync(type = 'image/png', quality = 1.0){
+
+
+    toBlob(type = 'image/png', quality = 1.0){
         if(type==='wc3.json' || type=== 'application/json'){
             return this.toBlobJsonAsync(...arguments);
         }else{
@@ -205,7 +207,19 @@ export default class Document extends Layer{
         return null;
     }
 
-
+    async exportWithContentSplitFiles(){
+        const r = await this.exportWithContent('file');
+        console.log(r);
+        // 파일 뽑기
+        const files = []
+        files.push(r.__content__);
+        r.__content__ = r.__content__.name;
+        r.layers.elements.forEach((layer)=>{
+            files.push(layer.__content__);
+            layer.__content__ = layer.__content__.name;
+        })
+        return {export:r,files};
+    }
 
 
 
