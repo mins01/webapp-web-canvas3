@@ -182,6 +182,20 @@ class Canvas extends HTMLCanvasElement{
         return this.export();
     }
 
+    async toWithContent(contentType='dataurl'){
+        const obj = this;
+        const r = {...obj}
+        r.exportVersion = '20250710';
+        r.__class__ = obj.constructor.name;
+        r.__content_type__ = contentType;
+        if(contentType=='dataurl'){ r.__content__ = obj.toDataURL('image/png'); }
+        else if(contentType=='snapshot'){ r.__content__ = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height); }
+        else if(contentType=='file'){
+            obj.toBlob((blob)=>{ r.__content__ = new File([blob],`${obj.id}.png`,{ type: blob.type, lastModified: Date.now() }) },'image/png');
+        }
+        return r;
+    }
+
     export(){
         return this.constructor.export(this);
     }
