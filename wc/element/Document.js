@@ -124,7 +124,7 @@ export default class Document extends Layer{
         super.flush();
     }
     draw(){
-        console.log('Document.draw()');
+        // console.log('Document.draw()'); //너무 많이 나온다.
         const ctx = this.ctx;
         const drawingLayer = this.drawingLayer;
         ctx.save();
