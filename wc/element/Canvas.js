@@ -181,6 +181,10 @@ class Canvas extends HTMLCanvasElement{
     toJSON(){
         return this.export();
     }
+
+    export(){
+        return this.constructor.export(this);
+    }
     static export(obj){
         const r = obj.toObject();
         r.exportVersion = '20250115';
@@ -188,6 +192,20 @@ class Canvas extends HTMLCanvasElement{
         r.dataUrl = obj.toDataURL('image/png')
         return r;
     }
+
+    // 우선 쓰지말자. export 를 좀 더 개선후 보자.
+    // async exportWithFile(){
+    //     return await this.constructor.exportWithFile(this);
+    // }
+    // // dataUrl 대신 파일 객체로
+    // static async exportWithFile(obj){
+    //     const r = obj.toObject();
+    //     r.exportVersion = '20250710';
+    //     r.__class__ = obj.constructor.name;
+    //     await obj.toBlob((blob)=>{ r.__file__ = new File([blob],`${obj.id}.png`,{ type: blob.type, lastModified: Date.now() }) },'image/png');
+    //     return r;
+    // }
+    
     snapshot(){
         return this.constructor.snapshot(this);
     }
@@ -202,9 +220,7 @@ class Canvas extends HTMLCanvasElement{
         r.imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
         return r;
     }
-    export(){
-        return this.constructor.export(this);
-    }
+
 
     // async 비동기로 하지 말자. dataUrl이 있는 경우는 wc3.json으로 저장했을 때 뿐이다. 즉, 그 때 빼고는 전부 동기로 가능하다.
     static import(obj,conf){
