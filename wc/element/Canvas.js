@@ -182,12 +182,12 @@ class Canvas extends HTMLCanvasElement{
         return this.exportWithDataUrl();
     }
 
-    async exportWithContent(contentType='dataurl'){
+    async export(contentType='dataurl'){
         const obj = this;
         // const r = {...obj}
         const r = obj.toObject()
         for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다.
-            if(r[k]?.exportWithContent){r[k] = await r[k].exportWithContent(contentType)}
+            if(r[k]?.export){r[k] = await r[k].export(contentType)}
         }
 
         r.exportVersion = '20250710';

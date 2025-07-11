@@ -186,4 +186,29 @@ class WcHelper{
    container.dataset.brushTab = navTab.dataset.brushTab
    
   }
+
+
+
+  // document.to
+  static filesFromExportedData(exportedData){
+      // const r = await this.export('file');
+      const r = exportedData;
+      console.log(r);
+      // 파일 뽑기
+      const files = []
+      files.push(r.__content__);
+      r.__content__ = r.__content__.name;
+      r.layers.elements.forEach((layer)=>{
+          files.push(layer.__content__);
+          layer.__content__ = layer.__content__.name;
+      })
+      return files;
+  }
+
+
+
+
+
+
+
 }

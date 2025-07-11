@@ -207,19 +207,7 @@ export default class Document extends Layer{
         return null;
     }
 
-    async exportWithContentSplitFiles(){
-        const r = await this.exportWithContent('file');
-        console.log(r);
-        // 파일 뽑기
-        const files = []
-        files.push(r.__content__);
-        r.__content__ = r.__content__.name;
-        r.layers.elements.forEach((layer)=>{
-            files.push(layer.__content__);
-            layer.__content__ = layer.__content__.name;
-        })
-        return {export:r,files};
-    }
+
 
 
 

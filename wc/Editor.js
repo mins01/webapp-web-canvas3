@@ -317,23 +317,20 @@ export default class Editor{
         }
         if(mimetype){
             if(type==='wc3.zip'){
-                this.document.exportWithContentSplitFiles().then(async (r)=>{
-                    // r.export; //객체
-                    // r.files; // 파일들
-                    // console.log(r.export);
-                    
+                this.document.export('file').then(async (exportedData)=>{
+                    const files = WcHelper.filesFromExportedData(exportedData);
+
                     const zip = new globalThis.JSZip();
-                    zip.file("wc3.json", JSON.stringify(r.export,null,2));
+                    zip.file("wc3.json", JSON.stringify(exportedData,null,2));
                     const folder = zip.folder("files"); // 'files/' 폴더 생성
-                    r.files.forEach(file=>{
+                    files.forEach(file=>{
                         folder.file(file.name, file);       // File 객체를 해당 폴더에 추가
                     })
-
+                    
                     const blob = await zip.generateAsync({ type: "blob" });
                     HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
                     this.autoSave.autoSave();
-
-                });
+                })
             }else{
                 this.document.toBlobAsync(mimetype,quality).then((blob)=>{ 
                     HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);

@@ -164,12 +164,12 @@ export default class Layers extends SelectableArray{
         }
     }
 
-    async exportWithContent(contentType='dataurl'){
+    async export(contentType='dataurl'){
         let elements = null;
         // if(!withoutElements){
             elements = []
             this.forEach(async element=>{
-                elements.push(await element.exportWithContent(contentType));
+                elements.push(await element.export(contentType));
             })
         // }
         return {
