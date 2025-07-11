@@ -32,7 +32,7 @@ export default class AutoSave{
     const updatedAt = this?.editor?.document?.updatedAt
     if(!updatedAt){return false;}    
     localStorage.setItem('wc-auto-save-document-updated-at',updatedAt)
-    localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.export()))
+    localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.exportWithDataUrl()))
     console.log('AutoSave.save()',updatedAt);
   }
   clear(){

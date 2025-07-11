@@ -157,7 +157,7 @@ class Canvas extends HTMLCanvasElement{
     clone(){
         const newCanvas = new this.constructor(this.width,this.height);
         newCanvas.import(this.snapshot())
-        // newCanvas.import(this.export())
+        // newCanvas.import(this.exportWithDataUrl())
         // newCanvas.ctx.drawImage(this,0,0)
         newCanvas.name = newCanvas.name.substr(0,40)+' cloned'
         return newCanvas;
@@ -179,7 +179,7 @@ class Canvas extends HTMLCanvasElement{
         return r;
     }
     toJSON(){
-        return this.export();
+        return this.exportWithDataUrl();
     }
 
     async exportWithContent(contentType='dataurl'){
@@ -211,10 +211,10 @@ class Canvas extends HTMLCanvasElement{
 
 
 
-    export(){
-        return this.constructor.export(this);
+    exportWithDataUrl(){
+        return this.constructor.exportWithDataUrl(this);
     }
-    static export(obj){
+    static exportWithDataUrl(obj){
         const r = obj.toObject();
         r.exportVersion = '20250115';
         r.__class__ = obj.constructor.name;

@@ -182,8 +182,8 @@ export default class Document extends Layer{
     }
 
     toBlobJson(callback, type = 'image/png', quality = 1.0){
-        // const blob = new Blob([JSON.stringify(this.export(),null,4)],{ type })
-        const blob = new Blob([JSON.stringify(this,null,4)],{ type })
+        const blob = new Blob([JSON.stringify(this.exportWithDataUrl(),null,4)],{ type })
+        // const blob = new Blob([JSON.stringify(this,null,4)],{ type })
         callback(blob);
     }
 
