@@ -262,10 +262,22 @@ class Canvas extends HTMLCanvasElement{
             obj[k] = conf[k];
         })
 
-        if(conf?.imageData !== undefined){
+        if(conf?.__content_type__){
+            if(conf.__content_type__==='dataurl'){
+                HtmlUtil.loadImageUrl(conf.__content__).then((img)=>{
+                    obj.ctx.drawImage(img,0,0);
+                    obj.flush();
+                }).catch((event)=>{
+                    console.log(event)
+                })
+            }else if(conf.__content_type__==='snapshot'){
+                obj.ctx.putImageData(conf?.__content__, 0, 0);
+                obj.flush();
+            }
+        }else if(conf?.imageData !== undefined){ // @deprecated
             obj.ctx.putImageData(conf?.imageData, 0, 0);
             obj.flush();
-        }else if(conf?.dataUrl !== undefined){
+        }else if(conf?.dataUrl !== undefined){ // @deprecated
             HtmlUtil.loadImageUrl(conf.dataUrl).then((img)=>{
                 obj.ctx.drawImage(img,0,0);
                 obj.flush();
