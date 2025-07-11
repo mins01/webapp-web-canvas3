@@ -147,9 +147,9 @@ export default class Layers extends SelectableArray{
         if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
         this.ready();
     }
-    export(){
-        return this.toJSON();
-    }
+    // export(){
+    //     return this.toJSON();
+    // }
     snapshot(withoutElements=false){
         let elements = null;
         if(!withoutElements){
@@ -176,8 +176,5 @@ export default class Layers extends SelectableArray{
             selectedIndex:this.selectedIndex,
             elements:elements,
         }
-    }
-
-
-    
+    }    
 }

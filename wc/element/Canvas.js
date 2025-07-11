@@ -300,9 +300,50 @@ class Canvas extends HTMLCanvasElement{
 
 
 
+    /**
+     * Description placeholder
+     *
+     * @param {Function} callback 
+     * @param {string} type 
+     * @param {any} quality 
+     */
+    toBlob(callback, type = 'image/png', quality = 1.0){
+        if(type==='wc3.json' || type=== 'application/json'){
+            this.export('dataurl').then((exportedData)=>{
+               const blob = new Blob([JSON.stringify(exportedData,null,4)],{ type })
+               callback(blob);
+            });
+        }else if(type==='wc3.zip' || type=== 'application/zip'){
+            this.export('file').then(async (exportedData)=>{
+                const files = WcHelper.filesFromExportedData(exportedData);
+                if(!globalThis?.JSZip) throw new Error("Required JSZip.");
+                
+                const zip = new globalThis.JSZip();
+                zip.file("wc3.json", JSON.stringify(exportedData,null,2));
+                const folder = zip.folder("files"); // 'files/' 폴더 생성
+                files.forEach(file=>{
+                    folder.file(file.name, file);       // File 객체를 해당 폴더에 추가
+                })
+
+                zip.generateAsync({ type: "blob" }).then((blob)=>{
+                    callback(blob);
+                });
+                    
+            })
+        }else{
+            super.toBlob(...arguments)
+        }
+    }
+
+
+
+
+
+
+
     toBlobAsync(type = 'image/png', quality = 1.0) {
         return new Promise((resolve, reject) => {
-            super.toBlob(blob => {
+            this.toBlob(blob => {
                 if (blob) { resolve(blob); } 
                 else { reject(new Error('Error toBlob')); }
             }, type, quality);

@@ -198,10 +198,12 @@ class WcHelper{
       const files = []
       files.push(r.__content__);
       r.__content__ = r.__content__.name;
-      r.layers.elements.forEach((layer)=>{
-          files.push(layer.__content__);
-          layer.__content__ = layer.__content__.name;
-      })
+      if(r?.layers){
+        r.layers.elements.forEach((layer)=>{
+            files.push(layer.__content__);
+            layer.__content__ = layer.__content__.name;
+        })
+      }
       return files;
   }
 

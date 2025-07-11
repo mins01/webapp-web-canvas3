@@ -166,49 +166,20 @@ export default class Document extends Layer{
 
 
 
-    /**
-     * Description placeholder
-     *
-     * @param {Function} callback 
-     * @param {string} type 
-     * @param {any} quality 
-     */
-    toBlob(callback, type = 'image/png', quality = 1.0){
-        if(type==='wc3.json' || type=== 'application/json'){
-            this.toBlobJson(callback, type, quality);
-        }else{
-            super.toBlob(...arguments)
-        }
-    }
+    // toBlobJson(callback, type = 'image/png', quality = 1.0){
+    //     const blob = new Blob([JSON.stringify(this.exportWithDataUrl(),null,4)],{ type })
+    //     // const blob = new Blob([JSON.stringify(this,null,4)],{ type })
+    //     callback(blob);
+    // }
 
-    toBlobJson(callback, type = 'image/png', quality = 1.0){
-        const blob = new Blob([JSON.stringify(this.exportWithDataUrl(),null,4)],{ type })
-        // const blob = new Blob([JSON.stringify(this,null,4)],{ type })
-        callback(blob);
-    }
-
-    toBlobJsonAsync(type, quality){
-        return new Promise((resolve, reject) => {
-            this.toBlobJson(blob => {
-                if (blob) { resolve(blob); } 
-                else { reject(new Error('Error toBlob')); }
-            }, type, quality);
-        });
-    }
-
-
-
-    toBlob(type = 'image/png', quality = 1.0){
-        if(type==='wc3.json' || type=== 'application/json'){
-            return this.toBlobJsonAsync(...arguments);
-        }else{
-            return super.toBlobAsync(...arguments)
-        }
-        return null;
-    }
-
-
-
+    // toBlobJsonAsync(type, quality){
+    //     return new Promise((resolve, reject) => {
+    //         this.toBlobJson(blob => {
+    //             if (blob) { resolve(blob); } 
+    //             else { reject(new Error('Error toBlob')); }
+    //         }, type, quality);
+    //     });
+    // }
 
 
     /**
