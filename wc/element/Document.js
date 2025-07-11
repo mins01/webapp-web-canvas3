@@ -164,24 +164,7 @@ export default class Document extends Layer{
         this.history.save();
     }
 
-
-
-    // toBlobJson(callback, type = 'image/png', quality = 1.0){
-    //     const blob = new Blob([JSON.stringify(this.exportWithDataUrl(),null,4)],{ type })
-    //     // const blob = new Blob([JSON.stringify(this,null,4)],{ type })
-    //     callback(blob);
-    // }
-
-    // toBlobJsonAsync(type, quality){
-    //     return new Promise((resolve, reject) => {
-    //         this.toBlobJson(blob => {
-    //             if (blob) { resolve(blob); } 
-    //             else { reject(new Error('Error toBlob')); }
-    //         }, type, quality);
-    //     });
-    // }
-
-
+    
     /**
      * Description placeholder
      *

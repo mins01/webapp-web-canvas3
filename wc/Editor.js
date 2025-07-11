@@ -316,27 +316,10 @@ export default class Editor{
             mimetype = 'application/zip';            
         }
         if(mimetype){
-            if(type==='wc3.zip'){
-                this.document.export('file').then(async (exportedData)=>{
-                    const files = WcHelper.filesFromExportedData(exportedData);
-
-                    const zip = new globalThis.JSZip();
-                    zip.file("wc3.json", JSON.stringify(exportedData,null,2));
-                    const folder = zip.folder("files"); // 'files/' 폴더 생성
-                    files.forEach(file=>{
-                        folder.file(file.name, file);       // File 객체를 해당 폴더에 추가
-                    })
-                    
-                    const blob = await zip.generateAsync({ type: "blob" });
-                    HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
-                    this.autoSave.autoSave();
-                })
-            }else{
-                this.document.toBlobAsync(mimetype,quality).then((blob)=>{ 
-                    HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
-                    this.autoSave.autoSave();
-                }).catch(e=>{console.error(e);})
-            }
+            this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
+                HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
+                this.autoSave.autoSave();
+            }).catch(e=>{console.error(e);})
         }else {
             console.error('지원되지 않는 타입')
         }
@@ -375,7 +358,7 @@ export default class Editor{
         }
         if(mimetype){
             try{
-                const blob = await this.document.toBlobAsync(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
+                const blob = await this.document.asyncToBlob(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
                 this.autoSave.autoSave();
                 return this.upload(blob, filename+'.'+ext);
             }catch(e){

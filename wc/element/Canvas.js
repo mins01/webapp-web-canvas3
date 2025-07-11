@@ -340,14 +340,18 @@ class Canvas extends HTMLCanvasElement{
 
 
 
-
-    toBlobAsync(type = 'image/png', quality = 1.0) {
+    asyncToBlob(type = 'image/png', quality = 1.0){
         return new Promise((resolve, reject) => {
             this.toBlob(blob => {
                 if (blob) { resolve(blob); } 
                 else { reject(new Error('Error toBlob')); }
             }, type, quality);
         });
+    }
+    // @deprecated
+    // @see asyncToBlob
+    toBlobAsync(type = 'image/png', quality = 1.0) {
+        return this.asyncToBlob(type,quality)
     }
 }
 
