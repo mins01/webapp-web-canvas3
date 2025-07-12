@@ -75,6 +75,16 @@ export default class HtmlUtil{
     return this.fetchUrl(url).then(response => response.json());
   }
   
+
+  static loadBinFile(file){
+    return new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.onload = (event) => { resolve(event.target.result); }
+      reader.onerror = (event) => { reject(event); }
+      reader.readAsArrayBuffer(file);
+    })
+  }
+
   /**
   * 텍스트 파일을 읽어 문자열로 반환하는 정적 메서드입니다.
   *
@@ -114,6 +124,59 @@ export default class HtmlUtil{
     return new Promise((resolve,reject)=>{
       this.loadTextFile(file)
       .then((text)=>{ resolve(JSON.parse( text)); })
+      .catch((e)=>{reject(e)})
+    })
+  }
+
+
+  static loadZipFile(file){
+    return new Promise((resolve,reject)=>{
+      this.loadBinFile(file)
+      .then(async (arrayBuffer)=>{ 
+        if(!globalThis?.JSZip) throw new Error("Required JSZip.");
+        const zip = await globalThis.JSZip.loadAsync(arrayBuffer);
+
+        let conf = {}
+        // 예: 특정 텍스트 파일 읽기
+        const textFile = zip.file("wc3.json");
+        if (textFile) {
+          const content = await textFile.async("string");
+          // console.log(content);
+          conf = JSON.parse(content);
+        }
+        // 첨부파일 연길하기
+        if(conf?.__content__){
+          const file = zip.file(`files/${conf.__content__}`);
+          if(file){ 
+            try{
+              const blob = await file.async('blob');
+              conf.__content__ = new File([blob], conf.__content__, { type: blob.type || 'image/png' ,  lastModified: file.date.getTime() });
+            }catch(e){
+              console.error('ERROR: conf',e);
+              throw e;
+            }
+          }
+        }
+        // 첨부파일 연길하기
+        if(conf?.layers){
+          for (const layer of conf.layers.elements) {
+            const file = zip.file(`files/${layer.__content__}`);
+            if(file){ 
+              try{
+                const blob = await file.async('blob');
+                layer.__content__ = new File([blob], layer.__content__, { type: blob.type || 'image/png' , lastModified: file.date.getTime() });
+              }catch(e){
+                console.error('ERROR: conf.layers.elements',e);
+                throw e;
+              }             
+            }
+
+          }
+        }
+       
+        // console.log('loadZipFile',file,conf);
+        resolve(conf)
+      })
       .catch((e)=>{reject(e)})
     })
   }
@@ -157,6 +220,20 @@ export default class HtmlUtil{
       img.onload=function(event){ resolve(event.target); }
       img.onerror=function(event){ reject(event); }
       img.src = url;
+    });
+  }
+
+  static loadImageFile(file){
+    return new Promise((resolve, reject) => {
+      if (!(file instanceof File)) { reject(new TypeError("Input must be a File object")); return; }
+      const url = URL.createObjectURL(file);
+      this.loadImageUrl(url).then((img)=>{
+        URL.revokeObjectURL(url);
+        resolve(img)
+      }).catch((e)=>{
+        URL.revokeObjectURL(url);
+        reject(e);
+      })
     });
   }
   

@@ -385,6 +385,11 @@ export default class Editor{
                 this.closeDocument();
                 this.loadJson(conf);
             })
+        }if(file.name.match(/wc3\.zip$/)){
+            return HtmlUtil.loadZipFile(file).then((conf)=>{
+                this.closeDocument();
+                this.loadJson(conf);
+            })
         }else if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
             return HtmlUtil.loadImageUrl(imageURL).then((image)=>{               
@@ -428,6 +433,12 @@ export default class Editor{
         this.documents.add(document);
         return document;
     }
+    loadDocumentZip(zip){
+        
+    }
+
+
+    
     closeDocument(){
         if(this.document){
             this.documents.remove();

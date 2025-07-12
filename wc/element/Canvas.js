@@ -263,7 +263,14 @@ class Canvas extends HTMLCanvasElement{
         })
 
         if(conf?.__content_type__){
-            if(conf.__content_type__==='dataurl'){
+            if(conf.__content_type__==='file'){
+                HtmlUtil.loadImageFile(conf.__content__).then((img)=>{
+                    obj.ctx.drawImage(img,0,0);
+                    obj.flush();
+                }).catch((event)=>{
+                    console.log(event)
+                })
+            }else if(conf.__content_type__==='dataurl'){
                 HtmlUtil.loadImageUrl(conf.__content__).then((img)=>{
                     obj.ctx.drawImage(img,0,0);
                     obj.flush();
@@ -293,6 +300,8 @@ class Canvas extends HTMLCanvasElement{
     }
 
     static importFrom(conf){
+        // console.log('---------------',conf);
+        
         const c = new this()
         c.import(conf)
         return c;
