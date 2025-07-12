@@ -355,15 +355,16 @@ export default class Editor{
         }else if(type==='webp'){
             ext = 'webp';
             mimetype = 'image/webp';
+        }else if(type==='wc3.zip'){
+            ext = 'wc3.zip';
+            mimetype = 'application/zip';            
         }
         if(mimetype){
-            try{
-                const blob = await this.document.asyncToBlob(mimetype,quality)//.then((blob)=>{ this.upload(blob, filename+'.'+ext); }).catch(e=>{console.error(e);})
+            this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
                 this.autoSave.autoSave();
                 return this.upload(blob, filename+'.'+ext);
-            }catch(e){
-                throw new Error(e);
-            }
+
+            }).catch(e=>{console.error(e);})            
         }else {
             throw new Error('지원되지 않는 타입');
         }
