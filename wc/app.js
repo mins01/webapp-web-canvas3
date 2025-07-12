@@ -130,8 +130,12 @@ if(globalThis?.Wg2Uploder??false){
             const uploaded = obj[0];
             console.log(uploaded);
 
-            if(uploaded.previewurl){
-                editor.previewImage(uploaded.previewurl);
+            if (/\.(jpe?g|png)$/i.test(uploaded.name)) {
+                if(uploaded.previewurl){
+                    editor.previewImage(uploaded.previewurl);
+                }
+            }else{
+                alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
             }
 
         }).catch(e => {
