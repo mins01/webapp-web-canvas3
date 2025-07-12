@@ -412,6 +412,20 @@ export default class Editor{
                 console.warn(e);
                 throw e;
             });
+        }else if(url.match(/wc3\.zip/)){ // JSON 형식인가?
+            return HtmlUtil.loadBinUrl(url).then(async (file)=>{
+                await HtmlUtil.loadZipFile(file).then((conf)=>{
+                    if(!conf?.exportVersion){
+                        throw new Error("This file is not in WC3 JSON format.");
+                    }
+                    this.closeDocument();
+                    this.loadJson(conf);
+                })
+            }).catch((e)=>{
+                alert(e.message);
+                console.warn(e);
+                throw e;
+            });
         }else{ // 이미지로 보고 진행
             const imageURL = url;
             return HtmlUtil.loadImageUrl(imageURL).then((image)=>{               

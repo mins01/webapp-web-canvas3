@@ -74,6 +74,9 @@ export default class HtmlUtil{
   static fetchJsonUrl(url){
     return this.fetchUrl(url).then(response => response.json());
   }
+  static fetchBinUrl(url){
+    return this.fetchUrl(url).then(response => response.blob());
+  }
   
 
   static loadBinFile(file){
@@ -197,6 +200,18 @@ export default class HtmlUtil{
       return obj
     });
   }
+
+  static loadBinUrl(url){
+    return this.fetchBinUrl(url).then((obj)=>{
+      // if(!obj?.exportVersion){
+      //   throw new Error("This file is not in WC3 JSON format.");
+      // }
+      return obj
+    });
+  }
+
+
+
   
   /**
   * 이미지 URL을 비동기적으로 로드하고, 로드 완료 시 HTMLImageElement를 반환하는 정적 메서드입니다.
