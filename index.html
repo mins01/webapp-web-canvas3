@@ -552,7 +552,7 @@
                 <div class="input-group input-group-lg">
                   <input type="text" class="form-control" name="openfile" placeholder="https://-- or /--">
                 </div>
-                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip  파일이 지원됩니다.</div>
+                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip 파일이 지원됩니다.</div>
                 <div class="form-text text-end"><i class="bi bi-info-circle"></i> 같은 도메인의 URL만 지원합니다.</div>
                 <div class="text-end my-1">
                   <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
@@ -666,7 +666,7 @@
                   <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
                 </div>
               </form>
-              <form action="" onsubmit="editor.uploadDocument('wc3.json',this.filename.value).then(()=>{ alert('uploadDocument 완료\n미리보기가 지원되지 않는 확장자.');console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
+              <form action="" onsubmit="editor.uploadDocument('wc3.json',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>
@@ -675,7 +675,7 @@
                 </div>
                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
               </form>
-              <form action="" onsubmit="editor.uploadDocument('wc3.zip',this.filename.value).then(()=>{ alert('uploadDocument 완료\n미리보기가 지원되지 않는 확장자.');console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
+              <form action="" onsubmit="editor.uploadDocument('wc3.zip',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>
