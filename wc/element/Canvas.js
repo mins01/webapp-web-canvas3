@@ -343,10 +343,16 @@ class Canvas extends HTMLCanvasElement{
                 zip.file("wc3.json", JSON.stringify(exportedData,null,2));
                 const folder = zip.folder("files"); // 'files/' 폴더 생성
                 files.forEach(file=>{
-                    folder.file(file.name, file);       // File 객체를 해당 폴더에 추가
+                    folder.file(file.name, file ,{ compression: 'STORE' });       // File 객체를 해당 폴더에 추가. 압축하지 않는다. 저장만 한다.
                 })
 
-                zip.generateAsync({ type: "blob" }).then((blob)=>{
+                zip.generateAsync(
+                    { 
+                        type: "blob" ,
+                        compression: 'DEFLATE',
+                        compressionOptions: { level: 9 } // 기본 압축률 9
+                    }
+                ).then((blob)=>{
                     callback(blob);
                 });
                     
