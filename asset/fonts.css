@@ -1,4 +1,16 @@
 @charset "utf-8";
 
-/*   font-family: 'Black Han Sans'; */
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/*  
+구글 폰트 인기 한글폰트 10종
+font-family: 'Black Han Sans',
+font-family: 'Do Hyeon',
+font-family: 'Dokdo',
+font-family: 'Gaegu',
+font-family: 'Jua',
+font-family: 'Nanum Gothic',
+font-family: 'Nanum Myeongjo',
+font-family: 'Noto Sans KR',
+font-family: 'Noto Serif KR',
+font-family: 'Yeon Sung',
+*/
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Dokdo&family=Gaegu:wght@300;400;700&family=Jua&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&family=Yeon+Sung&display=swap');
