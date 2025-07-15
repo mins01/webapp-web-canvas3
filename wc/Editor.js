@@ -444,6 +444,11 @@ export default class Editor{
         this.loadJson(json);
     }
     loadJson(json){
+        if(!json?.name || !json?.createdAt){
+            alert("This format is not supported by the program.");
+            return null;
+            // throw new Error("This format is not supported by the program.");
+        }
         const document = Document.importFrom(json)
         this.documents.add(document);
         return document;
