@@ -57,12 +57,17 @@ export default class TextLayer extends Layer{
         const isLoaded = document.fonts.check(font);
         // console.log('font load check',font,isLoaded);
         if(!isLoaded){
-            document.fonts.load(font).then((loadedFonts)=>{
-                console.log('font loaded',loadedFonts);
+            document.fonts.load(font).then((fontFaceSet)=>{
+                // console.log('load',loadedFonts);
+                return document.fonts.ready;
+            }).then((fontFaceSet)=>{
+                // console.log('font load',fontFaceSet);
                 this.flush();
             }).catch((e)=>{
                 console.error(e)
             });
+        }else{
+            // console.log('font loaded',font);
         }
 
     }

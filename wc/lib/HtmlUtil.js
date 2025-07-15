@@ -258,4 +258,26 @@ export default class HtmlUtil{
       element.style[key] = value
     }
   }
+
+
+
+
+
+
+
+  static getFontMap(){
+    const fonts = new Map();
+    document.fonts.forEach(fontface=>{
+      if(!fonts.has(fontface.family)){
+        const font = { family:fontface.family, status:fontface.status, style:new Set(), weight:new Set(),fontFaces:[] }
+        fonts.set(fontface.family,font);
+      }
+      const font = fonts.get(fontface.family);
+      font.style.add(fontface.style)
+      font.weight.add(fontface.weight)
+      font.fontFaces.push(fontface)
+    })
+    return fonts;
+
+  }
 }

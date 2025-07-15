@@ -96,6 +96,18 @@ globalThis.window.addEventListener('load',(event)=>{
 
 
 
+        //-- 폰트 목록 동기화
+        // console.log(HtmlUtil.getFontMap());
+        const optgroupWebFont = document.querySelector('#optgroup-web-font');
+        optgroupWebFont.innerHTML = '';
+        Wc.HtmlUtil.getFontMap().values().forEach((font)=>{
+          if(font.family=='bootstrap-icons'){return;} //부트스트랩 아이콘은 제외. 일반 폰트가 아님.
+          // console.log(font);  
+          const option = new Option(font.family,font.family,false,false);
+          optgroupWebFont.append(option)
+        })
+
+
 
         // 쿼리스트링 확인해서 로드 동작        
         const params = new URLSearchParams(globalThis.location.search);
