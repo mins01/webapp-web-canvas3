@@ -120,7 +120,7 @@ class Canvas extends HTMLCanvasElement{
         this.updatedAt = Date.now();
         this.sync();
         this.dispatchEvent( new CustomEvent("flush", {bubbles:true,cancelable:true}) );
-        // console.log('flush',this,this.updatedAt);
+        console.log('flush',this.id,this.updatedAt);
     }
     sync(){
         this.parentFlush();
@@ -294,7 +294,7 @@ class Canvas extends HTMLCanvasElement{
         }else{
             // obj.flush();
         }
-        obj.flush();
+        // obj.flush();
     }
     import(conf){
         return this.constructor.import(this,conf);
