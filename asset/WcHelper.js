@@ -72,7 +72,7 @@ class WcHelper{
 
     document.layers.add(layer,false,true)
     
-
+    document.flush();
     document.history.clear();
     document.history.save('new document');
   }
@@ -97,7 +97,7 @@ class WcHelper{
     document.layers.add(layer,true)
    
     
-
+    document.flush();
     document.history.clear();
     document.history.save('new document');
   }
@@ -208,6 +208,23 @@ class WcHelper{
   }
 
 
+
+
+
+  static forceFontLoad(textConfig, text = "A") {
+    
+    const span = document.createElement('span');
+    Wc.HtmlUtil.applyStyleObject(span,textConfig.exportToStyleObject())
+    span.textContent = text;
+    // span.style.font = font;
+    span.style.position = 'absolute';
+    span.style.opacity = '1';
+    span.style.zIndex = '1000';
+    span.style.pointerEvents = 'none';
+    // span.style.whiteSpace = 'break-spaces';
+    document.body.appendChild(span);
+    // setTimeout(()=>{span.remove()},1000)
+  }
 
 
 

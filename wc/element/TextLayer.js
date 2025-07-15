@@ -47,17 +47,29 @@ export default class TextLayer extends Layer{
         this.ctx.StrokeStyle = conf.backColor;
     }
     setTextConfig(conf){
-        // console.log('xxxx',conf)
-        // Object.assign(this.textConfig,conf)
         this.textConfig.assignFrom(conf);
         this.ctx.fillStyle = this.textConfig.textColor;
-        // console.log('textConfig.font',this.textConfig.font,this.textConfig);
-        
+    }
+
+    setText(text){
+        this.text = text;
+    }
+    
+    // get foreColor(){ return this.fillStyle; }
+    // set foreColor(v){ this.fillStyle = v; }
+
+    isFontLoading = false; //페일 백으로 로딩을 한번만 하게 한다.
+    flush(){
         const font = `${this.textConfig.fontSize} "${this.textConfig.fontFamily}"`;
-        const isLoaded = document.fonts.check(font);
+        
+        const isLoaded = document.fonts.check(font,this.text); //여러 이유 때문에 항상 false가 나올 수 있다. 참고용으로만 사용하고 load를 한번만 하게 한다.
+        // 항상 false가 나오는건 load()와 아규멘트 같게 하면 해결 되는 것 같음
+
         // console.log('font load check',font,isLoaded);
-        if(!isLoaded){
-            document.fonts.load(font,this.text).then((fontFaceSet)=>{
+        if(!isLoaded && !this.isFontLoading){
+            // console.log('font loading',font);
+            this.isFontLoading = true;
+            document.fonts.load(font,this.text).then((fontFaces)=>{
                 // console.log('load',loadedFonts);
                 return document.fonts.ready;
             }).then((fontFaceSet)=>{
@@ -68,30 +80,24 @@ export default class TextLayer extends Layer{
             });
         }else{
             // console.log('font loaded',font);
+            super.flush();
+            this.isFontLoading = false;
         }
-
     }
-
-    setText(text){
-        this.text = text;
-    }
-    
-    // get foreColor(){ return this.fillStyle; }
-    // set foreColor(v){ this.fillStyle = v; }
-
     draw(){
+        this.ctx.fillStyle = this.textConfig.textColor;
         const ctx = this.ctx;
         this.ctx.clearRect(0,0,this.width,this.height);
 
         // ctx.save();
         this.contextConfig.assignTo(ctx,true);
         this.textConfig.assignTo(ctx);
-        // let {fontSize} = CssFontUtil.parse(ctx.font);        
-
-
+        // let {fontSize} = CssFontUtil.parse(ctx.font);       
+        
         const textConfig = this.textConfig;            
         DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
         this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
+
         
     }
 }
