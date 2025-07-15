@@ -20,6 +20,7 @@ export default class History extends LimitedHistory{
         console.log('history.undo();',snapshot.title,`idx:${this.currentIndex},len:${this.length}`);
         layers.import(snapshot);
         setTimeout(()=>{
+            this.document.flush();
             this.document.editor?.tool?.activate()
         },20)
         return true;
@@ -30,8 +31,10 @@ export default class History extends LimitedHistory{
         if(snapshot===null){return false}
         console.log('history.redo();',snapshot.title,`idx:${this.currentIndex},len:${this.length}`);
         layers.import(snapshot);
+        this.document.flush();
         this.document.editor?.tool?.activate()
         setTimeout(()=>{
+            this.document.flush();
             this.document.editor?.tool?.activate()
         },20)
         return true;
@@ -42,6 +45,7 @@ export default class History extends LimitedHistory{
         if(snapshot===null){return false}
         console.log('history.reload();',snapshot.title,`idx:${this.currentIndex},len:${this.length}`);
         layers.import(snapshot);
+        this.document.flush();
         this.document.editor?.tool?.activate()
         return true;
     }

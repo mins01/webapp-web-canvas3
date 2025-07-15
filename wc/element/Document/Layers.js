@@ -41,8 +41,7 @@ export default class Layers extends SelectableArray{
         }
         this?.document?.editor?.tool?.inactivate()
         this.add(layer,withoutHistory);
-        this?.document?.editor?.tool?.activate()
-
+        // layer.flush();
         return layer;
     }
     cloneLayer(layer=null,withoutHistory=false){
@@ -51,7 +50,7 @@ export default class Layers extends SelectableArray{
         const newLayer = layer.clone();
         this?.document?.editor?.tool?.inactivate()
         this.add(newLayer,withoutHistory);
-        this?.document?.editor?.tool?.activate()
+        // newLayer.flush();
     }
     add(layer,withoutHistory=false){
         const document = this.document
@@ -59,9 +58,10 @@ export default class Layers extends SelectableArray{
         // if(!noPostionCenterCenter){ layer.postionCenterCenter(); }
         const r = super.add(layer);
         // document.syncDrawingLayer(layer);
-        // layer.flush();
         document?.editor?.onselectLayer(document.layer);
-
+        layer.flush();
+        this?.document?.editor?.tool?.activate()
+        // document.flush();
         this.ready();
         if(!withoutHistory){
             this.document.history.save('Layers.add');
