@@ -266,34 +266,35 @@ class Canvas extends HTMLCanvasElement{
             if(conf.__content_type__==='file'){
                 HtmlUtil.loadImageFile(conf.__content__).then((img)=>{
                     obj.ctx.drawImage(img,0,0);
-                    obj.flush();
+                    // obj.flush();
                 }).catch((event)=>{
                     console.log(event)
                 })
             }else if(conf.__content_type__==='dataurl'){
                 HtmlUtil.loadImageUrl(conf.__content__).then((img)=>{
                     obj.ctx.drawImage(img,0,0);
-                    obj.flush();
+                    // obj.flush();
                 }).catch((event)=>{
                     console.log(event)
                 })
             }else if(conf.__content_type__==='snapshot'){
                 obj.ctx.putImageData(conf?.__content__, 0, 0);
-                obj.flush();
+                // obj.flush();
             }
         }else if(conf?.imageData !== undefined){ // @deprecated
             obj.ctx.putImageData(conf?.imageData, 0, 0);
-            obj.flush();
+            // obj.flush();
         }else if(conf?.dataUrl !== undefined){ // @deprecated
             HtmlUtil.loadImageUrl(conf.dataUrl).then((img)=>{
                 obj.ctx.drawImage(img,0,0);
-                obj.flush();
+                // obj.flush();
             }).catch((event)=>{
                 console.log(event)
             })
         }else{
-            obj.flush();
+            // obj.flush();
         }
+        obj.flush();
     }
     import(conf){
         return this.constructor.import(this,conf);

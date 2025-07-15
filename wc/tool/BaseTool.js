@@ -50,7 +50,7 @@ export default class BaseTool {
 		this.init();
 		this.ready();
 		if(cb){ cb(); }
-		this?.document?.flush();
+		// this?.document?.flush();
 		this.editor.dispatchEvent('wc.tool.activate', { toolName:this.name, tool:this } );
 		console.log('tool-activate:',this.name);
 	}

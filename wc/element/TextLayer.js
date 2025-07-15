@@ -88,12 +88,10 @@ export default class TextLayer extends Layer{
         this.textConfig.assignTo(ctx);
         // let {fontSize} = CssFontUtil.parse(ctx.font);        
 
-        if(this.text?.length){
-            const textConfig = this.textConfig;            
-            DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
-        }else{
-            this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
-        }
 
+        const textConfig = this.textConfig;            
+        DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
+        this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
+        
     }
 }
