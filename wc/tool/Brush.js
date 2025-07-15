@@ -82,12 +82,14 @@ export default class Brush extends BaseTool{
         return;
     }
     onpointerup(event){
+        if(super.onpointerup(event)===false){return false;}
+
         this.stopBuildUp();
         this.pointerEvent = new PointerEvent(event.type, event)
         this.mergeFromWorkingLayer();
         this.workingLayer.clear();
         
-        return super.onpointerup(event);
+        return;
     }
 
     mergeFromWorkingLayer(){
