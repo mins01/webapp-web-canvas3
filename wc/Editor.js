@@ -487,14 +487,16 @@ export default class Editor{
     insertLayerFromFile(file){
         if(file.type.match(/^image\//)){
             const imageURL = URL.createObjectURL(file);
-            HtmlUtil.loadImageUrl(imageURL).then((image)=>{
+            return HtmlUtil.loadImageUrl(imageURL).then((image)=>{
                 const layer = Layer.fromImage(image)
                 this.document.layers.add(layer);
                 this.ready()
                 URL.revokeObjectURL(imageURL);
             })
         }else{
-            console.error('It is not an image file',file);
+            // console.error('It is not an image file',file);
+            throw new Error("It is not an image file");
+            
         }
     }
 

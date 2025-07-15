@@ -116,7 +116,7 @@ class Canvas extends HTMLCanvasElement{
         this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     }
     flush(){
-        // console.log('flush',this.id,this.updatedAt);
+        console.log('flush',this.id,this.updatedAt);
         this.draw();
         this.updatedAt = Date.now();
         this.sync();

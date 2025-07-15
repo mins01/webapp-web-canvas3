@@ -59,7 +59,7 @@ export default class Layers extends SelectableArray{
         const r = super.add(layer);
         // document.syncDrawingLayer(layer);
         document?.editor?.onselectLayer(document.layer);
-        layer.flush();
+        // layer.flush();
         this?.document?.editor?.tool?.activate()
         // document.flush();
         this.ready();
@@ -73,7 +73,7 @@ export default class Layers extends SelectableArray{
         this?.document?.editor?.tool?.inactivate()
         const document = this.document
         super.remove();
-        document.flush();
+        // document.flush();
         this?.document?.editor?.tool?.activate()
         this.ready();
         this.document.history.save('Layers.remove');
@@ -83,7 +83,7 @@ export default class Layers extends SelectableArray{
         const document = this.document
         const r = super.move(index);
         if(r===-1){return false}
-        document.flush();
+        // document.flush();
         document?.editor?.onselectLayer(document.layer);
         this.ready();
         this.document.history.save('Layers.move');
@@ -110,7 +110,7 @@ export default class Layers extends SelectableArray{
         console.log(fromLayer,toLayer);
         
         toLayer.drawLayer(fromLayer);
-        toLayer.flush();
+        // toLayer.flush();
         //-- 삭제처리
         const document = this.document
         super.remove();
