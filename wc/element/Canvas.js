@@ -18,7 +18,7 @@ class Canvas extends HTMLCanvasElement{
     static defineCustomElements(name='wc-canvas'){
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
-        console.log('namenamename',name);
+        console.log('defineCustomElements',name);
     }
     static getDefaultName(prefix){
         const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
@@ -55,8 +55,8 @@ class Canvas extends HTMLCanvasElement{
         this.updatedAt = this.createdAt = Date.now();
         this.setContext2d();
 
-        if(w && w != this.width) this.width = w;
-        if(h && h != this.height) this.height = h;
+        this.width = w?w:this.width;
+        this.height = h?h:this.height;
     }
 
 
@@ -116,7 +116,7 @@ class Canvas extends HTMLCanvasElement{
         this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     }
     flush(){
-        console.log('flush',this.id,this.updatedAt);
+        // console.log('flush',this.id,this.updatedAt);
         this.draw();
         this.updatedAt = Date.now();
         this.sync();
