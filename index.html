@@ -1605,43 +1605,43 @@
           <div class="modal-body brush-config">
             <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" onsubmit="return false">
               <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
-                <div>
-                  <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
-                  <select name="shape" class="form-select shape">
-                    <option value="circle">circle(원)</option>
-                    <option value="square">square(정사각형)</option>
-                  </select>
-                </div>
-                <div>
-                  <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size(크기,지름)</div>
-                  <div class="input-group ui-input-stepper">
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                      <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
-                    </div>
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
+                <select name="shape" class="form-select shape">
+                  <option value="circle">circle(원)</option>
+                  <option value="square">square(정사각형)</option>
+                </select>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size(크기,지름)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                    <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="200" step="1"  value="5">
                   </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
-                <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
-                  <div class="input-group ui-input-stepper">
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                      <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
-                    </div>
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                    <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
                   </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
-                <div>
-                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
-                  <div class="input-group ui-input-stepper">
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                      <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
-                    </div>
-                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                    <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
                   </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
+              </div>
               </div>
               <hr>
               <div class="brush-nav-container mt-3" data-brush-tab="brush">
@@ -1683,32 +1683,11 @@
                         <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                         <!-- compositeOperation 는 tool에서 사용된다. -->
                         <select name="compositeOperation" class="form-select">
-                          <option value="source-over">source-over</option>
-                          <option value="source-in">source-in</option>
-                          <option value="source-out">source-out</option>
-                          <option value="source-atop">source-atop</option>
-                          <option value="destination-over">destination-over</option>
-                          <option value="destination-in">destination-in</option>
-                          <option value="destination-out">destination-out</option>
-                          <option value="destination-atop">destination-atop</option>
-                          <option value="lighter">lighter</option>
-                          <option value="copy">copy</option>
-                          <option value="xor">xor</option>
-                          <option value="multiply">multiply</option>
-                          <option value="screen">screen</option>
-                          <option value="overlay">overlay</option>
-                          <option value="darken">darken</option>
-                          <option value="lighten">lighten</option>
-                          <option value="color-dodge">color-dodge</option>
-                          <option value="color-burn">color-burn</option>
-                          <option value="hard-light">hard-light</option>
-                          <option value="soft-light">soft-light</option>
-                          <option value="difference">difference</option>
-                          <option value="exclusion">exclusion</option>
-                          <option value="hue">hue</option>
-                          <option value="saturation">saturation</option>
-                          <option value="color">color</option>
-                          <option value="luminosity">luminosity</option>
+                          <option value="source-over">source-over(표준)</option>
+                          <option value="destination-out">destination-out(지우개)</option>
+                          <option value="source-in">source-in(교집합)</option>
+                          <option value="destination-over">destination-over(뒤에 그리기)</option>
+                          <!-- 나머지 모드들은 무시한다. -->
                         </select>
                       </div>
 

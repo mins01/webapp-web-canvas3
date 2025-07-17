@@ -183,7 +183,17 @@
       remainInterval = b1.drawOnLine(c1.ctx,b1.width/2,b1.height/2,c1.width-b1.width/2,c1.height-b1.height/2,{remainInterval,lastPressure:1,pressure:0})
 
       const ctx = c2.ctx;
-      c2.fill('#ffffff')
+      const gradient = ctx.createLinearGradient(0, 0, c2.width, 0); 
+      gradient.addColorStop(0.00, "red");
+      gradient.addColorStop(0.17, "orange");
+      gradient.addColorStop(0.33, "yellow");
+      gradient.addColorStop(0.50, "green");
+      gradient.addColorStop(0.67, "blue");
+      gradient.addColorStop(0.83, "indigo"); // 남색
+      gradient.addColorStop(1.00, "violet"); // 보라
+
+      c2.fill(gradient);
+      
       ctx.save();
       ctx.globalCompositeOperation = b1.brushConfig.compositeOperation;
       ctx.drawImage(c1,0,0)
@@ -342,32 +352,11 @@
                       <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                       <!-- compositeOperation 는 tool에서 사용된다. -->
                       <select name="compositeOperation" class="form-select">
-                        <option value="source-over">source-over</option>
-                        <option value="source-in">source-in</option>
-                        <option value="source-out">source-out</option>
-                        <option value="source-atop">source-atop</option>
-                        <option value="destination-over">destination-over</option>
-                        <option value="destination-in">destination-in</option>
-                        <option value="destination-out">destination-out</option>
-                        <option value="destination-atop">destination-atop</option>
-                        <option value="lighter">lighter</option>
-                        <option value="copy">copy</option>
-                        <option value="xor">xor</option>
-                        <option value="multiply">multiply</option>
-                        <option value="screen">screen</option>
-                        <option value="overlay">overlay</option>
-                        <option value="darken">darken</option>
-                        <option value="lighten">lighten</option>
-                        <option value="color-dodge">color-dodge</option>
-                        <option value="color-burn">color-burn</option>
-                        <option value="hard-light">hard-light</option>
-                        <option value="soft-light">soft-light</option>
-                        <option value="difference">difference</option>
-                        <option value="exclusion">exclusion</option>
-                        <option value="hue">hue</option>
-                        <option value="saturation">saturation</option>
-                        <option value="color">color</option>
-                        <option value="luminosity">luminosity</option>
+                        <option value="source-over">source-over(표준)</option>
+                        <option value="destination-out">destination-out(지우개)</option>
+                        <option value="source-in">source-in(교집합)</option>
+                        <option value="destination-over">destination-over(뒤에 그리기)</option>
+                        <!-- 나머지 모드들은 무시한다. -->
                       </select>
                     </div>
 
