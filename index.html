@@ -1051,32 +1051,48 @@
                     oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready()}"
                     x-data-wc-sync-from="editor.document.layer.compositeOperation"
                     >
-                    <option value="source-over">source-over</option>
-                    <option value="source-in">source-in</option>
-                    <option value="source-out">source-out</option>
-                    <option value="source-atop">source-atop</option>
-                    <option value="destination-over">destination-over</option>
-                    <option value="destination-in">destination-in</option>
-                    <option value="destination-out">destination-out</option>
-                    <option value="destination-atop">destination-atop</option>
-                    <option value="lighter">lighter</option>
-                    <option value="copy">copy</option>
-                    <option value="xor">xor</option>
-                    <option value="multiply">multiply</option>
-                    <option value="screen">screen</option>
-                    <option value="overlay">overlay</option>
-                    <option value="darken">darken</option>
-                    <option value="lighten">lighten</option>
-                    <option value="color-dodge">color-dodge</option>
-                    <option value="color-burn">color-burn</option>
-                    <option value="hard-light">hard-light</option>
-                    <option value="soft-light">soft-light</option>
-                    <option value="difference">difference</option>
-                    <option value="exclusion">exclusion</option>
-                    <option value="hue">hue</option>
-                    <option value="saturation">saturation</option>
-                    <option value="color">color</option>
-                    <option value="luminosity">luminosity</option>
+                    <optgroup label="일반 혼합">
+                      <option value="source-over">source-over(표준)</option>
+                    </optgroup>
+                    <optgroup label="밝게 혼합">
+                      <option value="lighter">lighter(밝게. 두 색상을 더해서 밝게)</option>
+                      <option value="lighten">lighten(밝게 하기. 더 밝은 색)</option>
+                      <option value="screen">screen(스크린. 밝아짐)</option>
+                      <option value="color-dodge">color-dodge(색상 닷지. 색상을 밝게 강조)</option>
+                    </optgroup>
+                    <optgroup label="어둡게 혼합">
+                      <option value="darken">darken(어둡게. 더 어두운 색)</option>
+                      <option value="multiply">multiply(곱하기. 어두워짐)</option>
+                      <option value="color-burn">color-burn(색상 번. 색상을 어둡게 강조)</option>
+                    </optgroup>
+                    <optgroup label="명암 혼합">
+                      <option value="overlay">overlay(오버레이. 더 어둡고 밝게)</option>
+                      <option value="soft-light">soft-light(소프트 라이트. 부드러운 명암 대비)</option>
+                      <option value="hard-light">hard-light(하드 라이트. 강한 명암 대비)</option>
+                    </optgroup>
+                    <optgroup label="색상 차이 혼합">
+                      <option value="difference">difference(차이. 색상 차)</option>
+                      <option value="exclusion">exclusion(색상 배제)</option>
+                    </optgroup>
+                    <optgroup label="HSL 조절 혼합">
+                      <option value="hue">hue(색조 유지)</option>
+                      <option value="saturation">saturation(채도 유지)</option>
+                      <option value="color">color(색상. 색상만 적용)</option>
+                      <option value="luminosity">luminosity(밝기. 밝기만 적용)</option>
+                    </optgroup>
+                    <optgroup label="영역 기반 혼합(마스크/교집합/차집합)">
+                      <option value="source-in">source-in(교집합)</option>
+                      <option value="source-out">source-out(차집합)</option>
+                      <option value="source-atop">source-atop(교집합+대상 유지)</option>
+                      <option value="destination-over">destination-over(뒤에 그리기)</option>
+                      <option value="destination-in">destination-in(교집함 마스크)</option>
+                      <option value="destination-out">destination-out(지우개)</option>
+                      <option value="destination-atop">destination-atop(마스크 교집합+소스 유지)</option>
+                      <option value="xor">xor(대칭 차집합. 겹치면 투명)</option>
+                    </optgroup>
+                    <optgroup label="복사 및 특수">
+                      <option value="copy">copy(소스만 유지하고 대상 제거)</option>
+                    </optgroup>
                   </select>
                 </div>
                 <div class="col">
