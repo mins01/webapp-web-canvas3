@@ -490,6 +490,7 @@ export default class Editor{
             return HtmlUtil.loadImageUrl(imageURL).then((image)=>{
                 const layer = Layer.fromImage(image)
                 this.document.layers.add(layer);
+                layer.flush();
                 this.ready()
                 URL.revokeObjectURL(imageURL);
             })
