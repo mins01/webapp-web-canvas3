@@ -127,7 +127,8 @@ class WcHelper{
       preview.fill('#ffffff')
       // preview.ctx.globalCompositeOperation = 'destination-out';
     }
-    preview.ctx.globalCompositeOperation = brush.brushConfig.compositeOperation
+
+    preview.ctx.globalCompositeOperation = brush.brushConfig.compositeOperation=='destination-out'?'destination-out':'source-over';
     // console.log(brush.brushConfig.compositeOperation);
 
 
