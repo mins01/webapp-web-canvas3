@@ -2,7 +2,7 @@ export default class DrawText{
 
     static draw(ctx,textConfig,text,w,h,x,y){
         const padding = textConfig.paddingPx;
-        let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2),h-(padding*2));
+        let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2));
 
         //-- 높이기준 넘치는 line 버리기
         const lineHeight = textConfig.lineHeightPx;
