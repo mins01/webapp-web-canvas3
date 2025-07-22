@@ -3,11 +3,18 @@ export default class DrawText{
     static draw(ctx,textConfig,text,w,h,x,y){
         const padding = textConfig.paddingPx;
         let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2),h-(padding*2));
-        return this.drawTextLines(ctx,textConfig,textLines,w-(padding*2),h-(padding*2),x+padding,y+padding);
+
+        //-- 높이기준 넘치는 line 버리기
+        const lineHeight = textConfig.lineHeightPx;
+        const innerHeight = h-(padding*2);
+        let lineNumber = Math.floor(innerHeight/lineHeight)
+        let heightedLines = textLines.slice(0,0+lineNumber);
+
+        return this.drawTextLines(ctx,textConfig,heightedLines,w-(padding*2),h-(padding*2),x+padding,y+padding);
     }
 
-    static textToLines(ctx,textConfig,text,width,height){
-        const lineHeight = textConfig.lineHeightPx;
+    static textToLines(ctx,textConfig,text,width){
+        
         // const lines = [];
         // let chars = [...text];
         let lines = [];
@@ -35,12 +42,7 @@ export default class DrawText{
             lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
         }
         // console.log(textConfig.whiteSpace);
-        
-        
-        let lineNumber = Math.floor(height/lineHeight)
-        let heightedLines = lines.slice(0,0+lineNumber);
-        // console.log(heightedLines);
-        return heightedLines;
+        return lines;
     }
 
     static drawTextLines(ctx,textConfig,lines,w,h,x,y){
