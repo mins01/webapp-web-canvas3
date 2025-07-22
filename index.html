@@ -1048,7 +1048,7 @@
                 <div class="col">
                   <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
                   <select name="compositeOperation" id="layer-composite-operation" class="form-select"
-                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready()}"
+                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready()};editor.document.history.save('layer.compositeOperation')"
                     x-data-wc-sync-from="editor.document.layer.compositeOperation"
                     >
                     <optgroup label="일반 혼합">
@@ -1097,7 +1097,7 @@
                 </div>
                 <div class="col">
                   <div class="form-label mb-0"><i class="bi bi-transparency"></i> alpha</div>
-                  <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save()">
+                  <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor.document.history.save('layer.alpha')">
                     <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
                       oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.ready()}"
                       x-data-wc-sync-from="editor.document.layer.alpha"
