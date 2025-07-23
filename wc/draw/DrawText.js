@@ -1,16 +1,18 @@
 export default class DrawText{
 
-    static draw(ctx,textConfig,text,w,h,x,y){
+    static draw(ctx,textConfig,text,width,height,x,y){
         const padding = textConfig.paddingPx;
-        let textLines = this.textToLines(ctx,textConfig,text,w-(padding*2));
+        const innerWidth = width-(padding*2);
+        const innerHeight = height-(padding*2);
+        let textLines = this.textToLines(ctx,textConfig,text,innerWidth);
 
         //-- 높이기준 넘치는 line 버리기
         const lineHeight = textConfig.lineHeightPx;
-        const innerHeight = h-(padding*2);
         let lineNumber = Math.floor(innerHeight/lineHeight)
         let heightedLines = textLines.slice(0,0+lineNumber);
 
-        return this.drawTextLines(ctx,textConfig,heightedLines,w-(padding*2),h-(padding*2),x+padding,y+padding);
+
+        return this.drawTextLines(ctx,textConfig,heightedLines,innerWidth,innerHeight,x+padding,y+padding);
     }
 
     static textToLines(ctx,textConfig,text,width){
@@ -19,37 +21,39 @@ export default class DrawText{
         // let chars = [...text];
         let lines = [];
         const whiteSpace = textConfig.whiteSpace
+        const wordBreak = textConfig.wordBreak??'normal'
+        const overflowWrap = textConfig.overflowWrap??'normal'
         if(whiteSpace=='normal'){ // 공백압축+줄바꿈금지+자동줄바꿈
-            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal')
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' '),wordBreak)
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth); 
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap,ignoreWhiteSpaceWidth); 
         }else if(whiteSpace=='nowrap'){ // 공백압축+줄바꿈금지
             lines = [text.replace(/\r?\n/g,'').replace(/[ \t\v\f]+/g,' ')];
         }else if(whiteSpace=='pre'){ // 공백유지+줄바꿈허용+공백도글자(공백도 줄바꿈 함)
             lines = text.split(/\r?\n/);
 
         }else if(whiteSpace=='pre-wrap'){ // 공백유지+줄바꿈허용+자동줄바꿈+뒷공백유지(공백은 줄바꿈 안함)
-            let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text,wordBreak)
             const ignoreWhiteSpaceWidth = true; //공백너비 체크 없음. 줄 뒤에 무조건 붙임.
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap,ignoreWhiteSpaceWidth);            
         }else if(whiteSpace=='pre-line'){ // 공백압축+줄바꿈허용+자동줄바꿈
-            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/[ \t\v\f]+/g,' '),textConfig.wordBreak??'normal') //공백을 압축후 처리한다.
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text.replace(/[ \t\v\f]+/g,' '),wordBreak) //공백을 압축후 처리한다.
             const ignoreWhiteSpaceWidth = true; //공백너비 체크 없음. 줄 뒤에 무조건 붙임. // pre-line이라서 1개의 공백까지만 유지됨
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap,ignoreWhiteSpaceWidth);            
         }else{  // break-spaces  // 공백유지+줄바꿈허용+자동줄바꿈+공백도글자(공백도 줄바꿈 함)
-            let wordBreakGroup = this.splitIntoWordBreakGroup(text,textConfig.wordBreak??'normal')
+            let wordBreakGroup = this.splitIntoWordBreakGroup(text,wordBreak)
             const ignoreWhiteSpaceWidth = false; //공백도 글자처림
-            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,textConfig.overflowWrap??'normal',ignoreWhiteSpaceWidth);            
+            lines = this.wordBreakGroupToLines(ctx,wordBreakGroup,width,overflowWrap,ignoreWhiteSpaceWidth);            
         }
         // console.log(textConfig.whiteSpace);
         return lines;
     }
 
-    static drawTextLines(ctx,textConfig,lines,w,h,x,y){
+    static drawTextLines(ctx,textConfig,lines,width,height,x,y){
         // return;
         const lineHeight = textConfig.lineHeightPx; 
         const verticalAlign = textConfig?.verticalAlign??'top';
-        const linesH = lineHeight * lines.length;
+        const innerHeight = lineHeight * lines.length;
         
         // const fontSize = textConfig?.fontSize??'10px';
         // const fontFamily = textConfig?.fontFamily??'sans-serif';
@@ -62,7 +66,7 @@ export default class DrawText{
         lines.forEach((line) => {
             const textMetrics = ctx.measureText(line);
             textMetricsForLines.push(textMetrics);
-            const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent ??0; //폰트의 baseline 기준 상단 높이 
+            const fontBoundingBoxAscent  = textMetrics.fontBoundingBoxAscent??0; //폰트의 baseline 기준 상단 높이 
             if(maxfontBoundingBoxAscent < fontBoundingBoxAscent ){ maxfontBoundingBoxAscent = fontBoundingBoxAscent ; }
             const fontBoundingBoxDescent = textMetrics.fontBoundingBoxDescent??0; //폰트의 baseline 기준 하단 높이 
             if(maxFontBoundingBoxDescent < fontBoundingBoxDescent){ maxFontBoundingBoxDescent = fontBoundingBoxDescent; }
@@ -78,20 +82,20 @@ export default class DrawText{
         if(verticalAlign=='top'){
             
         }else if(verticalAlign=='bottom'){
-            y1 += h-linesH
+            y1 += height-innerHeight
         }else if(verticalAlign=='middle'){
-            y1 += Math.round((h-linesH)/2)
+            y1 += Math.round((height-innerHeight)/2)
         }
         
         if(ctx.textAlign=='center'){
-            x1 = x+(w / 2);
+            x1 = x+(width / 2);
         }else if(ctx.textAlign=='left'){
             x1 = x;
         }else if(ctx.textAlign=='right'){
-            x1 = x+w;
+            x1 = x+width;
         }else if(ctx.textAlign=='start'){
             if(ctx.direction == 'rtl'){
-                x1 = x+w;
+                x1 = x+width;
             }else{
                 x1 = x;
             }
@@ -99,7 +103,7 @@ export default class DrawText{
             if(ctx.direction == 'rtl'){
                 x1 = x;
             }else{
-                x1 = x+w;
+                x1 = x+width;
             }
         }
         
@@ -112,19 +116,15 @@ export default class DrawText{
         // normal과 pre-line과 pre-wrap 는 trim 처리
         // pre, nowrap 는 너비가 넘어가면 시작부분에서 그려지게.
 
-
-        const whiteSpace = textConfig.whiteSpace??'break-space';
         lines.forEach((line,i) => {
             const textMetrics = textMetricsForLines[i];
             // console.log(`[${line}]`,textMetrics);
             
-
-            
-            if(w < textMetrics.width){
+            if(width < textMetrics.width){
                 // console.log('넘침',x);
                 const t = ctx.textAlign;
                 if(ctx.direction == 'rtl'){ //오른쪽에서 왼쪽시
-                    x1 = x+w;
+                    x1 = x+width;
                     ctx.textAlign='right'
                     ctx.fillText(line, x+w, y1  );
                 }else{
