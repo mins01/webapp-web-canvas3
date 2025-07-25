@@ -443,23 +443,41 @@
     <div class="my-3">
       <div class="card">
         <div class="card-body">
-          <form name="form_layerConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" 
-              onsubmit="
-                if(textlayer){
-                    const layer = textlayer
-                    layer.resize(this.width.value,this.height.value);
-                    layer.flush();
-                } return false">
-                <div>
-                  <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
-                  <div class="input-group">
-                      <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
-                      <span class="input-group-text" >X</span>
-                      <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
-                      <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+          <div class="d-flex flex-column gap-3">
+            <form name="form_layerConfig" class="d-grid gap-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" 
+                onsubmit="
+                  if(textlayer){
+                      const layer = textlayer
+                      layer.resize(this.width.value,this.height.value);
+                      layer.flush();
+                  } return false">
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Size</div>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="width" placeholder="width" min="1" max="10000">
+                        <span class="input-group-text" >X</span>
+                        <input class="form-control" type="number" name="height" placeholder="height" min="1" max="10000">
+                        <button type="submit"  style="width:6em" class="btn btn-primary">Resize</button>
+                    </div>
                   </div>
-                </div>
-          </form>
+            </form>
+            <div>
+              <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
+              <div class="d-flex gap-1">
+                <button class="btn btn-success" onclick="textlayer.adjustAutoHeight();console.log(textlayer.height);textlayer.flush();"><i class="bi bi-distribute-vertical"></i> Auto height</button>
+              </div>
+            </div>
+            <div>
+              <div class="form-label mb-0"><i class="bi bi-info-circle"></i> info</div>
+              <div class="d-flex gap-1">
+                <button class="btn btn-success" onclick="alert(textlayer.text)"> text</button>
+                <button class="btn btn-success" onclick="alert(textlayer.textLines)"> textLines</button>
+                <button class="btn btn-success" onclick="alert(textlayer.textHeight)"> textHeight</button>
+                <button class="btn btn-success" onclick="alert(textlayer.textMaxHeight)"> textMaxHeight</button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
