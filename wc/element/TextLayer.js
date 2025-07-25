@@ -32,7 +32,7 @@ export default class TextLayer extends Layer{
         super.connectedCallback();
         this.initFromAttributes()
         this.flush();
-        console.log('connectedCallback',this.text);
+        // console.log('connectedCallback',this.text);
     }
 
     initFromAttributes(){
@@ -50,7 +50,7 @@ export default class TextLayer extends Layer{
         if(this.dataset.adjustAutoHeight=='true'){ //자동 높이 조절을 할 것인가?
             this.adjustAutoHeight();
         }
-        console.log('initFromAttributes',this.text);
+        // console.log('initFromAttributes',this.text);
 
     }
 

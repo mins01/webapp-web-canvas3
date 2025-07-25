@@ -52,7 +52,9 @@
   </script>
   <script>
     window.addEventListener('load',(event)=>{
-      document.querySelector('#div-append').append(new TextLayer(200,100));
+      const textLayer = new TextLayer(200,100);
+      textLayer.text = 'JS에서 생성한 객체를 append';
+      document.querySelector('#div-append').append(textLayer);
     })
   </script>
 </head>
@@ -65,7 +67,7 @@
         <div class="form-label">default</div>
         <div>
           <canvas class="wc-textlayer" is="wc-textlayer" width="200" height="200"></canvas>
-          <canvas class="wc-textlayer" is="wc-textlayer" width="200" height="200" ></canvas>
+          <canvas class="wc-textlayer" is="wc-textlayer" width="200" height="200" data-text="data-text 입력 테스트트트트틑 입니다ㅏ다다다"></canvas>
           <canvas class="wc-textlayer" is="wc-textlayer" width="200" height="200" data-text=""></canvas>
         </div>
       </div>
