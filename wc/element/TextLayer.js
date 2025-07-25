@@ -98,6 +98,8 @@ export default class TextLayer extends Layer{
     // 자동 높이 조정
     adjustAutoHeight(){
         this.height = this.textMaxHeight+(this.textConfig.paddingPx*2);
+        console.log('adjustAutoHeight',this.height);
+        
     }
     
     // get foreColor(){ return this.fillStyle; }
