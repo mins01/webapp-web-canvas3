@@ -75,7 +75,7 @@ export default class TextLayer extends Layer{
     get textLines(){
         const innerWidth = this.width-(this.textConfig.paddingPx*2);
         // const innerHeight = this.height-(padding*2);
-        const textLines = DrawText.textToLines(this.ctx,this.textConfig,this.text,innerWidth);
+        const textLines = DrawText.textToTextLines(this.ctx,this.textConfig,this.text,innerWidth);
         return textLines;
     }
     // 텍스트의 최대 높이
