@@ -168,7 +168,7 @@ export default class DrawText{
         }
         // console.log('groups',wordBreak,`[${text}]`,groups);
         
-        return groups;
+        return groups??[];
     }
 
     /**
