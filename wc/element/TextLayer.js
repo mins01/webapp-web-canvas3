@@ -41,6 +41,15 @@ export default class TextLayer extends Layer{
         }else if(this.textContent && this.textContent.trim().length){
             this.text = this.textContent
         }
+
+        // console.log('style',this.style,this.style.cssText);
+        // 노드의 style 적용
+        if(this.style.length){
+            const style = this.style;
+            const styleObj = Object.fromEntries(Object.keys(style).filter(k=>k.match(/^[^\d]/) && style[k]!=='').map(k => [k,style[k]]));
+            this.textConfig.assignFrom(styleObj)
+        }
+
         // 기본 textConfig
         if(this.dataset.textConfig){
            const objTextConfig = JSON.parse(this.dataset.textConfig);
@@ -50,6 +59,7 @@ export default class TextLayer extends Layer{
         if(this.dataset.adjustAutoHeight=='true'){ //자동 높이 조절을 할 것인가?
             this.adjustAutoHeight();
         }
+
         // console.log('initFromAttributes',this.text);
 
     }
@@ -98,7 +108,7 @@ export default class TextLayer extends Layer{
     // 자동 높이 조정
     adjustAutoHeight(){
         this.height = this.textMaxHeight+(this.textConfig.paddingPx*2);
-        console.log('adjustAutoHeight',this.height);
+        // console.log('adjustAutoHeight',this.height);
         
     }
     
@@ -135,7 +145,7 @@ export default class TextLayer extends Layer{
         const ctx = this.ctx;
         // ctx.fillStyle = this.textConfig.textColor;
         // ctx.fillStyle = this.textConfig.color;
-        console.log(this.textConfig,ctx);
+        // console.log(this.textConfig,ctx);
         
         ctx.clearRect(0,0,this.width,this.height);
 
