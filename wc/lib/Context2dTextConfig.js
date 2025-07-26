@@ -19,7 +19,8 @@ class Context2dTextConfig extends BaseConfig{
     fontFamily = "sans-serif";
     //-- font
 
-    textColor = "#000000";
+    // textColor = "#000000";
+    color = "#000000";
     // padding = "0px";
     paddingNumber = "0";
     paddingUnit = "px";
@@ -48,7 +49,7 @@ class Context2dTextConfig extends BaseConfig{
         const proxyConfig = {
             number:['fontSizeNumber','lineHeightNumber','paddingNumber','letterSpacingNumber',],
             boolean:null,
-            keys:['font','fontStretch','lineHeight','textColor','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing','verticalAlign','wordBreak','overflowWrap','whiteSpace']
+            keys:['font','fontStretch','lineHeight','color','padding','textAlign','textBaseline','direction','fontKerning','fontVariantCaps','letterSpacing','textRendering','wordSpacing','verticalAlign','wordBreak','overflowWrap','whiteSpace']
         }
         const proxy = super(proxyConfig);
         proxy.reset();
@@ -119,6 +120,43 @@ class Context2dTextConfig extends BaseConfig{
     get letterSpacingPx(){
         return CssLengthUtil.pxBasedOnFontSize(this.letterSpacing,this.fontSize);
     }
+
+
+    /**
+     * 텍스트 색상을 설정합니다.
+     * @param {string} v - 설정할 색상 값 (예: '#ff0000', 'red' 등)
+     * @alias color
+     */
+    set textColor(v) {
+        this.color = v;
+    }
+
+    /**
+     * 현재 텍스트 색상을 반환합니다.
+     * @returns {string} 현재 설정된 색상 값
+     * @alias color
+     */
+    get textColor() {
+        return this.color;
+    }
+
+    // /**
+    //  * 텍스트 색상을 설정합니다.
+    //  * @param {string} v - 설정할 색상 값 (예: '#ff0000', 'red' 등)
+    //  * @alias textColor
+    //  */
+    // set color(v) {
+    //     this.textColor = v;
+    // }
+
+    // /**
+    //  * 현재 텍스트 색상을 반환합니다.
+    //  * @returns {string} 현재 설정된 색상 값
+    //  * @alias textColor
+    //  */
+    // get color() {
+    //     return this.textColor;
+    // }
     
 
     reset(){
@@ -128,7 +166,8 @@ class Context2dTextConfig extends BaseConfig{
         this.fontSize = "20px"; //px 만 지원하자. 우선은...
         // this.fontSizeNumber = "10"; //px 만 지원하자. 우선은...
         // this.fontSizeUnit = "px"; //px 만 지원하자. 우선은...
-        this.textColor = "#000000";
+        this.color = "#000000";
+        // this.textColor = "#000000";
         this.padding = "0px";
         // this.paddingNumber = "0";
         // this.paddingUnit = "px";
@@ -163,7 +202,7 @@ class Context2dTextConfig extends BaseConfig{
             font:this.font,
             fontSize:this.fontSize,
             textColor:this.textColor,
-            color:this.textColor,
+            color:this.color,
             padding:this.padding,
             textAlign:this.textAlign,
             lineHeight:this.lineHeight,
