@@ -140,24 +140,7 @@ class Context2dTextConfig extends BaseConfig{
         return this.color;
     }
 
-    // /**
-    //  * 텍스트 색상을 설정합니다.
-    //  * @param {string} v - 설정할 색상 값 (예: '#ff0000', 'red' 등)
-    //  * @alias textColor
-    //  */
-    // set color(v) {
-    //     this.textColor = v;
-    // }
-
-    // /**
-    //  * 현재 텍스트 색상을 반환합니다.
-    //  * @returns {string} 현재 설정된 색상 값
-    //  * @alias textColor
-    //  */
-    // get color() {
-    //     return this.textColor;
-    // }
-    
+   
 
     reset(){
         this.font = "20px sans-serif";
@@ -194,7 +177,9 @@ class Context2dTextConfig extends BaseConfig{
 
     assignTo(context){
         super.assignTo(context);
-        context.fillStyle = this.textColor;
+        if ('fillStyle' in context) {
+            context.fillStyle = this.color;
+        }
     }
 
     exportToStyleObject(){

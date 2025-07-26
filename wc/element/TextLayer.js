@@ -60,12 +60,12 @@ export default class TextLayer extends Layer{
 
     setContextConfig(conf){
         super.setContextConfig(conf);
-        this.ctx.fillStyle = conf.foreColor;
+        // this.ctx.fillStyle = conf.foreColor;
         // this.ctx.strokeStyle = conf.backColor; // 무시하자
     }
     setTextConfig(conf){
         this.textConfig.assignFrom(conf);
-        this.ctx.fillStyle = this.textConfig.textColor;
+        // this.ctx.fillStyle = this.textConfig.textColor; //draw 할 때 한다.
     }
 
     setText(text){
@@ -132,17 +132,17 @@ export default class TextLayer extends Layer{
         }
     }
     draw(){
-        this.ctx.fillStyle = this.textConfig.textColor;
         const ctx = this.ctx;
-        this.ctx.clearRect(0,0,this.width,this.height);
+        // ctx.fillStyle = this.textConfig.textColor;
+        // ctx.fillStyle = this.textConfig.color;
+        console.log(this.textConfig,ctx);
+        
+        ctx.clearRect(0,0,this.width,this.height);
 
-        // ctx.save();
         this.contextConfig.assignTo(ctx,true);
-        this.textConfig.assignTo(ctx);
-        // let {fontSize} = CssFontUtil.parse(ctx.font);       
+        this.textConfig.assignTo(ctx); // ctx.fillStyle = this.textConfig.color; 이게 동작함.
 
-        const textConfig = this.textConfig;            
-        DrawText.draw(ctx,textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
+        DrawText.draw(ctx,this.textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
         this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );        
     }
 }
