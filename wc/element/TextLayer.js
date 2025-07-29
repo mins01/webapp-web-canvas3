@@ -117,7 +117,7 @@ export default class TextLayer extends Layer{
 
     isFontLoading = false; //페일 백으로 로딩을 한번만 하게 한다.
     flush(){
-        const font = `${this.textConfig.fontSize} "${this.textConfig.fontFamily}"`;
+        const font = `${this.textConfig.fontSize} ${this.textConfig.fontFamily}`;
         
         const isLoaded = document.fonts.check(font,this.text); //여러 이유 때문에 항상 false가 나올 수 있다. 참고용으로만 사용하고 load를 한번만 하게 한다.
         // 항상 false가 나오는건 load()와 아규멘트 같게 하면 해결 되는 것 같음

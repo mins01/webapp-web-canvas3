@@ -96,10 +96,10 @@
         <div class="canvas-outter"></div>
       </div>
     </template>
-    <div class="d-flex flex-column gap-3" id="boxes">
+    <div class="d-flex flex-wrap gap-3" id="boxes">
     </div>
     <hr>
-    <div class="d-flex flex-column gap-3">
+    <div class="d-flex flex-wrap gap-3">
       <div class="rounded border border-1 p-3 text-bg-secondary">
         <div class="form-label">Black Han Sans</div>
         <div>
@@ -115,7 +115,8 @@
         <div class="form-label">Do Hyeon</div>
         <div>
           <canvas class="wc-textlayer" is="wc-textlayer" width="300" height="50"
-            data-text-config='{"fontSize":"24px","fontFamily":"Do Hyeon","textAlign":"center","padding":"4px"}'
+            style='font-family: "Do Hyeon";font-size: 24px; text-align: center; padding: 4px;'
+            
             data-text="안녕하세요&#10data-adjust-auto-height"
             data-adjust-auto-height="true"
           ></canvas>
