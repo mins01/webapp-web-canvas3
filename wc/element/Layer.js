@@ -135,8 +135,8 @@ export default class Layer extends Canvas{
         ctx.globalCompositeOperation = targetLayer.compositeOperation
         ctx.globalAlpha = targetLayer.alpha
         // ctx.translate(targetLayer.left, targetLayer.top)
-        const tranLeft = targetLayer.left-this.left
-        const tranTop = targetLayer.top-this.top
+        const tranLeft = targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left)
+        const tranTop = targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top)
         ctx.translate(tranLeft, tranTop)
         if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
         ctx.translate(targetLayer.width/2, targetLayer.height/2)
