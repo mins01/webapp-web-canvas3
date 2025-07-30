@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test FloodFillPath</title>
+
+    <!-- 부트스트랩 5.3.left -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+    <style>
+        canvas{
+            outline: 2px dashed #aabbcc99;
+        }
+    </style>
+    <script type="module">
+        import FloodFillPath from '../../../wc/lib/FloodFillPath.js';
+        window.addEventListener('load',(event)=>{
+            const from_canvas = document.getElementById('from_canvas');
+            /** 
+             * 2D rendering context of the source canvas element.
+             * @type {CanvasRenderingContext2D} 
+             */
+            const from_ctx = from_canvas.getContext('2d');
+
+            const to_canvas = document.getElementById('to_canvas')
+            /** 
+             * 2D rendering context of the source canvas element.
+             * @type {CanvasRenderingContext2D} 
+             */
+            const to_ctx = to_canvas.getContext('2d');
+
+            from_ctx.fillStyle = '#aabbcc';
+            from_ctx.fillRect(0,0,200,100);
+            from_ctx.beginPath();
+            from_ctx.moveTo(50,25)
+            from_ctx.lineTo(150,25)
+            from_ctx.lineTo(50,75)
+            from_ctx.fillStyle = '#ff00ffff';
+            from_ctx.fill()
+            from_ctx.closePath();
+            from_ctx.beginPath();
+            from_ctx.arc(100, 50, 40, 0,2*Math.PI,false)
+            from_ctx.fillStyle = '#0000ff66';
+            from_ctx.fill()
+            from_ctx.closePath();
+
+            const path = FloodFillPath.floodFillWithAlpha(from_ctx, 50+1, 25+1, 30);
+            //--------
+            // to_ctx.fillStyle = '#aabbcc';
+            // to_ctx.fillRect(0,0,200,100);
+            to_ctx.fillStyle = '#00ffff99';
+            to_ctx.fill(path)
+
+            //--- 이벤트로
+            from_canvas.addEventListener('click',(event)=>{
+                const tolerance = document.getElementById('tolerance').valueAsNumber
+                const path = FloodFillPath.floodFillWithAlpha(from_ctx, event.offsetX, event.offsetY, tolerance);
+                
+                //--------
+                // to_ctx.fillStyle = '#aabbcc';
+                // to_ctx.fillRect(0,0,200,100);
+                to_ctx.fillStyle = '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+                to_ctx.fill(path)
+                
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>test FloodFillPath</h1>
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <div class="input-group">
+                    <span class="input-group-text">색상오차</span>
+                    <div class="form-control ">
+                        <input class="form-range d-block" type="range" name="" id="tolerance" value="0" min="0" max="510" oninput="this.parentNode.parentNode.querySelector('out').textContent = this.value;">
+                    </div>
+                    <out class="input-group-text justify-content-end" style="width: 5em;">0</out>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="from_canvas" width="200" height="100"></canvas>
+            </div>
+            <div class="card-footer">클릭시 해당 영역을 아래 canvas에 랜덤으로 색칠함</div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <canvas id="to_canvas" width="200" height="100"></canvas>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
