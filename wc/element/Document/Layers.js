@@ -4,6 +4,8 @@ import Layer from "../Layer.js";
 import EllipseLayer from "../EllipseLayer.js";
 import RectangleLayer from "../RectangleLayer.js";
 import TextLayer from "../TextLayer.js";
+import LayerKind from "../../lib/LayerKind.js";
+
 
 const Wc = { Canvas,Layer,EllipseLayer,RectangleLayer,TextLayer };
 
@@ -99,7 +101,7 @@ export default class Layers extends SelectableArray{
     mergeDown(){
         console.log(this.selectedIndex);
         if(this.selectedIndex===0){
-            alert('No layers available to merge.');
+            alert('No layers available to merge down.');
             return false;
         }
         this?.document?.editor?.tool?.inactivate()
@@ -108,6 +110,11 @@ export default class Layers extends SelectableArray{
         const fromLayer = this[this.selectedIndex];
         const toLayer = this[this.selectedIndex-1];
         console.log(fromLayer,toLayer);
+        if(toLayer.kind !== LayerKind.NORMAL){
+            alert('Merge Down is only available on NORMAL layer.');
+            return false;
+        }
+        
         
         toLayer.drawLayer(fromLayer);
         // toLayer.flush();

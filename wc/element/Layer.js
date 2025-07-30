@@ -134,16 +134,19 @@ export default class Layer extends Canvas{
         ctx.save();
         ctx.globalCompositeOperation = targetLayer.compositeOperation
         ctx.globalAlpha = targetLayer.alpha
-        ctx.translate(targetLayer.left, targetLayer.top)
-        if(targetLayer.zoom !== 1){
-            ctx.scale(targetLayer.zoom,targetLayer.zoom); 
-        }
+        // ctx.translate(targetLayer.left, targetLayer.top)
+        const tranLeft = targetLayer.left-this.left
+        const tranTop = targetLayer.top-this.top
+        ctx.translate(tranLeft, tranTop)
+        if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
         ctx.translate(targetLayer.width/2, targetLayer.height/2)
         ctx.scale(targetLayer.flipX,targetLayer.flipY);
         if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
         ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
+        // ctx.translate(targetLayer.left-this.left, targetLayer.top-this.top);
         ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
-        ctx.translate(-targetLayer.left, -targetLayer.top)
+        // ctx.translate(-targetLayer.left, -targetLayer.top)
+        ctx.translate(-tranLeft, -tranTop)
         ctx.restore()
     }
 }
