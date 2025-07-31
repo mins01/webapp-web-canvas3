@@ -138,6 +138,170 @@
                 ctx.restore();
                 out.append(c)
             }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                ctx.beginPath();
+                let path = ShapePath2D.roundSquare(25, 10, 50, 10);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.roundSquare(175, 10, 50,{x:10,y:20});
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.roundSquare(25, 80, 50,[10,20]);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.roundSquare(175, 80, 50,[10,20,30]);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.roundSquare(25, 150, 50,[10,20,30,40]);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.roundSquare(175, 150, 50,[{x:10,y:20},{x:20,y:30},{x:30,y:40},{x:40,y:50}]);
+                ctx.fill(path);
+                ctx.stroke(path);
+                
+                ctx.restore();
+                out.append(c)
+            }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.equilateralPolygon(150, 150, 100, 3 , null);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.lines([[0,150],[150,150],[150,0]])
+                ctx.stroke(path);
+                
+                ctx.restore();
+                out.append(c)
+            }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.equilateralPolygon(75, 75, 50, 3, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 75, 50, 4, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(75, 225, 50, 5, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 225, 50, 6, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                ctx.restore();
+                out.append(c)
+            }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.equilateralPolygon(75, 75, 50, 7, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 75, 50, 8, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(75, 225, 50, 9, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 225, 50, 10, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                ctx.restore();
+                out.append(c)
+            }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.equilateralPolygon(75, 75, 50, 3);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 75, 50, 4);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(75, 225, 50, 5);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 225, 50, 6);
+                ctx.fill(path);
+                ctx.stroke(path);
+                ctx.restore();
+                out.append(c)
+            }
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.equilateralPolygon(75, 75, 50, 7);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 75, 50, 8);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(75, 225, 50, 9);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.equilateralPolygon(225, 225, 50, 10);
+                ctx.fill(path);
+                ctx.stroke(path);
+                ctx.restore();
+                out.append(c)
+            }
+
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.star(75, 75, 50, 25 , 5, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.star(225, 75, 50, 15 , 5);
+                ctx.fill(path);
+                ctx.stroke(path);
+
+                path = ShapePath2D.star(75, 225, 50, 25 , 6, -0.5 * Math.PI);
+                ctx.fill(path);
+                ctx.stroke(path);
+                path = ShapePath2D.star(225, 225, 50, 15 , 6);
+                ctx.fill(path);
+                ctx.stroke(path);
+                
+               
+                ctx.restore();
+                out.append(c)
+            }
+
+            // merge
+            {
+                const c = new Canvas(300,300);
+                const ctx = c.ctx; ctx.fillStyle = "#ff000080"; ctx.strokeStyle = "#0000ff80"; ctx.lineWidth = 10;
+                ctx.save();
+                let path = ShapePath2D.merge(
+                    ShapePath2D.star(75, 75, 50, 25 , 5, -0.5 * Math.PI),
+                    ShapePath2D.star(225, 75, 50, 15 , 5),
+                    ShapePath2D.star(75, 225, 50, 25 , 6, -0.5 * Math.PI),
+                    ShapePath2D.star(225, 225, 50, 15 , 6), 
+                )
+                console.log(path);
+                
+                ctx.fill(path);
+                ctx.stroke(path);
+               
+                ctx.restore();
+                out.append(c)
+            }
         })
         
     </script>
