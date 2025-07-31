@@ -8,7 +8,7 @@ class Canvas extends HTMLCanvasElement{
         "alpha":true,
         // "colorSpace":"srgb", // srgb, display-p3
         // "colorType":"unorm8", // unorm8, float16
-        "desynchronized": true, // 더 빠른 반응시간
+        // "desynchronized": true, // 더 빠른 반응시간
         "willReadFrequently": false,
     };
 
