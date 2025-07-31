@@ -4,7 +4,13 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 import HtmlUtil from "../lib/HtmlUtil.js";
 
 class Canvas extends HTMLCanvasElement{
-    static context2dOptions = {"alpha":true,"antialias":true,"depth":true,"willReadFrequently": false,};
+    static context2dOptions = {
+        "alpha":true,
+        // "colorSpace":"srgb", // srgb, display-p3
+        // "colorType":"unorm8", // unorm8, float16
+        "desynchronized": true, // 더 빠른 반응시간
+        "willReadFrequently": false,
+    };
 
     static get keys(){
         return ['name', 'width', 'height', 'drawable', 'label', 'contextConfig', 'createdAt','updatedAt',];
