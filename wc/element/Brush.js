@@ -1,4 +1,4 @@
-import Layer from "./Layer.js";
+// import Layer from "./Layer.js";
 import PathShape from "../draw/PathShape.js";
 import jsColor from "../lib/jsColor.js";
 import Canvas from "./Canvas.js";
@@ -6,7 +6,7 @@ import Canvas from "./Canvas.js";
 import BrushConfig from "../lib/BrushConfig.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
 
-export default class Brush extends Layer{
+export default class Brush extends Canvas{
   margin = 4;
   // remainInterval = 0 // @deprecated 2025-05-18
   // lastPressure = 0.5; // @deprecated 2025-05-17
@@ -108,14 +108,12 @@ export default class Brush extends Layer{
       ctx.fillStyle = gradient;
       ctx.beginPath();
       PathShape.rect(ctx,this.margin,this.margin,size,size);
-      ctx.closePath();
       ctx.fill()
     }else if(shape=='circle'){
       const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
       ctx.fillStyle = gradient;
       ctx.beginPath();
       PathShape.circle(ctx,x,y,r);
-      ctx.closePath();
       ctx.fill()
     }else{
       if((shape[0]??'')=='#'){ // 이미지 DOM 관련
@@ -133,7 +131,6 @@ export default class Brush extends Layer{
         
         ctx.beginPath();
         PathShape.rect(ctx,this.margin,this.margin,size,size);
-        ctx.closePath();
         ctx.fill()
         
       }else{ //failback
@@ -141,7 +138,6 @@ export default class Brush extends Layer{
         ctx.fillStyle = gradient;
         ctx.beginPath();
         PathShape.circle(ctx,x,y,r);
-        ctx.closePath();
         ctx.fill()
         console.error(`This shape(${shape}) is not supported.`);
       }
