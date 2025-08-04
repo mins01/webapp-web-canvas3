@@ -124,9 +124,9 @@
 .wc-app[data-tool="Text"] .only-shown-tool-Text{display: block;}
 .wc-app[data-tool="Text"] .only-hidden-tool-Text{display: none;}
 
-
-
-
+body[data-fullscreen="true"] .only-shown-fullscreen-true{display: block;}
+body:not([data-fullscreen]) .only-shown-fullscreen-false{display: block;}
+body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 
 
 

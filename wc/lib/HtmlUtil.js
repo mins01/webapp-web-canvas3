@@ -280,4 +280,17 @@ export default class HtmlUtil{
     return fonts;
 
   }
+
+
+
+  // 전체화면
+  static toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      return true;
+    } else {
+      document.exitFullscreen();
+      return false;
+    }
+  }
 }
