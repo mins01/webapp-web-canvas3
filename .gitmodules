@@ -13,3 +13,6 @@
 [submodule "third_party/js-templater"]
 	path = third_party/js-templater
 	url = https://github.com/mins01/js-templater.git
+[submodule "third_party/ui-exclusive-dialog"]
+	path = third_party/ui-exclusive-dialog
+	url = https://github.com/mins01/ui-exclusive-dialog.git
