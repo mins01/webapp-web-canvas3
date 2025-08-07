@@ -276,8 +276,8 @@ export default class Editor{
      * Downloads the current document by saving it with the specified type, filename, and quality.
      *
      */
-    downloadDocument(type='wc3.json',filename=null,quality=0.5){
-        return this.saveDocument(type,filename,quality);
+    downloadDocument(type='wc3.json',basename=null,quality=0.5){
+        return this.saveDocument(type,basename,quality);
     }
     /**
      * Saves the current document in the specified format with optional filename and image quality.
@@ -287,12 +287,12 @@ export default class Editor{
      * @param {number} [quality=0.5] - Image quality (0.0–1.0). Used only for image formats.
      * @returns {boolean|Promise<void>} Returns false if no document exists, otherwise a promise that resolves after saving.
      */
-    saveDocument(type='wc3.json',filename=null,quality=0.5){
+    saveDocument(type='wc3.json',basename=null,quality=0.5){
         if(!this.document){return false;}
-        if(filename===null){ filename = this.document.name }
-        filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
-        if(filename.length==0) filename = Date.now();
-        if(filename != this.document.name){ this.document.name = filename; }
+        if(basename===null){ basename = this.document.name }
+        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        if(basename.length==0) basename = Date.now();
+        if(basename != this.document.name){ this.document.name = basename; }
 
         quality = parseFloat(quality);
 
@@ -316,9 +316,11 @@ export default class Editor{
             mimetype = 'application/zip';            
         }
         if(mimetype){
-            this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
-                HtmlUtil.saveAsFile(blob, filename+'.'+ext , mimetype);
+            const filename = basename+'.'+ext
+            return this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
+                HtmlUtil.saveAsFile(blob, filename , mimetype);
                 this.autoSave.autoSave();
+                return Promise.resolve({ content:blob, basename, filename , type:mimetype });
             }).catch(e=>{console.error(e);})
         }else {
             console.error('지원되지 않는 타입')
@@ -332,14 +334,14 @@ export default class Editor{
      * @param {string} [filename=null] 
      * @returns {boolean} 
      */
-    async uploadDocument(type='wc3.json',filename=null,quality=0.5){
+    async uploadDocument(type='wc3.json',basename=null,quality=0.5){
         if(!this.document){return false;}
-        if(filename===null){ filename = this.document.name }
-        filename = filename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
-        if(filename.length==0) filename = Date.now();
-        if(filename != this.document.name){ this.document.name = filename; }
+        if(basename===null){ basename = this.document.name }
+        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        if(basename.length==0) basename = Date.now();
+        if(basename != this.document.name){ this.document.name = basename; }
 
-        console.log(filename);
+        console.log(basename);
 
         let ext = '';
         let mimetype = null;
@@ -360,11 +362,11 @@ export default class Editor{
             mimetype = 'application/zip';            
         }
         if(mimetype){
-            this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
+            const filename = basename+'.'+ext
+            await this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
                 this.autoSave.autoSave();
                 return this.upload(blob, filename+'.'+ext);
-
-            }).catch(e=>{console.error(e);})            
+            }).catch(e=>{console.error(e); throw e;})            
         }else {
             throw new Error('지원되지 않는 타입');
         }

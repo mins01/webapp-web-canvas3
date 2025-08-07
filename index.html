@@ -614,7 +614,7 @@
           </div>
           <div class="modal-body">
             <div class="d-flex flex-column gap-3 p-1">
-              <form action="" onsubmit="editor.downloadDocument(this.type.value,this.filename.value,this.quality.value);return false;">
+              <form action="" onsubmit="editor.downloadDocument(this.type.value,this.filename.value,this.quality.value).then((r)=>{edialog.alert(`${r.basename}을 다운로드하였습니다.\n(시간이 걸릴 수 있습니다.)`)});return false;">
                 <input type="hidden" name="type" value="png">
                 <div class="d-flex flex-column gap-3">
                   <div class="input-group ">

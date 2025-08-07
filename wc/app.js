@@ -137,17 +137,21 @@ globalThis.window.addEventListener('load',(event)=>{
 if(globalThis?.Wg2Uploder??false){
     editor.upload = function(file,filename){
         const resJson = globalThis.Wg2Uploder.upload(file,filename)
-        resJson.then((obj)=>{
+        return resJson.then((obj)=>{
             if(!obj[0]){ return; }
             const uploaded = obj[0];
             console.log(uploaded);
 
             if (/\.(jpe?g|png)$/i.test(uploaded.name)) {
                 if(uploaded.previewurl){
-                    editor.previewImage(uploaded.previewurl);
+                    globalThis.edialog.confirm('업로드가 완료되었습니다.\n업로드 이미지를 확인할까요?').then((r)=>{
+                        if(r){
+                            editor.previewImage(uploaded.previewurl);
+                        }
+                    })
                 }
             }else{
-                alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
+                globalThis.edialog.alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
             }
 
         }).catch(e => {
