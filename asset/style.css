@@ -229,7 +229,7 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 .layer-box[data-flip-y="-1"] .icon-flip-y{ display: block;}
 .layer-box.active{
   /* border:1px dashed #333; */
-  background-color: #eee;
+  background-color: rgba(0,0,0,0.1);
 }
 .layer-box-preview{
   padding:0 4px;
