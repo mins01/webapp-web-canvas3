@@ -227,9 +227,13 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 .icons-d-none .icon{display: none;}
 .layer-box[data-flip-x="-1"] .icon-flip-x{ display: block;}
 .layer-box[data-flip-y="-1"] .icon-flip-y{ display: block;}
+.layer-box{
+  border-color: transparent;
+}
 .layer-box.active{
+  border:1px solid #999;
   /* border:1px dashed #333; */
-  background-color: rgba(0,0,0,0.1);
+  /* background-color: rgba(0,0,0,0.1); */
 }
 .layer-box-preview{
   padding:0 4px;
@@ -355,7 +359,10 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 
 /* ui-input-stepper */
 .btn-stepper{ width: 2.5em;}
+.ui-input-stepper.ui-input-stepper-data-value::before, .ui-input-stepper .ui-input-stepper-data-value::before{
+  text-shadow: -1px -1px 0 var(--bs-border-color,#666), 1px -1px 0 var(--bs-border-color,#666), -1px 1px 0 var(--bs-border-color,#666), 1px 1px 0 var(--bs-border-color,#666);
 
+}
 
 .wc-app[data-tool-enable="true"] .only-enable-tool-enable,
 .wc-app[data-tool-enable="true"] .group-only-enable-tool-enable > *{
