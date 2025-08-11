@@ -128,6 +128,8 @@ globalThis.window.addEventListener('load',(event)=>{
 
     },500)
 
+
+    window.document.body.dataset.bsTheme = globalThis.localStorage.getItem('data-bs-theme')??'light';
     
 })
 

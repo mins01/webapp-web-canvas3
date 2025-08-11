@@ -229,6 +229,10 @@ class WcHelper{
   }
 
 
+  static toggleColorTheme(){
+    document.body.dataset.bsTheme = document.body.dataset.bsTheme==='dark'?'light':'dark';
+    globalThis.localStorage.setItem('data-bs-theme',document.body.dataset.bsTheme)
+  }
 
 
 
