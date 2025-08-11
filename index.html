@@ -612,6 +612,24 @@
         </div>
       </div>
     </div>
+    <script>
+      document.querySelector('#modal-file-preview').addEventListener('show.bs.modal', (event)=>{ 
+        const target = event.target;
+        target.querySelector('#img-preview-natural-size').textContent = 'Loading';
+        target.querySelector('#img-preview-size').textContent = 'Loading';
+      });
+      document.querySelector('#modal-file-preview').addEventListener('shown.bs.modal', (event)=>{ 
+        const target = event.target;
+        requestAnimationFrame(()=>{
+              const img = document.querySelector('#img-preview');
+              // alert(img);
+              const rect = img.getBoundingClientRect()                
+              target.querySelector('#img-preview-natural-size').textContent = `${img.naturalWidth}px x ${img.naturalHeight}px`;
+              target.querySelector('#img-preview-size').textContent = `(${rect.width.toFixed(0)}px x ${rect.height.toFixed(0)}px)`;
+          })
+      })
+
+    </script>
         
     <div class="modal fade" id="modal-file-download"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -2131,10 +2149,10 @@
             editor.brush2.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush2) })
             editor.brush3.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush3) })
             editor.eraser.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.eraser,true) })
-            editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ previewAndSyncForm(editor.brush) },100); })
-            editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ previewAndSyncForm(editor.brush2) },100); })
-            editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ previewAndSyncForm(editor.brush3) },100); })
-            editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ setTimeout(()=>{ previewAndSyncForm(editor.eraser,true) },100); })
+            editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush) }); })
+            editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush2) }); })
+            editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush3) }); })
+            editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.eraser,true) }); })
   
             window.addEventListener('resize', (event)=>{
               previewAndSyncForm(editor.brush);
@@ -2143,11 +2161,13 @@
               previewAndSyncForm(editor.eraser,true);
             })
             
-  
-            previewAndSyncForm(editor.brush);
-            previewAndSyncForm(editor.brush2);
-            previewAndSyncForm(editor.brush3);
-            previewAndSyncForm(editor.eraser,true);
+            // 안보일 때 그려봤자 의미가 없네.
+            // requestAnimationFrame(()=>{
+            //   previewAndSyncForm(editor.brush);
+            //   previewAndSyncForm(editor.brush2);
+            //   previewAndSyncForm(editor.brush3);
+            //   previewAndSyncForm(editor.eraser,true);
+            // });
           },600)
         })
       }

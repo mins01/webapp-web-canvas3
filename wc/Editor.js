@@ -519,12 +519,6 @@ export default class Editor{
         imgPreview.addEventListener('load',(event)=>{
             let target = event.target;
             let modalNode = target.closest('.modal');
-            setTimeout(()=>{
-                const rect = target.getBoundingClientRect()                
-                modalNode.querySelector('#img-preview-natural-size').textContent = `${target.naturalWidth}px x ${target.naturalHeight}px`;
-                modalNode.querySelector('#img-preview-size').textContent = `(${rect.width.toFixed(0)}px x ${rect.height.toFixed(0)}px)`;
-            },500)
-            
             const modal = bootstrap.Modal.getInstance(modalNode)
             editor.modalHandler.hideAll();
             modal.show()
