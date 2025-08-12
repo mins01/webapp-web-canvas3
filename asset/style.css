@@ -155,7 +155,7 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   touch-action: none;
   scrollbar-gutter: stable both-edges;
   */
-  overflow: hidden;
+  overflow: visible;
   background-color: #39f; 
   /* display: flex;
   justify-content: center;
@@ -167,6 +167,7 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 }
 
 .wc-frame > .wc-document{
+  display: block;
   /* margin:100svh 100svw; */
   outline:4px dashed #000;
   background-image: url(bg.gif);
