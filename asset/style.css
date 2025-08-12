@@ -145,10 +145,11 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 }
 .wc-frame{
   position: absolute;
-  top: 0;
+  /* top: 0;
   left: 0;
   right: 0; 
-  bottom: 0;
+  bottom: 0; */
+  inset: 0px;
   /* overflow: scroll;
   scrollbar-width: thin;
   scrollbar-color: #333 #eee;
@@ -164,6 +165,8 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   place-items: center;
   grid-template-rows: 100%;
   grid-template-columns: 100%;
+
+  contain: strict;
 }
 
 .wc-frame > .wc-document{
