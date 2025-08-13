@@ -1,6 +1,7 @@
 // import NamedSelectableArray from "./lib/NamedSelectableArray.js";
 // import SelectableArray from "./lib/SelectableArray.js";
-import PointerEventHandler from "./lib/PointerEventHandler.js";
+// import PointerEventHandler from "./lib/PointerEventHandler.js";
+import PointerEventHandler from "../third_party/js-pointer-event-handler/PointerEventHandler.esm.js";
 
 import Context2dConfig from "./lib/Context2dConfig.js";
 import Context2dTextConfig from "./lib/Context2dTextConfig.js";
@@ -41,11 +42,11 @@ export default class Editor{
             this.documents.add(el)
         });
         this.activeTool = null;
-        this.peh = new PointerEventHandler(this);
+        this.peh = new PointerEventHandler(target);
         this.peh.onpointerdown = this.onpointerdown;
         this.peh.onpointermove = this.onpointermove;
         this.peh.onpointerup = this.onpointerup;
-        this.peh.addEventListener(target)
+        // this.peh.addEventListener(target)
 
         // this.tool = null;
         this.tools = new Tools(this);
@@ -171,9 +172,9 @@ export default class Editor{
     addEventListener(){
         this.peh.addEventListener(this.target);
         this.target.addEventListener('dblclick',(event)=>{ 
-            if(this.peh.maxPointers===1 ){
+            if(this.peh.maxActivePointers===1 ){
                 if(this?.tool?.ondblclick) this?.tool?.ondblclick(event) 
-            }else if(this.peh.maxPointers >= 2){
+            }else if(this.peh.maxActivePointers >= 2){
                 if(this.peh.pointers.size===2){
                     
                 }
@@ -196,13 +197,18 @@ export default class Editor{
         let y = event.y - doc.offsetTop - layer.top + window.scrollY;
         return {x:x,y:y};
     }
-
+    checkInputMode(event){
+        // console.log('inputMode',this.editor.editorConfig.inputMode);
+        if(this.editorConfig.inputMode==='all'){return true;}
+        return this.editorConfig.inputMode == event.pointerType;
+    }
     onpointerdown=(event)=>{
         this.target.dataset.pointerEventType = event.type;
-        if(this.peh.maxPointers===1 ){
+        if(this.peh.maxActivePointers===1 ){
+            if(!this.checkInputMode(event)) return;
             this.tool.start();
             this.tool.onpointerdown(event);
-        }else if(this.peh.maxPointers >= 2){
+        }else if(this.peh.maxActivePointers >= 2){
             if(this.tool.downAt){
                 this.tool.cancel();
             }
@@ -221,9 +227,10 @@ export default class Editor{
     }
     onpointermove=(event)=>{
         this.target.dataset.pointerEventType = event.type;
-        if(this.peh.maxPointers===1 ){
+        if(this.peh.maxActivePointers===1 ){
+            if(!this.checkInputMode(event)) return;
             this.tool.onpointermove(event);
-        }else if(this.peh.maxPointers >= 2){
+        }else if(this.peh.maxActivePointers >= 2){
             if(this.peh.pointers.size===2){
                 // 줌 처리
                 const document = this?.document
@@ -253,10 +260,11 @@ export default class Editor{
     onpointerup=(event)=>{
         // this.target.dataset.pointerEventType = event.type;
         delete this.target.dataset.pointerEventType
-        if(this.peh.maxPointers===1 ){
+        if(this.peh.maxActivePointers===1 ){
+            if(!this.checkInputMode(event)) return;
             this.tool.onpointerup(event);
             this.tool.end();
-        }else if(this.maxPointers>=2 && this.peh.pointers.size===2 ){
+        }else if(this.maxActivePointers>=2 && this.peh.pointers.size===2 ){
             
         }
     }
