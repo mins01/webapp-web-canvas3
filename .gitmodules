@@ -16,3 +16,6 @@
 [submodule "third_party/ui-exclusive-dialog"]
 	path = third_party/ui-exclusive-dialog
 	url = https://github.com/mins01/ui-exclusive-dialog.git
+[submodule "third_party/js-pointer-event-handler"]
+	path = third_party/js-pointer-event-handler
+	url = https://github.com/mins01/js-pointer-event-handler.git
