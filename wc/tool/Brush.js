@@ -3,6 +3,7 @@ import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class Brush extends BaseTool{
+    drawCount = 0;
     remainInterval = 0;
     brush = null;
     workingLayer = null;
@@ -16,6 +17,7 @@ export default class Brush extends BaseTool{
         this.name = 'Brush';
         this.brush = this.editor.brush;
         this.workingLayer = new Layer(100,100);
+        this.drawCount = 0;
     }
 
     start(){
@@ -58,14 +60,15 @@ export default class Brush extends BaseTool{
     onpointerdown(event){
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
-        this.brush.ready()
+        this.drawCount = 0; // 0으로 초기화
+        this.brush.ready();
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
-        if(event.pointerType!=='touch'){
-            this.drawForDown(this.x0,this.y0)
-        }
+        // if(event.pointerType!=='touch'){
+        //     this.drawForDown(this.x0,this.y0)
+        // }
         this.lastPointerEvent = this.pointerEvent;
 
         this.startBuildUp();
@@ -83,12 +86,15 @@ export default class Brush extends BaseTool{
     }
     onpointerup(event){
         if(super.onpointerup(event)===false){return false;}
+        if(this.drawCount===0){
+            this.drawForDown(this.x0,this.y0); // 아무 동작 없이 up을 하면 점 하나를 찍는 다.
+        }
 
         this.stopBuildUp();
         this.pointerEvent = new PointerEvent(event.type, event)
         this.mergeFromWorkingLayer();
         this.workingLayer.clear();
-        
+        this.drawCount = 0; // 0으로 초기화
         return;
     }
 
@@ -150,6 +156,7 @@ export default class Brush extends BaseTool{
         ctx.restore();
         layer.flush();
         this.mergeFromWorkingLayer();
+        this.drawCount++;       
     }
 
     
