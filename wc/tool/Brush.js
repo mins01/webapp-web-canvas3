@@ -76,6 +76,9 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
+        if(this.drawCount===0){
+            this.drawForDown(this.x0,this.y0); // 아무 동작 없으면 점 하나를 찍는 다.
+        }        
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
