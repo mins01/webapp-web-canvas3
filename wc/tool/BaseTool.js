@@ -5,10 +5,10 @@ export default class BaseTool {
 	name = null;
 	editor = null;
 	peh = null;
-	document = null;
+	// document = null;
+	// layer = null;
+	// drawingLayer = null;
 	documentRect = null;
-	layer = null;
-	drawingLayer = null;
 	x0 = null;
 	y0 = null;
 	// x = null;
@@ -32,16 +32,23 @@ export default class BaseTool {
 		this.pointerType = null
 		this.downAt = null;
 
-		this.document = this.editor?.document;
-		this.layer = this?.document?.layer;
-		this.drawingLayer = this?.document?.drawingLayer;
-		// if(this.document) this.ready()
+		// this.document = this.editor?.document; // to getter
+		// this.layer = this?.document?.layer; // to getter
+		// this.drawingLayer = this?.document?.drawingLayer; // to getter
+		// console.log(this.document);
+		
 
 		this.x0 = null;
 		this.y0 = null;
 		this.x1 = null;
 		this.y1 = null;
 	}
+
+	get document(){ return this?.editor?.document??null; }
+	get layer(){ return this?.editor?.document?.layer??null; }
+	get drawingLayer(){ return this?.editor?.document?.drawingLayer??null; }
+
+
 
 	/** 
 	 * 활성화 : 툴이 선택 되면
