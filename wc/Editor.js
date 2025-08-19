@@ -544,7 +544,7 @@ export default class Editor{
     // ready안에서 flush 하지 마라! flush 는 ready 전에 실행해라.
     ready(){
         console.log('Editor.ready()');
-        this.document.ready();
+        this?.document?.ready();
         this.tool?.ready(); // 툴의 동작을 다시 준비.
         this.syncLayers();
     }
@@ -555,73 +555,18 @@ export default class Editor{
     syncLayers(){
         console.log('Editor.syncLayers()')
         if(!this.layerBoxWraps) this.layerBoxWraps=[];
+        const layerBoxContainer = window.document.querySelector('.layer-box-container');
+        const templateLayerBox = window.document.querySelector('#template-layer-box');
+        layerBoxContainer.innerHTML = '';
 
+        if(!this.document){
+            return;
+        }
         const document = this.document
         const modalHandler = this.modalHandler;
 
-        const layerBoxContainer = window.document.querySelector('.layer-box-container');
-        const templateLayerBox = window.document.querySelector('#template-layer-box');
-        
-        layerBoxContainer.innerHTML = '';
-
         // const layers = [document.drawingLayer].concat(document.layers);
         const selectedIndex = document.layers.selectedIndex;
-
-        // old
-        // document.layers.forEach((layer,index)=>{
-        //     console.log(layer.name);
-            
-        //     const layerBoxNode = window.document.importNode(templateLayerBox.content,true);
-        //     const layerBox = layerBoxNode.querySelector('.layer-box');
-        //     const content = layerBoxNode.querySelector('.layer-box-content');
-        //     const preview = layerBoxNode.querySelector('.layer-box-preview');
-        //     const detail = layerBoxNode.querySelector('.layer-box-detail');
-        //     const eye = layerBoxNode.querySelector('.layer-box-eye');
-        //     const config = layerBoxNode.querySelector('.layer-box-config');
-
-        //     // const label = layerBoxNode.querySelector('.layer-box-detail-label');
-        //     const name = layerBoxNode.querySelector('.layer-box-detail-name');
-        //     const size = layerBoxNode.querySelector('.layer-box-detail-size');
-        //     const zoom = layerBoxNode.querySelector('.layer-box-detail-zoom');
-        //     const alpha = layerBoxNode.querySelector('.layer-box-detail-alpha');
-        //     layerBox.dataset.flipX = layer.flipX;
-        //     layerBox.dataset.flipY = layer.flipY;
-        //     layerBox.dataset.kind = layer.kind;
-
-        //     // label.textContent = layer.constructor.name
-        //     name.textContent = layer.name
-        //     size.textContent = layer.width+'x'+layer.height
-        //     zoom.textContent = Math.floor(layer.zoom*100)+'%'
-        //     alpha.textContent = Math.floor(layer.alpha*100)+'%'
-
-        //     if(selectedIndex == index){
-        //         layerBox.classList.add('active')
-        //     }
-        //     content.onclick = (event)=>{
-        //         layer.parent.select(index);
-        //     }
-        //     eye.onclick = (event)=>{
-        //         event.stopPropagation()
-        //         layer.visible = !layer.visible;
-        //         layer.flush();
-        //         layer?.parent?.ready();
-        //         layer?.parent?.history.save('layer.visible')
-        //     }
-        //     config.layer = layer;
-        //     config.onclick = (event)=>{
-        //         this.showModalLayerProperty(layer);
-        //     }   
-        //     layerBox.dataset.wcLayerVisible = layer.visible;
-
-        //     preview.innerHTML = '';
-        //     preview.append(layer);
-        //     layerBoxContainer.prepend(layerBox)
-
-            
-        // })
-
-
-
 
         const templater1 = new Templater();
         templater1.debug = true;
