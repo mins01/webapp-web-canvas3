@@ -28,7 +28,7 @@ export default class Brush extends BaseTool{
 
     ready(){
 		super.ready();
-        if(!this.layer){ return false; }
+        if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         this.targetLayer = this.document.layer;

@@ -1100,8 +1100,8 @@
                 "><i class="bi bi-union"></i></button>
                 
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document.layers.moveUp();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-forward"></i></button>
-                  <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers.moveDown();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-backward"></i></button>
+                  <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document?.layers?.moveUp();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-forward"></i></button>
+                  <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers?.moveDown();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-backward"></i></button>
                 </div>
                 <button type="button" class="btn btn-danger" title="Delete layer" onclick="
                   edialog.confirm('Delete layer?').then((r)=>{
