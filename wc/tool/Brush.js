@@ -31,15 +31,15 @@ export default class Brush extends BaseTool{
         if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
-        this.targetLayer = this.document.layer;
-        this.orignalSnapshot = this.targetLayer.snapshot()
+        // this.layer = this.document.layer;
+        this.orignalSnapshot = this.layer?.snapshot()??null
         this.stopBuildUp();        
 	}
 
     /** 
      * 활성화 : 툴이 선택 되면
      */
-    activate(cb=null){        
+    activate(cb=null){
         super.activate(()=>{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
                 console.warn(`Only normal layer are supported. (${this?.layer?.kind})`);
@@ -53,8 +53,8 @@ export default class Brush extends BaseTool{
 
     inactivate(){
         super.inactivate();
-        this.targetLayer.import(this.orignalSnapshot); // 되돌린다.
-
+        if(this.layer && this.orignalSnapshot) this.layer.import(this.orignalSnapshot); // 되돌린다.
+        this.orignalSnapshot = null;
     }
 
     onpointerdown(event){
@@ -103,9 +103,9 @@ export default class Brush extends BaseTool{
 
     mergeFromWorkingLayer(){
         const from = this.workingLayer;
-        const to = this.targetLayer;
+        const to = this.layer;
         const ctx = to.ctx;
-        this.targetLayer.import(this.orignalSnapshot);
+        if(this.orignalSnapshot) this.layer.import(this.orignalSnapshot);
         ctx.save();
         ctx.globalCompositeOperation = this.brush.brushConfig.compositeOperation;        
         ctx.globalAlpha = from.alpha
@@ -117,7 +117,7 @@ export default class Brush extends BaseTool{
     end(){
         if(super.end()===false){return false;}
         // this.document.history.save(`Tool.${this.constructor.name}`);
-        this.orignalSnapshot = this.targetLayer.snapshot()
+        this.orignalSnapshot = this.layer.snapshot()
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
     }
