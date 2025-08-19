@@ -61,8 +61,7 @@ export default class Documents extends SelectableArray{
     }
     const document = this.selected;
     document.frame.remove();
-    delete document.layers;
-    delete document.history;
+    document.dispose();
     const r = super.remove();
     if(r>=0){ this.select(r); }
   }

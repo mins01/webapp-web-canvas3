@@ -53,6 +53,20 @@ export default class Document extends Layer{
         this.flush()
     }
 
+    // 연결된 요소들 정리
+    dispose(){       
+        
+        this.layers.forEach(layer=>{ layer.remove(); }); //레이어들 해제
+        this.layers.document = null;
+        this.layers = null;
+        this.history = null;
+        this.parent = null;
+        this.drawingLayer.parent = null;
+        this.drawingLayer = null;
+        this.editor = null;
+
+        console.log('document.dispose()');
+    }
 
     get layer(){ return this.layers.selected; }
 
@@ -178,4 +192,7 @@ export default class Document extends Layer{
         c.history.save();
         return c;
     }
+
+
+    
 }
