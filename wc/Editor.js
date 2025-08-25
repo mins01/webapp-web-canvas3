@@ -288,10 +288,10 @@ export default class Editor{
         return this.saveDocument(type,basename,quality);
     }
     /**
-     * Saves the current document in the specified format with optional filename and image quality.
+     * Saves the current document in the specified format with optional basename and image quality.
      *
      * @param {string} [type='wc3.json'] - Format to save the document as. Supports: 'wc3.json', 'png', 'jpg', 'webp'.
-     * @param {string|null} [filename=null] - Filename to use. Defaults to the document's current name.
+     * @param {string|null} [basename=null] - Basename to use. Defaults to the document's current name.
      * @param {number} [quality=0.5] - Image quality (0.0–1.0). Used only for image formats.
      * @returns {boolean|Promise<void>} Returns false if no document exists, otherwise a promise that resolves after saving.
      */
@@ -339,7 +339,7 @@ export default class Editor{
      * Description placeholder
      *
      * @param {string} [type='wc3.json'] 
-     * @param {string} [filename=null] 
+     * @param {string} [basename=null] 
      * @returns {boolean} 
      */
     async uploadDocument(type='wc3.json',basename=null,quality=0.5){
@@ -373,7 +373,7 @@ export default class Editor{
             const filename = basename+'.'+ext
             await this.document.asyncToBlob(mimetype,quality).then((blob)=>{ 
                 this.autoSave.autoSave();
-                return this.upload(blob, filename+'.'+ext);
+                return this.upload(blob, filename);
             }).catch(e=>{console.error(e); throw e;})            
         }else {
             throw new Error('지원되지 않는 타입');
