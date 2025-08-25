@@ -402,6 +402,33 @@ export default class Brush extends Canvas{
     if(filters.length > 0){ ctx.filter = filters.join(' '); }
   }
   
+
+
+  calInterval(brushConfig=this.brushConfig){
+    let size = Math.max(1,parseFloat(brushConfig.size));
+    const sizeControl = brushConfig.sizeControl
+    const flowControl = brushConfig.flowControl
+    if(sizeControl==='off'){ // 아무 설정이 없을 경우
+    }else if(sizeControl==='penPressure'){
+      const v = Math.max((lastPressure+pressure) / 2, brushConfig.mininumSizeRatio); 
+      size *= v;
+    }
+    size = Math.max(1,size);
+
+    const interval = Math.max(0.8,size * Math.max(0.001,parseFloat(brushConfig.spacing)));
+    return interval;
+  }
+  remainDistance(opts = {}){
+    let {
+      brushConfig= this.brushConfig  ,
+      remainInterval = 0, 
+      // interval = this.calInterval(brushConfig),
+      distance = 0,
+    } = opts;
+    let remainDistance = distance + remainInterval
+    return remainDistance
+  }
+
   /**
    * Description placeholder
    *
@@ -415,6 +442,7 @@ export default class Brush extends Canvas{
    */
   drawOnLine(ctx,x0, y0, x1, y1 , opts = {}) {
     let {
+      brushConfig= this.brushConfig  ,
       remainInterval = 0, 
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
@@ -423,52 +451,23 @@ export default class Brush extends Canvas{
       // lastAzimuthAngle = this.lastAzimuthAngle??0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
       lastPressure = 0.5, // 압력
       lastAzimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위 // 사용 안할 듯
-
-
-      brushConfig= this.brushConfig  ,
+      lineAngle =  this.getAngle(x0,y0,x1,y1),
+      interval = this.calInterval(brushConfig),
+      distance = Math.hypot(x1 - x0, y1 - y0),
+      remainDistance = this.remainDistance({remainInterval,brushConfig,interval,distance}),
       image = this,
     } = opts;
-    // console.log('drawOnLine',this.counter,pressure,lastPressure);
-    
 
-
-    let size = Math.max(1,parseFloat(brushConfig.size));
-    
-    
     const sizeControl = brushConfig.sizeControl
     const flowControl = brushConfig.flowControl
-    if(sizeControl==='off'){ // 아무 설정이 없을 경우
-    }else if(sizeControl==='penPressure'){
-      const v = Math.max((lastPressure+pressure) / 2, brushConfig.mininumSizeRatio); 
-      size *= v;
-    }
-    size = Math.max(1,size);
-    
-    const lineAngle = this.getAngle(x0,y0,x1,y1);
-   
-    const interval = Math.max(0.8,size * Math.max(0.001,parseFloat(brushConfig.spacing)));
-    // 최소 1px 정도의 인터벌을 가지게 한다. 너무 작으면 반복이 많아져서 그리는데 끊긴다...
-    
-    
-    // 선의 길이를 계산
-    // let r = size / 2;
     let dx = x1 - x0;
     let dy = y1 - y0;
-    let distance = Math.sqrt(dx * dx + dy * dy);
-    let distance2 = distance + remainInterval
-    // console.log(distance,remainInterval,distance2,'>=',interval,{dx , dx , dy , dy},{x0,y0,x1,y1});
     
-    if(distance2 < interval){
-      // console.log('skip dot',remainInterval,distance2,'<',interval,{x0, y0, x1, y1});     
-      // this.lastPressure = pressure;
-      // this.lastAzimuthAngle = azimuthAngle;
-      // this.remainInterval = distance2
- 
-      
-      return distance2;
-      
+    if( remainDistance < interval){      
+      return remainDistance;
     }else{
-      let steps = Math.floor(distance2 / interval);      
+      let steps = Math.floor(remainDistance / interval);      
+      
       if(sizeControl==='penPressure' || flowControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
         let fromPressure = lastPressure;
         let toPressure = pressure;
@@ -492,13 +491,7 @@ export default class Brush extends Canvas{
 
       }
       
-      remainInterval = distance2 % interval;
-      // this.lastSize = size;
-      // this.lastPressure = pressure;
-      // this.lastAzimuthAngle = azimuthAngle;
-
-      // this.remainInterval = remainInterval;
-
+      remainInterval = remainDistance % interval;
       return remainInterval;
       
     }
@@ -509,13 +502,14 @@ export default class Brush extends Canvas{
       pointerType = '', // 포인터타입, mouse, touch, pen (code라는 값은 본래 없다.)
       pressure = 0.5, // 압력
       azimuthAngle = 0, // 수평면 기준 포인터의 각도. 도(°) 단위
+      lineAngle =  0,
 
       brushConfig= this.brushConfig,
       image = this
     } = opts;
     // console.log('drawOnDot',pressure);
 
-    this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle});
+    this.dot(ctx,x,y,{brushConfig,image,pointerType,pressure,azimuthAngle,lineAngle});
     // this.lastPressure = pressure;
     // this.lastAzimuthAngle = azimuthAngle;
   }

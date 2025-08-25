@@ -76,15 +76,14 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
-        if(this.drawCount===0){
-            this.drawForDown(this.x0,this.y0); // 아무 동작 없으면 점 하나를 찍는 다.
-        }        
+        
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
-        this.draw(this.x0,this.y0,this.x1,this.y1);
-        this.lastPointerEvent = this.pointerEvent;
-        this.x0 = x; this.y0 = y;
+        if(this.draw(this.x0,this.y0,this.x1,this.y1)){
+            this.lastPointerEvent = this.pointerEvent;
+            this.x0 = x; this.y0 = y;
+        }
         return;
     }
     onpointerup(event){
@@ -139,31 +138,53 @@ export default class Brush extends BaseTool{
         const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
 
         const brush = this.brush;
-        ctx.save();
-        this.prepareLayer(ctx);
+        
         // console.log(lx0,ly0,lx1,ly1);
         // console.log(this.lastEvent);
         let remainInterval = this.remainInterval
-        const pointerEvent = this.pointerEvent;
-        const lastPointerEvent = this.lastPointerEvent
-        this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,
+
+        const distance = Math.hypot(x1 - x0, y1 - y0);
+        const interval = brush.calInterval();
+        const remainDistance = brush.remainDistance({remainInterval,interval,distance});
+
+        if(remainDistance < interval){
+            this.remainInterval = remainDistance;
+            return false;
+        }else{
+            const pointerEvent = this.pointerEvent;
+            const lastPointerEvent = this.lastPointerEvent
+            const lineAngle =  brush.getAngle(x0,y0,x1,y1);
+
+            ctx.save();
+            this.prepareLayer(ctx);
+            if(this.drawCount===0){
+                this.drawForDown(this.x0,this.y0,lineAngle); // 아무 동작 없으면 점 하나를 찍는 다.
+            }
+            this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,
                 {
                     remainInterval,
                     pointerType:pointerEvent.pointerType,
                     pressure:pointerEvent.pressure,
                     azimuthAngle:pointerEvent.azimuthAngle,
                     lastPressure:lastPointerEvent.pressure,
-                    lastAzimuthAngle:lastPointerEvent.azimuthAngle
+                    lastAzimuthAngle:lastPointerEvent.azimuthAngle,
+                    lineAngle,
+                    interval,
+                    distance,
+                    remainDistance,
                 }
-        )
-        ctx.restore();
-        layer.flush();
-        this.mergeFromWorkingLayer();
-        this.drawCount++;       
+            )
+            ctx.restore();
+            layer.flush();
+            this.mergeFromWorkingLayer();
+            this.drawCount++;
+            return true;
+        }
+        
     }
 
     
-    drawForDown(x0,y0){
+    drawForDown(x0,y0,lineAngle=0){
         super.draw(...arguments);
         const layer = this.workingLayer;
         const ctx = layer.ctx;
@@ -181,7 +202,8 @@ export default class Brush extends BaseTool{
         brush.drawOnDot(ctx,lx0,ly0,{
             pointerType:pointerEvent.pointerType,
             pressure:pointerEvent.pressure,
-            azimuthAngle:pointerEvent.azimuthAngle
+            azimuthAngle:pointerEvent.azimuthAngle,
+            lineAngle,
         });
         ctx.restore();
         layer.flush();
