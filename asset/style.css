@@ -128,6 +128,8 @@ body[data-fullscreen="true"] .only-shown-fullscreen-true{display: block;}
 body:not([data-fullscreen]) .only-shown-fullscreen-false{display: block;}
 body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 
+[data-layer-kind="normal"] .only-display-layer-kind-normal{ display: block; }
+[data-layer-kind="text"] .only-display-layer-kind-text{ display: block; }
 
 
 

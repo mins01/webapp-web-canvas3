@@ -42,6 +42,7 @@ export default class Documents extends SelectableArray{
       document.history.save('new document');
       this.editor?.tool?.activate();
     },10)
+    this.editor.ready();
     this.editor?.tool?.activate();
   }
 
@@ -64,5 +65,6 @@ export default class Documents extends SelectableArray{
     document.dispose();
     const r = super.remove();
     if(r>=0){ this.select(r); }
+    this.editor.ready();
   }
 }

@@ -247,6 +247,15 @@
     window.addEventListener('wc.tool.confirm',event=>{ console.log(event.type,event.detail); })
     window.addEventListener('wc.tool.cancel',event=>{ console.log(event.type,event.detail); })
     window.addEventListener('wc.document.layers.select',event=>{ console.log(event.type,event.detail); })
+    window.addEventListener('wc.editor.ready',event=>{      
+      const layer = editor?.document?.layer;
+      if(layer){
+        wcApp.dataset.layerKind = layer.kind;
+      }else{
+        wcApp.dataset.layerKind = null
+      }
+    })
+    
     
   </script>
 </head>
@@ -1331,6 +1340,16 @@
                   <button class="btn btn-primary" onclick="editor.temp.selectedLayer.angle=-90;editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">270°</button>
                 </div>
               </div>
+              <div class="only-shown only-display-layer-kind-text">
+                <div class="form-label mb-0"><i class="bi bi-lightning-charge"></i> Convert</div>
+                <div class="d-flex flex-row gap-1">
+                  <button class="btn btn-primary only-shown only-display-layer-kind-text" onclick="
+                    edialog.confirm(`Text layer convert to normal layer?`).then((r)=>{
+                    if(r){  editor.document.layers.convertToLayer(editor.temp.selectedLayer); };
+                    })
+                    ">To Normal Layer</button>
+                </div>
+              </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-filetype-png"></i> Export</div>
                 <div class="d-flex flex-row gap-1">
@@ -1437,7 +1456,20 @@
         </div>
       </div>
     </div>
-
+    <script>
+      window.addEventListener('load',(event)=>{
+        document.getElementById('modal-layer-config').addEventListener('show.bs.modal', event => {
+          const layer = editor?.document?.layer;
+          if(layer){
+            event.target.dataset.layerKind = layer.kind;
+          }else{
+            event.target.dataset.layerKind = null
+          }
+        })
+        
+        
+      },{once:true})
+    </script>
     <div class="modal fade" id="modal-insert-layer"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
