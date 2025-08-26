@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+  <title>test index.html</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="http://www.mins01.com/favicon.ico"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <script src="/js/ForGoogle.js"></script>
+  <!-- google analytics -->
+  <script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
+  
+  
+  <!-- jquery 관련 -->
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> -->
+  
+  <!-- 부트스트랩 5.3.left -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+  
+  <!-- vue.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+  
+  <!-- meta og -->
+  
+  <meta property="og:title" content="test index.html">
+  
+  <meta property="og:description" content="test index.html">
+  <meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+  <meta property="og:image:width" content="190">
+  <meta property="og:image:height" content="70" />
+  <meta property="og:site_name" content="test index.html" />
+  <meta property="og:type" content="website">
+
+  <script>
+    function cbpointermove(event){
+        const output = document.querySelector('output');
+        const v = {
+            type:event.type,
+            pointerType:event.pointerType,
+            pressure:event.pressure, //압력
+            tiltX:event.tiltX, //x 축 기울기
+            tiltY:event.tiltY, //y 축 기울기
+            altitudeAngle:event.altitudeAngle, // 고도각. 세워진 정도
+            azimuthAngle:event.azimuthAngle, // 방위각. 평면에서의 방향
+            twist:event.twist, //펜 회전
+            tangentialPressure:event.tangentialPressure, // 측면 압력
+            clientX:event.clientX,
+            clientY:event.clientY,
+            width:event.width, // 입력장치의 포인터 너비
+            height:event.height, // 입력장치의 포인터 높이
+        } 
+        output.textContent = JSON.stringify(v,null,2);
+        console.log(event)
+
+    }
+  </script>
+</head>
+<body onpointermove="cbpointermove(event)" onpointerdown="cbpointermove(event)" onpointerup="cbpointermove(event)"  style="height: 100svh;touch-action: none; user-select: none;">
+    <div class="container">
+        <h1>Test for stylus pen</h1>
+        <div class="d-flex justify-content-center ">
+            <output class="border border-1 text-bg-primary p-3 rounded" style="white-space: break-spaces;"></output>
+        </div>
+    </div>
+</body>
+</html>
