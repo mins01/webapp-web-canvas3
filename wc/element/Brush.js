@@ -404,7 +404,12 @@ export default class Brush extends Canvas{
   
 
 
-  calInterval(brushConfig=this.brushConfig){
+  calInterval(opts){
+    let {
+      brushConfig= this.brushConfig  ,
+      pressure = 0.5, // 압력      
+      lastPressure = this.lastPressure??0.5, // 압력
+    } = opts;
     let size = Math.max(1,parseFloat(brushConfig.size));
     const sizeControl = brushConfig.sizeControl
     const flowControl = brushConfig.flowControl

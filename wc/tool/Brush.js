@@ -139,20 +139,24 @@ export default class Brush extends BaseTool{
 
         const brush = this.brush;
         
-        // console.log(lx0,ly0,lx1,ly1);
-        // console.log(this.lastEvent);
+        const pointerEvent = this.pointerEvent;
+        const lastPointerEvent = this.lastPointerEvent
+        
         let remainInterval = this.remainInterval
 
+
         const distance = Math.hypot(x1 - x0, y1 - y0);
-        const interval = brush.calInterval();
+        const interval = brush.calInterval({
+                    pressure:pointerEvent.pressure,
+                    lastPressure:lastPointerEvent.pressure,
+                });
         const remainDistance = brush.remainDistance({remainInterval,interval,distance});
 
         if(remainDistance < interval){
             this.remainInterval = remainDistance;
             return false;
         }else{
-            const pointerEvent = this.pointerEvent;
-            const lastPointerEvent = this.lastPointerEvent
+
             const lineAngle =  brush.getAngle(x0,y0,x1,y1);
 
             ctx.save();
