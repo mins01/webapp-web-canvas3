@@ -16,6 +16,7 @@ export default class Layers extends SelectableArray{
     }
     ready(){
         console.log('Layers.ready()')
+        this.document?.editor?.ready()
     }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){
@@ -131,6 +132,23 @@ export default class Layers extends SelectableArray{
 
         
     }
+
+    convertToLayer(layer=null){
+        const document = this.document
+        if(!layer) layer = document.layer;
+        const index = this.indexOf(layer);
+        if(index<0){ throw new Error("Not exists layer"); }
+        const newLayer = Layer.clone(layer,layer.name);
+        newLayer.parent = document;
+        this[index] = newLayer;
+        
+        newLayer.flush();
+        this?.document?.editor?.tool?.activate();
+        this.ready();
+        this.document.history.save('Layers.convertToLayer');
+    }
+
+
 
 
 

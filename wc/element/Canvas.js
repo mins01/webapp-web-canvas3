@@ -159,14 +159,23 @@ class Canvas extends HTMLCanvasElement{
         this.ctx.restore();
     }
 
-
-    clone(){
-        const newCanvas = new this.constructor(this.width,this.height);
-        newCanvas.import(this.snapshot())
-        // newCanvas.import(this.exportWithDataUrl())
-        // newCanvas.ctx.drawImage(this,0,0)
-        newCanvas.name = newCanvas.name.substr(0,40)+' cloned'
+    static clone(obj,name=obj.name.substr(0,40)+' cloned'){
+        const newCanvas = new this(obj.width,obj.height);
+        newCanvas.import(obj.snapshot())
+        // newCanvas.import(obj.exportWithDataUrl())
+        // newCanvas.ctx.drawImage(obj,0,0)
+        if(!name){
+            name = newCanvas.name.substr(0,40)+' cloned';
+        }
+        newCanvas.name = name
         return newCanvas;
+    }
+
+    clone(name=null){
+        if(!name){
+            name = this.name.substr(0,40)+' cloned';
+        }
+        return this.constructor.clone(this,name);
     }
     resize(width,height){
         const cloned = this.clone();
