@@ -161,6 +161,7 @@ export default class Brush extends Canvas{
     this.margin = Math.ceil(size * 0.25); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다. , (1.5 * size - size) / 2; 대각선의 비율이 1.41 이라서.
 
     let tsize = Math.round(size + this.margin * 2);
+    if(tsize%2 !==0){tsize++;} // 짝수로 맞춤. 안 그러면 anti-aliasing 적용되서 흐려짐.
     this.width = tsize;
     this.height = tsize;
     this.contextConfig.disableStroke = true;
@@ -229,6 +230,7 @@ export default class Brush extends Canvas{
     
     let gx = image.width/2;
     let gy = image.height/2;
+    
     
     // opacity 적용
     if(ctx.canvas.alpha != brushConfig.opacity){
@@ -354,7 +356,7 @@ export default class Brush extends Canvas{
         // if(angleControl!=='direction') ctx.rotate(-lineAngle * Math.PI / 180); 
       }
       this.applyJitter(ctx,brushConfig); // 지터적용
-      ctx.drawImage(image, -gx,-gy,image.width,image.height );
+      ctx.drawImage(image, -gx,-gy,image.width,image.height );      
       ctx.restore()
     }
     
@@ -412,7 +414,7 @@ export default class Brush extends Canvas{
     } = opts;
     let size = Math.max(1,parseFloat(brushConfig.size));
     const sizeControl = brushConfig.sizeControl
-    const flowControl = brushConfig.flowControl
+    // const flowControl = brushConfig.flowControl
     if(sizeControl==='off'){ // 아무 설정이 없을 경우
     }else if(sizeControl==='penPressure'){
       const v = Math.max((lastPressure+pressure) / 2, brushConfig.mininumSizeRatio); 
@@ -420,7 +422,7 @@ export default class Brush extends Canvas{
     }
     size = Math.max(1,size);
 
-    const interval = Math.max(0.8,size * Math.max(0.001,parseFloat(brushConfig.spacing)));
+    const interval = Math.max(0.5,size * Math.max(0.001,parseFloat(brushConfig.spacing)));
     return interval;
   }
   remainDistance(opts = {}){
