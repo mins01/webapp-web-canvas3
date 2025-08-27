@@ -23,11 +23,11 @@ class Context2dConfig extends BaseConfig{
     miterLimit = 10;
     lineDashOffset = 0;
     
-    fillAfterStroke = true;
-    disableStroke = false;
-    disableFill = false;
+    fillAfterStroke = true; // @deprecated
+    disableStroke = false; // @deprecated
+    disableFill = false; // @deprecated
 
-    strokeLocation = 'inside';
+    strokeLocation = 'inside';  // @deprecated
 
     constructor(ctx=null){
         const proxyConfig = {
@@ -44,8 +44,8 @@ class Context2dConfig extends BaseConfig{
         this.globalAlpha = 1;
         this.globalCompositeOperation = "source-over";
         this.filter = "none";
-        this.imageSmoothingEnabled = "true";
-        this.imageSmoothingQuality = "low";
+        this.imageSmoothingEnabled = true;
+        this.imageSmoothingQuality = "high"; // default: low
         this.strokeStyle = "#000000";
         this.fillStyle = "#ffffff";
         this.shadowOffsetX = 0;
