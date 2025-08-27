@@ -39,22 +39,51 @@
   <script>
     function cbpointermove(event){
         const output = document.querySelector('output');
-        const v = {
+        const pointerState = {
             type:event.type,
+            // 포인터 이벤트 전용
+            pointerId:event.pointerId,
             pointerType:event.pointerType,
+            isPrimary:event.isPrimary,
+            timeStamp: event.timeStamp,
             pressure:event.pressure, //압력
+            tangentialPressure:event.tangentialPressure, // 측면 압력
             tiltX:event.tiltX, //x 축 기울기
             tiltY:event.tiltY, //y 축 기울기
             altitudeAngle:event.altitudeAngle, // 고도각. 세워진 정도
             azimuthAngle:event.azimuthAngle, // 방위각. 평면에서의 방향
             twist:event.twist, //펜 회전
-            tangentialPressure:event.tangentialPressure, // 측면 압력
-            clientX:event.clientX,
-            clientY:event.clientY,
+
             width:event.width, // 입력장치의 포인터 너비
             height:event.height, // 입력장치의 포인터 높이
+
+            // 마우스 버튼 관련
+            button:event.button,
+            buttons:event.buttons, 
+
+            // 눌린 키
+            ctrlKey:event.ctrlKey, 
+            shiftKey:event.shiftKey, 
+            altKey:event.altKey, 
+            metaKey:event.metaKey, 
+
+            // 좌표
+            screenX:event.screenX,
+            screenY:event.screenY,
+            clientX:event.clientX,
+            clientY:event.clientY,
+            pageX:event.pageX,
+            pageY:event.pageY,
+            offsetX:event.offsetX,
+            offsetY:event.offsetY,
+            x:event.x,
+            y:event.y,
+            movementX:event.movementX,
+            movementY:event.movementY,
+
+
         } 
-        output.textContent = JSON.stringify(v,null,2);
+        output.textContent = JSON.stringify(pointerState,null,2);
         console.log(event)
 
     }
@@ -64,7 +93,7 @@
     <div class="container">
         <h1>Test for stylus pen</h1>
         <div class="d-flex justify-content-center ">
-            <output class="border border-1 text-bg-primary p-3 rounded" style="white-space: break-spaces;"></output>
+            <output class="border border-1 text-bg-primary p-3 rounded" style="white-space: break-spaces; font-size: 10px;"></output>
         </div>
     </div>
 </body>
