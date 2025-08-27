@@ -157,8 +157,10 @@ export default class BaseTool {
 	 * @returns {{}} 
 	 */
 	getXyFromEvent(event){
-		let x = event.x + window.scrollX;
-		let y = event.y + window.scrollY;
+		// let x = event.x + window.scrollX;
+		// let y = event.y + window.scrollY;
+		let x = event.pageX;
+		let y = event.pageY;
 		return [x,y];
 	}
 
