@@ -84,9 +84,12 @@ export default class Brush extends Canvas{
     const shape = brushConfig.shape;
     
     // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 밖에서 계산한다.
-    
+    let paddingLeft = 0;
     let tsize = size + this.margin * 2
-    if(tsize%2){ tsize++;}
+    if(tsize%2){ 
+      tsize++;
+      paddingLeft = 1;
+    }
     shapeCanvas.width = tsize;
     shapeCanvas.height = tsize;
     const r = size/2;
@@ -104,13 +107,13 @@ export default class Brush extends Canvas{
     
     if(shape=='square' || size==1){
       const diagonal  = Math.hypot(size,size);
-      const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, Math.ceil(diagonal/2));
+      const gradient = this.createRadialGradient(ctx,x+paddingLeft, y+paddingLeft, 0, x+paddingLeft, y+paddingLeft, Math.ceil(diagonal/2));
       ctx.fillStyle = gradient;
       ctx.beginPath();
-      PathShape.rect(ctx,this.margin,this.margin,size,size);
+      PathShape.rect(ctx,this.margin+paddingLeft,this.margin+paddingLeft,size,size);
       ctx.fill()
     }else if(shape=='circle'){
-      const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+      const gradient = this.createRadialGradient(ctx,x+paddingLeft, y+paddingLeft, 0, x+paddingLeft, y+paddingLeft, r);
       ctx.fillStyle = gradient;
       ctx.beginPath();
       PathShape.circle(ctx,x,y,r);
@@ -122,22 +125,22 @@ export default class Brush extends Canvas{
           console.error(`BrushShapeImage(${shape}) not found.`);
           return false;
         }
-        ctx.drawImage(brushShapeImage, this.margin,this.margin,size,size);
+        ctx.drawImage(brushShapeImage, this.margin+paddingLeft,this.margin+paddingLeft,size,size);
         
         ctx.globalCompositeOperation = "source-in";
         const diagonal  = Math.hypot(size,size);
-        const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, Math.ceil(diagonal/2));
+        const gradient = this.createRadialGradient(ctx,x+paddingLeft, y+paddingLeft, 0, x+paddingLeft, y+paddingLeft, Math.ceil(diagonal/2));
         ctx.fillStyle = gradient;
         
         ctx.beginPath();
-        PathShape.rect(ctx,this.margin,this.margin,size,size);
+        PathShape.rect(ctx,this.margin+paddingLeft,this.margin+paddingLeft,size,size);
         ctx.fill()
         
       }else{ //failback
-        const gradient = this.createRadialGradient(ctx,x, y, 0, x, y, r);
+        const gradient = this.createRadialGradient(ctx,x+paddingLeft, y+paddingLeft, 0, x+paddingLeft, y+paddingLeft, r);
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        PathShape.circle(ctx,x,y,r);
+        PathShape.circle(ctx,x+paddingLeft,y+paddingLeft,r);
         ctx.fill()
         console.error(`This shape(${shape}) is not supported.`);
       }
@@ -160,15 +163,17 @@ export default class Brush extends Canvas{
     // this.margin = Math.ceil((Math.hypot(size,size) - size) / 2); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다.
     this.margin = Math.ceil(size * 0.25); // 대각선만큼의 길이 기준으로 해야 angle 적용시 안 짤린다. , (1.5 * size - size) / 2; 대각선의 비율이 1.41 이라서.
 
-    let tsize = Math.round(size + this.margin * 2);
-    if(tsize%2 !==0){tsize++;} // 짝수로 맞춤. 안 그러면 anti-aliasing 적용되서 흐려짐.
-    this.width = tsize;
-    this.height = tsize;
-    this.contextConfig.disableStroke = true;
+    this.applyShapeCanvas(); // 브러시 모양 재적용
+
+    // let tsize = Math.round(size + this.margin * 2);
+    // if(tsize%2 !==0){tsize++;} // 짝수로 맞춤. 안 그러면 anti-aliasing 적용되서 흐려짐.
+    this.width = shape.width;
+    this.height = shape.height;
+    // this.contextConfig.disableStroke = true;
     this.contextConfig.assignTo(ctx,true);
     
     
-    this.applyShapeCanvas(); // 브러시 모양 재적용
+    
     
     
     // const dw = this.width;
@@ -191,7 +196,8 @@ export default class Brush extends Canvas{
       ctx.translate(-tx, -ty); // 중심을 원래 위치로 되돌림
     }
     // ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
+    ctx.drawImage(shape,dx,dy,dw,dh);
+    // ctx.drawImage(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
     // console.log(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
     ctx.restore();
     
