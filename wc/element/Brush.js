@@ -480,6 +480,8 @@ export default class Brush extends Canvas{
       return remainDistance;
     }else{
       let steps = Math.floor(remainDistance / interval);      
+      // console.log(steps,remainDistance,interval);
+      
       
       if(sizeControl==='penPressure' || flowControl==='penPressure'){ // 부드러운 압력감지의 변화 처리       
         let fromPressure = lastPressure;

@@ -145,7 +145,7 @@ export default class Brush extends BaseTool{
         let remainInterval = this.remainInterval
 
 
-        const distance = Math.hypot(x1 - x0, y1 - y0);
+        const distance = Math.hypot(lx1 - lx0, ly1 - ly0);
         const interval = brush.calInterval({
                     pressure:pointerEvent.pressure,
                     lastPressure:lastPointerEvent.pressure,
@@ -157,7 +157,7 @@ export default class Brush extends BaseTool{
             return false;
         }else{
 
-            const lineAngle =  brush.getAngle(x0,y0,x1,y1);
+            const lineAngle =  brush.getAngle(lx0,ly0,lx1,ly1);
 
             ctx.save();
             this.prepareLayer(ctx);
