@@ -12,6 +12,7 @@ export default class ShapePath2DLayer extends Layer{
 
     kind = LayerKind.PATH;
     drawMode = 'fill'; //fill, stroek, fill-stroke, stroke-fill
+    fillRule = 'nonzero'; // nonzero , evenodd
     commands = null; // [{closed:boolean,,method:string,args:array}]
     constructor(w=null,h=null){
         super(w,h);
@@ -60,10 +61,10 @@ export default class ShapePath2DLayer extends Layer{
         this.contextConfig.assignTo(ctx,true);        
 
         switch(this.drawMode){
-            case 'fill':ctx.fill(path2D);break;
+            case 'fill':ctx.fill(path2D,this.fillRule);break;
             case 'stroke':ctx.stroke(path2D);break;
-            case 'fill-stroke':ctx.fill(path2D);ctx.stroke(path2D);break;
-            case 'stroke-fill':ctx.stroke(path2D);ctx.fill(path2D);break;
+            case 'fill-stroke':ctx.fill(path2D,this.fillRule);ctx.stroke(path2D);break;
+            case 'stroke-fill':ctx.stroke(path2D);ctx.fill(path2D,this.fillRule);break;
         }
         ctx.restore();
         super.draw()

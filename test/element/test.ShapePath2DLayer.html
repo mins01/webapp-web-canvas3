@@ -73,11 +73,13 @@
       shapePath2DLayer.flush();
 
       const selected_area = document.getElementById('selected_area');
-      selected_area.contextConfig.foreColor = '#3693';
+      selected_area.contextConfig.foreColor = '#fff9';
       selected_area.contextConfig.backColor = '#f99';
       selected_area.contextConfig.lineWidth = 2
       selected_area.ctx.setLineDash([2, 6]);
       selected_area.drawMode = 'fill-stroke';
+      selected_area.fillRule = 'evenodd';
+      
 
       const selected_area_points = [];
       let is_down = false;
@@ -87,7 +89,6 @@
         is_down = true;
         event.target.setPointerCapture(event.pointerId);
         command.args[0].length = 0;
-        command.args[0] = [];
         command.args[0].push([event.offsetX,event.offsetY]);
         command.closed = false;
         selected_area.drawMode = 'stroke';
@@ -175,7 +176,7 @@
       <div class="rounded border border-1 p-3 text-bg-secondary">
         <div class="form-label">마우스 드래그로 영역 지정하기</div>
         <div>
-          <canvas id="selected_area" is="wc-shapepath2dlayer" width="300" height="300"></canvas>
+          <canvas id="selected_area" is="wc-shapepath2dlayer" width="300" height="300" style="touch-action: none;"></canvas>
         </div>
       </div>
       
