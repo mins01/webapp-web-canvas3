@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+  <title>test ShapePath2DLayer</title>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="http://www.mins01.com/favicon.ico"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <script src="/js/ForGoogle.js"></script>
+  <!-- google analytics -->
+  <script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
+  
+  
+  <!-- jquery 관련 -->
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> -->
+  
+  <!-- 부트스트랩 5.3.left -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+  
+  <!-- vue.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+  
+  <!-- meta og -->
+  
+  <meta property="og:title" content="test ShapePath2DLayer">
+  
+  <meta property="og:description" content="test ShapePath2DLayer">
+  <meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+  <meta property="og:image:width" content="190">
+  <meta property="og:image:height" content="70" />
+  <meta property="og:site_name" content="test ShapePath2DLayer" />
+  <meta property="og:type" content="website">
+  
+  <!-- //meta og -->
+
+  <style>
+    canvas{outline: 1px dashed #aabbcc99;}
+  </style>
+  <script type="module">
+    import ShapePath2DLayer from '../../wc/element/ShapePath2DLayer.js';
+    ShapePath2DLayer.defineCustomElements();
+    globalThis.ShapePath2DLayer = ShapePath2DLayer;
+  </script>
+  
+  <script>
+    window.addEventListener('load',(event)=>{
+      const shapePath2DLayer = new ShapePath2DLayer(300,300);
+      document.querySelector('#div-append').append(shapePath2DLayer);
+      shapePath2DLayer.contextConfig.foreColor = '#369';
+      shapePath2DLayer.contextConfig.backColor = '#963';
+      shapePath2DLayer.contextConfig.lineWidth = 5
+      shapePath2DLayer.drawMode = 'fill-stroke';
+      shapePath2DLayer.commands.push({ closed:true, method:'line', args:[100,100,200,200] });
+      shapePath2DLayer.commands.push({ closed:true, method:'rect', args:[10,10,50,50] });
+      shapePath2DLayer.flush();
+    })
+    /*
+    [
+      {
+        "name": "line",
+        "requiredArgs": 4
+      },
+      {
+        "name": "lines",
+        "requiredArgs": 1
+      },
+      {
+        "name": "arc",
+        "requiredArgs": 3
+      },
+      {
+        "name": "circle",
+        "requiredArgs": 3
+      },
+      {
+        "name": "rect",
+        "requiredArgs": 4
+      },
+      {
+        "name": "square",
+        "requiredArgs": 3
+      },
+      {
+        "name": "roundRect",
+        "requiredArgs": 5
+      },
+      {
+        "name": "roundSquare",
+        "requiredArgs": 4
+      },
+      {
+        "name": "equilateralPolygon",
+        "requiredArgs": 4
+      },
+      {
+        "name": "star",
+        "requiredArgs": 4
+      },
+      {
+        "name": "merge",
+        "requiredArgs": 0
+      }
+    ]
+    */
+  </script>
+</head>
+<body>
+  
+  <div class="container py-3">
+    <h1>test ShapePath2DLayer</h1>
+    <div class="d-flex flex-column gap-3">
+      <div class="rounded border border-1 p-3 text-bg-secondary">
+        <div class="form-label">test</div>
+        <div>
+          <div id="div-append"></div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  
+</body>
+</html>
+
