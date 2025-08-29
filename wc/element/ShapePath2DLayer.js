@@ -53,6 +53,7 @@ export default class ShapePath2DLayer extends Layer{
 
 
     draw(){
+        this.clear();
         const ctx = this.ctx;
         const path2D = this.path2D;
         ctx.save();
