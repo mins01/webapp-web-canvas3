@@ -7,13 +7,13 @@ export default class ShapePath2D{
     return path2d;
   }
   
-  static lines(lines){
-    if(lines.length < 2){ return null}
+  static lines(points){
     const path2d = new Path2D();
+    if(points.length < 2){ return path2d}
     let i = 0;
-    path2d.moveTo(lines[i][0],lines[i][1]);
-    for(let i=1,m=lines.length;i<m;i++){
-      path2d.lineTo(lines[i][0],lines[i][1])
+    path2d.moveTo(points[i][0],points[i][1]);
+    for(let i=1,m=points.length;i<m;i++){
+      path2d.lineTo(points[i][0],points[i][1])
     }
     // path2d.closePath(); // line에서는 close 안한다.
     return path2d;
