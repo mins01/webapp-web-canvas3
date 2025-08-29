@@ -49,14 +49,27 @@
   
   <script>
     window.addEventListener('load',(event)=>{
-      const shapePath2DLayer = new ShapePath2DLayer(300,300);
+      const shapePath2DLayer = new ShapePath2DLayer(300,600);
       document.querySelector('#div-append').append(shapePath2DLayer);
       shapePath2DLayer.contextConfig.foreColor = '#369';
-      shapePath2DLayer.contextConfig.backColor = '#963';
+      shapePath2DLayer.contextConfig.backColor = '#f99';
       shapePath2DLayer.contextConfig.lineWidth = 5
       shapePath2DLayer.drawMode = 'fill-stroke';
-      shapePath2DLayer.commands.push({ closed:true, method:'line', args:[100,100,200,200] });
-      shapePath2DLayer.commands.push({ closed:true, method:'rect', args:[10,10,50,50] });
+      shapePath2DLayer.commands.push({ closed:false, method:'line', args:[10,10,90,30] });
+      shapePath2DLayer.commands.push({ closed:false, method:'lines', args:[[[100,10],[100,60],[170,60],[200,100]]] });
+      shapePath2DLayer.commands.push({ closed:false, method:'arc', args:[50,110,30,0.5*Math.PI,2*Math.PI] });
+      shapePath2DLayer.commands.push({ closed:false, method:'circle', args:[150,110,30] });
+      shapePath2DLayer.commands.push({ closed:false, method:'rect', args:[10,210,75,50] });
+      shapePath2DLayer.commands.push({ closed:false, method:'square', args:[110,210,50] });
+      shapePath2DLayer.commands.push({ closed:false, method:'roundRect', args:[10,310,75,50,20] });
+      shapePath2DLayer.commands.push({ closed:false, method:'roundSquare', args:[110,310,50,20] });
+      shapePath2DLayer.commands.push({ closed:false, method:'equilateralPolygon', args:[60, 410, 30, 3 , null] });
+      shapePath2DLayer.commands.push({ closed:false, method:'equilateralPolygon', args:[160, 410, 30, 5 , null] });
+      shapePath2DLayer.commands.push({ closed:false, method:'equilateralPolygon', args:[260, 410, 30, 8 , null] });
+
+      shapePath2DLayer.commands.push({ closed:false, method:'star', args:[60, 510, 50, 25 , 5, -0.5 * Math.PI] });
+      shapePath2DLayer.commands.push({ closed:false, method:'star', args:[160, 510, 50, 25 , 6, -0.5 * Math.PI] });
+      shapePath2DLayer.commands.push({ closed:false, method:'star', args:[260, 510, 50, 25 , 7] });
       shapePath2DLayer.flush();
     })
     /*

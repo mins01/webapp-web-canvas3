@@ -1,10 +1,6 @@
 export default class ShapePath2D{
   static line(x0,y0,x1,y1){
-    const path2d = new Path2D();
-    path2d.moveTo(x0,y0)
-    path2d.lineTo(x1,y1)
-    // path2d.closePath(); // line에서는 close 안한다.
-    return path2d;
+    return this.lines([[x0,y0],[x1,y1]])
   }
   
   static lines(points){

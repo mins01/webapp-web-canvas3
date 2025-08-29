@@ -35,6 +35,8 @@ export default class ShapePath2DLayer extends Layer{
             const {closed=false,method,args} = command;
             if(!ShapePath2D[method]){ throw new Error(`${method} is not supported`); }
             const subPath2D = ShapePath2D[method](...args);
+            console.log(method,args);
+            
             if(closed) subPath2D.closePath();
             subPath2Ds.push(subPath2D);
         });
