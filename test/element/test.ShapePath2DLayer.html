@@ -42,14 +42,19 @@
     canvas{outline: 1px dashed #aabbcc99;}
   </style>
   <script type="module">
+    import Layer from '../../wc/element/Layer.js';
+    globalThis.Layer = Layer;
+    Layer.defineCustomElements();
     import ShapePath2DLayer from '../../wc/element/ShapePath2DLayer.js';
     ShapePath2DLayer.defineCustomElements();
     globalThis.ShapePath2DLayer = ShapePath2DLayer;
   </script>
   
   <script>
+    let shapePath2DLayer = null
+    const selected_area_points = [];
     window.addEventListener('load',(event)=>{
-      const shapePath2DLayer = new ShapePath2DLayer(300,600);
+      shapePath2DLayer = new ShapePath2DLayer(300,600);
       document.querySelector('#div-append').append(shapePath2DLayer);
       shapePath2DLayer.contextConfig.foreColor = '#369';
       shapePath2DLayer.contextConfig.backColor = '#f99';
@@ -73,15 +78,18 @@
       shapePath2DLayer.flush();
 
       const selected_area = document.getElementById('selected_area');
-      selected_area.contextConfig.foreColor = '#fff9';
+      selected_area.width = shapePath2DLayer.width;
+      selected_area.height = shapePath2DLayer.height;
+      selected_area.contextConfig.foreColor = '#fff2';
       selected_area.contextConfig.backColor = '#f99';
       selected_area.contextConfig.lineWidth = 2
       selected_area.ctx.setLineDash([2, 6]);
       selected_area.drawMode = 'fill-stroke';
-      selected_area.fillRule = 'evenodd';
+      // selected_area.fillRule = 'evenodd';
+      selected_area.fillRule = 'nonzero';
       
 
-      const selected_area_points = [];
+      
       let is_down = false;
       const command = { closed:true, method:'lines', args:[selected_area_points] }
       selected_area.commands.push(command);
@@ -107,11 +115,53 @@
         event.target.releasePointerCapture(event.pointerId);
         command.args[0].push([event.offsetX,event.offsetY]);
         command.closed = true;
-        selected_area.drawMode = 'fill-stroke';
+        selected_area.drawMode = 'fill';
         selected_area.flush()
         console.log(event.type,command);
       }
     })
+    function copyToLayer(){
+      // shapePath2DLayer
+      const selected_area = document.getElementById('selected_area');
+      const newLayer = new Layer(selected_area.width,selected_area.height);
+      newLayer.ctx.fillStyle = '#f00'
+      newLayer.ctx.fill(selected_area.path2D)
+      // newLayer.ctx.drawImage(selected_area,0,0);
+      // newLayer.ctx.globalCompositeOperation = 'source-in';
+      // newLayer.ctx.fillStyle = '#f00'
+      // newLayer.ctx.fillRect(0,0,selected_area.width,selected_area.height);
+      // newLayer.ctx.globalCompositeOperation = 'luminosity';
+      
+
+      newLayer.ctx.globalCompositeOperation = 'source-in';
+      newLayer.ctx.drawImage(shapePath2DLayer,0,0);
+      const outputCopy = document.querySelector('#output-copy');
+      outputCopy.replaceChildren(newLayer);
+    }
+    function deleteToLayer(){
+      // shapePath2DLayer
+      const selected_area = document.getElementById('selected_area');
+      const newLayer = new Layer(selected_area.width,selected_area.height);
+      newLayer.ctx.fillStyle = '#f00'
+      newLayer.ctx.fill(selected_area.path2D)
+      // newLayer.ctx.drawImage(selected_area,0,0);
+      // newLayer.ctx.globalCompositeOperation = 'source-in';
+      // newLayer.ctx.fillStyle = '#f00'
+      // newLayer.ctx.fillRect(0,0,selected_area.width,selected_area.height);
+      // newLayer.ctx.globalCompositeOperation = 'luminosity';
+      
+
+      shapePath2DLayer.ctx.save();
+      shapePath2DLayer.ctx.globalCompositeOperation = 'destination-out';
+      shapePath2DLayer.ctx.drawImage(newLayer,0,0);
+      shapePath2DLayer.ctx.restore();
+    }
+    function resetSelection(){
+      const selected_area = document.getElementById('selected_area');
+
+      selected_area_points.length = 0;
+      selected_area.flush()
+    }
     /*
     [
       {
@@ -161,6 +211,9 @@
     ]
     */
   </script>
+  <style>
+    #selected_area{position: absolute; inset: 0;}
+  </style>
 </head>
 <body>
   
@@ -170,13 +223,30 @@
       <div class="rounded border border-1 p-3 text-bg-secondary">
         <div class="form-label">path command 추가</div>
         <div>
-          <div id="div-append"></div>
-        </div>
-      </div>
-      <div class="rounded border border-1 p-3 text-bg-secondary">
-        <div class="form-label">마우스 드래그로 영역 지정하기</div>
-        <div>
-          <canvas id="selected_area" is="wc-shapepath2dlayer" width="300" height="300" style="touch-action: none;"></canvas>
+          <div class="d-flex gap-3">
+            <div>
+              <div class="form-label">original</div>
+              <div id="div-append" class="position-relative">
+                <canvas id="selected_area" is="wc-shapepath2dlayer" width="300" height="300" style="touch-action: none;"></canvas>
+              </div>
+            </div>
+            <div >
+              <div class="form-label">copy</div>
+              <div>
+                <output id="output-copy"></output>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>마우스 드래그로 영역 지정하기</div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="copyToLayer()">선택영역으로 레이어 생성</button>
+              <button class="btn btn-primary" type="button" onclick="deleteToLayer()">선택영역으로 삭제</button>
+              <button class="btn btn-primary" type="button" onclick="resetSelection()">선택영역 초기화</button>
+              
+              
+            </div>
+          </div>
         </div>
       </div>
       
