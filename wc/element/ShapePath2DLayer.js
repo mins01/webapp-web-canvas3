@@ -11,7 +11,7 @@ export default class ShapePath2DLayer extends Layer{
     }
 
     kind = LayerKind.PATH;
-    drawMode = 'fill'; //fill, stroek, fill-stroke, stroke-fill
+    drawMode = 'fill'; //fill, stroke, fill-stroke, stroke-fill
     fillRule = 'nonzero'; // nonzero , evenodd
     commands = null; // [{closed:boolean,,method:string,args:array}]
     constructor(w=null,h=null){
