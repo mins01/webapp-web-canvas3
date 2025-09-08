@@ -48,6 +48,9 @@
     import ShapePath2DLayer from '../../wc/element/ShapePath2DLayer.js';
     ShapePath2DLayer.defineCustomElements();
     globalThis.ShapePath2DLayer = ShapePath2DLayer;
+
+    import Context2dUtil from '../../wc/lib/Context2dUtil.js';
+    globalThis.Context2dUtil = Context2dUtil;
   </script>
   
   <script>
@@ -80,7 +83,7 @@
       const selected_area = document.getElementById('selected_area');
       selected_area.width = shapePath2DLayer.width;
       selected_area.height = shapePath2DLayer.height;
-      selected_area.contextConfig.foreColor = '#fff';
+      selected_area.contextConfig.foreColor = '#fff2';
       selected_area.contextConfig.backColor = '#f99';
       selected_area.contextConfig.lineWidth = 2
       selected_area.ctx.setLineDash([2, 6]);
@@ -115,32 +118,29 @@
         event.target.releasePointerCapture(event.pointerId);
         command.args[0].push([event.offsetX,event.offsetY]);
         command.closed = true;
-        // selected_area.drawMode = 'fill';
-        // selected_area.drawMode = 'stroke-fill';
-        // selected_area.flush()
-
-
-        const path2D = selected_area.path2D;
-        const ctx = selected_area.ctx;
         selected_area.ctx.save();
-        selected_area.contextConfig.foreColor = '#fff';
+        selected_area.contextConfig.foreColor = '#f0f2';
         selected_area.contextConfig.backColor = '#f99';
-        selected_area.contextConfig.assignTo(ctx,true);
+        selected_area.contextConfig.assignTo(selected_area.ctx,true);
+        
+        selected_area.drawMode = 'fill';
+        selected_area.draw()
+       
 
-        // 불투명으로 칠하기
-        ctx.fill(path2D,selected_area.fillRule);
-        // 선 그리기
-        selected_area.ctx.globalCompositeOperation = 'destination-over';
-        ctx.stroke(path2D);
-        // 칠하기에 반투명으로
-        // selected_area.ctx.globalCompositeOperation = 'source-over';
-        selected_area.contextConfig.foreColor = '#f00';
-        selected_area.contextConfig.assignTo(ctx,true);
-        selected_area.ctx.globalCompositeOperation = 'destination-out';
-        selected_area.ctx.globalAlpha = 0.8;
-        ctx.fill(path2D,selected_area.fillRule);
-
+        const coords = Context2dUtil.getEdgeCoordinates(selected_area.ctx)
+        const sortedCoords = Context2dUtil.traceBoundary(coords,selected_area.width,selected_area.height);
+        const closedPath2D = Context2dUtil.coordinatesToClosedPath2D(sortedCoords)
+        if(closedPath2D){
+          // selected_area.clear();
+          // console.log('closedPath2D',closedPath2D);
+          const path2D = closedPath2D
+          const ctx = selected_area.ctx;
+          ctx.stroke(path2D);
+          // ctx.fill(path2D,selected_area.fillRule);
+          
+        }
         selected_area.ctx.restore();
+
         selected_area.sync()
         console.log(event.type,command);
       }
