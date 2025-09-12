@@ -1607,13 +1607,13 @@
           <div class="modal-body">
             <div class="d-flex flex-column gap-3">
               <button class="btn btn-primary" id="btn-autosave-load" type="button" onclick="
-                edialog.confirm(`${dayjs(Wc.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then((r)=>{
-                  if(r){  Wc.autoSave.load(); };
+                edialog.confirm(`${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then((r)=>{
+                  if(r){  editor.autoSave.load(); };
                 })
               ">Load last save: <span id="autosave-updatedat"></span></button>
               <button class="btn btn-primary" id="btn-autosave-save" type="button" onclick="
                 edialog.confirm(`현재 데이터로 임시 저장할까요?`).then((r)=>{
-                  if(r){  Wc.autoSave.save(); };
+                  if(r){  editor.autoSave.save(); };
                 })
               ">Save now</button>
             </div>
@@ -1625,14 +1625,14 @@
       document.querySelector('#modal-autosave').addEventListener('show.bs.modal',event =>{
         const autosaveUpdatedat = document.querySelector('#autosave-updatedat');
         const btn = document.querySelector('#btn-autosave-load');
-        if(Wc.autoSave.updatedAt){
-          autosaveUpdatedat.textContent = dayjs(Wc.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')
+        if(editor.autoSave.updatedAt){
+          autosaveUpdatedat.textContent = dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')
           btn.disabled = false;
         }else{
           autosaveUpdatedat.textContent = 'NO-DATA';
           btn.disabled = true;
         }
-        console.log(Wc.autoSave.updatedAt);
+        console.log(editor.autoSave.updatedAt);
         
       })
     </script>

@@ -50,6 +50,57 @@ const modalHandler = globalThis.modalHandler = new ModalHandler();
 editor.modalHandler = modalHandler;
 editor.modalHandler.collectModals();
 
+//-- upload, Wg2Uploder 가 있다면
+if(globalThis?.Wg2Uploder??false){
+    editor.upload = function(file,filename){
+        const resJson = globalThis.Wg2Uploder.upload(file,filename)
+        return resJson.then((obj)=>{
+            if(!obj[0]){ return; }
+            const uploaded = obj[0];
+            console.log(uploaded);
+
+            if (/\.(jpe?g|png)$/i.test(uploaded.name)) {
+                if(uploaded.previewurl){
+                    globalThis.edialog.confirm('업로드가 완료되었습니다.\n업로드 이미지를 확인할까요?').then((r)=>{
+                        if(r){
+                            editor.previewImage(uploaded.previewurl);
+                        }
+                    })
+                }
+            }else{
+                globalThis.edialog.alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
+            }
+
+        }).catch(e => {
+            console.error(e);
+        })
+    }
+}
+
+
+
+
+
+
+//-- UI sync
+import WcSyncHandler from "./lib/WcSyncHandler.js";
+Wc.WcSyncHandler = WcSyncHandler;
+const wcSyncHandler = globalThis.wcSyncHandler = editor.wcSyncHandler = new WcSyncHandler();
+wcSyncHandler.addEventListener();
+Wc.wcSyncHandler = wcSyncHandler;
+
+
+
+//-- AutoSave
+import AutoSave from './lib/AutoSave.js';
+Wc.AutoSave = AutoSave
+const autoSave = new AutoSave(editor,60*1000*5); //5분에 한번씩 저장함
+// Wc.autoSave = autoSave
+autoSave.activate();
+editor.autoSave = autoSave 
+
+
+//-- onload
 globalThis.window.addEventListener('load',(event)=>{
     setTimeout(()=>{
         // 브러시들
@@ -123,6 +174,13 @@ globalThis.window.addEventListener('load',(event)=>{
             }else{
                 //-- new document
                 editor.newDocument(300,300);
+                if(editor.autoSave.updatedAt){
+                    window.edialog.confirm(`작업 중이던 이미지가 있습니다.\n${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then(
+                        (r)=>{
+                            if(r){  editor.autoSave.load(); };
+                        }
+                    )
+                }
             }
         }
 
@@ -133,53 +191,3 @@ globalThis.window.addEventListener('load',(event)=>{
     
 })
 
-
-
-//-- upload, Wg2Uploder 가 있다면
-if(globalThis?.Wg2Uploder??false){
-    editor.upload = function(file,filename){
-        const resJson = globalThis.Wg2Uploder.upload(file,filename)
-        return resJson.then((obj)=>{
-            if(!obj[0]){ return; }
-            const uploaded = obj[0];
-            console.log(uploaded);
-
-            if (/\.(jpe?g|png)$/i.test(uploaded.name)) {
-                if(uploaded.previewurl){
-                    globalThis.edialog.confirm('업로드가 완료되었습니다.\n업로드 이미지를 확인할까요?').then((r)=>{
-                        if(r){
-                            editor.previewImage(uploaded.previewurl);
-                        }
-                    })
-                }
-            }else{
-                globalThis.edialog.alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
-            }
-
-        }).catch(e => {
-            console.error(e);
-        })
-    }
-}
-
-
-
-
-
-
-//-- UI sync
-import WcSyncHandler from "./lib/WcSyncHandler.js";
-Wc.WcSyncHandler = WcSyncHandler;
-const wcSyncHandler = globalThis.wcSyncHandler = editor.wcSyncHandler = new WcSyncHandler();
-wcSyncHandler.addEventListener();
-Wc.wcSyncHandler = wcSyncHandler;
-
-
-
-//-- AutoSave
-import AutoSave from './lib/AutoSave.js';
-Wc.AutoSave = AutoSave
-const autoSave = new AutoSave(editor,60*1000*5); //5분에 한번씩 저장함
-Wc.autoSave = autoSave
-autoSave.activate();
-editor.autoSave = autoSave 
