@@ -495,7 +495,7 @@
                 <div class="fs-4"><i class="bi bi-image"></i></div>
                 <div class="text-truncate">PREVIEW</div>
               </button>
-              <button type="button" class="w-100 min-w-0 btn btn-danger" onclick="editor.closeDocument()">
+              <button type="button" class="w-100 min-w-0 btn btn-danger" onclick="edialog.confirm(`작업 중인 문서를 닫을까요?\n(자동 저장이 안되어있을 수 있습니다.)`).then((r)=>{if(r){ editor.closeDocument();editor.modalHandler.hideAll();}})">
                 <div class="fs-4"><i class="bi bi-x-circle"></i></div>
                 <div class="text-truncate">CLOSE</div>
               </button>
@@ -1607,11 +1607,10 @@
           <div class="modal-body">
             <div class="d-flex flex-column gap-3">
               <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-load"  type="button" onclick="
-                edialog.confirm(`${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then((r)=>{
+                edialog.confirm(`${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 자동 저장 데이터를 불러올까요?`).then((r)=>{
                   if(r){  
                     editor.autoSave.load();
                     editor.modalHandler.hideAll();
-                    edialog.alert(`데이터를 불러왔습니다.`);
                   };
                 })
               "><i class="bi bi-card-image"></i> Load last save: <span id="autosave-updatedat"></span></button>
@@ -1625,11 +1624,11 @@
                 })
               "><i class="bi bi-floppy"></i> Save now</button>
               <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-clear" type="button" onclick="
-                edialog.confirm(`임시 저장 데이터를 삭제할까요?`).then((r)=>{
+                edialog.confirm(`자동 저장 데이터를 삭제할까요?`).then((r)=>{
                   if(r){
                     editor.autoSave.clear();
                     editor.modalHandler.hideAll();
-                    edialog.alert(`임시 저장 데이터를 삭제하였습니다.`);
+                    edialog.alert(`자동 저장 데이터를 삭제하였습니다.`);
                   };
                 })
               "><i class="bi bi-trash"></i> Clear</button>
