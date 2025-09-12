@@ -528,7 +528,7 @@ export default class Editor{
             let target = event.target;
             let modalNode = target.closest('.modal');
             const modal = bootstrap.Modal.getInstance(modalNode)
-            editor.modalHandler.hideAll();
+            this.modalHandler.hideAll();
             modal.show()
         },{once:true})
     }

@@ -764,7 +764,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form name="form_new" action="" onsubmit="editor.newDocument(this.width.value,this.height.value); return false;">
+            <form name="form_new" action="" onsubmit="editor.newDocument(this.width.value,this.height.value); editor.modalHandler.hideAll(); return false;">
               <div class="d-flex flex-column gap-3">
                 <div>
                   <div class="input-group input-group-lg">
@@ -1606,16 +1606,33 @@
           </div>
           <div class="modal-body">
             <div class="d-flex flex-column gap-3">
-              <button class="btn btn-primary" id="btn-autosave-load" type="button" onclick="
+              <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-load"  type="button" onclick="
                 edialog.confirm(`${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then((r)=>{
-                  if(r){  editor.autoSave.load(); };
+                  if(r){  
+                    editor.autoSave.load();
+                    editor.modalHandler.hideAll();
+                    edialog.alert(`데이터를 불러왔습니다.`);
+                  };
                 })
-              ">Load last save: <span id="autosave-updatedat"></span></button>
+              "><i class="bi bi-card-image"></i> Load last save: <span id="autosave-updatedat"></span></button>
               <button class="btn btn-primary" id="btn-autosave-save" type="button" onclick="
                 edialog.confirm(`현재 데이터로 임시 저장할까요?`).then((r)=>{
-                  if(r){  editor.autoSave.save(); };
+                  if(r){  
+                    editor.autoSave.save();
+                    editor.modalHandler.hideAll();
+                    edialog.alert(`현재 데이터로 임시 저장하였습니다.`);
+                  };
                 })
-              ">Save now</button>
+              "><i class="bi bi-floppy"></i> Save now</button>
+              <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-clear" type="button" onclick="
+                edialog.confirm(`임시 저장 데이터를 삭제할까요?`).then((r)=>{
+                  if(r){
+                    editor.autoSave.clear();
+                    editor.modalHandler.hideAll();
+                    edialog.alert(`임시 저장 데이터를 삭제하였습니다.`);
+                  };
+                })
+              "><i class="bi bi-trash"></i> Clear</button>
             </div>
           </div>
         </div>
@@ -1624,13 +1641,17 @@
     <script>
       document.querySelector('#modal-autosave').addEventListener('show.bs.modal',event =>{
         const autosaveUpdatedat = document.querySelector('#autosave-updatedat');
-        const btn = document.querySelector('#btn-autosave-load');
+        const btns = document.querySelectorAll('.btn-autosave-is-disabled');
         if(editor.autoSave.updatedAt){
           autosaveUpdatedat.textContent = dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')
-          btn.disabled = false;
+          btns.forEach((btn)=>{
+            btn.disabled = false;
+          })
         }else{
           autosaveUpdatedat.textContent = 'NO-DATA';
-          btn.disabled = true;
+          btns.forEach((btn)=>{
+            btn.disabled = true;
+          })
         }
         console.log(editor.autoSave.updatedAt);
         

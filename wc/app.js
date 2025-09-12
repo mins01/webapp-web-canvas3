@@ -177,7 +177,11 @@ globalThis.window.addEventListener('load',(event)=>{
                 if(editor.autoSave.updatedAt){
                     window.edialog.confirm(`작업 중이던 이미지가 있습니다.\n${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 데이터를 불러올까요?`).then(
                         (r)=>{
-                            if(r){  editor.autoSave.load(); };
+                            if(r){  
+                                editor.autoSave.load(); 
+                                editor.modalHandler.hideAll();
+                                edialog.alert(`데이터를 불러왔습니다.`);
+                            };
                         }
                     )
                 }
