@@ -46,6 +46,8 @@ export default class Editor{
         target.addEventListener('pointerdown.peh',this.onpointerdown)
         target.addEventListener('pointermove.peh',this.onpointermove)
         target.addEventListener('pointerup.peh',this.onpointerup)
+        target.addEventListener('pinch.peh',this.onpinch)
+        
         // this.peh.onpointerdown = this.onpointerdown;
         // this.peh.onpointermove = this.onpointermove;
         // this.peh.onpointerup = this.onpointerup;
@@ -206,83 +208,75 @@ export default class Editor{
         return this.editorConfig.inputMode == event.pointerType;
     }
     onpointerdown=(event)=>{
-        const detail = event.detail??null;
-        const originalEvent = detail.originalEvent??event
-        const pointer = detail.pointer??event;
+        const detail = event?.detail;
+        const originalEvent = detail?.originalEvent??event
+        const pointer = detail?.pointer??event;
+        const peh = detail?.pointerEventHandler??this.peh;
+
         
         this.target.dataset.pointerEventType = event.type;
-        if(this.peh.maxActivePointers===1 ){
+        if(peh.maxActivePointers===1 ){
             if(!this.checkInputMode(pointer)) return;
             this.tool.start();
             this.tool.onpointerdown(pointer);
-        }else if(this.peh.maxActivePointers >= 2){
+        }else if(peh.maxActivePointers >= 2){
             if(this.tool.downAt){
                 this.tool.cancel();
             }
-            if(this.peh.pointers.size===2){
+            if(peh.pointers.size===2){
                 // 줌 처리
                 const document = this?.document
                 if(!document){ console.warn('document is not exists'); return;}
                 this.temp.document_zoom = this.document.zoom;
-                const points = Array.from(this.peh.pointers.values());
-                this.temp.touchStartDistance = Math.hypot( points[1].x - points[0].x, points[1].y - points[0].y );
-                this.temp.documentHypot = Math.hypot( document.width, document.height );
             }
         }
         
         
     }
     onpointermove=(event)=>{
-        const detail = event.detail??null;
-        const originalEvent = detail.originalEvent??event
-        const pointer = detail.pointer??event;
+        const detail = event?.detail;
+        const originalEvent = detail?.originalEvent??event
+        const pointer = detail?.pointer??event;
+        const peh = detail?.pointerEventHandler??this.peh;
 
         this.target.dataset.pointerEventType = event.type;
-        if(this.peh.maxActivePointers===1 ){
+        if(peh.maxActivePointers===1 ){
             if(!this.checkInputMode(pointer)) return;
             this.tool.onpointermove(pointer);
-        }else if(this.peh.maxActivePointers >= 2){
-            if(this.peh.pointers.size===2){
-                // 줌 처리
-                const document = this?.document
-                if(!document){ console.warn('document is not exists'); return;}
-                const touchStartDistance = this.temp.touchStartDistance
-                // const baseWidth = Math.min(document.width,document.height)
-                const baseWidth = this.temp.documentHypot;
-                
-
-                // this.temp.document_zoom = this.document.zoom;
-                const points = Array.from(this.peh.pointers.values());
-                const currentDistance = Math.hypot( points[1].x - points[0].x, points[1].y - points[0].y );
-                const moveDistance = currentDistance - touchStartDistance;
-                const scale = moveDistance/baseWidth;
-                // const scale = Math.round(((currentDistance / this.temp.touchStartDistance) - 1)*100)/1000;
-                const zoom = Math.ceil(Math.min(3,Math.max(0.1,this.temp.document_zoom + scale))*100)/100;
-                // console.log(this.document.zoom-zoom,zoom);
-                // console.log('moveDistance',moveDistance,scale,zoom);
-                
-                if(Math.abs(this.document.zoom-zoom)>0.01){
-                    this.document.zoom = zoom
-                    this.document.flush();
-                }
-            }
         }
     }
     onpointerup=(event)=>{
-        const detail = event.detail??null;
-        const originalEvent = detail.originalEvent??event
-        const pointer = detail.pointer??event;
+        const detail = event?.detail;
+        const originalEvent = detail?.originalEvent??event
+        const pointer = detail?.pointer??event;
+        const peh = detail?.pointerEventHandler??this.peh;
 
         delete this.target.dataset.pointerEventType
-        if(this.peh.maxActivePointers===1 ){
+        if(peh.maxActivePointers===1 ){
             if(!this.checkInputMode(pointer)) return;
             this.tool.onpointerup(pointer);
             this.tool.end();
-        }else if(this.maxActivePointers>=2 && this.peh.pointers.size===2 ){
+        }else if(this.maxActivePointers>=2 && peh.pointers.size===2 ){
             
         }
     }
-
+    onpinch=(event)=>{
+        const detail = event?.detail;
+        const peh = detail?.pointerEventHandler??this.peh;
+        // const metrics = detail?.metrics;
+        const totalMetrics = detail?.totalMetrics;
+        const scale = (totalMetrics?.scale??1)-1;
+        
+        const zoom = Math.ceil(Math.min(3,Math.max(0.1,this.temp.document_zoom + scale))*100)/100;
+        // console.log(scale,zoom);
+        if(Math.abs(this.document.zoom-zoom)>0.05){
+            console.log('onpinch',zoom);
+            
+            this.document.zoom = zoom
+            this.document.flush();
+        }
+        
+    }
     // document가 변경되면 불러야한다.
     onchangeDocument(document){
         // console.log('onchangeDocument',document.id,document.layer.id)
