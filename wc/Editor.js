@@ -49,6 +49,7 @@ export default class Editor{
         target.addEventListener('pinch.peh',this.onpinch)
         target.addEventListener('multipointerdown.peh',this.onmultipointerdown)
         target.addEventListener('multipointermove.peh',this.onmultipointermove)
+        target.addEventListener('multipointerup.peh',this.onmultipointerup)
         
         
         // this.peh.onpointerdown = this.onpointerdown;
@@ -285,7 +286,7 @@ export default class Editor{
         const peh = detail?.pointerEventHandler??this.peh;
         // const metrics = detail?.metrics;
         // const totalMetrics = detail?.totalMetrics;
-        if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
+        if(peh.maxActivePointers===2 && peh.pointers.size===2 ){
             this.temp.document_left = this.document.left;
             this.temp.document_top = this.document.top;
         }
@@ -298,6 +299,15 @@ export default class Editor{
         if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
             this.document.left = Math.floor(this.temp.document_left + totalMetrics.distanceX);
             this.document.top = Math.floor(this.temp.document_top + totalMetrics.distanceY);
+            this.document.flush();
+        }
+    }
+    onmultipointerup = (event)=>{
+        const detail = event?.detail;
+        const peh = detail?.pointerEventHandler??this.peh;
+        if(peh.maxActivePointers===3){ //세손가락 터치시 위치 초기화
+            this.document.left = 0
+            this.document.top = 0
             this.document.flush();
         }
     }
