@@ -47,6 +47,9 @@ export default class Editor{
         target.addEventListener('pointermove.peh',this.onpointermove)
         target.addEventListener('pointerup.peh',this.onpointerup)
         target.addEventListener('pinch.peh',this.onpinch)
+        target.addEventListener('multipointerdown.peh',this.onmultipointerdown)
+        target.addEventListener('multipointermove.peh',this.onmultipointermove)
+        
         
         // this.peh.onpointerdown = this.onpointerdown;
         // this.peh.onpointermove = this.onpointermove;
@@ -256,7 +259,7 @@ export default class Editor{
             if(!this.checkInputMode(pointer)) return;
             this.tool.onpointerup(pointer);
             this.tool.end();
-        }else if(this.maxActivePointers>=2 && peh.pointers.size===2 ){
+        }else if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
             
         }
     }
@@ -277,6 +280,28 @@ export default class Editor{
         }
         
     }
+    onmultipointerdown = (event)=>{
+        const detail = event?.detail;
+        const peh = detail?.pointerEventHandler??this.peh;
+        // const metrics = detail?.metrics;
+        // const totalMetrics = detail?.totalMetrics;
+        if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
+            this.temp.document_left = this.document.left;
+            this.temp.document_top = this.document.top;
+        }
+    }
+    onmultipointermove = (event)=>{
+        const detail = event?.detail;
+        const peh = detail?.pointerEventHandler??this.peh;
+        // const metrics = detail?.metrics;
+        const totalMetrics = detail?.totalMetrics;
+        if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
+            this.document.left = Math.floor(this.temp.document_left + totalMetrics.distanceX);
+            this.document.top = Math.floor(this.temp.document_top + totalMetrics.distanceY);
+            this.document.flush();
+        }
+    }
+    
     // document가 변경되면 불러야한다.
     onchangeDocument(document){
         // console.log('onchangeDocument',document.id,document.layer.id)
