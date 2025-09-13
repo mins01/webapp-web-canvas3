@@ -43,9 +43,12 @@ export default class Editor{
         });
         this.activeTool = null;
         this.peh = new PointerEventHandler(target);
-        this.peh.onpointerdown = this.onpointerdown;
-        this.peh.onpointermove = this.onpointermove;
-        this.peh.onpointerup = this.onpointerup;
+        target.addEventListener('pointerdown.peh',this.onpointerdown)
+        target.addEventListener('pointermove.peh',this.onpointermove)
+        target.addEventListener('pointerup.peh',this.onpointerup)
+        // this.peh.onpointerdown = this.onpointerdown;
+        // this.peh.onpointermove = this.onpointermove;
+        // this.peh.onpointerup = this.onpointerup;
         // this.peh.addEventListener(target)
 
         // this.tool = null;
@@ -203,11 +206,15 @@ export default class Editor{
         return this.editorConfig.inputMode == event.pointerType;
     }
     onpointerdown=(event)=>{
+        const detail = event.detail??null;
+        const originalEvent = detail.originalEvent??event
+        const pointer = detail.pointer??event;
+        
         this.target.dataset.pointerEventType = event.type;
         if(this.peh.maxActivePointers===1 ){
-            if(!this.checkInputMode(event)) return;
+            if(!this.checkInputMode(pointer)) return;
             this.tool.start();
-            this.tool.onpointerdown(event);
+            this.tool.onpointerdown(pointer);
         }else if(this.peh.maxActivePointers >= 2){
             if(this.tool.downAt){
                 this.tool.cancel();
@@ -226,10 +233,14 @@ export default class Editor{
         
     }
     onpointermove=(event)=>{
+        const detail = event.detail??null;
+        const originalEvent = detail.originalEvent??event
+        const pointer = detail.pointer??event;
+
         this.target.dataset.pointerEventType = event.type;
         if(this.peh.maxActivePointers===1 ){
-            if(!this.checkInputMode(event)) return;
-            this.tool.onpointermove(event);
+            if(!this.checkInputMode(pointer)) return;
+            this.tool.onpointermove(pointer);
         }else if(this.peh.maxActivePointers >= 2){
             if(this.peh.pointers.size===2){
                 // 줌 처리
@@ -258,11 +269,14 @@ export default class Editor{
         }
     }
     onpointerup=(event)=>{
-        // this.target.dataset.pointerEventType = event.type;
+        const detail = event.detail??null;
+        const originalEvent = detail.originalEvent??event
+        const pointer = detail.pointer??event;
+
         delete this.target.dataset.pointerEventType
         if(this.peh.maxActivePointers===1 ){
-            if(!this.checkInputMode(event)) return;
-            this.tool.onpointerup(event);
+            if(!this.checkInputMode(pointer)) return;
+            this.tool.onpointerup(pointer);
             this.tool.end();
         }else if(this.maxActivePointers>=2 && this.peh.pointers.size===2 ){
             
