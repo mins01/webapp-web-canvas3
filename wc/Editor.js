@@ -297,8 +297,8 @@ export default class Editor{
         // const metrics = detail?.metrics;
         const totalMetrics = detail?.totalMetrics;
         if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
-            this.document.left = Math.floor(this.temp.document_left + totalMetrics.distanceX);
-            this.document.top = Math.floor(this.temp.document_top + totalMetrics.distanceY);
+            this.document.left = Math.floor(this.temp.document_left + totalMetrics.distanceX / this.document.zoom );
+            this.document.top = Math.floor(this.temp.document_top + totalMetrics.distanceY / this.document.zoom);
             this.document.flush();
         }
     }
