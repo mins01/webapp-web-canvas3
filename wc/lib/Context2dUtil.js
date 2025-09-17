@@ -62,122 +62,65 @@ export default class Context2dUtil{
     //     });
     // }
     
-    /**
-    * 캔버스에서 투명과 불투명 영역 경계 좌표 추출
-    * @returns {Array<{x:number, y:number}>} 경계 좌표 배열
-    */
-    static getEdgeCoordinates(ctx){
-        const width = ctx.canvas.width;
-        const height = ctx.canvas.height;
-        const imgData = ctx.getImageData(0, 0, width, height);
-        const data = imgData.data;
-        const edgeCoords = [];
-        
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                const i = (y * width + x) * 4;
-                const alpha = data[i + 3];
-                
-                if (alpha > 0) {
-                    // 상하좌우 픽셀 중 하나라도 alpha = 0이면 경계
-                    const neighbors = [
-                        ((y-1) * width + x) * 4 + 3,
-                        ((y+1) * width + x) * 4 + 3,
-                        (y * width + (x-1)) * 4 + 3,
-                        (y * width + (x+1)) * 4 + 3
-                    ];
-                    
-                    if (neighbors.some(n => data[n] === 0)) {
-                        edgeCoords.push({ x, y });
-                    }
-                }
-            }
-        }
-        return edgeCoords;
-    }
 
 
-    /**
-   * 화면 안쪽 좌표인지 확인
-   */
-  static isInsideCanvas(x, y, width, height) {
-    return x >= 0 && y >= 0 && x < width && y < height;
+
+
+  static async  getOrderedContour(canvas) {
+      return new Promise((resolve, reject) => {
+          // OpenCV.js 로딩 확인
+          const run = () => {
+              try {
+                  // Canvas → cv.Mat
+                  let img = cv.imread(canvas); // RGBA
+                  let gray = new cv.Mat();
+                  cv.cvtColor(img, gray, cv.COLOR_RGBA2GRAY);
+
+                  // Threshold: 투명 vs 불투명
+                  let thresh = new cv.Mat();
+                  cv.threshold(gray, thresh, 1, 255, cv.THRESH_BINARY);
+
+                  // 윤곽선 찾기 (외곽만)
+                  let contours = new cv.MatVector();
+                  let hierarchy = new cv.Mat();
+                  cv.findContours(thresh, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+
+                  let points = [];
+                  if (contours.size() > 0) {
+                      // 첫 번째 외곽선만 사용
+                      const contour = contours.get(0);
+                      for (let i = 0; i < contour.data32S.length; i += 2) {
+                          points.push({ x: contour.data32S[i], y: contour.data32S[i + 1] });
+                      }
+                  }
+
+                  // 메모리 해제
+                  img.delete(); gray.delete(); thresh.delete(); contours.delete(); hierarchy.delete();
+
+                  resolve(points);
+              } catch (err) {
+                  reject(err);
+              }
+          };
+
+          if (cv.getBuildInformation) run();
+          else cv['onRuntimeInitialized'] = run;
+      });
   }
 
-  /**
-   * Moore-Neighbor Tracing (외곽선 좌표 추적)
-   * @param {Array<{x:number,y:number}>} coords - 경계 픽셀 좌표
-   * @param {number} width - 캔버스 가로 크기
-   * @param {number} height - 캔버스 세로 크기
-   * @returns {Array<{x:number,y:number}>} 외곽선 좌표 (순서 정렬됨)
-   */
-  static traceBoundary(coords, width, height) {
-    if (!coords.length) return [];
-
-    const set = new Set(coords.map(p => `${p.x},${p.y}`));
-
-    // 시작점: 화면 안쪽에서 y가 가장 작고, 같은 y면 x가 가장 작은 픽셀
-    let start = coords
-      .filter(p => this.isInsideCanvas(p.x, p.y, width, height))
-      .reduce((a, b) =>
-        (a.y < b.y || (a.y === b.y && a.x < b.x)) ? a : b
-      );
-
-    let boundary = [start];
-    let current = { ...start };
-
-    // 8방향 (시계 방향)
-    const dirs = [
-      {x:0,y:-1}, {x:1,y:-1}, {x:1,y:0}, {x:1,y:1},
-      {x:0,y:1}, {x:-1,y:1}, {x:-1,y:0}, {x:-1,y:-1}
-    ];
-
-    // 시작 시, 탐색 방향은 "서쪽(왼쪽)"으로 설정
-    let prevDir = 6; 
-
-    let loopGuard = 0;
-    do {
-      let found = false;
-
-      // 이전 방향의 왼쪽(반시계)부터 검사
-      for (let i = 0; i < 8; i++) {
-        let dir = (prevDir + i) % 8;
-        let nx = current.x + dirs[dir].x;
-        let ny = current.y + dirs[dir].y;
-
-        if (!this.isInsideCanvas(nx, ny, width, height)) continue;
-
-        if (set.has(`${nx},${ny}`)) {
-          current = {x: nx, y: ny};
-          boundary.push(current);
-
-          // 새로운 prevDir = 현재 dir 기준으로 시계 반대 두 칸
-          prevDir = (dir + 6) % 8; 
-          found = true;
-          break;
-        }
+  // 좌표를 폐쇄경로로 변환
+  static coordinatesToClosedPath2D(coords){
+      const path2D = new Path2D();
+      if(!(coords?.length)){return null; }
+      path2D.moveTo(coords[0].x,coords[0].y);
+      console.log(coords[0].x,coords[0].y);
+      
+      for(let i=1,m=coords.length;i<m;i++){
+          path2D.lineTo(coords[i].x,coords[i].y);
       }
-
-      if (!found) break;
-      if (++loopGuard > 100000) break; // 안전장치
-    } while (current.x !== start.x || current.y !== start.y);
-
-    return boundary;
+      path2D.closePath()
+      return path2D;
   }
-
-    // 좌표를 폐쇄경로로 변환
-    static coordinatesToClosedPath2D(coords){
-        const path2D = new Path2D();
-        if(!(coords?.length)){return null; }
-        path2D.moveTo(coords[0].x,coords[0].y);
-        console.log(coords[0].x,coords[0].y);
-        
-        for(let i=1,m=coords.length;i<m;i++){
-            path2D.lineTo(coords[i].x,coords[i].y);
-        }
-        path2D.closePath()
-        return path2D;
-    }
 
 
 

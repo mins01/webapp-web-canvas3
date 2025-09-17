@@ -37,6 +37,7 @@
   <meta property="og:type" content="website">
   
   <!-- //meta og -->
+  <script async src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript"></script>
 
   <style>
     canvas{outline: 1px dashed #aabbcc99;}
@@ -113,7 +114,7 @@
         selected_area.flush()
         console.log(event.type,command);
       }
-      selected_area.onpointerup = (event)=>{
+      selected_area.onpointerup = async (event)=>{
         is_down = false;
         event.target.releasePointerCapture(event.pointerId);
         command.args[0].push([event.offsetX,event.offsetY]);
@@ -122,14 +123,15 @@
         selected_area.contextConfig.foreColor = '#f0f2';
         selected_area.contextConfig.backColor = '#f99';
         selected_area.contextConfig.assignTo(selected_area.ctx,true);
-        
+        selected_area.fillRule = 'nonzero'
         selected_area.drawMode = 'fill';
         selected_area.draw()
        
 
-        const coords = Context2dUtil.getEdgeCoordinates(selected_area.ctx)
-        const sortedCoords = Context2dUtil.traceBoundary(coords,selected_area.width,selected_area.height);
-        const closedPath2D = Context2dUtil.coordinatesToClosedPath2D(sortedCoords)
+
+        const coords = await Context2dUtil.getOrderedContour(selected_area);
+        const closedPath2D = Context2dUtil.coordinatesToClosedPath2D(coords)
+
         if(closedPath2D){
           // selected_area.clear();
           // console.log('closedPath2D',closedPath2D);
