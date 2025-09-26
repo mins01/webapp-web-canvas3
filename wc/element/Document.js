@@ -17,7 +17,7 @@ export default class Document extends Layer{
     history = null;
     drawingLayer = null;
     editor = null;
-    frame = null;
+    stage = null;
     constructor(w=null,h=null){
         super(w,h);
 

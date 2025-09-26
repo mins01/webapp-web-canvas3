@@ -57,8 +57,8 @@ export default class Hand extends BaseTool{
         document.left = this.left0 + dx;
         document.top = this.top0 + dy;
 
-        // document.frame.scrollLeft = this.left0 - dx;
-        // document.frame.scrollTop = this.top0 - dy;
+        // document.stage.scrollLeft = this.left0 - dx;
+        // document.stage.scrollTop = this.top0 - dy;
         
 
         document.flush()

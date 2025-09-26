@@ -253,8 +253,8 @@ export default class BaseTool {
 	// getXyInDocument(inX,inY){
 	// 	const doc = this.document;
 	// 	const zoom = doc.zoom;
-	// 	let x = inX - (doc.offsetLeft * zoom + doc.frame.offsetLeft + doc.frame.parentElement.offsetLeft - doc.frame.scrollLeft);
-	// 	let y = inY - (doc.offsetTop * zoom + doc.frame.offsetTop + doc.frame.parentElement.offsetTop - doc.frame.scrollTop);
+	// 	let x = inX - (doc.offsetLeft * zoom + doc.stage.offsetLeft + doc.stage.parentElement.offsetLeft - doc.stage.scrollLeft);
+	// 	let y = inY - (doc.offsetTop * zoom + doc.stage.offsetTop + doc.stage.parentElement.offsetTop - doc.stage.scrollTop);
 
 	// 	if(zoom!==1){
 	// 		x = x/zoom;

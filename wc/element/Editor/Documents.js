@@ -9,34 +9,29 @@ export default class Documents extends SelectableArray{
     this.editor = editor;
   }
   add(document){
-    if(!(document.frame??false)){
-      document.frame = document.closest('.wc-frame')??null;
-      if(!document.frame){
-          const frame = window.document.createElement('div');
-          frame.classList.add('wc-frame');
-          document.frame = frame;
-          document.frame.append(document)
+    if(!(document.stage??false)){
+      document.stage = document.closest('.wc-frame')??null;
+      if(!document.stage){
+          const stage = window.document.createElement('div');
+          stage.classList.add('wc-frame');
+          stage.classList.add('wc-stage');
+          document.stage = stage;
+          document.stage.append(document)
       }
     }
-    const frame = document.frame;
-    // console.log(document.frame);
+    const stage = document.stage;
+    // console.log(document.stage);
     
     super.add(document);
     document.editor = this.editor;
-    // if(!document.frame){
-    //   const frame = document.createElement('div');
-    //   frame.classList.add('wc-frame');
-    //   document.frame = frame;
-    // }
-    this.editor.target.append(frame)
-    // document.scrollIntoView( { behavior:'smooth', block:'center', inline:'center', } );
+    this.editor.target.append(stage)
     document.flush();
     document.ready();
     document.history.clear();
     document.history.save('new document');
     setTimeout(()=>{
-      frame.scrollLeft = (frame.scrollWidth - frame.offsetWidth) / 2;
-      frame.scrollTop = (frame.scrollHeight - frame.offsetHeight) / 2;
+      stage.scrollLeft = (stage.scrollWidth - stage.offsetWidth) / 2;
+      stage.scrollTop = (stage.scrollHeight - stage.offsetHeight) / 2;
 
       document.history.clear();
       document.history.save('new document');
@@ -61,7 +56,7 @@ export default class Documents extends SelectableArray{
       return false;
     }
     const document = this.selected;
-    document.frame.remove();
+    document.stage.remove();
     document.dispose();
     const r = super.remove();
     if(r>=0){ this.select(r); }

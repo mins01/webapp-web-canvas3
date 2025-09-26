@@ -49,7 +49,7 @@ export default class Transform extends BaseTool{
 
     start(){
         
-        // this.top0 = this.document.frame.scrollTop;
+        // this.top0 = this.document.stage.scrollTop;
     }
     onpointerdown(event){
         
