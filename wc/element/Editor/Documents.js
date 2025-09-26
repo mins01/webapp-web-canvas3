@@ -10,13 +10,17 @@ export default class Documents extends SelectableArray{
   }
   add(document){
     if(!(document.stage??false)){
-      document.stage = document.closest('.wc-frame')??null;
+      document.stage = document.closest('.wc-frame , .wc-document-stage')??null;
       if(!document.stage){
           const stage = window.document.createElement('div');
           stage.classList.add('wc-frame');
-          stage.classList.add('wc-stage');
+          stage.classList.add('wc-document-stage');
+          const wrapper = window.document.createElement('div');
+          wrapper.classList.add('wc-document-wrapper');
           document.stage = stage;
-          document.stage.append(document)
+          document.wrapper = wrapper;
+          wrapper.append(document)
+          stage.append(wrapper)
       }
     }
     const stage = document.stage;

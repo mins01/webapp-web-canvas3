@@ -145,7 +145,7 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 .wc-editor{
   overflow: hidden;
 }
-.wc-frame{
+.wc-document-stage{
   position: absolute;
   /* top: 0;
   left: 0;
@@ -171,7 +171,8 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   contain: strict;
 }
 
-.wc-frame > .wc-document{
+.wc-document-stage > .wc-document,
+.wc-document-stage > .wc-document-wrapper{
   display: block;
   /* margin:100svh 100svw; */
   outline:4px dashed #000;
@@ -185,18 +186,20 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   /* transform:  scale(var(--zoom))  rotate(var(--angle));     */
   
 }
+.wc-document-stage  .wc-document{
+  display: block;
+}
 
-
-.wc-app .wc-frame{
+.wc-app .wc-document-stage{
   cursor: crosshair;
 }
-.wc-app[data-tool="Move"] .wc-frame{
+.wc-app[data-tool="Move"] .wc-document-stage{
   cursor: move;
 }
-.wc-app[data-tool="Hand"] .wc-frame{
+.wc-app[data-tool="Hand"] .wc-document-stage{
   cursor: grab;
 }
-.wc-app[data-tool="Hand"] .wc-editor[data-pointer-event-type] .wc-frame{
+.wc-app[data-tool="Hand"] .wc-editor[data-pointer-event-type] .wc-document-stage{
   cursor: grabbing;
 }
 
