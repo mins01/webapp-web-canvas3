@@ -18,6 +18,7 @@ export default class Document extends Layer{
     drawingLayer = null;
     editor = null;
     stage = null;
+    wrapper = null;
     constructor(w=null,h=null){
         super(w,h);
 
@@ -42,10 +43,12 @@ export default class Document extends Layer{
     static defineCustomElements(name='wc-document'){
         super.defineCustomElements(name);
     }
-    get left(){ return super.left; }
-    get top(){ return super.top; }
-    set left(v){ super.left = v; this.style.left=`${this.left}px` }
-    set top(v){ super.top = v;  this.style.top=`${this.top}px` }
+    // get left(){ return super.left; }
+    // get top(){ return super.top; }
+    // // set left(v){ super.left = v; this.style.left=`${this.left}px` }
+    // // set top(v){ super.top = v;  this.style.top=`${this.top}px` }
+    // set left(v){ super.left = v; }
+    // set top(v){ super.top = v; }
 
     init(){
         this.classList.add('wc-document')
@@ -163,12 +166,14 @@ export default class Document extends Layer{
         ctx.restore()
         // this.style.zoom = this.zoom;
 
-        this.style.setProperty('--width',this.width+'px');
-        this.style.setProperty('--height',this.height+'px');
-        this.style.setProperty('--zoom',this.zoom);
-        this.style.setProperty('--angle',this.angle+'deg');
-        this.style.setProperty('--left',this.left+'px');
-        this.style.setProperty('--top',this.top+'px');
+        if(this.wrapper){
+            this.wrapper.style.setProperty('--width',this.width+'px');
+            this.wrapper.style.setProperty('--height',this.height+'px');
+            this.wrapper.style.setProperty('--zoom',this.zoom);
+            this.wrapper.style.setProperty('--angle',this.angle+'deg');
+            this.wrapper.style.setProperty('--left',this.left+'px');
+            this.wrapper.style.setProperty('--top',this.top+'px');
+        }
     }
 
     resize(width,height){
