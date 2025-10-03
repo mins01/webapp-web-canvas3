@@ -123,6 +123,7 @@
 .wc-app[data-tool="Spuit"] .only-shown-tool-Spuit{display: block;}
 .wc-app[data-tool="Text"] .only-shown-tool-Text{display: block;}
 .wc-app[data-tool="Text"] .only-hidden-tool-Text{display: none;}
+.wc-app[data-tool="Rectangle"] .only-shown-tool-Rectangle{display: block;}
 
 body[data-fullscreen="true"] .only-shown-fullscreen-true{display: block;}
 body:not([data-fullscreen]) .only-shown-fullscreen-false{display: block;}
