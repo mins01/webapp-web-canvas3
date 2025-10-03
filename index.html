@@ -2269,10 +2269,10 @@
           <div class="modal-body" onclick="wcSyncHandler.sync(this.closest('.modal'))">
             <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
               <div>
-                <div class="form-label mb-0"><i class="bi bi-pentagon"></i> Number of vertices(꼭지점의 수)</div>
+                <div class="form-label mb-0"><i class="bi bi-pentagon"></i> Points(꼭지점의 수)</div>
                 <div class="input-group ui-input-stepper">
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="3">
+                  <div class="form-control ui-input-stepper-data-value" data-value="3">
                     <input type="range" class="form-range d-block" name="points" placeholder="size" min="3" max="30" step="1" value="3">
                   </div>
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
