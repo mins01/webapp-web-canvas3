@@ -186,8 +186,17 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   /* transform:  scale(var(--zoom))  rotate(var(--angle));     */
   
 }
+.wc-document-stage > .wc-document-wrapper{
+  position: relative;
+}
 .wc-document-stage  .wc-document{
   display: block;
+}
+.wc-document-stage  .wc-selection{
+  display: block;
+  position: absolute;
+  top:0;left:0;inset: 0;
+  z-index: 2;
 }
 
 .wc-app .wc-document-stage{

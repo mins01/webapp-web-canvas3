@@ -19,6 +19,8 @@ export default class Document extends Layer{
     editor = null;
     stage = null;
     wrapper = null;
+    selectionLayer = null;
+
     constructor(w=null,h=null){
         super(w,h);
 
@@ -180,6 +182,8 @@ export default class Document extends Layer{
         this.width = width;
         this.height = height;
         this.flush();
+        this.selectionLayer.resize(this.width,this.height)
+        this.selectionLayer.flush();
         this.history.save();
     }
 
