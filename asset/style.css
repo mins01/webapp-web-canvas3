@@ -124,6 +124,7 @@
 .wc-app[data-tool="Text"] .only-shown-tool-Text{display: block;}
 .wc-app[data-tool="Text"] .only-hidden-tool-Text{display: none;}
 .wc-app[data-tool="Rectangle"] .only-shown-tool-Rectangle{display: block;}
+.wc-app[data-tool="Polygon"] .only-shown-tool-Polygon{display: block;}
 
 body[data-fullscreen="true"] .only-shown-fullscreen-true{display: block;}
 body:not([data-fullscreen]) .only-shown-fullscreen-false{display: block;}

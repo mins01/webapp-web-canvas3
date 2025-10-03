@@ -3,15 +3,17 @@ import Layer from '../element/Layer.js';
 import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
-export default class Rectangle extends BaseTool{
-    drawCount = 0;
-    remainInterval = 0;
+export default class Polygon extends BaseTool{
+    // drawCount = 0;
+    // remainInterval = 0;
     targetLayer = null
     orignalSnapshot = null
     workingLayer = null;
+    points = 3;
+    opacity = 1;
     constructor(editor){
         super(editor);
-        this.name = 'Rectangle';
+        this.name = 'Polygon';
         this.workingLayer = new Layer(100,100);
         this.drawCount = 0;
     }
@@ -119,13 +121,19 @@ export default class Rectangle extends BaseTool{
         let w = lx1 - lx0;
         let h = ly1 - ly0;
 
+        const x = lx0;
+        const y = ly0;
+        const radius = Math.floor(Math.hypot(lx0-lx1,ly0-ly1));
+        const points = this.points;
+        const startAngle = Math.atan2(h, w);
+
 
         ctx.save();
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
         
         this.prepareLayer(ctx);
-        ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
+        ctx.fill(ShapePath2D.equilateralPolygon(x, y, radius, points , startAngle));
         ctx.restore();
 
         this.mergeFromWorkingLayer();
