@@ -3,15 +3,16 @@ import Layer from '../element/Layer.js';
 import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
-export default class Polygon extends BaseTool{
+export default class Star extends BaseTool{
     targetLayer = null
     orignalSnapshot = null
     workingLayer = null;
-    points = 3;
+    points = 5;
     opacity = 1;
+    innerRadiusPercent = 0.5;
     constructor(editor){
         super(editor);
-        this.name = 'Polygon';
+        this.name = 'Star';
         this.workingLayer = new Layer(100,100);
     }
 
@@ -121,6 +122,7 @@ export default class Polygon extends BaseTool{
         const x = lx0;
         const y = ly0;
         const radius = Math.floor(Math.hypot(lx0-lx1,ly0-ly1));
+        const innerRadius = this.innerRadiusPercent?Math.floor(radius*this.innerRadiusPercent):0;
         const points = this.points;
         const startAngle = Math.atan2(h, w);
 
@@ -130,7 +132,7 @@ export default class Polygon extends BaseTool{
         ctx.lineJoin = "miter";
         
         this.prepareLayer(ctx);
-        ctx.fill(ShapePath2D.equilateralPolygon(x, y, radius, points , startAngle));
+        ctx.fill(ShapePath2D.star(x, y, radius,innerRadius, points , startAngle));
         ctx.restore();
 
         this.mergeFromWorkingLayer();

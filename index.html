@@ -273,6 +273,7 @@
             <div class="only-shown only-shown-tool-Eraser"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eraser"></i></button></div>
             <div class="only-shown only-shown-tool-Rectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-square-fill"></i></button></div>
             <div class="only-shown only-shown-tool-Polygon"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-pentagon-fill"></i></button></div>
+            <div class="only-shown only-shown-tool-Star"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-star-fill"></i></button></div>
             
             <div class="only-shown only-shown-tool-Text"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-alphabet-uppercase"></i></button></div>
             <div class="only-shown only-shown-tool-Spuit"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eyedropper"></i></button></div>
@@ -291,6 +292,7 @@
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Text"  data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Rectangle"  data-bs-toggle="modal" data-bs-target="#modal-rectangle-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Polygon"  data-bs-toggle="modal" data-bs-target="#modal-polygon-config"><i class="bi bi-sliders"></i></i></button>
+            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Star"  data-bs-toggle="modal" data-bs-target="#modal-star-config"><i class="bi bi-sliders"></i></i></button>
             
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Spuit" disabled><i class="bi bi-sliders"></i></i></button>
             
@@ -324,6 +326,8 @@
               
               <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square-fill"></i></button></label>
               <label role="button" title="tool Polygon" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Polygon" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pentagon-fill"></i></button></label>
+              <label role="button" title="tool Star" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Star" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-star-fill"></i></button></label>
+
               <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-alphabet-uppercase"></i></button></label>
               
               <label role="button" title="tool Spuit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Spuit" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eyedropper"></i></button></label>
@@ -2294,6 +2298,52 @@
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
                   <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="100">
                     <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-star-config"  aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-4"><i class="bi bi-pentagon-fill"></i> star</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" onclick="wcSyncHandler.sync(this.closest('.modal'))">
+            <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-pentagon"></i> Points(꼭지점의 수)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value="3">
+                    <input type="range" class="form-range d-block" name="points" placeholder="size" min="3" max="30" step="1" value="3">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="100">
+                    <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-pentagon-fill"></i> Inner radius(내부 지름)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="0.5">
+                    <input type="range" class="form-range d-block" name="innerRadiusPercent" placeholder="innerRadiusPercent" step="0.01" min="0" max="1" value="0.5">
                   </div>
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
