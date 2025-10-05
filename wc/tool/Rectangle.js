@@ -9,6 +9,8 @@ export default class Rectangle extends BaseTool{
     targetLayer = null
     orignalSnapshot = null
     workingLayer = null;
+    radii = 0;
+    opacity = 1;
     constructor(editor){
         super(editor);
         this.name = 'Rectangle';
@@ -118,14 +120,15 @@ export default class Rectangle extends BaseTool{
         this.editor.contextConfig.assignTo(ctx,true);
         let w = lx1 - lx0;
         let h = ly1 - ly0;
-
+        const radii = this.radii;
 
         ctx.save();
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
         
         this.prepareLayer(ctx);
-        ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
+        // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
+        ctx.fill(ShapePath2D.roundRect(lx0,ly0,w,h,radii));
         ctx.restore();
 
         this.mergeFromWorkingLayer();
