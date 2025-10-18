@@ -110,8 +110,6 @@ export default class Brush extends BaseTool{
             from.ctx.save();
             from.ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
             from.ctx.drawImage(selectionLayer,-to.left,-to.top);
-            console.log(from.left*4,from.top);
-            
             from.ctx.restore();
         }
         if(this.orignalSnapshot) this.layer.import(this.orignalSnapshot);

@@ -413,6 +413,18 @@
               </div>
             </div>
           </div>
+          <div class="only-shown only-shown-tool-SelectionRectangle my-1">
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-primary" onclick="editor.document.selectionLayer.copyToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 복사하였습니다.')"><i class="bi bi-copy"></i> Copy to layer</button>
+                  <button class="btn btn-primary" onclick="editor.document.selectionLayer.cutToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 이동하였습니다.')"><i class="bi bi-scissors"></i> Cut to layer</button>
+                  <button class="btn btn-warning" onclick="editor.document.selectionLayer.eraseLayer(editor.document.layer);editor.document.layer.flush();editor.saveHistory('erase');"><i class="bi bi-eraser-fill"></i> Erase</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="wc-editor" class="wc-editor wc-app-body debug-box">

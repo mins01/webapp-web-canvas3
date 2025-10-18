@@ -33,4 +33,45 @@ export default class SelectionLayer extends Layer{
         this.isEmpty = Context2dUtil.isEmpty(this.ctx);        
         super.draw();
     }
+
+    eraseLayer(layer){
+        const ctx=  layer.ctx;
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-out"; /// 기존 그림과 겹치는 않은 부분만 남김
+        ctx.drawImage(this,-layer.left,-layer.top);
+        ctx.restore();
+    }
+
+    copyToLayer(layer){
+        const newLayer = layer.clone(`${layer.title}-copy`);
+        const document = layer.parent;
+        const ctx=  newLayer.ctx;
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
+        ctx.drawImage(this,-newLayer.left,-newLayer.top);
+        ctx.restore();
+        newLayer.adjustSize(layer.parent.width,layer.parent.height);
+        document.layers.add(newLayer);
+    }
+
+    cutToLayer(layer){
+        {
+            const newLayer = layer.clone(`${layer.title}-copy`);
+            const document = layer.parent;
+            const ctx=  newLayer.ctx;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
+            ctx.drawImage(this,-newLayer.left,-newLayer.top);
+            ctx.restore();
+            newLayer.adjustSize(layer.parent.width,layer.parent.height);
+            document.layers.add(newLayer);
+        }
+        {
+            const ctx=  layer.ctx;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-out"; // 기존 그림과 겹치는 않은 부분만 남김
+            ctx.drawImage(this,-layer.left,-layer.top);
+            ctx.restore();
+        }
+    }
 }
