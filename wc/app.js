@@ -99,6 +99,9 @@ const autoSave = new AutoSave(editor,60*1000*5); //5분에 한번씩 저장함
 autoSave.activate();
 editor.autoSave = autoSave 
 
+//-- 설정
+const askLoadAutosaveAtStart = true; // 시작 시 그리던 것 이어그리기
+
 
 //-- onload
 globalThis.window.addEventListener('load',(event)=>{
@@ -174,7 +177,7 @@ globalThis.window.addEventListener('load',(event)=>{
             }else{
                 //-- new document
                 editor.newDocument(300,300);
-                if(editor.autoSave.updatedAt){
+                if(askLoadAutosaveAtStart && editor.autoSave.updatedAt){
                     window.edialog.confirm(`작업 중이던 이미지가 있습니다.\n${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 자동 저장 데이터를 불러올까요?`).then(
                         (r)=>{
                             if(r){  
