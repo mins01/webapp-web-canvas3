@@ -103,8 +103,12 @@ export default class SelectionRectangle extends BaseTool{
         layer.clear();
 
         // 레이어 기준으로 좌표 재계산
-        const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
-        const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
+        // const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
+        // const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
+        const [lx0,ly0] = this.getXyInDocument(x0,y0);
+        const [lx1,ly1] = this.getXyInDocument(x1,y1);
+        console.log(lx0);
+        
         
 
         this.editor.contextConfig.assignTo(ctx,true);
@@ -116,7 +120,7 @@ export default class SelectionRectangle extends BaseTool{
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
         
-        this.prepareLayer(ctx);
+        // this.prepareLayer(ctx); // 레이어 기준이 아니라서 동작하면 안된다.
         // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
         ctx.fillStyle = this.pattern;
         ctx.fill(ShapePath2D.roundRect(lx0,ly0,w,h,radii));
