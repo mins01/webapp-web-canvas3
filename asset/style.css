@@ -488,14 +488,14 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 
 
 .wc-selectionlayer{
-  opacity: 0.5;
+  opacity: 0.2;
 }
 .wc-selectionlayer[data-is-empty="false"]{
-  animation: blink 1s steps(2, end) infinite;
+  animation: ani-invert 1s steps(2, end) infinite;
 
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 0.3; }
-  50.01%, 100% { opacity: 0.5; }
+@keyframes ani-invert {
+  0%, 50% { filter:invert(0);}
+  50.01%, 100% { filter:invert(1); }
 }

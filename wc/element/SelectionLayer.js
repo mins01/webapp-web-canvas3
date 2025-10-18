@@ -30,7 +30,7 @@ export default class SelectionLayer extends Layer{
     }
 
     draw(){ // 따로 그리기 동작이 있을 경우.
-        this.isEmpty = Context2dUtil.isEmpty(this.ctx);
+        this.isEmpty = Context2dUtil.isEmpty(this.ctx);        
         super.draw();
     }
 }

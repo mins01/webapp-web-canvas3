@@ -1,13 +1,29 @@
 import ShapePath2D from '../draw/ShapePath2D.js';
-import Layer from '../element/Layer.js';
+// import Layer from '../element/Layer.js';
+import Canvas from '../element/Canvas.js';
 import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class SelectionRectangle extends BaseTool{
     radii = 0;
+    pattern = null;
     constructor(editor){
         super(editor);
         this.name = 'SelectionRectangle';
+        this.initPattern();
+    }
+
+    initPattern(){
+        const patternCanvas = new Canvas(4,4);
+        patternCanvas.ctx.fillStyle = "#ffffff"; // 흰색
+        patternCanvas.ctx.fillRect(0, 0, 2, 2); // 좌상단
+        patternCanvas.ctx.fillRect(2, 2, 2, 2); // 우하단
+
+        patternCanvas.ctx.fillStyle = "#000000"; // 검은색
+        patternCanvas.ctx.fillRect(2, 0, 2, 2); // 우상단
+        patternCanvas.ctx.fillRect(0, 2, 2, 2); // 좌하단
+
+        this.pattern = patternCanvas.ctx.createPattern(patternCanvas, "repeat");
     }
 
     start(){
@@ -100,6 +116,7 @@ export default class SelectionRectangle extends BaseTool{
         
         this.prepareLayer(ctx);
         // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
+        ctx.fillStyle = this.pattern;
         ctx.fill(ShapePath2D.roundRect(lx0,ly0,w,h,radii));
         ctx.restore();
         layer.flush();
