@@ -110,7 +110,7 @@ export default class Rectangle extends BaseTool{
         const ctx = layer.ctx;
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
-        this.workingLayer.clear();
+        layer.clear();
 
         // 레이어 기준으로 좌표 재계산
         const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
