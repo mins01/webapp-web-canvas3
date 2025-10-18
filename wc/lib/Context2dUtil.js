@@ -66,62 +66,73 @@ export default class Context2dUtil{
 
 
 
-  static async  getOrderedContour(canvas) {
-      return new Promise((resolve, reject) => {
-          // OpenCV.js 로딩 확인
-          const run = () => {
-              try {
-                  // Canvas → cv.Mat
-                  let img = cv.imread(canvas); // RGBA
-                  let gray = new cv.Mat();
-                  cv.cvtColor(img, gray, cv.COLOR_RGBA2GRAY);
+    static async  getOrderedContour(canvas) {
+        return new Promise((resolve, reject) => {
+            // OpenCV.js 로딩 확인
+            const run = () => {
+                try {
+                    // Canvas → cv.Mat
+                    let img = cv.imread(canvas); // RGBA
+                    let gray = new cv.Mat();
+                    cv.cvtColor(img, gray, cv.COLOR_RGBA2GRAY);
 
-                  // Threshold: 투명 vs 불투명
-                  let thresh = new cv.Mat();
-                  cv.threshold(gray, thresh, 1, 255, cv.THRESH_BINARY);
+                    // Threshold: 투명 vs 불투명
+                    let thresh = new cv.Mat();
+                    cv.threshold(gray, thresh, 1, 255, cv.THRESH_BINARY);
 
-                  // 윤곽선 찾기 (외곽만)
-                  let contours = new cv.MatVector();
-                  let hierarchy = new cv.Mat();
-                  cv.findContours(thresh, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+                    // 윤곽선 찾기 (외곽만)
+                    let contours = new cv.MatVector();
+                    let hierarchy = new cv.Mat();
+                    cv.findContours(thresh, contours, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
 
-                  let points = [];
-                  if (contours.size() > 0) {
-                      // 첫 번째 외곽선만 사용
-                      const contour = contours.get(0);
-                      for (let i = 0; i < contour.data32S.length; i += 2) {
-                          points.push({ x: contour.data32S[i], y: contour.data32S[i + 1] });
-                      }
-                  }
+                    let points = [];
+                    if (contours.size() > 0) {
+                        // 첫 번째 외곽선만 사용
+                        const contour = contours.get(0);
+                        for (let i = 0; i < contour.data32S.length; i += 2) {
+                            points.push({ x: contour.data32S[i], y: contour.data32S[i + 1] });
+                        }
+                    }
 
-                  // 메모리 해제
-                  img.delete(); gray.delete(); thresh.delete(); contours.delete(); hierarchy.delete();
+                    // 메모리 해제
+                    img.delete(); gray.delete(); thresh.delete(); contours.delete(); hierarchy.delete();
 
-                  resolve(points);
-              } catch (err) {
-                  reject(err);
-              }
-          };
+                    resolve(points);
+                } catch (err) {
+                    reject(err);
+                }
+            };
 
-          if (cv.getBuildInformation) run();
-          else cv['onRuntimeInitialized'] = run;
-      });
-  }
+            if (cv.getBuildInformation) run();
+            else cv['onRuntimeInitialized'] = run;
+        });
+    }
 
-  // 좌표를 폐쇄경로로 변환
-  static coordinatesToClosedPath2D(coords){
-      const path2D = new Path2D();
-      if(!(coords?.length)){return null; }
-      path2D.moveTo(coords[0].x,coords[0].y);
-      console.log(coords[0].x,coords[0].y);
-      
-      for(let i=1,m=coords.length;i<m;i++){
-          path2D.lineTo(coords[i].x,coords[i].y);
-      }
-      path2D.closePath()
-      return path2D;
-  }
+    // 좌표를 폐쇄경로로 변환
+    static coordinatesToClosedPath2D(coords){
+        const path2D = new Path2D();
+        if(!(coords?.length)){return null; }
+        path2D.moveTo(coords[0].x,coords[0].y);
+        console.log(coords[0].x,coords[0].y);
+        
+        for(let i=1,m=coords.length;i<m;i++){
+            path2D.lineTo(coords[i].x,coords[i].y);
+        }
+        path2D.closePath()
+        return path2D;
+    }
 
+    // context2d 가 비어있는가?
+    static isEmpty(ctx) {
+        const { width, height } = ctx.canvas;
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const buffer = new Uint32Array(imageData.data.buffer);
 
-
+        for (let i = 0; i < buffer.length; i++) {
+            if (buffer[i] !== 0){
+                return false; // 픽셀이 하나라도 있으면 false
+            }
+        }
+        return true; // 모두 0이면 완전 투명
+    }
 }

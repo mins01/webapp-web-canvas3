@@ -479,3 +479,23 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 .text-frame .content:focus{
   outline: none;
 }
+
+
+
+
+
+
+
+
+.wc-selectionlayer{
+  opacity: 0.5;
+}
+.wc-selectionlayer[data-is-empty="false"]{
+  animation: blink 1s steps(2, end) infinite;
+
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 0.3; }
+  50.01%, 100% { opacity: 0.5; }
+}

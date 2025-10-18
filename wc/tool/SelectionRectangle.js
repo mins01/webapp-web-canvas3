@@ -50,6 +50,9 @@ export default class SelectionRectangle extends BaseTool{
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
+        if(this.draw(this.x0,this.y0,this.x1,this.y1)){
+            // this.x0 = x; this.y0 = y;
+        }
         return;
     }
     onpointermove(event){
@@ -99,6 +102,7 @@ export default class SelectionRectangle extends BaseTool{
         // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
         ctx.fill(ShapePath2D.roundRect(lx0,ly0,w,h,radii));
         ctx.restore();
+        layer.flush();
         
         return true;
     }

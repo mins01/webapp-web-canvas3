@@ -1,6 +1,8 @@
 import SelectableArray from "../../lib/SelectableArray.js";
 import Document from "../Document.js";
-import Layer from "../Layer.js"
+// import Layer from "../Layer.js"
+import SelectionLayer from "../SelectionLayer.js";
+SelectionLayer.defineCustomElements();
 
 export default class Documents extends SelectableArray{
   editor = null;
@@ -20,8 +22,9 @@ export default class Documents extends SelectableArray{
           document.stage = stage;
           document.wrapper = wrapper;
           wrapper.append(document)
-          const selectionLayer = new Layer(document.width,document.height);
+          const selectionLayer = new SelectionLayer(document.width,document.height);
           selectionLayer.classList.add('wc-selection');
+          selectionLayer.classList.add('wc-selectionlayer');
           wrapper.append(selectionLayer)
           document.selectionLayer = selectionLayer;
 
