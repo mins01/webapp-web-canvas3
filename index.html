@@ -9,36 +9,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <meta name="viewport" content="width=600px" /> -->
-  
+
   <script src="/js/ForGoogle.js"></script>
   <!-- google analytics -->
   <script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
-  
-  
+
+
   <!-- 부트스트랩 아이콘 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
+
   <!-- jquery 관련 -->
   <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> -->
-  
+
   <!-- 부트스트랩 5.3.left -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <!-- // 부트스트랩 5.3.left -->
-  
+
   <!-- 부트스트랩 커스텀용 -->
   <link rel="stylesheet" href="asset/bootstrap-custom.css">
   <!-- // 부트스트랩 커스텀용 -->
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
   <!-- vue.js -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-  
+
   <link rel="shortcut icon" href="asset/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="57x57" href="asset/favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="asset/favicon/apple-icon-60x60.png">
@@ -57,25 +57,25 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
-  
-  
+
+
   <!-- meta og -->
-  
+
   <meta property="og:title" content="web canvas 3">
-  
+
   <meta property="og:description" content="web canvas 3">
   <meta name="og:image" content="http://www.mins01.com/img/logo.gif">
   <meta property="og:image:width" content="190">
   <meta property="og:image:height" content="70" />
   <meta property="og:site_name" content="web canvas 3" />
   <meta property="og:type" content="website">
-  
+
   <!-- //meta og -->
   <!-- hammer.js -->
   <!-- <script src="https://cdnjs.com/libraries/hammer.js/"></script> -->
-  
+
   <!-- //hammer.js -->
-  
+
 
   <script src="third_party/js-templater/Templater.js"></script>
 
@@ -84,7 +84,7 @@
   <script src="//unpkg.com/@ungap/custom-elements/es.js"></script>
 
 
-  <!-- third_party/ui-exclusive-dialog --> 
+  <!-- third_party/ui-exclusive-dialog -->
   <link rel="stylesheet" href="third_party/ui-exclusive-dialog/exclusiveDialog.css">
   <link rel="stylesheet" href="third_party/ui-exclusive-dialog/extensions/bs5.css">
   <script src="third_party/ui-exclusive-dialog/ExclusiveDialog.js"></script>
@@ -98,24 +98,24 @@
     }
   </script>
   <!-- //WG2 uploader -->
-  
+
   <!-- dayjs -->
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   <!-- <script>dayjs().format()</script> -->
   <!-- //dayjs -->
-  
+
   <!-- color palette -->
   <link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css">
   <script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
-  
+
   <script src="third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>
   <link rel="stylesheet" href="third_party/ui_ColorPalette/ColorPalette.css">
   <script src="third_party/ui_ColorPalette/ColorPalette.js"></script>
-  
+
   <!-- jszip -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-    
+
   <style>
     .colorPalette-tab-hsl {
       max-height: 300px;
@@ -125,14 +125,14 @@
     window.addEventListener('load',(evnet)=>{
       const foreColor = localStorage.getItem('foreColor')??'#000000';
       const bookmark = ["#000000","#ffffff","#c00000","#ff0000","#ffc000","#ffff00","#92d050","#00b050","#00b0f0","#0070c0","#002060","#7030a0"]
-      
+
       const cpForeColor = globalThis.cpForeColor = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cpForeColor"});
       InputRangeBox.autoInit(cpForeColor);
-      
+
       document.getElementById('box-color-palette').appendChild(cpForeColor);
       cpForeColor.addEventListener('input',function(evt){
         // const targetColor = event?.target?.closest('.modal')?.dataset?.targetColor??'foreColor';
-        
+
         // if(targetColor=='foreColor'){
         //     const obj = {'foreColor':this.toString()}
         //     editor.setContextConfig(obj);
@@ -162,8 +162,8 @@
       cpForeColor.addEventListener('setselectedcolor',function(evt){
         // console.log(evt.type,this.getSelectedColor())
       })
-      
-      
+
+
       document.querySelector('#modal-color-palette').addEventListener('show.bs.modal', event => {
         const wcTargetColor = event.target.dataset.wcTargetColor = event?.relatedTarget?.dataset.wcTargetColor??'foreColor';
         if(wcTargetColor=='foreColor'){
@@ -179,7 +179,7 @@
       }
       // 경고 메시지 설정
       const message = '변경사항이 저장되지 않을 수 있습니다. 정말 나가시겠습니까?';
-      
+
       // 대부분의 브라우저에서는 e.returnValue를 설정해야 경고가 뜹니다.
       e.preventDefault(); // 일부 브라우저에서 필요
       e.returnValue = message;
@@ -207,15 +207,15 @@
     })
   </script>
   <!-- //ui-input-stepper -->
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="asset/fonts.css">
   <link rel="stylesheet" href="asset/style.css">
-  
-  
 
-  
+
+
+
   <style>
     /* canvas{
       outline: 1px dashed #aabbcc99;
@@ -233,7 +233,7 @@
       wcApp.header = wcApp.querySelector('.wc-app-header')
       wcApp.body = wcApp.querySelector('.wc-app-body')
       wcApp.footer = wcApp.querySelector('.wc-app-footer')
-      
+
       // document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
     })
     window.addEventListener('wc.tools.load',event=>{ console.log(event.type,event.detail); })
@@ -247,7 +247,7 @@
     window.addEventListener('wc.tool.confirm',event=>{ console.log(event.type,event.detail); })
     window.addEventListener('wc.tool.cancel',event=>{ console.log(event.type,event.detail); })
     window.addEventListener('wc.document.layers.select',event=>{ console.log(event.type,event.detail); })
-    window.addEventListener('wc.editor.ready',event=>{      
+    window.addEventListener('wc.editor.ready',event=>{
       const layer = editor?.document?.layer;
       if(layer){
         wcApp.dataset.layerKind = layer.kind;
@@ -255,8 +255,8 @@
         wcApp.dataset.layerKind = null
       }
     })
-    
-    
+
+
   </script>
 </head>
 <body>
@@ -274,9 +274,9 @@
             <div class="only-shown only-shown-tool-Rectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-square-fill"></i></button></div>
             <div class="only-shown only-shown-tool-Polygon"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-pentagon-fill"></i></button></div>
             <div class="only-shown only-shown-tool-Star"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-star-fill"></i></button></div>
-            
+
             <div class="only-shown only-shown-tool-SelectionRectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-plus-square-dotted"></i></button></div>
-            
+
             <div class="only-shown only-shown-tool-Text"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-alphabet-uppercase"></i></button></div>
             <div class="only-shown only-shown-tool-Spuit"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eyedropper"></i></button></div>
             <div class="only-shown only-shown-tool-Transform"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-bounding-box"></i></button></div>
@@ -288,25 +288,25 @@
             <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush1" data-bs-toggle="modal" data-bs-target="#modal-brush1-config"><i class="bi bi-sliders"></i></button> -->
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush2" data-bs-toggle="modal" data-bs-target="#modal-brush2-config"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush3" data-bs-toggle="modal" data-bs-target="#modal-brush3-config"><i class="bi bi-sliders"></i></button>
-            
+
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
-            
+
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Text"  data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Rectangle"  data-bs-toggle="modal" data-bs-target="#modal-rectangle-config"><i class="bi bi-sliders"></i></i></button>
-            
+
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Polygon"  data-bs-toggle="modal" data-bs-target="#modal-polygon-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Star"  data-bs-toggle="modal" data-bs-target="#modal-star-config"><i class="bi bi-sliders"></i></i></button>
-            
+
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-SelectionRectangle"  data-bs-toggle="modal" data-bs-target="#modal-selectionrectangle-config"><i class="bi bi-sliders"></i></i></button>
 
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Spuit" disabled><i class="bi bi-sliders"></i></i></button>
-            
-            
-            
+
+
+
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform"  data-bs-toggle="modal" data-bs-target="#modal-transform-config"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
-            
+
           </div>
           <div class="only-hidden-tool-Text">
             <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
@@ -326,26 +326,26 @@
               <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></label> -->
               <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
               <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
-              
+
               <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
-              
+
               <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square-fill"></i></button></label>
-              
-              
+
+
 
               <label role="button" title="tool Polygon" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Polygon" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pentagon-fill"></i></button></label>
               <label role="button" title="tool Star" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Star" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-star-fill"></i></button></label>
 
               <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-alphabet-uppercase"></i></button></label>
-              
+
               <label role="button" title="tool Spuit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Spuit" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eyedropper"></i></button></label>
-              
-              
-              
+
+
+
               <label role="button" title="tool Transform" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Transform" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-bounding-box"></i></button></label>
               <label role="button" title="tool Move" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Move" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-arrows-move"></i></button></label>
               <label role="button" title="tool Hand" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Hand" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-hand-index"></i></button></label>
-              
+
 
               <label role="button" title="tool SelectionRectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="SelectionRectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-plus-square-dotted"></i></button></label>
 
@@ -356,9 +356,9 @@
             </div>
           </div>
         </div>
-        
+
       </div>
-      
+
       <div class="wc-app-footer">
         <div class="container px-0 d-flex justify-content-between">
           <div class="wc-app-menu wc-app-menu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
@@ -392,7 +392,7 @@
                   <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
                 </div>
               </div>
-              
+
             </div>
           </div>
           <div class="only-shown only-shown-tool-Text my-1">
@@ -410,7 +410,7 @@
                   <button class="btn btn-success" onclick="editor.document.layer.adjustAutoHeight();console.log(editor.document.layer.height);editor.document.layer.flush();editor.tool.activate();editor.document.history.save('layer adjustAutoHeight');"><i class="bi bi-distribute-vertical"></i> Auto height</button>
                   <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
                 </div>
-              </div>             
+              </div>
             </div>
           </div>
         </div>
@@ -440,7 +440,7 @@
               event.stopPropagation();
               event.preventDefault();
             })
-            
+
             utt01.addEventListener('utt-move',(event)=>{
               const utt = event.target
               event.stopPropagation();
@@ -453,7 +453,7 @@
               event.preventDefault();
               editor?.tool?.onuttresize()
             })
-            
+
             utt01.addEventListener('utt-move-end',(event)=>{
               const utt = event.target
               event.stopPropagation();
@@ -466,16 +466,16 @@
               event.preventDefault();
               editor?.tool?.onuttresizeend()
             })
-            
-            
+
+
           }
         </script>
       </div>
-      
+
     </div>
     <!-- <div class="wc-app-preview-layers">
       <div id="div-for-debug" class="preview-layers">
-        
+
       </div>
       <div>
         <button type="button" class="btn btn-primary" onclick="if(editor?.document?.layer){ editor.document.layer.visible = true; editor.document.layer.flush() }">visible:on</button>
@@ -483,10 +483,10 @@
       </div>
     </div> -->
   </div>
-  
+
   <!-- Modal -->
   <div class="modals">
-    
+
     <div class="modal fade" id="modal-menu-main"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -567,7 +567,7 @@
         </div>
       </div>
     </div>
-        
+
     <div class="modal fade" id="modal-menu-setting"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -585,7 +585,7 @@
         </div>
       </div>
     </div>
-        
+
     <div class="modal fade" id="modal-file-open"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -623,7 +623,7 @@
         </div>
       </div>
     </div>
-        
+
     <div class="modal fade" id="modal-file-preview"  aria-hidden="true">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -644,24 +644,24 @@
       </div>
     </div>
     <script>
-      document.querySelector('#modal-file-preview').addEventListener('show.bs.modal', (event)=>{ 
+      document.querySelector('#modal-file-preview').addEventListener('show.bs.modal', (event)=>{
         const target = event.target;
         target.querySelector('#img-preview-natural-size').textContent = 'Loading';
         target.querySelector('#img-preview-size').textContent = 'Loading';
       });
-      document.querySelector('#modal-file-preview').addEventListener('shown.bs.modal', (event)=>{ 
+      document.querySelector('#modal-file-preview').addEventListener('shown.bs.modal', (event)=>{
         const target = event.target;
         requestAnimationFrame(()=>{
               const img = document.querySelector('#img-preview');
               // alert(img);
-              const rect = img.getBoundingClientRect()                
+              const rect = img.getBoundingClientRect()
               target.querySelector('#img-preview-natural-size').textContent = `${img.naturalWidth}px x ${img.naturalHeight}px`;
               target.querySelector('#img-preview-size').textContent = `(${rect.width.toFixed(0)}px x ${rect.height.toFixed(0)}px)`;
           })
       })
 
     </script>
-        
+
     <div class="modal fade" id="modal-file-download"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -725,7 +725,7 @@
         </div>
       </div>
     </div>
-        
+
     <div class="modal fade" id="modal-file-upload"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -735,7 +735,7 @@
           </div>
           <div class="modal-body">
             <div class="d-flex flex-column gap-3 p-1">
-              
+
               <form action="" onsubmit="editor.uploadDocument('png',this.filename.value).then(()=>{ console.log('uploadDocument 완료');}).catch((e)=>{console.error('uploadDocument 실패',e); edialog.alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
@@ -777,7 +777,7 @@
         })
       })
     </script>
-        
+
     <div class="modal fade" id="modal-file-new"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -793,7 +793,7 @@
                     <input type="number" class="form-control" name="width" placeholder="width" min="1" max="10000" value="300">
                     <span class="input-group-text" >X</span>
                     <input type="number" class="form-control" name="height" placeholder="height" min="1" max="10000" value="300">
-                    
+
                   </div>
                 </div>
                 <div class="text-end">
@@ -828,14 +828,14 @@
                     <button type="button" class="btn btn-sm btn-success" onclick="this.form.width.value=1024;this.form.height.value=768;">1024x768</button>
                   </div>
                 </div>
-                
+
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-        
+
     <div class="modal modal-xl fade" id="modal-text-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -884,7 +884,7 @@
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </form>
             <hr>
@@ -895,10 +895,10 @@
                   textlayer.flush();
                   document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
                   Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
-                }              
-              " 
+                }
+              "
               onchange="this.oninput(event);"
-              
+
               data-wc-sync-form="editor.document.layer.textConfig"
               >
               <div class="div-text-config grid-auto-fill grid-auto-fill-260px gap-3">
@@ -909,7 +909,7 @@
                     <button type="button" class="btn btn-outline-light wc-bg-textColor pe-none" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
                   </label>
                 </div>
-                
+
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-type"></i> fontFamily</div>
                   <select name="fontFamily" class="form-select">
@@ -1056,7 +1056,7 @@
                       <option value="nowrap">nowrap (줄바꿈금지+공백압축)</option>
                       <option value="normal">normal (줄바꿈금지+공백압축+자동줄바꿈)</option>
                     </optgroup>
-                    
+
                   </select>
                 </div>
                 <div>
@@ -1075,13 +1075,13 @@
                   </select>
                 </div>
 
-                
+
                 <!-- fontStretch 지원 안되나? 나중에 다시 테스트해보자  -->
                 <!-- fontVariantCaps 지원 안할꺼라 -->
-                
-                
+
+
               </div>
-              
+
             </form>
           </div>
         </div>
@@ -1089,15 +1089,14 @@
     </div>
 
     <script>
-      document.getElementById('modal-text-config').addEventListener('show.bs.modal', event => {
-        const textlayer = editor?.document?.layer
-        // Wc.HtmlUtil.applyStyleObject(document.querySelector('#form-text-text'),textlayer.textConfig.exportToStyleObject())
-
-        document.querySelector('#text-frame-content').textContent = textlayer.text;
-        document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
-        Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
-
-      })
+      document.getElementById('modal-text-config').addEventListener('show.bs.modal',
+        (event) => {
+          const textlayer = editor?.document?.layer
+          document.querySelector('#text-frame-content').textContent = textlayer.text;
+          document.querySelector('#text-frame').style.padding = textlayer.textConfig.padding
+          Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
+        }
+      )
     </script>
 
     <div class="modal fade" id="modal-layers"  aria-hidden="true">
@@ -1112,44 +1111,26 @@
               <div class="d-flex justify-content-end flex-wrap gap-1">
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary" title="Add a new layer" onclick="editor?.document?.layers.addLayer();editor?.document?.flush();editor.ready();"><i class="bi bi-file-plus"></i></button>
-                <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="
-                  edialog.confirm('Duplicate layer?').then((r)=>{
-                    if(!r){ return; }  
-                    editor?.document?.layers.cloneLayer();editor?.document?.flush();editor.ready(); 
-                  })
-                "><i class="bi bi-copy"></i></button>  
+                    <button type="button" class="btn btn-primary" title="Duplicate layer" onclick="edialog.confirm('Duplicate layer?').then((r)=>{if(!r){ return; }editor?.document?.layers.cloneLayer();editor?.document?.flush();editor.ready();})"><i class="bi bi-copy"></i></button>
                   <button type="button" class="btn btn-outline-primary" title="Add another layer" data-bs-toggle="modal" data-bs-target="#modal-insert-layer" ><i class="bi bi-three-dots"></i></button>
                 </div>
 
                 <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.history.save('layer.clear');editor?.document?.flush();editor.ready();"><i class="bi bi-eraser-fill"></i></button>
-                
-                <button type="button" class="btn btn-primary" title="Merge down" onclick="
-                  edialog.confirm('Merge down?').then((r)=>{
-                    if(!r){ return; }  
-                    editor?.document.layers.mergeDown();editor?.document?.flush();editor.ready();
-                  })
-                "><i class="bi bi-union"></i></button>
-                
+
+                <button type="button" class="btn btn-primary" title="Merge down" onclick="edialog.confirm('Merge down?').then((r)=>{ if(!r){ return; }   editor?.document.layers.mergeDown();editor?.document?.flush();editor.ready(); })"><i class="bi bi-union"></i></button>
+
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document?.layers?.moveUp();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-forward"></i></button>
                   <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers?.moveDown();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-backward"></i></button>
                 </div>
-                <button type="button" class="btn btn-danger" title="Delete layer" onclick="
-                  edialog.confirm('Delete layer?').then((r)=>{
-                    if(!r){ return; }  
-                     editor?.document?.layers.remove();editor?.document?.flush();editor.ready();
-                  })
-                "><i class="bi bi-trash"></i></button>
-                
+                <button type="button" class="btn btn-danger" title="Delete layer" onclick="edialog.confirm('Delete layer?').then((r)=>{if(!r){ return; }  editor?.document?.layers.remove();editor?.document?.flush();editor.ready();})"><i class="bi bi-trash"></i></button>
+
 
               </div>
               <div class="d-flex justify-content-end gap-1 flex-fill">
                 <div class="col">
                   <div class="form-label mb-0"><i class="bi bi-intersect"></i> Composite</div>
-                  <select name="compositeOperation" id="layer-composite-operation" class="form-select"
-                    oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready();editor.document.history.save('layer.compositeOperation');}"
-                    x-data-wc-sync-from="editor.document.layer.compositeOperation"
-                    >
+                  <select name="compositeOperation" id="layer-composite-operation" class="form-select"  oninput="if(editor?.document?.layer){ editor.document.layer.compositeOperation = this.value; editor.document.layer.flush(); editor.ready();editor.document.history.save('layer.compositeOperation');}" x-data-wc-sync-from="editor.document.layer.compositeOperation" >
                     <optgroup label="일반 혼합">
                       <option value="source-over">source-over(표준)</option>
                     </optgroup>
@@ -1198,9 +1179,9 @@
                   <div class="form-label mb-0"><i class="bi bi-transparency"></i> alpha</div>
                   <div class="form-control ui-input-stepper ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0"  onchange="editor?.document?.history?.save('layer.alpha')">
                     <input type="range" class="form-range m-0 d-block" id="layer-alpha" min="0" max="1" value="1" step="0.01"
-                      oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.ready()}"
-                      x-data-wc-sync-from="editor.document.layer.alpha"
-                      >
+                    oninput="if(editor?.document?.layer){ editor.document.layer.alpha = this.value; editor.document.layer.flush(); editor.ready()}"
+                    x-data-wc-sync-from="editor.document.layer.alpha"
+                    >
                   </div>
                 </div>
               </div>
@@ -1208,60 +1189,13 @@
             </div>
           </div>
           <div class="modal-body">
-            
             <div class="d-flex flex-column gap-3" style="max-height: max-content; height: 100%;">
-              
               <div class="d-flex flex-column gap-3">
-                <!-- 
-                  @deprecated #template-layer-box  
-                  @see #template-layer-box2
-                 -->
-                <template id="template-layer-box" >
-                  <div class="layer-box d-flex gap-1 align-items-center p-1" role="button">
-                    <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
-                      <i class="bi bi-eye on-visible"></i>
-                      <i class="bi bi-eye-slash no-visible"></i>
-                    </button>
-                    <button class="btn layer-box-content text-start flex-fill d-flex gap-1 align-items-center p-0 m-0" style="min-width: 0">
-                      <div class="layer-box-preview">canvas</div>
-                      <div class="layer-box-detail  flex-fill" style="min-width: 0;">
-                        <div class="d-flex gap-1" >
-                          <div>
-                            <i class="bi bi-file-image layer-kind" data-kind="normal" ></i>
-                            <i class="bi bi-file-text layer-kind"  data-kind="text"></i>
-                          </div>
-                          <div class="layer-box-detail-name text-truncate"></div>
-                        </div>
-                        <small class="d-flex flex-wrap gap-2 row-gap-1">
-                          <div class="d-flex gap-1">
-                            <div><i class="bi bi-bounding-box"></i></div>
-                            <div class="layer-box-detail-size"></div>
-                          </div>
-                          <div class="d-flex gap-1">
-                            <div><i class="bi bi-zoom-in"></i></div>
-                            <div class="layer-box-detail-zoom"></div>
-                          </div>
-                          <div class="d-flex gap-1">
-                            <div><i class="bi bi-transparency"></i></div>
-                            <div class="layer-box-detail-alpha"></div>
-                          </div>
-                          <div class="d-flex gap-1 icons icons-d-none icon-flips">
-                            <div class="icon icon-flip-x"><i class="bi bi-symmetry-vertical"></i></div>
-                            <div class="icon icon-flip-y"><i class="bi bi-symmetry-horizontal"></i></div>
-                          </div>
-                        </small>
-                      </div>
-                    </button>
-                    <button class="btn layer-box-config d-flex justify-content-center align-items-center p-0 m-0 px-2" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config">
-                      <i class="bi bi-sliders"></i>
-                    </button>
-                  </div>
-                </template>
                 <template id="template-layer-box2" >
-                  <div class="layer-box d-flex gap-1 align-items-center p-1 {{selectedIndex == index?'active':''}}" 
-                      data-flip-x="{{layer.flipX}}" 
-                      data-flip-y="{{layer.flipY}}" 
-                      data-kind="{{layer.kind}}" 
+                  <div class="layer-box d-flex gap-1 align-items-center p-1 {{selectedIndex == index?'active':''}}"
+                      data-flip-x="{{layer.flipX}}"
+                      data-flip-y="{{layer.flipY}}"
+                      data-kind="{{layer.kind}}"
                       data-wc-layer-visible = "{{layer.visible}}"
                       role="button">
                     <button class="btn layer-box-eye d-flex justify-content-center align-items-center p-0 m-0 px-2">
@@ -1304,7 +1238,7 @@
                   </div>
                 </template>
                 <div class="layer-box-container d-flex flex-column gap-3">
-                  
+
                 </div>
               </div>
             </div>
@@ -1322,7 +1256,7 @@
         // document.querySelector('.layer-box-container').addEventListener('draw',(event)=>{
         //   editor.ready();
         // })
-        
+
       },{once:true})
     </script>
 
@@ -1378,7 +1312,7 @@
                   <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
                 </div>
               </div>
-              
+
             </div>
           </div>
           <div class="modal-body">
@@ -1470,8 +1404,8 @@
                     <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000">
                   </div>
                 </div>
-                
-                
+
+
               </form>
             </div>
           </div>
@@ -1488,8 +1422,8 @@
             event.target.dataset.layerKind = null
           }
         })
-        
-        
+
+
       },{once:true})
     </script>
     <div class="modal fade" id="modal-insert-layer"  aria-hidden="true">
@@ -1504,10 +1438,10 @@
               <div class="form-label mb-0"><i class="bi bi-file-plus"></i> Insert Layer</div>
               <div class="d-flex gap-3">
                 <button type="button" class="btn btn-primary" onclick="editor?.document?.layers.addLayer();editor?.document?.flush();"><i class="bi bi-file-image"></i> Normal Layer</button>
-                <button type="button" class="btn btn-primary" 
+                <button type="button" class="btn btn-primary"
                 onclick="
                 editor?.document?.layers.addLayer('TextLayer');
-                editor.document.layer.textConfig.textColor = editor.contextConfig.foreColor; 
+                editor.document.layer.textConfig.textColor = editor.contextConfig.foreColor;
                 editor.document.flush();
                 editor.ready();"><i class="bi bi-file-text"></i> Text layer</button>
               </div>
@@ -1549,7 +1483,7 @@
                 <div>
                   <button class="btn btn-primary" onclick="editor.document.left=0;editor.document.top=0;editor.document.flush();wcSyncHandler.sync(this.closest('.modal'))">CENTER</button>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -1630,7 +1564,7 @@
             <div class="d-flex flex-column gap-3">
               <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-load"  type="button" onclick="
                 edialog.confirm(`${dayjs(editor.autoSave.updatedAt).format('YYYY-MM-DD HH:mm:ss')} 의 자동 저장 데이터를 불러올까요?`).then((r)=>{
-                  if(r){  
+                  if(r){
                     editor.autoSave.load();
                     editor.modalHandler.hideAll();
                   };
@@ -1638,7 +1572,7 @@
               "><i class="bi bi-card-image"></i> Load last save: <span id="autosave-updatedat"></span></button>
               <button class="btn btn-primary" id="btn-autosave-save" type="button" onclick="
                 edialog.confirm(`현재 데이터로 임시 저장할까요?`).then((r)=>{
-                  if(r){  
+                  if(r){
                     editor.autoSave.save();
                     editor.modalHandler.hideAll();
                     edialog.alert(`현재 데이터로 임시 저장하였습니다.`);
@@ -1675,7 +1609,7 @@
           })
         }
         console.log(editor.autoSave.updatedAt);
-        
+
       })
     </script>
 
@@ -1707,13 +1641,13 @@
                   <button class="btn btn-primary" onclick="let layer = editor?.document?.layer;if(!layer){return} layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();">ADJUST SIZE TO DOCUMENT</button>
                 </div>
               </div>
-              
-              
+
+
             </div>
           </div>
           <div class="modal-body">
             <div class="d-flex flex-column flex-wrap gap-3">
-              
+
               <hr>
               <form  class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.document.layer" >
                 <div class="input-group w-100">
@@ -1730,7 +1664,7 @@
                   <input class="form-control" type="number" name="top" placeholder="top" min="-10000" max="10000" oninput="editor.document.layer.top = this.value; editor.tool.readyUtt(); editor.tool.draw();">
                 </div>
               </form>
-              
+
             </div>
           </div>
         </div>
@@ -1815,7 +1749,7 @@
 
                       <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Eraser</button>
                       <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));"><i class="bi bi-eraser"></i> Soft Eraser</button>
-                      
+
                       <hr class="my-1">
                       <header> <h4 class="m-0">Art brush</h4> </header>
                       <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));"><i class="bi bi-highlighter"></i> Highlighter</button>
@@ -2200,9 +2134,9 @@
 
             //---- form -> brush
             const formToBrush = (f)=>{
-              const brush = WcHelper.getBrushCanvas(f); 
-              brush.setBrushConfig(Wc.HtmlUtil.formToObject(f)); 
-              brush.saveBrushConfig(); 
+              const brush = WcHelper.getBrushCanvas(f);
+              brush.setBrushConfig(Wc.HtmlUtil.formToObject(f));
+              brush.saveBrushConfig();
               brush.flush();
             }
             document.querySelectorAll('.form-brush-config').forEach((f)=>{
@@ -2227,14 +2161,14 @@
             editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush2) }); })
             editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush3) }); })
             editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.eraser,true) }); })
-  
+
             window.addEventListener('resize', (event)=>{
               previewAndSyncForm(editor.brush);
               previewAndSyncForm(editor.brush2);
               previewAndSyncForm(editor.brush3);
               previewAndSyncForm(editor.eraser,true);
             })
-            
+
             // 안보일 때 그려봤자 의미가 없네.
             // requestAnimationFrame(()=>{
             //   previewAndSyncForm(editor.brush);
@@ -2421,7 +2355,7 @@
     <script>
       window.addEventListener('load',()=>{
         const shapes = [...document.querySelectorAll('#brush-shapes > *')].map((el)=>{ return el.id?el:null});
-        
+
         document.querySelectorAll('.form-brush-config select.shape').forEach((el)=>{
           shapes.forEach(shape => {
             el.appendChild(new Option((shape.dataset.shapeLabel??'#'+shape.id),'#'+shape.id,false));
@@ -2475,7 +2409,7 @@
         window.addEventListener('load',(event)=>{
             window.edialog = new ExclusiveDialog(document.querySelector('.exclusive-dialog-container.sample-2'));
         })
-    </script>  
+    </script>
   </div>
 
 
