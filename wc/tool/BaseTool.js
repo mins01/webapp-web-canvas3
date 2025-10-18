@@ -47,6 +47,7 @@ export default class BaseTool {
 	get document(){ return this?.editor?.document??null; }
 	get layer(){ return this?.editor?.document?.layer??null; }
 	get drawingLayer(){ return this?.editor?.document?.drawingLayer??null; }
+	get selectionLayer(){ return this?.editor?.document?.selectionLayer??null; }
 
 
 
