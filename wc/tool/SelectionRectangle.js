@@ -14,14 +14,16 @@ export default class SelectionRectangle extends BaseTool{
     }
 
     initPattern(){
-        const patternCanvas = new Canvas(4,4);
+        const halfWidth = 4
+        const halfHeight = 4;
+        const patternCanvas = new Canvas(halfWidth*2,halfHeight*2);
         patternCanvas.ctx.fillStyle = "#ffffff"; // 흰색
-        patternCanvas.ctx.fillRect(0, 0, 2, 2); // 좌상단
-        patternCanvas.ctx.fillRect(2, 2, 2, 2); // 우하단
+        patternCanvas.ctx.fillRect(0, 0, halfWidth, halfHeight); // 좌상단
+        patternCanvas.ctx.fillRect(halfWidth, halfHeight, halfWidth, halfHeight); // 우하단
 
         patternCanvas.ctx.fillStyle = "#000000"; // 검은색
-        patternCanvas.ctx.fillRect(2, 0, 2, 2); // 우상단
-        patternCanvas.ctx.fillRect(0, 2, 2, 2); // 좌하단
+        patternCanvas.ctx.fillRect(halfWidth, 0, halfWidth, halfHeight); // 우상단
+        patternCanvas.ctx.fillRect(0, halfHeight, halfWidth, halfHeight); // 좌하단
 
         this.pattern = patternCanvas.ctx.createPattern(patternCanvas, "repeat");
     }

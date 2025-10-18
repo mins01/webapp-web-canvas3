@@ -297,7 +297,7 @@
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Polygon"  data-bs-toggle="modal" data-bs-target="#modal-polygon-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Star"  data-bs-toggle="modal" data-bs-target="#modal-star-config"><i class="bi bi-sliders"></i></i></button>
             
-            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-SelectionRectangle"  data-bs-toggle="modal" data-bs-target="#modal-rectangle-config"><i class="bi bi-sliders"></i></i></button>
+            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-SelectionRectangle"  data-bs-toggle="modal" data-bs-target="#modal-selectionrectangle-config"><i class="bi bi-sliders"></i></i></button>
 
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Spuit" disabled><i class="bi bi-sliders"></i></i></button>
             
@@ -2267,6 +2267,32 @@
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
               </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-square-fill"></i> Border radius(꼭짓점 반경,라운딩박스)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="1">
+                    <input type="range" class="form-range d-block" name="radii" placeholder="radii" step="1" min="0" max="100" value="0">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-selectionrectangle-config"  aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-4"><i class="bi bi-plus-square-dotted"></i> Selection rectangle</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" onclick="wcSyncHandler.sync(this.closest('.modal'))">
+            <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
               <div>
                 <div class="form-label mb-0"><i class="bi bi-square-fill"></i> Border radius(꼭짓점 반경,라운딩박스)</div>
                 <div class="input-group ui-input-stepper">
