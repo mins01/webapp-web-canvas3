@@ -100,7 +100,7 @@ autoSave.activate();
 editor.autoSave = autoSave 
 
 //-- 설정
-const askLoadAutosaveAtStart = false; // 시작 시 그리던 것 이어그리기
+const askLoadAutosaveAtStart = true; // 시작 시 그리던 것 이어그리기
 
 
 //-- onload
