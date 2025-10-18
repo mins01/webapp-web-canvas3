@@ -73,6 +73,7 @@ export default class Transform extends BaseTool{
     }
     cancel(){
         super.cancel();
+        this.targetLayer.import(this.orignalSnapshot);
         this.activate();
     }
 
