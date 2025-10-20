@@ -98,7 +98,7 @@ export default class SelectionLayer extends Layer{
     invert(){
         const ctx = this.ctx;
         ctx.save()
-        ctx.globalCompositeOperation = "xor"; // 기존 그림과 겹치는 않은 부분만 남김
+        ctx.globalCompositeOperation = "xor"; // 겹치는 부분은 삭제됨
         ctx.fillRect(0,0,this.width,this.height);
         ctx.restore();
     }
