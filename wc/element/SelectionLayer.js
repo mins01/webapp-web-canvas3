@@ -25,8 +25,27 @@ export default class SelectionLayer extends Layer{
     constructor(w=null,h=null){
         super(w,h);
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
+        this.initPattern();
+
+        this.ctx.fillStyle = this.pattern;
 
         this.isEmpty = Context2dUtil.isEmpty(this.ctx);
+    }
+
+    pattern = null;
+    initPattern(){
+        const halfWidth = 4
+        const halfHeight = 4;
+        const patternCanvas = new Canvas(halfWidth*2,halfHeight*2);
+        patternCanvas.ctx.fillStyle = "#ffffff"; // 흰색
+        patternCanvas.ctx.fillRect(0, 0, halfWidth, halfHeight); // 좌상단
+        patternCanvas.ctx.fillRect(halfWidth, halfHeight, halfWidth, halfHeight); // 우하단
+
+        patternCanvas.ctx.fillStyle = "#000000"; // 검은색
+        patternCanvas.ctx.fillRect(halfWidth, 0, halfWidth, halfHeight); // 우상단
+        patternCanvas.ctx.fillRect(0, halfHeight, halfWidth, halfHeight); // 좌하단
+
+        this.pattern = patternCanvas.ctx.createPattern(patternCanvas, "repeat");
     }
 
     draw(){ // 따로 그리기 동작이 있을 경우.
@@ -73,5 +92,16 @@ export default class SelectionLayer extends Layer{
             ctx.drawImage(this,-layer.left,-layer.top);
             ctx.restore();
         }
+    }
+
+    invert(){
+        const ctx = this.ctx;
+        ctx.save()
+        ctx.globalCompositeOperation = "xor"; // 기존 그림과 겹치는 않은 부분만 남김
+        ctx.fillStyle = '#0f0'
+        ctx.fillRect(0,0,this.width,this.height);
+        ctx.drawImage(this,0,0);
+        ctx.restore();
+
     }
 }
