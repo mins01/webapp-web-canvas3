@@ -94,14 +94,12 @@ export default class SelectionLayer extends Layer{
         }
     }
 
+    // 선택 반전
     invert(){
         const ctx = this.ctx;
         ctx.save()
         ctx.globalCompositeOperation = "xor"; // 기존 그림과 겹치는 않은 부분만 남김
-        ctx.fillStyle = '#0f0'
         ctx.fillRect(0,0,this.width,this.height);
-        ctx.drawImage(this,0,0);
         ctx.restore();
-
     }
 }
