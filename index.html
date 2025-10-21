@@ -360,79 +360,87 @@
       </div>
 
       <div class="wc-app-footer">
-        <div class="container px-0 d-flex justify-content-between">
-          <div class="wc-app-menu wc-app-menu-undo  d-flex gap-1 px-1 py-1 justify-content-center mx-auto ms-0">
-            <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
-            <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
+
+        <div class="container-xl d-flex justify-content-between align-items-end flex-wrap gap-3 row-gap-1 p-1">
+          <div class="wc-app-menu wc-app-menu-undo">
+            <div class="d-flex gap-1">
+              <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
+              <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
+            </div>
             <!-- <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.save('manual')"><i class="bi bi-save2"></i></button> -->
           </div>
-          <div class="wc-app-menu wc-app-menu-tool-propety  d-flex gap-1 px-1 py-1 justify-content-center mx-auto me-0">
-            <!-- 오른쪽하단 버튼 위치 -->
-          </div>
-        </div>
-        <div class="container px-0 d-flex justify-content-center">
-          <div class="only-shown only-shown-tool-Transform my-1">
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
-                  <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
-                </div>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-primary" onclick="editor.tool.center();">Center</button>
-                </div>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
-                </div>
-              </div>
+          <div class="wc-app-menu wc-app-menu-tool-propety flex-fill">
+            <div class="px-0 d-flex justify-content-end">
+              <div class="only-shown only-shown-tool-Transform">
+                <div class="d-flex flex-wrap justify-content-end gap-3 row-gap-1">
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
+                      <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-arrows-move"></i> Postion</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-primary" onclick="editor.tool.center();">Center</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
+                    </div>
+                  </div>
 
-            </div>
-          </div>
-          <div class="only-shown only-shown-tool-Text my-1">
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
-                  <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
                 </div>
               </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-success" onclick="editor.document.layer.adjustAutoHeight();console.log(editor.document.layer.height);editor.document.layer.flush();editor.tool.activate();editor.document.history.save('layer adjustAutoHeight');"><i class="bi bi-distribute-vertical"></i> Auto height</button>
-                  <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
+              <div class="only-shown only-shown-tool-Text">
+                <div class="d-flex flex-wrap justify-content-end gap-3 row-gap-1">
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-primary" onclick="editor.tool.confirm();"><i class="bi bi-check"></i> Confirm</button>
+                      <button class="btn btn-warning" onclick="editor.tool.cancel();"><i class="bi bi-x"></i> Cancel</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-success" onclick="editor.document.layer.adjustAutoHeight();console.log(editor.document.layer.height);editor.document.layer.flush();editor.tool.activate();editor.document.history.save('layer adjustAutoHeight');"><i class="bi bi-distribute-vertical"></i> Auto height</button>
+                      <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="only-shown only-shown-tool-SelectionRectangle my-1">
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-primary" onclick="editor.document.selectionLayer.copyToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 복사하였습니다.')"><i class="bi bi-copy"></i> Copy to layer</button>
-                  <button class="btn btn-primary" onclick="editor.document.selectionLayer.cutToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 이동하였습니다.')"><i class="bi bi-scissors"></i> Cut to layer</button>
-                  <button class="btn btn-warning" onclick="editor.document.selectionLayer.eraseLayer(editor.document.layer);editor.document.layer.flush();editor.saveHistory('erase');"><i class="bi bi-eraser-fill"></i> Erase</button>
-                </div>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Control</div>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-warning" onclick="editor.document.selectionLayer.clear();editor.document.selectionLayer.flush();"><i class="bi bi-eraser-fill"></i> Clear</button>
-                  <button class="btn btn-info" onclick="editor.document.selectionLayer.invert();editor.document.selectionLayer.flush();"><i class="bi bi-square-half"></i> Invert</button>
+              <div class="only-shown only-shown-tool-SelectionRectangle">
+                <div class="d-flex flex-wrap justify-content-end gap-3 row-gap-1">
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-info-circle"></i> To layer</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-primary text-truncate" onclick="editor.document.selectionLayer.copyToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 복사하였습니다.')"><i class="bi bi-copy"></i> Copy</button>
+                      <button class="btn btn-primary text-truncate" onclick="editor.document.selectionLayer.cutToLayer(editor.document.layer);editor.document.layer.flush();edialog.alert('새로운 레이어로 이동하였습니다.')"><i class="bi bi-scissors"></i> Cut</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-warning text-nowrap" onclick="editor.document.selectionLayer.eraseLayer(editor.document.layer);editor.document.layer.flush();editor.saveHistory('erase');"><i class="bi bi-eraser-fill"></i> Erase</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Selection</div>
+                    <div class="d-flex flex-wrap gap-1">
+                      <button class="btn btn-warning" onclick="editor.document.selectionLayer.clear();editor.document.selectionLayer.flush();"><i class="bi bi-eraser-fill"></i> Clear</button>
+                      <button class="btn btn-info" onclick="editor.document.selectionLayer.invert();editor.document.selectionLayer.flush();"><i class="bi bi-square-half"></i> Invert</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
       </div>
       <div id="wc-editor" class="wc-editor wc-app-body debug-box">
         <!-- <div class="wc-document-stage">

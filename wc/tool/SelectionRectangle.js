@@ -93,7 +93,6 @@ export default class SelectionRectangle extends BaseTool{
         // const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
         const [lx0,ly0] = this.getXyInDocument(x0,y0);
         const [lx1,ly1] = this.getXyInDocument(x1,y1);
-        console.log(lx0);
         
         
 

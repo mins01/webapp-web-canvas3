@@ -45,7 +45,7 @@ export default class SelectionLayer extends Layer{
         patternCanvas.ctx.fillRect(halfWidth, 0, halfWidth, halfHeight); // 우상단
         patternCanvas.ctx.fillRect(0, halfHeight, halfWidth, halfHeight); // 좌하단
 
-        this.pattern = patternCanvas.ctx.createPattern(patternCanvas, "repeat");
+        this.pattern = this.ctx.createPattern(patternCanvas, "repeat");
     }
 
     draw(){ // 따로 그리기 동작이 있을 경우.
@@ -96,6 +96,7 @@ export default class SelectionLayer extends Layer{
 
     // 선택 반전
     invert(){
+        if(this.isEmpty){ return; }
         const ctx = this.ctx;
         ctx.save()
         ctx.globalCompositeOperation = "xor"; // 겹치는 부분은 삭제됨
