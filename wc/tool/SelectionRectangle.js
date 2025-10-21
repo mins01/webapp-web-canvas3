@@ -91,9 +91,13 @@ export default class SelectionRectangle extends BaseTool{
         // 레이어 기준으로 좌표 재계산
         // const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
         // const [lx1,ly1] = this.getXyInLayer(...this.getXyInDocument(x1,y1));
-        const [lx0,ly0] = this.getXyInDocument(x0,y0);
-        const [lx1,ly1] = this.getXyInDocument(x1,y1);
-        
+        let [lx0,ly0] = this.getXyInDocument(x0,y0);
+        let [lx1,ly1] = this.getXyInDocument(x1,y1);
+        lx0 = Math.round(lx0);
+        ly0 = Math.round(ly0);
+        lx1 = Math.round(lx1);
+        ly1 = Math.round(ly1);
+        // console.log(lx0,ly0,lx1,ly1);   
         
 
         // this.editor.contextConfig.assignTo(ctx,true);
