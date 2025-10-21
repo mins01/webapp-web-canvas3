@@ -62,7 +62,7 @@ export default class SelectionLayer extends Layer{
     }
 
     copyToLayer(layer){
-        const newLayer = layer.clone(`${layer.title}-copy`);
+        const newLayer = layer.clone(`${layer.name.substr(0,40)}-copy`);
         const document = layer.parent;
         const ctx=  newLayer.ctx;
         ctx.save();
@@ -75,7 +75,7 @@ export default class SelectionLayer extends Layer{
 
     cutToLayer(layer){
         {
-            const newLayer = layer.clone(`${layer.title}-copy`);
+            const newLayer = layer.clone(`${layer.name.substr(0,40)}-cut`);
             const document = layer.parent;
             const ctx=  newLayer.ctx;
             ctx.save();
