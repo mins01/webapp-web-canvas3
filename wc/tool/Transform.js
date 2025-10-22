@@ -25,10 +25,12 @@ export default class Transform extends BaseTool{
 
     ready(){
         super.ready();
-        this.targetLayer = this.document.layer;
-        this.orignalSnapshot = this.targetLayer.snapshot()
-        this.readyUtt();
-        this.draw();
+        this.targetLayer = this.document?.layer;
+        if(this.targetLayer){
+            this.orignalSnapshot = this?.targetLayer?.snapshot()
+            this.readyUtt();
+            this.draw();
+        }
         
     }
 
