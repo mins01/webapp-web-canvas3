@@ -362,22 +362,18 @@
       <div class="wc-app-footer">
         
 
-        <div class="container-xl d-flex justify-content-between align-items-end flex-wrap gap-3 row-gap-1 p-1">
+        <div class="container-xl  p-0 d-flex flex-wrap gap-3 row-gap-1 align-items-end">
+
           <div class="wc-app-menu wc-app-menu-undo">
-            <div class="d-flex gap-1">
+            <div class="d-flex gap-1  p-1">
               <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.undo()"><i class="bi bi-arrow-counterclockwise"></i></button>
               <button type="button" class="btn btn-md btn-warning" onclick="editor?.document.history.redo()"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
             <!-- <button type="button" class="btn btn-md btn-outline-warning" onclick="editor?.document.history.save('manual')"><i class="bi bi-save2"></i></button> -->
           </div>
-          <div class="wc-app-menu wc-app-menu-tool-propety flex-fill">
-
-          </div>
-        </div>
-        <div class="container-xl  p-0" style="background-color: #0009;">
-          <div class="px-0 pe-auto overflow-x-auto" >
+          <div class="wc-app-menu wc-app-menu-tool-propety flex-fill  pe-auto  overflow-x-auto ">
             <div class="only-shown only-shown-tool-Transform  p-1" style="min-width: max-content;">
-              <div class="d-flex flex-nowrap justify-content-center gap-3 row-gap-1">
+              <div class="d-flex flex-nowrap justify-content-end gap-3 row-gap-1">
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
                   <div class="d-flex flex-wrap gap-1">
@@ -401,7 +397,7 @@
               </div>
             </div>
             <div class="only-shown only-shown-tool-Text  p-1" style="min-width: max-content;">
-              <div class="d-flex flex-nowrap justify-content-center gap-3 row-gap-1">
+              <div class="d-flex flex-nowrap justify-content-end gap-3 row-gap-1">
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
                   <div class="d-flex flex-wrap gap-1">
@@ -419,7 +415,7 @@
               </div>
             </div>
             <div class="only-shown only-shown-tool-SelectionRectangle  p-1" style="min-width: max-content;">
-              <div class="d-flex flex-nowrap justify-content-center gap-3 row-gap-1">
+              <div class="d-flex flex-nowrap justify-content-end gap-3 row-gap-1">
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-info-circle"></i> To layer</div>
                   <div class="d-flex flex-nowrap gap-1">
