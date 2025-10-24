@@ -151,20 +151,48 @@ export default class Context2dUtil{
     static trim(ctx,color='transparent'){
         if(color==='transparent'){
             const rect = this.getTrimBoundingBox(ctx,[null,null,null,0]);
-            if(rect){ return this.trimByRect(ctx,rect); }
-            return rect;
+            if(rect){ return this.crop(ctx,rect); }
+            return null;
         }else if(color==='white'){
             const rect = this.getTrimBoundingBox(ctx,[255,255,255,null]);
-            if(rect){ return this.trimByRect(ctx,rect); }
-            return rect;
+            if(rect){ return this.crop(ctx,rect); }
+            return null;
         }else if(color==='black'){
             const rect = this.getTrimBoundingBox(ctx,[0,0,0,null]);
-            if(rect){ return this.trimByRect(ctx,rect); }
-            return rect;
+            if(rect){ return this.crop(ctx,rect); }
+            return null;
         }else if(Array.isArray(color)){
             const rect = this.getTrimBoundingBox(ctx,color);
-            if(rect){ return this.trimByRect(ctx,rect); }
-            return rect;
+            if(rect){ return this.crop(ctx,rect); }
+            return null;
+        }
+        throw Error('wrong color');
+    }
+    /**
+     * 캔버스를 특정 기준(type)에 따라 잘라냅니다.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 캔버스의 2D 렌더링 컨텍스트
+     * @param {'transparent'} [type='transparent'] - 잘라낼 기준 ('transparent'만 지원)
+     * @throws {Error} 지원하지 않는 type일 경우 에러 발생
+     * @returns {void}
+     */
+    static selfTrim(ctx,color='transparent'){
+        if(color==='transparent'){
+            const rect = this.getTrimBoundingBox(ctx,[null,null,null,0]);
+            if(rect){ return this.selfCrop(ctx,rect); }
+            return null;
+        }else if(color==='white'){
+            const rect = this.getTrimBoundingBox(ctx,[255,255,255,null]);
+            if(rect){ return this.selfCrop(ctx,rect); }
+            return null;
+        }else if(color==='black'){
+            const rect = this.getTrimBoundingBox(ctx,[0,0,0,null]);
+            if(rect){ return this.selfCrop(ctx,rect); }
+            return null;
+        }else if(Array.isArray(color)){
+            const rect = this.getTrimBoundingBox(ctx,color);
+            if(rect){ return this.selfCrop(ctx,rect); }
+            return null;
         }
         throw Error('wrong color');
     }
@@ -174,17 +202,36 @@ export default class Context2dUtil{
      * 
      * @param {CanvasRenderingContext2D} ctx - 원본 캔버스 컨텍스트
      * @param {{x: number, y: number, width: number, height: number}} rect - 잘라낼 사각형 영역
+     * @returns {CanvasRenderingContext2D}
+     */
+    static crop(ctx,rect){
+        const { x, y, width, height } = rect;
+        // const newCanvas = globalThis.document.createElement('canvas');
+        const newCanvas = ctx.canvas.cloneNode(true);
+        newCanvas.width = width;
+        newCanvas.height = height;
+        const newCtx = newCanvas.getContext('2d')
+        const imageData = ctx.getImageData(x, y, width, height);
+        newCtx.putImageData(imageData,0,0);
+        return newCanvas;
+    }
+    
+    /**
+     * 지정된 영역(rect)만 남기고 캔버스를 잘라냅니다.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 원본 캔버스 컨텍스트
+     * @param {{x: number, y: number, width: number, height: number}} rect - 잘라낼 사각형 영역
      * @returns {void}
      */
-    static trimByRect(ctx,rect){
+    static selfCrop(ctx,rect){
         const { x, y, width, height } = rect;
         const imageData = ctx.getImageData(x, y, width, height);
         ctx.canvas.width = width;
         ctx.canvas.height = height;
-        ctx.putImageData(imageData,0,0);
-        return rect;
+        const newCtx = ctx.canvas.getContext('2d')
+        newCtx.putImageData(imageData,0,0);
+        return ;
     }
-    
 
     /**
      * 캔버스에서 특정 RGBA 색상에 해당하는 픽셀 영역의 최소 바운딩 박스 계산

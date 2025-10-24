@@ -24,6 +24,39 @@
             //getBoundingBoxForTransparentTrim
             const output = document.querySelector('#trim-output');
             {
+                const h2 = document.createElement('h2')
+                h2.innerText = 'crop/selfCrop';
+                output.append(h2);
+            }
+            {
+                const testCanvas = new Canvas(300,300);
+                output.append(testCanvas);
+                const ctx = testCanvas.ctx;
+                ctx.save();
+                ctx.fillStyle = "#fff"
+                ctx.fillRect(0,0,ctx.canvas.width,100);
+                ctx.fillStyle = "#000"
+                ctx.fillRect(0,101,200,ctx.canvas.height);
+                ctx.fillStyle = "#069"
+                ctx.arc(170, 80, 57,0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore()
+                const cropedCanvas = Context2dUtil.crop(testCanvas.ctx,{x:10,y:10,width:200,height:200}); // 새 canvas가 생김
+                output.append(cropedCanvas);
+                const clonedCanvas = testCanvas.clone()
+                Context2dUtil.selfCrop(clonedCanvas.ctx,{x:10,y:10,width:200,height:200}); // 복사한                 
+                output.append(clonedCanvas);
+            }
+            {
+                output.append(document.createElement('hr'));
+            }
+
+            {
+                const h2 = document.createElement('h2')
+                h2.innerText = 'trim/selfTrim';
+                output.append(h2);
+            }
+            {
                 
                 const h3 = document.createElement('h3')
                 h3.innerText = 'transparent';
@@ -36,9 +69,10 @@
                 ctx.arc(170, 80, 57,0, 2 * Math.PI);
                 ctx.fill();
                 ctx.restore()
-                const trimedCanvas = testCanvas.clone();
-                Context2dUtil.trim(trimedCanvas.ctx);
+                const trimedCanvas = Context2dUtil.trim(testCanvas.ctx); // 새 canvas가 생김
                 output.append(trimedCanvas);
+                const selfTrimedCanvas = Context2dUtil.trim(testCanvas.clone().ctx); // 복사한 걸
+                output.append(selfTrimedCanvas);
 
                 {
                     const rect = Context2dUtil.getTrimBoundingBox(ctx,[null,null,null,0])
@@ -66,9 +100,10 @@
                 ctx.arc(170, 80, 57,0, 2 * Math.PI);
                 ctx.fill();
                 ctx.restore()
-                const trimedCanvas = testCanvas.clone();
-                Context2dUtil.trim(trimedCanvas.ctx,'white');
+                const trimedCanvas = Context2dUtil.trim(testCanvas.ctx,'white');
                 output.append(trimedCanvas);
+                const selfTrimedCanvas = Context2dUtil.trim(testCanvas.clone().ctx,'white'); // 복사한 걸
+                output.append(selfTrimedCanvas);
 
                 {
                     const rect = Context2dUtil.getTrimBoundingBox(ctx,[255,255,255,255])
@@ -99,9 +134,11 @@
                 ctx.arc(170, 80, 57,0, 2 * Math.PI);
                 ctx.fill();
                 ctx.restore()
-                const trimedCanvas = testCanvas.clone();
-                Context2dUtil.trim(trimedCanvas.ctx,'black');
+                const trimedCanvas = Context2dUtil.trim(testCanvas.ctx,'black');
                 output.append(trimedCanvas);
+                const selfTrimedCanvas = Context2dUtil.trim(testCanvas.clone().ctx,'black'); // 복사한 걸
+                output.append(selfTrimedCanvas);
+
                 {
                     const rect = Context2dUtil.getTrimBoundingBox(ctx,[0,0,0,255])
                     console.log(rect);
@@ -134,9 +171,10 @@
                 ctx.fill();
                 ctx.restore()
 
-                const trimedCanvas = testCanvas.clone();
-                Context2dUtil.trim(trimedCanvas.ctx,[100,50,20,null]);
+                const trimedCanvas = Context2dUtil.trim(testCanvas.ctx,[100,50,20,null]);
                 output.append(trimedCanvas);
+                const selfTrimedCanvas = Context2dUtil.trim(testCanvas.clone().ctx,[100,50,20,null]); // 복사한 걸
+                output.append(selfTrimedCanvas);
 
                 {
                     const rect = Context2dUtil.getTrimBoundingBox(ctx,[100,50,20,null])
@@ -161,7 +199,6 @@
     <div class="container">
         <h1>test Context2dUtil</h1>
         <hr>
-        <h2>trim</h2>
         <div id="trim-output">
 
         </div>
