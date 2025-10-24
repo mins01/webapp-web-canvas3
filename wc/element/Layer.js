@@ -2,6 +2,7 @@
 
 import Canvas from "./Canvas.js"
 import LayerKind from "../lib/LayerKind.js";
+import Context2dUtil from "../lib/Context2dUtil.js";
 
 export default class Layer extends Canvas{
 
@@ -148,5 +149,17 @@ export default class Layer extends Canvas{
         // ctx.translate(-targetLayer.left, -targetLayer.top)
         ctx.translate(-tranLeft, -tranTop)
         ctx.restore()
+    }
+
+
+
+
+
+    trim(){
+        // Context2dUtil.selfTrim(this.ctx);
+        const rect = Context2dUtil.getTrimBoundingBox(this.ctx);
+        this.left+=rect.x;
+        this.top+=rect.y;
+        super.trim();
     }
 }

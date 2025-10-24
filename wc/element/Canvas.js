@@ -184,6 +184,10 @@ class Canvas extends HTMLCanvasElement{
         this.ctx.drawImage(cloned, 0, 0, width, height);
     }
 
+    trim(){
+        Context2dUtil.selfTrim(this.ctx);
+    }
+
 
 
     toObject(){

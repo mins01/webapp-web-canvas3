@@ -390,7 +390,8 @@
                 <div>
                   <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
                   <div class="d-flex gap-1">
-                    <button class="btn btn-success" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
+                    <button class="btn btn-warning" onclick="editor.document.layer.trim();editor.document.layer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-scissors"></i> Trim</button>
+                    <button class="btn btn-warning" onclick="if(editor?.document?.layer){ let layer = editor?.document?.layer; layer.adjustSize(layer.parent.width,layer.parent.height);layer.flush();editor.saveHistory();editor.tool.activate();}"><i class="bi bi-bounding-box"></i> Fit document</button>
                   </div>
                 </div>
 
@@ -1310,7 +1311,8 @@
               <div>
                 <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> Resize</div>
                 <div class="d-flex flex-row gap-1">
-                  <button class="btn btn-primary" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">Adjust size to document</button>
+                  <button class="btn btn-warning" onclick="editor.temp.selectedLayer.trim();editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))"><i class="bi bi-scissors"></i> Trim</button>
+                  <button class="btn btn-warning" onclick="editor.temp.selectedLayer.adjustSize(editor.temp.selectedLayer.parent.width,editor.temp.selectedLayer.parent.height);editor.temp.selectedLayer.flush();editor.saveHistory();editor.tool.activate(); wcSyncHandler.sync(this.closest('.modal'))">Fit to document</button>
                 </div>
               </div>
               <div>
@@ -1333,9 +1335,9 @@
                 </div>
               </div>
               <div>
-                <div class="form-label mb-0"><i class="bi bi-filetype-png"></i> Export</div>
+                <div class="form-label mb-0"><i class="bi bi-download"></i> Export</div>
                 <div class="d-flex flex-row gap-1">
-                  <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);">EXPORT PNG</button>
+                  <button class="btn btn-primary" onclick="Wc.HtmlUtil.saveAsCanvas(editor.temp.selectedLayer);"><i class="bi bi-filetype-png"></i> PNG</button>
                 </div>
               </div>
 
