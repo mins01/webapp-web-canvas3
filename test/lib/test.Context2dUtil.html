@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test Context2dUtil</title>
+
+    <!-- 부트스트랩 5.3.left -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+    <style>
+        canvas{
+            outline: 2px dashed #aabbcc99;
+            background-color: #eeffee;
+        }
+    </style>
+    <script type="module">
+        import Context2dUtil from '../../wc/lib/Context2dUtil.js';
+        import Canvas from '../../wc/element/Canvas.js'
+        Canvas.defineCustomElements();
+
+
+        window.addEventListener('load',()=>{
+            //getBoundingBoxForTransparentTrim
+            const output = document.querySelector('#trim-output');
+            {
+                
+                const h3 = document.createElement('h3')
+                h3.innerText = 'transparent';
+                output.append(h3);
+                const testCanvas = new Canvas(300,300);
+                output.append(testCanvas);
+                const ctx = testCanvas.ctx;
+                ctx.save();
+                ctx.fillStyle = "#069"
+                ctx.arc(170, 80, 57,0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore()
+                const rect = Context2dUtil.getBoundingBoxForTransparentTrim(ctx);
+                console.log(rect);
+                // {
+                //     ctx.save();
+                //     ctx.setLineDash([4,4])
+                //     ctx.lineWidth = 2;
+                //     ctx.strokeStyle = "#33996633";
+                //     const {x, y, width, height} = rect;
+                //     ctx.strokeRect(x, y, width, height)
+                //     ctx.restore()
+                // }
+                const trimedCanvas = testCanvas.clone();
+                Context2dUtil.trim(trimedCanvas.ctx);
+                output.append(trimedCanvas);
+            }
+            {
+                const h3 = document.createElement('h3')
+                h3.innerText = 'white';
+                output.append(h3);
+                const testCanvas = new Canvas(300,300);
+                output.append(testCanvas);
+                const ctx = testCanvas.ctx;
+                ctx.save();
+                ctx.fillStyle = "#fff"
+                ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
+                ctx.fillStyle = "#069"
+                ctx.arc(170, 80, 57,0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore()
+                const rect = Context2dUtil.getBoundingBoxForColorTrim(ctx,[255,255,255]);
+                console.log(rect);
+                // {
+                //     ctx.save();
+                //     ctx.setLineDash([4,4])
+                //     ctx.lineWidth = 2;
+                //     ctx.strokeStyle = "#33996633";
+                //     const {x, y, width, height} = rect;
+                //     ctx.strokeRect(x, y, width, height)
+                //     ctx.restore()
+                // }
+                const trimedCanvas = testCanvas.clone();
+                Context2dUtil.trim(trimedCanvas.ctx,'white');
+                output.append(trimedCanvas);
+            }
+
+            {
+                const h3 = document.createElement('h3')
+                h3.innerText = 'black';
+                output.append(h3);
+                const testCanvas = new Canvas(300,300);
+                output.append(testCanvas);
+                const ctx = testCanvas.ctx;
+                ctx.save();
+                ctx.fillStyle = "#fff"
+                ctx.fillRect(0,0,ctx.canvas.width,100);
+                ctx.fillStyle = "#000"
+                ctx.fillRect(0,101,ctx.canvas.width,ctx.canvas.height);
+                ctx.fillStyle = "#069"
+                ctx.arc(170, 80, 57,0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore()
+                const rect = Context2dUtil.getBoundingBoxForColorTrim(ctx,[0,0,0]);
+                console.log(rect);
+                // {
+                //     ctx.save();
+                //     ctx.setLineDash([4,4])
+                //     ctx.lineWidth = 2;
+                //     ctx.strokeStyle = "#33996633";
+                //     const {x, y, width, height} = rect;
+                //     ctx.strokeRect(x, y, width, height)
+                //     ctx.restore()
+                // }
+                const trimedCanvas = testCanvas.clone();
+                Context2dUtil.trim(trimedCanvas.ctx,'black');
+                output.append(trimedCanvas);
+            }
+            {
+                const h3 = document.createElement('h3')
+                h3.innerText = '[100,50,20]';
+                output.append(h3);
+                const testCanvas = new Canvas(300,300);
+                output.append(testCanvas);
+                const ctx = testCanvas.ctx;
+                ctx.save();
+                ctx.fillStyle = "#fff"
+                ctx.fillRect(0,0,ctx.canvas.width,100);
+                ctx.fillStyle = "#000"
+                ctx.fillRect(0,101,ctx.canvas.width,ctx.canvas.height);
+                ctx.fillStyle = "rgb(100,50,20)"
+                ctx.fillRect(0,0,170,ctx.canvas.height);
+                ctx.fillStyle = "#069"
+                ctx.arc(170, 80, 57,0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore()
+                const rect = Context2dUtil.getBoundingBoxForColorTrim(ctx,[100,50,20]);
+                console.log(rect);
+                // {
+                //     ctx.save();
+                //     ctx.setLineDash([4,4])
+                //     ctx.lineWidth = 2;
+                //     ctx.strokeStyle = "#33996633";
+                //     const {x, y, width, height} = rect;
+                //     ctx.strokeRect(x, y, width, height)
+                //     ctx.restore()
+                // }
+                const trimedCanvas = testCanvas.clone();
+                Context2dUtil.trim(trimedCanvas.ctx,[100,50,20]);
+                output.append(trimedCanvas);
+            }
+
+
+            
+
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>test Context2dUtil</h1>
+        <hr>
+        <h2>trim</h2>
+        <div id="trim-output">
+
+        </div>
+        <!-- <div>
+            <canvas id="testCanvas" width="300" height="300"></canvas>
+        </div> -->
+    </div>
+</body>
+</html>

@@ -65,7 +65,10 @@ export default class Context2dUtil{
 
 
 
-
+    /*
+    우선 이거 포기 중. 사용금지.
+    opencv 필수
+     */
     static async  getOrderedContour(canvas) {
         return new Promise((resolve, reject) => {
             // OpenCV.js 로딩 확인
@@ -135,4 +138,201 @@ export default class Context2dUtil{
         }
         return true; // 모두 0이면 완전 투명
     }
+
+
+    /**
+     * 캔버스를 특정 기준(type)에 따라 잘라냅니다.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 캔버스의 2D 렌더링 컨텍스트
+     * @param {'transparent'} [type='transparent'] - 잘라낼 기준 ('transparent'만 지원)
+     * @throws {Error} 지원하지 않는 type일 경우 에러 발생
+     * @returns {void}
+     */
+    static trim(ctx,color='transparent'){
+        if(color==='transparent'){
+            const rect = this.getBoundingBoxForTransparentTrim(ctx);
+            if(rect){ return this.trimByRect(ctx,rect); }
+            return rect;
+        }else if(color==='white'){
+            const rect = this.getBoundingBoxForColorTrim(ctx,[255,255,255]);
+            if(rect){ return this.trimByRect(ctx,rect); }
+            return rect;
+        }else if(color==='black'){
+            const rect = this.getBoundingBoxForColorTrim(ctx,[0,0,0]);
+            if(rect){ return this.trimByRect(ctx,rect); }
+            return rect;
+        }else if(Array.isArray(color)){
+            const rect = this.getBoundingBoxForColorTrim(ctx,color);
+            if(rect){ return this.trimByRect(ctx,rect); }
+            return rect;
+        }
+        throw Error('wrong color');
+    }
+
+    /**
+     * 지정된 영역(rect)만 남기고 캔버스를 잘라냅니다.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 원본 캔버스 컨텍스트
+     * @param {{x: number, y: number, width: number, height: number}} rect - 잘라낼 사각형 영역
+     * @returns {void}
+     */
+    static trimByRect(ctx,rect){
+        const { x, y, width, height } = rect;
+        const imageData = ctx.getImageData(x, y, width, height);
+        ctx.canvas.width = width;
+        ctx.canvas.height = height;
+        ctx.putImageData(imageData,0,0);
+        return rect;
+    }
+
+    /**
+     * getBoundingBoxForTransparentTrim(ctx[, options])
+     *
+     * ctx: CanvasRenderingContext2D
+     * options: {
+     *   alphaThreshold: number (0-255) - 이 값보다 큰 알파를 "불투명"으로 간주. 기본 0 (알파가 1 이상이면 불투명)
+     *   sample: number - 성능 최적화용 샘플 단계(정수 >=1). 기본 1 (모든 픽셀 검사). 2면 2픽셀마다 검사.
+     * }
+     *
+     * 반환:
+     *   null               -> 전부 투명
+     *   { x, y, width, height } -> 트리밍할 바운딩 박스 (정수)
+     */
+    static getBoundingBoxForTransparentTrim(ctx, options = {}) {
+        if (!ctx || typeof ctx.getImageData !== 'function') {
+            throw new TypeError('유효한 CanvasRenderingContext2D를 전달하세요.');
+        }
+
+        const alphaThreshold = Number.isFinite(options.alphaThreshold) ? options.alphaThreshold : 0;
+        const sample = Math.max(1, Math.floor(options.sample || 1));
+
+        const canvas = ctx.canvas;
+        const w = canvas.width;
+        const h = canvas.height;
+
+        if (w === 0 || h === 0) return null;
+
+        // 전체 픽셀 가져오기
+        let img;
+        try {
+            img = ctx.getImageData(0, 0, w, h);
+        } catch (e) {
+            // 보안 제한(CORS)으로 읽기 불가한 경우
+            throw new Error('getImageData를 호출할 수 없습니다. (CORS 제약일 수 있음)');
+        }
+        const data = img.data;
+
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+
+        // data는 [r,g,b,a, r,g,b,a, ...] 순서, alpha는 0..255
+        for (let y = 0; y < h; y += sample) {
+            let rowOffset = y * w * 4;
+            for (let x = 0; x < w; x += sample) {
+            const idx = rowOffset + x * 4;
+            const alpha = data[idx + 3];
+            if (alpha > alphaThreshold) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            }
+            }
+        }
+
+        if (maxX === -1) {
+            // 전부 투명
+            return null;
+        }
+
+        // 샘플링을 사용했다면 더 정확도를 위해 주변 픽을 확장(보수적 보정)
+        // (샘플>1 인 경우, 영역을 sample-1 만큼 확장하여 샘플링으로 인한 누락 보정)
+        if (sample > 1) {
+            minX = Math.max(0, minX - (sample - 1));
+            minY = Math.max(0, minY - (sample - 1));
+            maxX = Math.min(w - 1, maxX + (sample - 1));
+            maxY = Math.min(h - 1, maxY + (sample - 1));
+        }
+
+        const x = minX;
+        const y = minY;
+        const width = maxX - minX + 1;
+        const height = maxY - minY + 1;
+
+        return { x, y, width, height };
+    }
+
+    /**
+     * 캔버스에서 특정 색상에 해당하는 픽셀 영역의 최소 바운딩 박스 계산
+     * 
+     * @param {CanvasRenderingContext2D} ctx - 캔버스 2D 렌더링 컨텍스트
+     * @param {number[]} [color=[255,255,255]] - trim 될 기준 색상 [r, g, b] (0~255)
+     * @param {Object} [options={}] - 추가 옵션
+     * @param {number} [options.colorTolerance=0] - 색상 허용 오차 (0~255)
+     * @param {number} [options.sample=1] - 샘플링 간격 (성능/정확도 조절)
+     * @returns {{x:number, y:number, width:number, height:number} | null} - 잘라낼 영역 사각형 또는 null
+     * @throws {TypeError} 유효하지 않은 ctx가 전달된 경우
+     */
+    static getBoundingBoxForColorTrim(ctx, color = [255, 255, 255], options = {}) {
+        if (!ctx || typeof ctx.getImageData !== 'function') {
+            throw new TypeError('유효한 CanvasRenderingContext2D를 전달하세요.');
+        }
+
+        const { colorTolerance = 0, sample = 1 } = options;
+
+        const canvas = ctx.canvas;
+        const w = canvas.width;
+        const h = canvas.height;
+        if (w === 0 || h === 0) return null;
+
+        let img;
+        try {
+            img = ctx.getImageData(0, 0, w, h);
+        } catch (e) {
+            throw new Error('getImageData를 호출할 수 없습니다. (CORS 제약일 수 있음)');
+        }
+
+        const data = img.data;
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+
+
+        for (let y = 0; y < h; y += sample) {
+            let rowOffset = y * w * 4;
+            for (let x = 0; x < w; x += sample) {
+                const idx = rowOffset + x * 4;
+                const r = data[idx];
+                const g = data[idx + 1];
+                const b = data[idx + 2];
+
+                const dr = Math.abs(r - color[0]);
+                const dg = Math.abs(g - color[1]);
+                const db = Math.abs(b - color[2]);
+                if (!(dr <= colorTolerance && dg <= colorTolerance && db <= colorTolerance)) {
+                    if (x < minX) minX = x;
+                    if (x > maxX) maxX = x;
+                    if (y < minY) minY = y;
+                    if (y > maxY) maxY = y;
+                }
+            }
+        }        
+
+        if (maxX === -1) return null; // 일치하는 픽셀 없음
+
+        // 샘플링 보정
+        if (sample > 1) {
+            minX = Math.max(0, minX - (sample - 1));
+            minY = Math.max(0, minY - (sample - 1));
+            maxX = Math.min(w - 1, maxX + (sample - 1));
+            maxY = Math.min(h - 1, maxY + (sample - 1));
+        }
+
+        const x = minX;
+        const y = minY;
+        const width = maxX - minX + 1;
+        const height = maxY - minY + 1;
+
+        return { x, y, width, height };
+    }
+    
+
+    
 }
