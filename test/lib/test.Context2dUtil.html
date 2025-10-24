@@ -41,7 +41,7 @@
                 output.append(trimedCanvas);
 
                 {
-                    const rect = Context2dUtil.getBoundingBoxForTrim(ctx,[null,null,null,0])
+                    const rect = Context2dUtil.getTrimBoundingBox(ctx,[null,null,null,0])
                     console.log(rect);
                     ctx.save();
                     ctx.setLineDash([4,4])
@@ -71,7 +71,7 @@
                 output.append(trimedCanvas);
 
                 {
-                    const rect = Context2dUtil.getBoundingBoxForTrim(ctx,[255,255,255,255])
+                    const rect = Context2dUtil.getTrimBoundingBox(ctx,[255,255,255,255])
                     console.log(rect);
                     ctx.save();
                     ctx.setLineDash([4,4])
@@ -103,7 +103,7 @@
                 Context2dUtil.trim(trimedCanvas.ctx,'black');
                 output.append(trimedCanvas);
                 {
-                    const rect = Context2dUtil.getBoundingBoxForTrim(ctx,[0,0,0,255])
+                    const rect = Context2dUtil.getTrimBoundingBox(ctx,[0,0,0,255])
                     console.log(rect);
                     ctx.save();
                     ctx.setLineDash([4,4])
@@ -139,7 +139,7 @@
                 output.append(trimedCanvas);
 
                 {
-                    const rect = Context2dUtil.getBoundingBoxForTrim(ctx,[100,50,20,null])
+                    const rect = Context2dUtil.getTrimBoundingBox(ctx,[100,50,20,null])
                     console.log(rect);
                     ctx.save();
                     ctx.setLineDash([4,4])

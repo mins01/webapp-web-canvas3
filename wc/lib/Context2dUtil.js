@@ -150,19 +150,19 @@ export default class Context2dUtil{
      */
     static trim(ctx,color='transparent'){
         if(color==='transparent'){
-            const rect = this.getBoundingBoxForTrim(ctx,[null,null,null,0]);
+            const rect = this.getTrimBoundingBox(ctx,[null,null,null,0]);
             if(rect){ return this.trimByRect(ctx,rect); }
             return rect;
         }else if(color==='white'){
-            const rect = this.getBoundingBoxForTrim(ctx,[255,255,255,null]);
+            const rect = this.getTrimBoundingBox(ctx,[255,255,255,null]);
             if(rect){ return this.trimByRect(ctx,rect); }
             return rect;
         }else if(color==='black'){
-            const rect = this.getBoundingBoxForTrim(ctx,[0,0,0,null]);
+            const rect = this.getTrimBoundingBox(ctx,[0,0,0,null]);
             if(rect){ return this.trimByRect(ctx,rect); }
             return rect;
         }else if(Array.isArray(color)){
-            const rect = this.getBoundingBoxForTrim(ctx,color);
+            const rect = this.getTrimBoundingBox(ctx,color);
             if(rect){ return this.trimByRect(ctx,rect); }
             return rect;
         }
@@ -191,23 +191,23 @@ export default class Context2dUtil{
      * 배경색으로 지정된 RGBA 픽셀은 제외하고, 나머지 영역만 바운딩 박스로 잡습니다.
      * 
      * @param {CanvasRenderingContext2D} ctx - 캔버스 2D 렌더링 컨텍스트
-     * @param {number[]} [rgba=[255,255,255,255]] - trim 될 기준 색상 [r, g, b, a] (0~255)
+     * @param {number[]} [excludeRgba=[null, null, null, 0]] - trim 될 기준 색상 [r, g, b, a] (0~255)
      * @param {Object} [options={}] - 추가 옵션
      * @param {number} [options.tolerance=0] - 색상 허용 오차 (0~255)
      * @param {number} [options.sample=1] - 샘플링 간격 (성능/정확도 조절)
      * @returns {{x:number, y:number, width:number, height:number} | null} - 잘라낼 영역 사각형 또는 null
      * @throws {TypeError} 유효하지 않은 ctx가 전달된 경우
      */
-    static getBoundingBoxForTrim(ctx, rgba = [null, null, null, 0], options = {}) {
+    static getTrimBoundingBox(ctx, excludeRgba = [null, null, null, 0], options = {}) {
         if (!ctx || typeof ctx.getImageData !== 'function') {
             throw new TypeError('유효한 CanvasRenderingContext2D를 전달하세요.');
         }
 
         const { tolerance = 0, sample = 1 } = options;
 
-        // rgba가 배열이 아닌 경우 기본값으로 보정
-        if (!Array.isArray(rgba) || rgba.length !== 4) {
-            rgba = [null, null, null, 0];
+        // excludeRgba가 배열이 아닌 경우 기본값으로 보정
+        if (!Array.isArray(excludeRgba) || excludeRgba.length !== 4) {
+            excludeRgba = [null, null, null, 0];
         }
 
         const canvas = ctx.canvas;
@@ -225,11 +225,11 @@ export default class Context2dUtil{
         const data = img.data;
         let minX = w, minY = h, maxX = -1, maxY = -1;
 
-        const inRgba = (rgba,checkColor,tolerance)=>{
-            if(rgba[0]!==null && Math.abs(checkColor[0] - rgba[0]) > tolerance){ return false; }
-            if(rgba[1]!==null && Math.abs(checkColor[1] - rgba[1]) > tolerance){ return false; }
-            if(rgba[2]!==null && Math.abs(checkColor[2] - rgba[2]) > tolerance){ return false; }
-            if(rgba[3]!==null && Math.abs(checkColor[3] - rgba[3]) > tolerance){ return false; }
+        const matchesRgba = (rgbaData,pixelData,tolerance)=>{
+            if(rgbaData[0]!==null && Math.abs(pixelData[0] - rgbaData[0]) > tolerance){ return false; }
+            if(rgbaData[1]!==null && Math.abs(pixelData[1] - rgbaData[1]) > tolerance){ return false; }
+            if(rgbaData[2]!==null && Math.abs(pixelData[2] - rgbaData[2]) > tolerance){ return false; }
+            if(rgbaData[3]!==null && Math.abs(pixelData[3] - rgbaData[3]) > tolerance){ return false; }
             return true;
         }
 
@@ -242,26 +242,8 @@ export default class Context2dUtil{
                 const b = data[idx + 2];
                 const a = data[idx + 3];
 
-                // const dr = Math.abs(r - rgba[0]);
-                // const dg = Math.abs(g - rgba[1]);
-                // const db = Math.abs(b - rgba[2]);
-                // const da = Math.abs(a - rgba[3]);
-
-                // // 배경색 제외: RGBA 모두 tolerance 이하이면 건너뜀
-                // if (!(dr <= tolerance && dg <= tolerance && db <= tolerance && da <= tolerance)) {
-                //     if (x < minX) minX = x;
-                //     if (x > maxX) maxX = x;
-                //     if (y < minY) minY = y;
-                //     if (y > maxY) maxY = y;
-                // }
-
-                const dr = Math.abs(r - rgba[0]);
-                const dg = Math.abs(g - rgba[1]);
-                const db = Math.abs(b - rgba[2]);
-                const da = Math.abs(a - rgba[3]);
-
                 // 배경색 제외: RGBA 모두 tolerance 이하이면 건너뜀
-                if (!inRgba(rgba,[r,g,b,a],tolerance)) {
+                if (!matchesRgba(excludeRgba,[r,g,b,a],tolerance)) {
                     if (x < minX) minX = x;
                     if (x > maxX) maxX = x;
                     if (y < minY) minY = y;
