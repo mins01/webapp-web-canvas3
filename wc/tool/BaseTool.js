@@ -55,6 +55,10 @@ export default class BaseTool {
 	 * 활성화 : 툴이 선택 되면
 	 */
 	activate(cb=null){
+		if(!this.document){
+			this.enable = false;
+			return false;
+		}
 		this.init();
 		this.ready();
 		if(cb){ cb(); }

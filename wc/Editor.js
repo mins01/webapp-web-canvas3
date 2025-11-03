@@ -524,6 +524,7 @@ export default class Editor{
     closeDocument(){
         if(this.document){
             this.documents.remove();
+            this.tool.activate();
         }
     }
     newDocument(width,height){
