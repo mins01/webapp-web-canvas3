@@ -113,11 +113,17 @@ export default class Transform extends BaseTool{
 
         let leftUttC = utt.left + utt.width/2;
         let topUttC = utt.top + utt.height/2;
+        // console.log('leftUttC,topUttC',leftUttC,topUttC);
 
-        [leftUttC,topUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
+        leftUttC = Math.floor(leftUttC)
+        topUttC = Math.floor(topUttC)
+
+        let [angledLeftUttC,angledTopUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
+        // console.log('angledLeftUttC,angledTopUttC',angledLeftUttC,angledTopUttC);
+        
 
 
-        let [leftLC,topLC] = this.getDocumentXyFromPageXy(leftUttC,topUttC);
+        let [leftLC,topLC] = this.getDocumentXyFromPageXy(angledLeftUttC,angledTopUttC);
         let width = utt.width / mul;      
         let height = utt.height / mul;
 
@@ -125,7 +131,7 @@ export default class Transform extends BaseTool{
         let top =  topLC - height/2;
 
         this.targetLayer.import(this.orignalSnapshot);
-        this.targetLayer.resize(Math.floor(width),Math.floor(height))
+        this.targetLayer.resize(Math.ceil(width),Math.ceil(height))
         targetLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
         targetLayer.top = Math.floor(top);
         
