@@ -56,7 +56,7 @@ class WcHelper{
   }
 
   static onresize = (event)=>{
-    editor?.document.flush();
+    editor?.document?.flush();
     editor?.tool?.activate()
   }
 
