@@ -80,8 +80,18 @@ export default class Star extends BaseTool{
     mergeFromWorkingLayer(){
         const from = this.workingLayer;
         const to = this.layer;
+        const selectionLayer = this.selectionLayer;
         const ctx = to.ctx;
+
+        if(selectionLayer && !selectionLayer.isEmpty){ // 선택영역을 마스크로 동작
+            from.ctx.save();
+            from.ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
+            from.ctx.drawImage(selectionLayer,-to.left,-to.top);
+            from.ctx.restore();
+        }
+
         if(this.orignalSnapshot) this.layer.import(this.orignalSnapshot);
+        
         ctx.save();
         ctx.globalAlpha = this.opacity;
         ctx.drawImage(from,0,0);
