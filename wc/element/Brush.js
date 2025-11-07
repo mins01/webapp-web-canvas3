@@ -241,7 +241,7 @@ export default class Brush extends Canvas{
     // opacity 적용
     if(ctx.canvas.alpha != brushConfig.opacity){
       ctx.canvas.alpha = brushConfig.opacity;
-      if(ctx.canvas.style) ctx.canvas.style.opacity = brushConfig.opacity;
+      if(ctx.canvas?.style) ctx.canvas.style.opacity = brushConfig.opacity;
     }
     // console.log(ctx.canvas.style.opacity);
     

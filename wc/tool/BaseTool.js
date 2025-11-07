@@ -338,4 +338,15 @@ export default class BaseTool {
 		// 좌표 오차 변경		
 		ctx.translate(-layer.left,-layer.top);
 	}
+
+
+	// targetLayer 에 selectionLayer 를 기준으로 겹치는 부분만 보이게 한다.
+	maksingLayer(targetLayer,selectionLayer,left=0,top=0){
+		if(selectionLayer && !selectionLayer.isEmpty){ // 선택영역을 마스크로 동작
+				targetLayer.ctx.save();
+				targetLayer.ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
+				targetLayer.ctx.drawImage(selectionLayer,left,top);
+				targetLayer.ctx.restore();
+		}
+	}
 }
