@@ -53,7 +53,8 @@ export default class Brush extends BaseTool{
 
     inactivate(){
         super.inactivate();
-        if(this.layer && this.originalLayer) this.layer.import(this.originalLayer.snapshot()); // 되돌린다.
+        // if(this.layer && this.originalLayer) this.layer.import(this.originalLayer.snapshot()); // 되돌린다.
+        if(this.layer && this.originalLayer) this.layer.import(this.originalLayer); // 되돌린다.
         this.originalLayer = null;
     }
 
@@ -98,8 +99,6 @@ export default class Brush extends BaseTool{
     }
 
     mergeFromWorkingLayer(){
-        console.log(performance.now())
-
         const from = this.workingLayer;
         const to = this.layer;
         const selectionLayer = this.selectionLayer;
@@ -119,13 +118,12 @@ export default class Brush extends BaseTool{
         ctx.drawImage(from,0,0);
         ctx.restore(); 
         to.flush();
-        console.log(performance.now())
-
     }
     
     end(){
         if(super.end()===false){return false;}
-        this.originalLayer = this.layer?.clone()??null
+        // this.originalLayer = this.layer?.clone()??null
+        this.originalLayer.import(this.layer)
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
     }

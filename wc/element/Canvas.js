@@ -161,9 +161,20 @@ class Canvas extends HTMLCanvasElement{
 
     static clone(obj,name=obj.name.substr(0,40)+' cloned'){
         const newCanvas = new this(obj.width,obj.height);
-        newCanvas.import(obj.snapshot())
+        
+        newCanvas.import(obj)
+        // newCanvas.importProperties(obj); //속도 최적화를 위해서
+        // newCanvas.ctx.save();
+        // newCanvas.ctx.globalAlpha = 1,
+        // newCanvas.ctx.globalCompositeOperation = "source-over",
+        // newCanvas.ctx.drawImage(obj,0,0);
+        // newCanvas.ctx.restore();
+
+
+        // newCanvas.import(obj.snapshot()) //느림
         // newCanvas.import(obj.exportWithDataUrl())
         // newCanvas.ctx.drawImage(obj,0,0)
+
         if(!name){
             name = newCanvas.name.substr(0,40)+' cloned';
         }
@@ -270,8 +281,8 @@ class Canvas extends HTMLCanvasElement{
     }
 
 
-    // async 비동기로 하지 말자. dataUrl이 있는 경우는 wc3.json으로 저장했을 때 뿐이다. 즉, 그 때 빼고는 전부 동기로 가능하다.
-    static import(obj,conf){
+    
+    static importProperties(obj,conf){
         obj.constructor.keys.forEach((k)=>{
             if(conf?.[k] === undefined){return;}
             if(obj?.[k] === undefined){return;}
@@ -280,6 +291,11 @@ class Canvas extends HTMLCanvasElement{
             }
             obj[k] = conf[k];
         })
+    }
+
+    // async 비동기로 하지 말자. dataUrl이 있는 경우는 wc3.json으로 저장했을 때 뿐이다. 즉, 그 때 빼고는 전부 동기로 가능하다.
+    static import(obj,conf){
+        this.importProperties(obj,conf)
 
         if(conf?.__content_type__){
             if(conf.__content_type__==='file'){
@@ -310,11 +326,24 @@ class Canvas extends HTMLCanvasElement{
             }).catch((event)=>{
                 console.log(event)
             })
+        }else if(conf instanceof Canvas){
+            // console.log('canvas 객체임');
+            obj.ctx.save();
+            obj.ctx.globalAlpha = 1,
+            obj.ctx.globalCompositeOperation = "source-over",
+            obj.ctx.drawImage(conf,0,0);
+            obj.ctx.restore();
+            
         }else{
             // obj.flush();
         }
         // obj.flush();
     }
+    
+    importProperties(conf){
+        return this.constructor.importProperties(this,conf);
+    }
+
     import(conf){
         return this.constructor.import(this,conf);
     }
