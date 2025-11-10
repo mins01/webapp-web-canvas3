@@ -11,7 +11,7 @@ export default class Brush extends BaseTool{
     lastPointerEvent = null;
     tmBuildUp = null;
     targetLayer = null
-    orignalSnapshot = null
+    // orignalSnapshot = null // @deprecated
     originalLayer = null
     constructor(editor){
         super(editor);
