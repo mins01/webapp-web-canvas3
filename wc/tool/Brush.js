@@ -12,6 +12,7 @@ export default class Brush extends BaseTool{
     tmBuildUp = null;
     targetLayer = null
     orignalSnapshot = null
+    originalLayer = null
     constructor(editor){
         super(editor);
         this.name = 'Brush';
@@ -31,8 +32,6 @@ export default class Brush extends BaseTool{
         if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
-        // this.layer = this.document.layer;
-        this.orignalSnapshot = this.layer?.snapshot()??null
         this.stopBuildUp();        
 	}
 
@@ -46,6 +45,7 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
+                this.originalLayer = this.layer?.clone()??null
             }
             if(cb) cb();
         });
@@ -53,8 +53,8 @@ export default class Brush extends BaseTool{
 
     inactivate(){
         super.inactivate();
-        if(this.layer && this.orignalSnapshot) this.layer.import(this.orignalSnapshot); // 되돌린다.
-        this.orignalSnapshot = null;
+        if(this.layer && this.originalLayer) this.layer.import(this.originalLayer.snapshot()); // 되돌린다.
+        this.originalLayer = null;
     }
 
     onpointerdown(event){
@@ -66,9 +66,6 @@ export default class Brush extends BaseTool{
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
-        // if(event.pointerType!=='touch'){
-        //     this.drawForDown(this.x0,this.y0)
-        // }
         this.lastPointerEvent = this.pointerEvent;
 
         this.startBuildUp();
@@ -101,13 +98,18 @@ export default class Brush extends BaseTool{
     }
 
     mergeFromWorkingLayer(){
+        console.log(performance.now())
+
         const from = this.workingLayer;
         const to = this.layer;
         const selectionLayer = this.selectionLayer;
         
         this.maksingLayer(from,selectionLayer,-to.left,-to.top);
         
-        if(this.orignalSnapshot) to.import(this.orignalSnapshot);
+        if(this.originalLayer){
+            to.clear();
+            to.ctx.drawImage(this.originalLayer,0,0);
+        }
         
         const ctx = to.ctx;
         
@@ -117,12 +119,13 @@ export default class Brush extends BaseTool{
         ctx.drawImage(from,0,0);
         ctx.restore(); 
         to.flush();
+        console.log(performance.now())
+
     }
     
     end(){
         if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
-        this.orignalSnapshot = this.layer.snapshot()
+        this.originalLayer = this.layer?.clone()??null
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
     }
