@@ -11,6 +11,7 @@ export default class Rectangle extends BaseTool{
     workingLayer = null;
     radii = 0;
     opacity = 1;
+    originPoint = 'topleft';
     constructor(editor){
         super(editor);
         this.name = 'Rectangle';
@@ -127,14 +128,24 @@ export default class Rectangle extends BaseTool{
         let w = lx1 - lx0;
         let h = ly1 - ly0;
         const radii = this.radii;
+        let x = lx0;
+        let y = ly0;
+        if(this.originPoint =='topleft'){
+
+        }else if(this.originPoint =='center'){
+            x = Math.ceil(lx0 - w);
+            y = Math.ceil(ly0 - h);
+            w *= 2;
+            h *= 2;
+        }
 
         ctx.save();
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
         
+        
         this.prepareLayer(ctx);
-        // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));
-        ctx.fill(ShapePath2D.roundRect(lx0,ly0,w,h,radii));
+        ctx.fill(ShapePath2D.roundRect(x,y,w,h,radii));
         ctx.restore();
 
         this.mergeFromWorkingLayer();
