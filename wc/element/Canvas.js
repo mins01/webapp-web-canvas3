@@ -160,20 +160,8 @@ class Canvas extends HTMLCanvasElement{
     }
 
     static clone(obj,name=obj.name.substr(0,40)+' cloned'){
-        const newCanvas = new this(obj.width,obj.height);
-        
+        const newCanvas = new this(obj.width,obj.height);       
         newCanvas.import(obj)
-        // newCanvas.importProperties(obj); //속도 최적화를 위해서
-        // newCanvas.ctx.save();
-        // newCanvas.ctx.globalAlpha = 1,
-        // newCanvas.ctx.globalCompositeOperation = "source-over",
-        // newCanvas.ctx.drawImage(obj,0,0);
-        // newCanvas.ctx.restore();
-
-
-        // newCanvas.import(obj.snapshot()) //느림
-        // newCanvas.import(obj.exportWithDataUrl())
-        // newCanvas.ctx.drawImage(obj,0,0)
 
         if(!name){
             name = newCanvas.name.substr(0,40)+' cloned';
@@ -326,11 +314,22 @@ class Canvas extends HTMLCanvasElement{
             }).catch((event)=>{
                 console.log(event)
             })
-        }else if(conf instanceof Canvas){
-            // console.log('canvas 객체임');
+        }else if(conf instanceof Canvas){ // Canvas 객체를 가져와서 내용을 그대로 그림.
             obj.ctx.save();
-            obj.ctx.globalAlpha = 1,
-            obj.ctx.globalCompositeOperation = "source-over",
+            obj.ctx.globalAlpha = 1;
+            obj.ctx.setTransform(1, 0, 0, 1, 0, 0); // scale, rotate, translate, transform 초기화
+            obj.ctx.globalCompositeOperation = "source-over";
+            if(obj.ctx?.filter) obj.ctx.filter = 'none'; 
+            obj.ctx.imageSmoothingEnabled = false; // 최대한 픽셀이 똑같게
+            // obj.ctx.imageSmoothingQuality = 'low'; // 'medium', 'high'
+            obj.ctx.beginPath();
+            if(obj.ctx?.shadowColor){
+                obj.ctx.shadowColor = "transparent";
+                obj.ctx.shadowBlur = 0;
+                obj.ctx.shadowOffsetX = 0;
+                obj.ctx.shadowOffsetY = 0;
+            }
+
             obj.ctx.drawImage(conf,0,0);
             obj.ctx.restore();
             
