@@ -9,6 +9,8 @@ export default class Polygon extends BaseTool{
     workingLayer = null;
     points = 3;
     opacity = 1;
+    originPoint = 'center';
+
     constructor(editor){
         super(editor);
         this.name = 'Polygon';
@@ -123,11 +125,14 @@ export default class Polygon extends BaseTool{
         let w = lx1 - lx0;
         let h = ly1 - ly0;
 
-        const x = lx0;
-        const y = ly0;
+        let x = lx0;
+        let y = ly0;
+
         const radius = Math.floor(Math.hypot(lx0-lx1,ly0-ly1));
         const points = this.points;
         const startAngle = Math.atan2(h, w);
+
+
 
 
         ctx.save();

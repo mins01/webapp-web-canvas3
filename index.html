@@ -2220,6 +2220,17 @@
           <div class="modal-body" onclick="wcSyncHandler.sync(this.closest('.modal'))">
             <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
               <div>
+                <div class="form-label mb-0"><i class="bi bi-square-fill"></i> Border radius(꼭짓점 반경,라운딩박스)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="1">
+                    <input type="range" class="form-range d-block" name="radii" placeholder="radii" step="1" min="0" max="100" value="0">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div>
                 <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
                 <div class="input-group ui-input-stepper">
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
@@ -2236,16 +2247,7 @@
                   <option value="center">CENTER</option>
                 </select>
               </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-square-fill"></i> Border radius(꼭짓점 반경,라운딩박스)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="1">
-                    <input type="range" class="form-range d-block" name="radii" placeholder="radii" step="1" min="0" max="100" value="0">
-                  </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                </div>
-              </div>
+              
             </form>
           </div>
 
@@ -2298,6 +2300,7 @@
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
               </div>
+              <hr class="m-0">
               <div>
                 <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
                 <div class="input-group ui-input-stepper">
@@ -2308,6 +2311,14 @@
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
               </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> OriginPoint(원점 기준)</div>
+                <select class="form-select" name="originPoint" disabled>
+                  <option value="topleft">TOP and LEFT</option>
+                  <option value="center" selected>CENTER</option>
+                </select>
+              </div>
+              
             </form>
           </div>
 
@@ -2335,6 +2346,17 @@
                 </div>
               </div>
               <div>
+                <div class="form-label mb-0"><i class="bi bi-pentagon-fill"></i> Inner radius(내부 지름)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="0.4">
+                    <input type="range" class="form-range d-block" name="innerRadiusPercent" placeholder="innerRadiusPercent" step="0.01" min="0" max="1" value="0.4">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div>
                 <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
                 <div class="input-group ui-input-stepper">
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
@@ -2345,15 +2367,13 @@
                 </div>
               </div>
               <div>
-                <div class="form-label mb-0"><i class="bi bi-pentagon-fill"></i> Inner radius(내부 지름)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="0.4">
-                    <input type="range" class="form-range d-block" name="innerRadiusPercent" placeholder="innerRadiusPercent" step="0.01" min="0" max="1" value="0.4">
-                  </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                </div>
+                <div class="form-label mb-0"><i class="bi bi-bounding-box"></i> OriginPoint(원점 기준)</div>
+                <select class="form-select" name="originPoint" disabled>
+                  <option value="topleft">TOP and LEFT</option>
+                  <option value="center" selected>CENTER</option>
+                </select>
               </div>
+              
             </form>
           </div>
 

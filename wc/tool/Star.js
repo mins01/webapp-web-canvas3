@@ -10,6 +10,7 @@ export default class Star extends BaseTool{
     points = 5;
     opacity = 1;
     innerRadiusPercent = 0.5;
+    originPoint = 'center';    
     constructor(editor){
         super(editor);
         this.name = 'Star';
