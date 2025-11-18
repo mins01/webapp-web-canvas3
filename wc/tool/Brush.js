@@ -45,7 +45,7 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
-                this.originalLayer = this.layer?.clone()??null
+                this.originalLayer = this.layer?.clone(this.layer.name)??null
             }
             if(cb) cb();
         });

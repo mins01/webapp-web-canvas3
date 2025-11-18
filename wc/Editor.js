@@ -589,7 +589,8 @@ export default class Editor{
     ready(){
         console.log('Editor.ready()');
         this?.document?.ready();
-        this.tool?.ready(); // 툴의 동작을 다시 준비.
+        // this.tool?.ready(); // 툴의 동작을 다시 준비.
+        this.tool?.activate(); // 툴의 동작을 다시 준비.
         this.syncLayers();
         this.dispatchEvent((new CustomEvent("wc.editor.ready",{bubbles:true,composed:true})));
 
