@@ -41,8 +41,11 @@ export default class Transform extends BaseTool{
 
         let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
         
-        this.utt.left = Math.ceil(leftC - targetLayer.width/2*mul); //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
-        this.utt.top = Math.ceil(topC - targetLayer.height/2*mul);
+        // this.utt.left = Math.ceil(leftC - targetLayer.width/2*mul); //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
+        // this.utt.top = Math.ceil(topC - targetLayer.height/2*mul);
+
+        this.utt.left = leftC - targetLayer.width/2*mul; //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
+        this.utt.top = topC - targetLayer.height/2*mul;
         
         this.utt.width = targetLayer.width*mul
         this.utt.height = targetLayer.height*mul
@@ -126,8 +129,8 @@ export default class Transform extends BaseTool{
         let topUttC = utt.top + utt.height/2;
         // console.log('leftUttC,topUttC',leftUttC,topUttC);
 
-        leftUttC = Math.floor(leftUttC)
-        topUttC = Math.floor(topUttC)
+        // leftUttC = Math.floor(leftUttC)
+        // topUttC = Math.floor(topUttC)
 
         let [angledLeftUttC,angledTopUttC] = this.rotatePoint(leftUttC, topUttC, docCenterX, docCenterY, -document.angle)
         // console.log('angledLeftUttC,angledTopUttC',angledLeftUttC,angledTopUttC);
@@ -143,8 +146,8 @@ export default class Transform extends BaseTool{
 
         this.targetLayer.import(this.orignalSnapshot);
         this.targetLayer.resize(Math.ceil(width),Math.ceil(height))
-        targetLayer.left = Math.floor(left); //반올림 하면 오차가 나네...뭐지?
-        targetLayer.top = Math.floor(top);
+        targetLayer.left = Math.ceil(left); //반올림 하면 오차가 나네...뭐지?
+        targetLayer.top = Math.ceil(top);
         
 
         targetLayer.flush();
