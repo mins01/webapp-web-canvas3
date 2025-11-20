@@ -176,10 +176,12 @@ class Canvas extends HTMLCanvasElement{
         return this.constructor.clone(this,name);
     }
     resize(width,height){
-        const cloned = this.clone();
-        this.width = width;
-        this.height = height;
-        this.ctx.drawImage(cloned, 0, 0, width, height);
+        if(this.width != width || this.height != height){
+            const cloned = this.clone();
+            this.width = width;
+            this.height = height;
+            this.ctx.drawImage(cloned, 0, 0, width, height);
+        }
     }
 
     trim(){

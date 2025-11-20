@@ -82,7 +82,16 @@ export default class Transform extends BaseTool{
     center(){
         super.ready();
         this.targetLayer.postionCenterCenter();
+        this.confirm();
         this.readyUtt();       
+        this.draw();
+    }
+    trim(){
+        this.targetLayer.trim();
+        this.targetLayer.flush();
+        this.confirm();
+        super.ready();
+        this.readyUtt();
         this.draw();
     }
 
@@ -97,9 +106,11 @@ export default class Transform extends BaseTool{
     }
     onuttmoveend(){
         this.draw()
+        this.confirm();
     }
     onuttresizeend(){
         this.draw()
+        this.confirm();
     }
     draw(){
         const utt = this.utt;
