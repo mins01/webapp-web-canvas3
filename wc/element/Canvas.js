@@ -159,21 +159,20 @@ class Canvas extends HTMLCanvasElement{
         this.ctx.restore();
     }
 
-    static clone(obj,name=obj.name.substr(0,40)+' cloned'){
+    static clone(obj,name=null){
         const newCanvas = new this(obj.width,obj.height);       
         newCanvas.import(obj)
 
-        if(!name){
-            name = newCanvas.name.substr(0,40)+' cloned';
+        if(name===true){ // auto append cloned
+            newCanvas.name = newCanvas.name.substr(0,40)+' cloned';
+        }else if(name){
+            newCanvas.name = name.substr(0,40)
         }
-        newCanvas.name = name
+
         return newCanvas;
     }
 
     clone(name=null){
-        if(!name){
-            name = this.name.substr(0,40)+' cloned';
-        }
         return this.constructor.clone(this,name);
     }
     resize(width,height){

@@ -50,7 +50,7 @@ export default class Layers extends SelectableArray{
     cloneLayer(layer=null,withoutHistory=false){
         const document = this.document
         if(!layer) layer = document.layer;
-        const newLayer = layer.clone();
+        const newLayer = layer.clone(true);
         this?.document?.editor?.tool?.inactivate()
         this.add(newLayer,withoutHistory);
         // newLayer.flush();

@@ -45,7 +45,7 @@ export default class Brush extends BaseTool{
                 this.enable = false;
             }else{
                 this.enable = true;
-                this.originalLayer = this.layer?.clone(this.layer.name)??null
+                this.originalLayer = this.layer?.clone()??null
             }
             if(cb) cb();
         });
@@ -122,7 +122,6 @@ export default class Brush extends BaseTool{
     
     end(){
         if(super.end()===false){return false;}
-        // this.originalLayer = this.layer?.clone()??null
         this.originalLayer.import(this.layer)
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();

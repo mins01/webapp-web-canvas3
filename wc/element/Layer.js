@@ -89,7 +89,7 @@ export default class Layer extends Canvas{
      * @param {*} height 
      */
     adjustSize(width,height){
-        const cloned = this.clone();        
+        const cloned = this.clone();
         this.width = width;
         this.height = height;
         this.ctx.drawImage(cloned, this.left, this.top, cloned.width, cloned.height);
