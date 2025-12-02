@@ -6,7 +6,8 @@ import BaseTool from './BaseTool.js';
 
 export default class SelectionRectangle extends BaseTool{
     radii = 0;
-    pattern = null;
+    mode = 'add';
+    selectionLayerOrg = null;
     constructor(editor){
         super(editor);
         this.name = 'SelectionRectangle';
@@ -51,6 +52,7 @@ export default class SelectionRectangle extends BaseTool{
     onpointerdown(event){
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
+        this.selectionLayerOrg = this.selectionLayer.clone();
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
@@ -70,6 +72,7 @@ export default class SelectionRectangle extends BaseTool{
     }
     onpointerup(event){
         if(super.onpointerup(event)===false){return false;}
+        this.selectionLayerOrg = null;
         return;
     }
     
@@ -83,10 +86,15 @@ export default class SelectionRectangle extends BaseTool{
     draw(x0,y0,x1,y1){
         super.draw(...arguments);
         const layer = this.selectionLayer;
-        const ctx = layer.ctx;
+        layer.import(this.selectionLayerOrg);
+        // console.log(layer.pattern);
         
         if(!layer.drawable){ console.log('drawable',layer.drawable); return false; }
-        layer.clear();
+        if(this.mode=='new'){
+            layer.clear();
+        }
+
+        const ctx = layer.ctx;
 
         // 레이어 기준으로 좌표 재계산
         // const [lx0,ly0] = this.getXyInLayer(...this.getXyInDocument(x0,y0));
@@ -108,6 +116,14 @@ export default class SelectionRectangle extends BaseTool{
         ctx.save();
         ctx.lineCap = "butt";
         ctx.lineJoin = "miter";
+
+        switch(this.mode){
+            case 'new': ctx.globalCompositeOperation="source-over";break;
+            case 'add': ctx.globalCompositeOperation="source-over";break;
+            case 'subtract': ctx.globalCompositeOperation="destination-out";break;
+            case 'intersect': ctx.globalCompositeOperation="source-in";break;
+        }
+
         
         // this.prepareLayer(ctx); // 레이어 기준이 아니라서 동작하면 안된다.
         // ctx.fill(ShapePath2D.rect(lx0,ly0,w,h));

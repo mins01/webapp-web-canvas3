@@ -26,9 +26,11 @@ export default class SelectionLayer extends Layer{
         super(w,h);
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
         this.initPattern();
-
+        this.init();
+        
+    }
+    init(){
         this.ctx.fillStyle = this.pattern;
-
         this.isEmpty = Context2dUtil.isEmpty(this.ctx);
     }
 
@@ -102,5 +104,10 @@ export default class SelectionLayer extends Layer{
         ctx.globalCompositeOperation = "xor"; // 겹치는 부분은 삭제됨
         ctx.fillRect(0,0,this.width,this.height);
         ctx.restore();
+    }
+
+    import(conf){
+        super.import(conf);
+        this.init();
     }
 }
