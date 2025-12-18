@@ -764,7 +764,7 @@
           <div class="modal-body">
             <div class="d-flex flex-column gap-3 p-1">
 
-              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('png',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeOpenDialogs(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeOpenDialogs(); edialog.alert(e.message); });return false;">
+              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('png',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeAll(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeAll(); edialog.alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-png"></i></span>
                   <input type="text" class="form-control filename"  name="filename" value="" required>
@@ -772,7 +772,7 @@
                   <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
                 </div>
               </form>
-              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('wc3.json',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeOpenDialogs(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeOpenDialogs(); edialog.alert(e.message); });return false;">
+              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('wc3.json',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeAll(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeAll(); edialog.alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>
@@ -781,7 +781,7 @@
                 </div>
                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
               </form>
-              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('wc3.zip',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeOpenDialogs(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeOpenDialogs(); edialog.alert(e.message); });return false;">
+              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('wc3.zip',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); edialog.closeAll(); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeAll(); edialog.alert(e.message); });return false;">
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>
