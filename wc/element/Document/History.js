@@ -8,7 +8,8 @@ export default class History extends LimitedHistory{
     save(title='no-title',withoutElements=false){
         
         const layers = this.document.layers;
-        const snapshot = layers.snapshot(withoutElements);
+        // const snapshot = layers.snapshot(withoutElements); // @deprecated
+        const snapshot = layers.clone(withoutElements);
         snapshot.title = title
         super.save(snapshot);
         console.log('History:save();',title,`idx:${this.currentIndex},len:${this.length}`);

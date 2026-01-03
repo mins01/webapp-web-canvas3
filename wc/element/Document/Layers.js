@@ -159,14 +159,21 @@ export default class Layers extends SelectableArray{
         }else{
             this.clear();
             conf.elements.forEach(layerConf => {
-                if(layerConf?.__class__===undefined){ throw new Error(`Module name is not exists. - ${layerConf.__class__}`); }
-                let module = Wc?.[layerConf.__class__]
-                if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
-                const layer = module.importFrom(layerConf);
-                console.log(layerConf);
+                if(layerConf instanceof Canvas){ // 객체. 
+                    const layer = layerConf
+                    this.add(layer,true);
+                }else{ // snapshot 기준으로 동작할 때. @deprecated
+                    if(layerConf?.__class__===undefined){ throw new Error(`Module name is not exists. - ${layerConf.__class__}`); }
+                    let module = Wc?.[layerConf.__class__]
+                    if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
+                    const layer = module.importFrom(layerConf);
+                    console.log(layerConf);
+                    
+                    // this.document.add(layer);
+                    this.add(layer,true);
+                }
+
                 
-                // this.document.add(layer);
-                this.add(layer,true);
             });
         }
         if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
@@ -181,6 +188,22 @@ export default class Layers extends SelectableArray{
             elements = []
             this.forEach(element=>{
                 elements.push(element.snapshot());
+            })
+        }
+        return {
+            selectedIndex:this.selectedIndex,
+            elements:elements,
+        }
+    }
+
+    clone(withoutElements=false){
+        console.log('layers.clone');
+        
+        let elements = null;
+        if(!withoutElements){
+            elements = []
+            this.forEach(element=>{
+                elements.push(element.clone());
             })
         }
         return {
