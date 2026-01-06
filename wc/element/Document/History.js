@@ -6,11 +6,12 @@ export default class History extends LimitedHistory{
         this.document = document;
     }
     save(title='no-title',withoutElements=false){
-        
         const layers = this.document.layers;
         // const snapshot = layers.snapshot(withoutElements); // @deprecated
-        const snapshot = layers.clone(withoutElements);
+        // const snapshot = layers.clone(withoutElements);
+        const snapshot = layers.cloneOnlyUpdated(withoutElements);
         snapshot.title = title
+        snapshot.updatedAt = snapshot.elements.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0;
         super.save(snapshot);
         console.log('History:save();',title,`idx:${this.currentIndex},len:${this.length}`);
     }

@@ -212,6 +212,35 @@ export default class Layers extends SelectableArray{
         }
     }
 
+    // 최종 수정 된 것만 복제한다. 메모리 아껴보자. 개선 더 해야한다.
+    cloneOnlyUpdated(withoutElements=false){
+        console.log('layers.clone');
+        const lastUpdatedAt = this.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0;
+        // console.log('lastUpdatedAt',lastUpdatedAt);
+        
+        
+        let elements = null;
+        if(!withoutElements){
+            elements = []
+            this.forEach(element=>{
+                if(lastUpdatedAt <= element.updatedAt ){
+                    elements.push(element.clone()); // 최종 변경된 것이면 clone 한다.
+                    // console.log('element.clone(O)',element);
+                    
+                }else{
+                    elements.push(element);
+                    // console.log('element.clone(x)',element);
+                }
+                
+            })
+        }
+        return {
+            lastUpdatedAt:lastUpdatedAt,
+            selectedIndex:this.selectedIndex,
+            elements:elements,
+        }
+    }
+
     async export(contentType='dataurl'){
         let elements = null;
         // if(!withoutElements){
