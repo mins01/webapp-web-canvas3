@@ -176,6 +176,7 @@ export default class Document extends Layer{
             this.wrapper.style.setProperty('--left',this.left+'px');
             this.wrapper.style.setProperty('--top',this.top+'px');
         }
+        super.draw();
     }
 
     resize(width,height){

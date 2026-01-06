@@ -153,6 +153,7 @@ export default class TextLayer extends Layer{
         this.textConfig.assignTo(ctx); // ctx.fillStyle = this.textConfig.color; 이게 동작함.
 
         DrawText.draw(ctx,this.textConfig,this.text,Math.abs(this.width),Math.abs(this.height),0,0 )
-        this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );        
+        // this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );        
+        super.draw();
     }
 }

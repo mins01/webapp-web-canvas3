@@ -206,7 +206,8 @@ export default class Brush extends Canvas{
       const o = Math.round(brushConfig.flow*255);
       Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,o/10)
     }
-    this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
+    // this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
+    super.draw();
   }
   
 

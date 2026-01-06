@@ -1,3 +1,4 @@
+// @deprecated
 // WcLayer를 wc/element/Canvas로 변경
 
 import Layer from "./Layer.js"
