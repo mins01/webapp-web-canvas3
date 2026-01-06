@@ -213,21 +213,19 @@ export default class Layers extends SelectableArray{
     }
 
     // 최종 수정 된 것만 복제한다. 메모리 아껴보자. 개선 더 해야한다.
-    cloneOnlyUpdated(withoutElements=false){
-        console.log('layers.clone');
-        const lastUpdatedAt = this.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0;
-        // console.log('lastUpdatedAt',lastUpdatedAt);
-        
-        
+    cloneOnlyUpdated(withoutElements=false,lastUpdatedAt=0){
+        console.log('layers.cloneOnlyUpdated',withoutElements,lastUpdatedAt);
+        // console.log('cloneOnlyUpdated.lastUpdatedAt',lastUpdatedAt);
+
         let elements = null;
         if(!withoutElements){
             elements = []
             this.forEach(element=>{
-                if(lastUpdatedAt <= element.updatedAt ){
-                    elements.push(element.clone()); // 최종 변경된 것이면 clone 한다.
+                if(lastUpdatedAt <= element.updatedAt ){ // lastUpdatedAt 보다 크거가 같다면 변경된 것으로 보고 clone 한다.
+                    elements.push(element.clone()); 
                     // console.log('element.clone(O)',element);
                     
-                }else{
+                }else{ // 아니다면 원본 Canvas를 유지한다.
                     elements.push(element);
                     // console.log('element.clone(x)',element);
                 }
@@ -235,7 +233,7 @@ export default class Layers extends SelectableArray{
             })
         }
         return {
-            lastUpdatedAt:lastUpdatedAt,
+            lastUpdatedAt: (this.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0),
             selectedIndex:this.selectedIndex,
             elements:elements,
         }
