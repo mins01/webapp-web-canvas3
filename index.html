@@ -223,8 +223,7 @@
   </style>
   <script src="asset/WcHelper.js"></script>
   <script>
-    window.addEventListener('paste',WcHelper.onpaste)
-    window.addEventListener('resize',WcHelper.onresize)
+    
   </script>
   <script type="module" src="wc/app.js"></script>
   <script>
@@ -233,7 +232,7 @@
       wcApp.header = wcApp.querySelector('.wc-app-header')
       wcApp.body = wcApp.querySelector('.wc-app-body')
       wcApp.footer = wcApp.querySelector('.wc-app-footer')
-
+      
       // document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
     })
     window.addEventListener('wc.tools.load',event=>{ console.log(event.type,event.detail); })
@@ -254,6 +253,9 @@
       }else{
         wcApp.dataset.layerKind = null
       }
+
+      window.addEventListener('paste',WcHelper.onpaste)
+      window.addEventListener('resize',WcHelper.onresize)
     })
 
 
