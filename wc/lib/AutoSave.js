@@ -32,7 +32,17 @@ export default class AutoSave{
     const updatedAt = this?.editor?.document?.updatedAt
     if(!updatedAt){return false;}    
     localStorage.setItem('wc-auto-save-document-updated-at',updatedAt)
-    localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.exportWithDataUrl()))
+
+    try {
+      localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.exportWithDataUrl()))
+    } catch (e) {
+      console.error(e)
+      if (e.name === 'QuotaExceededError') {
+        console.warn('localStorage quota exceeded, autosave skipped');
+      }
+      
+    }
+
     console.log('AutoSave.save()',updatedAt);
   }
   clear(){
