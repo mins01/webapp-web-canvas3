@@ -1,7 +1,10 @@
+import AutoSaveDB from "./AutoSaveDB.js";
+
 export default class AutoSave{
   editor = null;
   duration = 60*1000*5; //60sec
   tm = null;
+  docId = 'autosave';
   constructor(editor,duration=60*1000*5){
     this.editor = editor;
     this.duration = duration;
@@ -33,21 +36,31 @@ export default class AutoSave{
     if(!updatedAt){return false;}    
     localStorage.setItem('wc-auto-save-document-updated-at',updatedAt)
 
-    try {
-      localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.exportWithDataUrl()))
-    } catch (e) {
-      console.error(e)
-      if (e.name === 'QuotaExceededError') {
-        console.warn('localStorage quota exceeded, autosave skipped');
-      }
+    // const documentJson = JSON.stringify(this.editor.document.exportWithDataUrl());
+    const documentJson = JSON.stringify(this.editor.document.exportWithDataUrl());
+    AutoSaveDB.put(this.docId, {
+      updatedAt: Date.now(),
+      content: documentJson
+    }).catch(err => {
+      console.error('IndexedDB autosave failed', err);
+    });
+
+    // try {
+    //   localStorage.setItem('wc-auto-save-document-json',JSON.stringify(this.editor.document.exportWithDataUrl()))
+    // } catch (e) {
+    //   console.error(e)
+    //   if (e.name === 'QuotaExceededError') {
+    //     console.warn('localStorage quota exceeded, autosave skipped');
+    //   }
       
-    }
+    // }
 
     console.log('AutoSave.save()',updatedAt);
   }
-  clear(){
+  async clear(){
     localStorage.removeItem('wc-auto-save-document-updated-at')
-    localStorage.removeItem('wc-auto-save-document-json')
+    await AutoSaveDB.delete(this.docId);
+    // localStorage.removeItem('wc-auto-save-document-json')
   }
   canAutoSave(){
     const updatedAt = this?.editor?.document?.updatedAt
@@ -65,8 +78,12 @@ export default class AutoSave{
       this.save();
     }
   }
-  load(){
-    const json = JSON.parse(localStorage.getItem('wc-auto-save-document-json'));
+  async load(){
+    const AutoSaveDBData = await AutoSaveDB.get(this.docId);
+    const json = JSON.parse(AutoSaveDBData.content); //TODO JSON.parse 안 쓰도록 해보자.
+    // console.log(json.name);
+    
+    // const json = JSON.parse(localStorage.getItem('wc-auto-save-document-json'));
     this.editor.loadDocumentJson(json)
   }
 
