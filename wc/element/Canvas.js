@@ -216,14 +216,46 @@ class Canvas extends HTMLCanvasElement{
         else if(contentType=='snapshot'){ r.__content__ = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height); }
         else if(contentType=='file'){
             // obj.toBlob((blob)=>{ console.log('obj.toBlob');r.__content__ = new File([blob],`${obj.id}.png`,{ type: blob.type, lastModified: Date.now() }) },'image/png'); //비동기라서 밑에 프로미스로
-            r.__content__ = await new Promise((resolve,reject) => {
-                try{
-                    super.toBlob(blob => { console.log('obj.toBlob'); const file = new File([blob], `${obj.id}.png`, { type: blob.type, lastModified: Date.now() }); resolve(file); }, 'image/png');
-                }catch(e){
-                    reject(e)
-                }
+            // r.__content__ = await new Promise((resolve,reject) => {
+            //     try{
+            //         super.toBlob(blob => { console.log('obj.toBlob'); const file = new File([blob], `${obj.id}.png`, { type: blob.type, lastModified: Date.now() }); resolve(file); }, 'image/png');
+            //     }catch(e){
+            //         reject(e)
+            //     }
                 
+            // });
+            console.log('export start',r.name);
+            
+            r.__content__ = await new Promise((resolve, reject) => {
+                super.toBlob(
+                    (blob) => {
+                    try {
+                        if (!blob) {
+                        reject(new Error('toBlob returned null'));
+                        return;
+                        }
+
+                        console.log('obj.toBlob');
+
+                        const file = new File(
+                        [blob],
+                        `${obj.id}.png`,
+                        {
+                            type: blob.type || 'image/png',
+                            lastModified: Date.now(),
+                        }
+                        );
+
+                        resolve(file);
+                    } catch (e) {
+                        reject(e);
+                    }
+                    },
+                    'image/png'
+                );
             });
+
+            console.log('export end',r.name);
         }
         return r;
     }
@@ -384,8 +416,9 @@ class Canvas extends HTMLCanvasElement{
                callback(blob);
             });
         }else if(type==='wc3.zip' || type=== 'application/zip'){
-            this.export('file').then(async (exportedData)=>{
+            this.export('file').then(async (exportedData)=>{                
                 const files = WcHelper.filesFromExportedData(exportedData);
+                // console.log(files)
                 if(!globalThis?.JSZip) throw new Error("Required JSZip.");
                 
                 const zip = new globalThis.JSZip();

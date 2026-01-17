@@ -243,9 +243,12 @@ export default class Layers extends SelectableArray{
         let elements = null;
         // if(!withoutElements){
             elements = []
-            this.forEach(async element=>{
+            // this.forEach(async element=>{
+            //     elements.push(await element.export(contentType));
+            // })
+            for (const element of this) {
                 elements.push(await element.export(contentType));
-            })
+            }
         // }
         return {
             selectedIndex:this.selectedIndex,

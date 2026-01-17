@@ -195,7 +195,7 @@ class WcHelper{
   static filesFromExportedData(exportedData){
       // const r = await this.export('file');
       const r = exportedData;
-      console.log(r);
+      // console.log(r);
       // 파일 뽑기
       const files = []
       files.push(r.__content__);
