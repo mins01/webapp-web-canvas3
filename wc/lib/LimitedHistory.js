@@ -36,7 +36,7 @@ export default class LimitedHistory{
     }
     clear(){ 
         this.history.length = 0; 
-        this.currentIndex == -1; 
+        this.currentIndex = -1; 
     }
     all(){
         return this.history;

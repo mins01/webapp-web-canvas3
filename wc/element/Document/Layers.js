@@ -233,10 +233,14 @@ export default class Layers extends SelectableArray{
             })
         }
         return {
-            lastUpdatedAt: (this.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0),
+            lastUpdatedAt: this.lastUpdatedAt,
             selectedIndex:this.selectedIndex,
             elements:elements,
         }
+    }
+
+    get lastUpdatedAt(){
+        return (this.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0)
     }
 
     async export(contentType='dataurl'){

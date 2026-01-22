@@ -12,9 +12,9 @@ export default class History extends LimitedHistory{
         // console.log('lastUpdatedAt',lastUpdatedAt);
         
         const layers = this.document.layers;
-        // const snapshot = layers.snapshot(withoutElements); // @deprecated
+        const snapshot = layers.snapshot(withoutElements); // @deprecated // 20260122 우선 이걸로 롤백. clone 동작이 이상해서
         // const snapshot = layers.clone(withoutElements);
-        const snapshot = layers.cloneOnlyUpdated(withoutElements,lastUpdatedAt); 
+        // const snapshot = layers.cloneOnlyUpdated(withoutElements,lastUpdatedAt); 
         snapshot.title = title
         // snapshot.updatedAt = snapshot.elements.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0;
         super.save(snapshot);
