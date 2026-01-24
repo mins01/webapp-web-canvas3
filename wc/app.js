@@ -61,6 +61,7 @@ if(globalThis?.Wg2Uploder??false){
 
             if (/\.(jpe?g|png)$/i.test(uploaded.name)) {
                 if(uploaded.previewurl){
+                    globalThis.edialog.closeAll(); 
                     globalThis.edialog.confirm('업로드가 완료되었습니다.\n업로드 이미지를 확인할까요?').then((r)=>{
                         if(r){
                             editor.previewImage(uploaded.previewurl);
@@ -68,6 +69,7 @@ if(globalThis?.Wg2Uploder??false){
                     })
                 }
             }else{
+                globalThis.edialog.closeAll(); 
                 globalThis.edialog.alert('업로드가 완료되었습니다.\n미리보기를 지원하지 않는 확장자입니다.')
             }
 
