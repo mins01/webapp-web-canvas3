@@ -580,12 +580,16 @@
                 </button>
                 <button type="button" class="w-100 btn btn-primary" onclick="WcHelper.toggleColorTheme()">
                   <div class="fs-4">
-                    <i class="bi bi-paint-bucket"></i>
+                    <!-- <i class="bi bi-paint-bucket"></i> -->
+                    <div class="hidden-data-bs-theme show-data-bs-theme-dark"><i class="bi bi-moon"></i></div>
+                    <div class="hidden-data-bs-theme show-data-bs-theme-light"><i class="bi bi-sun"></i></div>                                        
                   </div>
                   <div><small>Color theme</small></div>
                 </button>
                 <button type="button" class="w-100 btn btn-warning" onclick="WcHelper.newForTest(editor)">
-                  <div class="fs-4"><i class="bi bi-emoji-smile-upside-down"></i></div>
+                  <div class="fs-4">
+                    <i class="bi bi-emoji-smile-upside-down"></i>
+                  </div>
                   <div>For Test</div>
                 </button>
                 <button type="button" class="w-100 btn btn-warning" onclick="WcHelper.newForTest2(editor)">

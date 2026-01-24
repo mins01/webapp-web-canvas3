@@ -499,3 +499,17 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
   0%, 50% { filter:invert(0);}
   50.01%, 100% { filter:invert(1); }
 }
+
+
+
+
+
+.hidden-data-bs-theme{
+  display: none;
+}
+body[data-bs-theme='dark'] .show-data-bs-theme-dark{
+  display: block;
+}
+body[data-bs-theme='light'] .show-data-bs-theme-light{
+  display: block;
+}
