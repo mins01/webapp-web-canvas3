@@ -6,7 +6,6 @@ import RectangleLayer from "../RectangleLayer.js";
 import TextLayer from "../TextLayer.js";
 import LayerKind from "../../lib/LayerKind.js";
 
-
 const Wc = { Canvas,Layer,EllipseLayer,RectangleLayer,TextLayer };
 
 export default class Layers extends SelectableArray{
@@ -160,7 +159,7 @@ export default class Layers extends SelectableArray{
             this.clear();
             conf.elements.forEach(layerConf => {
                 if(layerConf instanceof Canvas){ // 객체. 
-                    const layer = layerConf
+                    const layer = layerConf.clone()
                     this.add(layer,true);
                 }else{ // snapshot 기준으로 동작할 때. @deprecated
                     if(layerConf?.__class__===undefined){ throw new Error(`Module name is not exists. - ${layerConf.__class__}`); }
@@ -203,7 +202,10 @@ export default class Layers extends SelectableArray{
         if(!withoutElements){
             elements = []
             this.forEach(element=>{
-                elements.push(element.clone());
+                // elements.push(element.clone(performance.now().toString()));
+                const c = element.clone(performance.now().toString());
+                elements.push(c);
+                // globalThis.document.body.appendChild(c);
             })
         }
         return {
