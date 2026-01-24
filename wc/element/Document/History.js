@@ -21,7 +21,6 @@ export default class History extends LimitedHistory{
         });
     }
     save(title='no-title',withoutElements=false){
-        
         const lastSnapshot = super.current();
         const lastUpdatedAt = lastSnapshot?.lastUpdatedAt??0;
         // console.log('lastUpdatedAt',lastUpdatedAt);
@@ -38,10 +37,7 @@ export default class History extends LimitedHistory{
     }
     undo(){
         const layers = this.document.layers;
-        const snapshot = super.undo();
-        console.log('undo.snapshot',snapshot);
-        
-        
+        const snapshot = super.undo();       
 
         if(snapshot===null){return false}
         console.log('history.undo();',snapshot.title,`idx:${this.currentIndex},len:${this.length}`);
@@ -55,10 +51,7 @@ export default class History extends LimitedHistory{
     }
     redo(){
         const layers = this.document.layers;
-        const snapshot = super.redo();
-        console.log('snapshot',snapshot);
-        
-        
+        const snapshot = super.redo();       
 
         if(snapshot===null){return false}
         console.log('history.redo();',snapshot.title,`idx:${this.currentIndex},len:${this.length}`);
