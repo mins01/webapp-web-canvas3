@@ -5,11 +5,21 @@ export default class Spuit extends BaseTool{
     remainInterval = 0;
     brush = null;
     color = null;
+    buffer = null;
     constructor(editor){
         super(editor);
         this.name = 'Spuit';
         this.color = new Color()
     }
+
+    activate(cb=null){
+        this.buffer = this.document.ctx.getImageData(0,0,this.document.width,this.document.height);
+		super.activate(cb);
+	}
+    inactivate(cb=null){
+		this.buffer = null
+		super.inactivate(cb);
+	}
 
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
@@ -34,8 +44,7 @@ export default class Spuit extends BaseTool{
     }
     end(){
         if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
-        this.document.history.save(`Tool.${this.constructor.name}`);
+        // this.document.history.save(`Tool.${this.constructor.name}`); //히스토리 저장 안한다!
         this.ready();
     }
     cancel(){
@@ -51,10 +60,23 @@ export default class Spuit extends BaseTool{
         const document = this.document;
 
         const [lx0,ly0] = this.getXyInDocument(x0,y0)
-        const imageData = document.ctx.getImageData(lx0,ly0,1,1);
-        const [r, g, b, a] = imageData.data; // RGBA 값 추출
-        // console.log(lx0,ly0,r, g, b, a);
-        this.color.set(r, g, b);
+
+
+        // console.log(this.buffer);
+        if(this.buffer){
+            const { width, data } = this.buffer;
+            const i = (ly0 * width + lx0) * 4; // 1픽셀 = 4바이트
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            // const a = data[i + 3];
+            this.color.set(r, g, b);
+        }else{ //failback
+            const imageData = document.ctx.getImageData(lx0,ly0,1,1);
+            const [r, g, b, a] = imageData.data; // RGBA 값 추출
+            // console.log(lx0,ly0,r, g, b, a);
+            this.color.set(r, g, b);
+        }
     }
 
 
