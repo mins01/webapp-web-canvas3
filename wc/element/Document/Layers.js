@@ -248,13 +248,16 @@ export default class Layers extends SelectableArray{
     async export(contentType='dataurl'){
         let elements = null;
         // if(!withoutElements){
-            elements = []
-            // this.forEach(async element=>{
+            // elements = []
+            // // this.forEach(async element=>{
+            // //     elements.push(await element.export(contentType));
+            // // })
+            // for (const element of this) {
             //     elements.push(await element.export(contentType));
-            // })
-            for (const element of this) {
-                elements.push(await element.export(contentType));
-            }
+            // }
+            elements = await Promise.all(
+                [...this].map(element => element.export(contentType))
+            );
         // }
         return {
             selectedIndex:this.selectedIndex,
