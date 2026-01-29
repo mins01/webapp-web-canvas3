@@ -426,6 +426,7 @@ export default class Editor{
         if(this.document){
             globalThis.edialog.confirm('An image document already exists. Do you want to load a new one?').then((r)=>{
                 if(!r) { return false; }
+                this?.modalHandler?.hideAll();
                 if(file instanceof File){
                     return this.loadDocumentByFile(file); //File 객체로 처리한다.
                 }else{
@@ -433,6 +434,7 @@ export default class Editor{
                 }
             })
         }else{
+            this?.modalHandler?.hideAll();
             if(file instanceof File){
                 return this.loadDocumentByFile(file); //File 객체로 처리한다.
             }else{
