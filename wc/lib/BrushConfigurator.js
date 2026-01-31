@@ -127,11 +127,21 @@ class BrushConfigurator{
     brush.flush();
   }
   
-      // 에어 브러시 처럼
+  // 에어 브러시 처럼
   static airbrush(brush){
     brush.brushConfig.reset();
     brush.setBrushConfig(
       {"compositeOperation":"source-over","shape":"circle","size":20,"angle":0,"roundness":1,"scaleX":0.1,"scaleY":"0.1","flipX":false,"flipY":false,"hardness":1,"spacing":0.1,"sizeJitter":0,"sizeControl":"off","mininumSizeRatio":0.01,"angleJitter":0,"angleControl":"off","roundnessJitter":0,"roundnessControl":"off","mininumRoundness":0.1,"scaleYControl":"off","mininumScaleY":0.1,"opacity":1,"opacityJitter":0,"opacityControl":"off","mininumOpacity":0.1,"flow":0.8,"flowJitter":0,"flowControl":"off","mininumFlow":"0.1","hueJitter":0,"saturationJitter":0,"brightnessJitter":0,"scatterAmount":1,"scatterAxes":"xy","scatterCount":3,"scatterCountJitter":0,"flattenOpacity":true,"buildUpInterval":0.01}
+    )
+    brush.saveBrushConfig();
+    brush.flush();
+  }
+
+  // 크레용
+  static crayon(brush){
+    brush.brushConfig.reset();
+    brush.setBrushConfig(
+      {"compositeOperation":"source-over","shape":"#brush-shape-brush-04","size":30,"angle":0,"roundness":1,"scaleX":1,"scaleY":"1","flipX":false,"flipY":false,"hardness":1,"spacing":0.25,"sizeJitter":0,"sizeControl":"off","mininumSizeRatio":0.01,"angleJitter":1,"angleControl":"off","roundnessJitter":0,"roundnessControl":"off","mininumRoundness":0.1,"scaleYControl":"off","mininumScaleY":0.1,"opacity":1,"opacityJitter":0,"opacityControl":"off","mininumOpacity":0.1,"flow":1,"flowJitter":0,"flowControl":"off","mininumFlow":"0.1","hueJitter":0,"saturationJitter":0,"brightnessJitter":0,"scatterAmount":0,"scatterAxes":"y","scatterCount":2,"scatterCountJitter":0,"flattenOpacity":true,"buildUpInterval":0}
     )
     brush.saveBrushConfig();
     brush.flush();
