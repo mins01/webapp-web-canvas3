@@ -501,7 +501,7 @@ export default class Brush extends Canvas{
         for (let i = 0; i < steps; i++) {
           let t = i / steps;
           let x = x0 + t * dx;
-          let y = y0 + t * dy;
+          let y = y0 + t * dy;          
           this.dot(ctx,x,y,{brushConfig,image,lineAngle,pressure,azimuthAngle,pointerType});
         }
 

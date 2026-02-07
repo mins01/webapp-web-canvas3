@@ -3,7 +3,8 @@ import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class Brush extends BaseTool{
-    drawCount = 0;
+    drawCount = 0; // draw 횟수
+    moveCount = 0; // 포인터 이동 수 // 현재 쓰는 곳 없음.
     remainInterval = 0;
     brush = null;
     workingLayer = null;
@@ -62,6 +63,7 @@ export default class Brush extends BaseTool{
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
         this.drawCount = 0; // 0으로 초기화
+        this.moveCount = 0; // 0으로 초기화
         this.brush.ready();
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
@@ -74,7 +76,12 @@ export default class Brush extends BaseTool{
     }
     onpointermove(event){
         if(super.onpointermove(event)===false){return false;}
-        
+        // if(this.moveCount===0){
+        //     this.drawForDown(this.x0,this.y0); // 아무 동작 없이 up을 하면 점 하나를 찍는 다.
+        // }
+        this.moveCount++;
+
+
         this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
@@ -157,19 +164,20 @@ export default class Brush extends BaseTool{
                     lastPressure:lastPointerEvent.pressure,
                 });
         const remainDistance = brush.remainDistance({remainInterval,interval,distance});
+        
 
-        if(remainDistance < interval){
-            this.remainInterval = remainDistance;
+
+        if(remainDistance < interval ){
+            // this.remainInterval = remainDistance;
             return false;
         }else{
-
             const lineAngle =  brush.getAngle(lx0,ly0,lx1,ly1);
 
             ctx.save();
             this.prepareLayer(ctx);
-            if(this.drawCount===0){
-                this.drawForDown(this.x0,this.y0,lineAngle); // 아무 동작 없으면 점 하나를 찍는 다.
-            }
+            // if(this.drawCount===0){ 
+            //     this.drawForDown(this.x0,this.y0,lineAngle); // 아무 동작 없으면 점 하나를 찍는 다.
+            // }
             this.remainInterval = brush.drawOnLine(ctx,lx0,ly0,lx1,ly1,
                 {
                     remainInterval,
