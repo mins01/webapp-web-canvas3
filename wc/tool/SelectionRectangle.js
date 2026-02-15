@@ -6,7 +6,8 @@ import BaseTool from './BaseTool.js';
 
 export default class SelectionRectangle extends BaseTool{
     radii = 0;
-    mode = 'add';
+    // mode = 'add';
+    mode = 'new';
     selectionLayerOrg = null;
     constructor(editor){
         super(editor);

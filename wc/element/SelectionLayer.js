@@ -63,6 +63,34 @@ export default class SelectionLayer extends Layer{
         ctx.restore();
     }
 
+    blurLayer(layer,length='2px'){
+        const supported = "filter" in layer.ctx;
+        if(!supported){
+            throw new Error("Canvas filter is not supported in this environment");
+        }
+
+        // 레이어 복제 후 selection으로 마스크 처리
+        const workingLayer = layer.clone();
+        {
+            const ctx = workingLayer.ctx;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-in"; /// 기존 그림과 겹치는 않은 부분만 남김
+            ctx.filter = `blur(${length})`;
+            ctx.drawImage(this,-layer.left,-layer.top);
+            ctx.restore();
+        }
+        {
+            const ctx=  layer.ctx;
+            ctx.save();
+            // ctx.globalCompositeOperation = "destination-out"; /// 기존 그림과 겹치는 않은 부분만 남김
+            ctx.filter = `blur(${length})`;
+            console.log(ctx);
+            
+            ctx.drawImage(workingLayer,-layer.left,-layer.top);
+            ctx.restore();
+        }
+    }
+
     copyToLayer(layer){
         const newLayer = layer.clone(`${layer.name.substr(0,40)}-copy`);
         const document = layer.parent;
