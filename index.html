@@ -432,7 +432,8 @@
                   <div class="form-label mb-0"><i class="bi bi-info-circle"></i> Action</div>
                   <div class="d-flex flex-nowrap gap-1">
                     <button class="btn btn-warning text-nowrap" onclick="editor.document.selectionLayer.eraseLayer(editor.document.layer);editor.document.layer.flush();editor.saveHistory('eraseLayer');"><i class="bi bi-eraser-fill"></i> Erase</button>
-                    <button class="btn btn-info text-nowrap" onclick="editor.document.selectionLayer.blurLayer(editor.document.layer);editor.document.layer.flush();editor.saveHistory('blurLayer');"><i class="bi bi-shadows"></i> Blur</button>
+                    <button class="btn btn-info text-nowrap" onclick="editor.document.selectionLayer.blurLayer(editor.document.layer,editor.tool.blurSize);editor.document.layer.flush();editor.saveHistory('blurLayer');"><i class="bi bi-shadows"></i> Blur</button>
+                    <button class="btn btn-info text-nowrap" onclick="editor.document.selectionLayer.mosaicLayer(editor.document.layer,editor.tool.mosaicSize);editor.document.layer.flush();editor.saveHistory('mosaicLayer');"><i class="bi bi-grid-3x3-gap-fill"></i> Mosaic</button>
                   </div>
                 </div>
                 <div>
@@ -2272,8 +2273,8 @@
             <h2 class="modal-title fs-4"><i class="bi bi-plus-square-dotted"></i> Selection rectangle</h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" onclick="wcSyncHandler.sync(this.closest('.modal'))">
-            <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
+          <div class="modal-body" >
+            <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))" onclick=" Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))">
               <div>
                 <div class="form-label mb-0"><i class="bi bi-square-fill"></i> Border radius(꼭짓점 반경,라운딩박스)</div>
                 <div class="input-group ui-input-stepper">
@@ -2283,6 +2284,41 @@
                   </div>
                   <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-shadows"></i> Blur</div>
+                <div class="d-flex gap-1">
+                  <div class="flex-fill">
+                    <div class="input-group ui-input-stepper">
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                      <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="1">
+                        <input type="range" class="form-range d-block" name="blurSize" placeholder="blurSize" step="1" min="1" max="10" value="0">
+                      </div>
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                    </div>
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-info text-nowrap" onclick="editor.document.selectionLayer.blurLayer(editor.document.layer,this.form.blurSize.value);editor.document.layer.flush();editor.saveHistory('blurLayer');">Apply</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-grid-3x3-gap-fill"></i> Mosaic</div>
+                <div class="d-flex gap-1">
+                  <div class="flex-fill">
+                    <div class="input-group ui-input-stepper">
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                      <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" data-value="1">
+                        <input type="range" class="form-range d-block" name="mosaicSize" placeholder="mosaicSize" step="1" min="1" max="10" value="0">
+                      </div>
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                    </div>
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-info text-nowrap" onclick="editor.document.selectionLayer.mosaicLayer(editor.document.layer,this.form.mosaicSize.value);editor.document.layer.flush();editor.saveHistory('mosaicLayer');">Apply</button>
+                  </div>
+                </div>
+                                  
               </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-sliders"></i> mode</div>
@@ -2299,6 +2335,17 @@
         </div>
       </div>
     </div>
+
+    <!-- <script>
+      document.getElementById('modal-selectionrectangle-config').addEventListener('show.bs.modal', event => {
+        const wcTargetColor = event.target.dataset.wcTargetColor = event?.relatedTarget?.dataset.wcTargetColor??'foreColor';
+        if(wcTargetColor=='foreColor'){
+          cpForeColor.setPreview(editor.contextConfig.foreColor??'#000000')
+        }else if(wcTargetColor=='textColor'){
+          cpForeColor.setPreview(editor?.document?.layer?.textConfig?.textColor??'#000000')
+        }
+      })
+    </script> -->
 
     <div class="modal fade" id="modal-polygon-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

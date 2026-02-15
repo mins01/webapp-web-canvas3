@@ -175,13 +175,19 @@ class Canvas extends HTMLCanvasElement{
     clone(name=null){
         return this.constructor.clone(this,name);
     }
-    resize(width,height){
+    resize(width,height,imageSmoothingEnabled=null){
         if(this.width != width || this.height != height){
             const cloned = this.clone();
             this.width = width;
             this.height = height;
+            this.ctx.save();
+            if(imageSmoothingEnabled!==null){
+                this.ctx.imageSmoothingEnabled = !!imageSmoothingEnabled;        
+            }
             this.ctx.drawImage(cloned, 0, 0, width, height);
+            this.ctx.restore();
         }
+        
     }
 
     trim(){

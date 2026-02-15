@@ -8,6 +8,8 @@ export default class SelectionRectangle extends BaseTool{
     radii = 0;
     // mode = 'add';
     mode = 'new';
+    blurSize = 2;
+    mosaicSize = 4;
     selectionLayerOrg = null;
     constructor(editor){
         super(editor);
