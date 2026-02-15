@@ -88,7 +88,7 @@ export default class SelectionLayer extends Layer{
             ctx.filter = `blur(${size}px)`;
             console.log(ctx);
             
-            ctx.drawImage(workingLayer,-layer.left,-layer.top);
+            ctx.drawImage(workingLayer,0,0);
             ctx.restore();
         }
     }
@@ -114,7 +114,7 @@ export default class SelectionLayer extends Layer{
             // ctx.filter = `grayscale(1)`;
             console.log(ctx);
             
-            ctx.drawImage(workingLayer,-layer.left,-layer.top);
+            ctx.drawImage(workingLayer,0,0);
             ctx.restore();
         }
     }
