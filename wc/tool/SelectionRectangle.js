@@ -8,9 +8,26 @@ export default class SelectionRectangle extends BaseTool{
     radii = 0;
     // mode = 'add';
     mode = 'new';
-    blurSize = 2;
-    mosaicSize = 4;
+    
+
+    
+    blurVal = 1;         // px   (기본: 0, 실질 최대: ~50px)
+    // brightnessVal = 1;  // 기본: 1, 실질 최대: ~5
+    // contrastVal = 1;    // 기본: 1, 실질 최대: ~5
+    // grayscaleVal = 0.5;   // 기본: 0, 최대: 1 (1이 완전 회색)
+    // hueRotateVal = 0;   // deg  (기본: 0, 최대: 360 순환)
+    // invertVal = 0.5;      // 기본: 0, 최대: 1
+    // opacityVal = 0.5;     // 기본: 1, 최대: 1
+    // saturateVal = 0.5;   // 기본: 1, 실질 최대: ~5
+    // sepiaVal = 0.5;      // 기본: 0, 최대: 1
+
+    mosaicVal = 4;
+
+
     selectionLayerOrg = null;
+
+
+
     constructor(editor){
         super(editor);
         this.name = 'SelectionRectangle';

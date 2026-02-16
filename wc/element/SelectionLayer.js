@@ -31,6 +31,7 @@ export default class SelectionLayer extends Layer{
     }
     init(){
         this.ctx.fillStyle = this.pattern;
+        // this.ctx.filter = `drop-shadow(0px 0px 2px black)`;
         this.isEmpty = Context2dUtil.isEmpty(this.ctx);
     }
 
@@ -63,7 +64,52 @@ export default class SelectionLayer extends Layer{
         ctx.restore();
     }
 
+    filterLayer(layer,filterName,val){
+        console.log('filterLayer',filterName,val);
+        
+        const supported = "filter" in layer.ctx;
+        if(!supported){
+            throw new Error("Canvas filter is not supported in this environment");
+        }
+        if(!['blur','brightness','contrast','grayscale','hue-rotate','invert','opacity','saturate','sepia',].includes(filterName)){
+            throw new Error(`Invaild filterName: ${filterName}`);
+        }
+        //drop-shadow 제외
+
+        // 레이어 복제 후 selection으로 마스크 처리
+        const workingLayer = layer.clone();
+        {
+            const ctx = workingLayer.ctx;
+            ctx.save();
+            ctx.globalCompositeOperation = "destination-in"; /// 기존 그림과 겹치는 않은 부분만 남김
+            // ctx.filter = `blur(${length})`;
+            ctx.drawImage(this,-layer.left,-layer.top);
+            ctx.restore();
+        }
+        {
+            const ctx=  layer.ctx;
+            ctx.save();
+            // ctx.globalCompositeOperation = "destination-out"; /// 기존 그림과 겹치는 않은 부분만 남김
+            switch(filterName){
+                case 'blur':ctx.filter = `blur(${val}px)`;break;
+                case 'brightness':ctx.filter = `brightness(${val})`;break;
+                case 'contrast':ctx.filter = `contrast(${val})`;break;
+                case 'grayscale':ctx.filter = `grayscale(${val})`;break;
+                case 'hue-rotate':ctx.filter = `hue-rotate(${val}deg)`;break;
+                case 'invert':ctx.filter = `invert(${val})`;break;
+                case 'opacity':ctx.filter = `opacity(${val})`;break;
+                case 'saturate':ctx.filter = `saturate(${val})`;break;
+                case 'sepia':ctx.filter = `sepia(${val})`;break;
+            }           
+            ctx.drawImage(workingLayer,0,0);
+            ctx.restore();
+        }
+
+    }
+
+    // @deprecated
     blurLayer(layer,size=2){
+        return this.filterLayer(layer,'blur',size);
         console.log('blurLayer',size);
         
         const supported = "filter" in layer.ctx;
