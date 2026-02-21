@@ -7,6 +7,8 @@ import HtmlUtil from "./lib/HtmlUtil.js";
 Wc.HtmlUtil = HtmlUtil;
 import BrushConfigurator from "./lib/BrushConfigurator.js";
 Wc.BrushConfigurator = BrushConfigurator;
+import BrushConfigStore from "./lib/BrushConfigStore.js";
+Wc.BrushConfigStore = BrushConfigStore;
 
 
 //-- editor.js 생성시작
