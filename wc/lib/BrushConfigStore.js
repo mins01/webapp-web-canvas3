@@ -12,7 +12,7 @@ class BrushConfigStore{
     const storageKey = `${this.storageKeyPrefix}${key}`;
     let brushConfig = localStorage.getItem(storageKey);
 
-    console.log('BrushConfigStore.load',key, brushConfig);
+    // console.log('BrushConfigStore.load',key, brushConfig);
 
     if (brushConfig === null) {
       brushConfig = (new BrushConfig()).toJSON();

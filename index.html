@@ -269,9 +269,10 @@
         <div class="wc-app-nav d-flex gap-1 px-1 py-1 justify-content-center mx-auto">
           <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
           <div onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur();">
-            <div class="only-shown only-shown-tool-Brush"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i></button></div>
+            <div class=""><button type="button" class="btn btn-lg btn-outline-light position-relative" id="wc-app-menu-tools-btn" ><i class="bi bi-x-circle"></i></button></div>
+            <!-- <div class="only-shown only-shown-tool-Brush"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i></button></div> -->
             <!-- <div class="only-shown only-shown-tool-Brush1 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></div> -->
-            <div class="only-shown only-shown-tool-Brush2 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></div>
+            <!-- <div class="only-shown only-shown-tool-Brush2 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></div>
             <div class="only-shown only-shown-tool-Brush3 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></div>
             <div class="only-shown only-shown-tool-Eraser"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eraser"></i></button></div>
             <div class="only-shown only-shown-tool-Rectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-square-fill"></i></button></div>
@@ -284,15 +285,15 @@
             <div class="only-shown only-shown-tool-Spuit"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eyedropper"></i></button></div>
             <div class="only-shown only-shown-tool-Transform"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-bounding-box"></i></button></div>
             <div class="only-shown only-shown-tool-Move"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-arrows-move"></i></button></div>
-            <div class="only-shown only-shown-tool-Hand"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-hand-index"></i></button></div>
+            <div class="only-shown only-shown-tool-Hand"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-hand-index"></i></button></div> -->
           </div>
           <div class="group-only-enable-tool-enable">
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
             <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush1" data-bs-toggle="modal" data-bs-target="#modal-brush1-config"><i class="bi bi-sliders"></i></button> -->
-            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush2" data-bs-toggle="modal" data-bs-target="#modal-brush2-config"><i class="bi bi-sliders"></i></button>
+            <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush2" data-bs-toggle="modal" data-bs-target="#modal-brush2-config"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush3" data-bs-toggle="modal" data-bs-target="#modal-brush3-config"><i class="bi bi-sliders"></i></button>
 
-            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button>
+            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button> -->
 
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Text"  data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Rectangle"  data-bs-toggle="modal" data-bs-target="#modal-rectangle-config"><i class="bi bi-sliders"></i></i></button>
@@ -322,19 +323,20 @@
         </div>
         <div class="px-1">
           <div class="wc-app-menu wc-app-menu-tools" >
-            <div class="wc-app-menu-content  gap-1 px-1 py-1 x-d-flex flex-wrap x-justify-content-between mx-auto border border-1 mt-1 " onclick="wcApp.classList.remove('show-wc-app-menu-tools');">
+            <div class="wc-app-menu-content  gap-1 px-1 py-1 x-d-flex flex-wrap x-justify-content-between mx-auto border border-1 mt-1 " onclick="wcApp.classList.remove('show-wc-app-menu-tools');WcHelper.setWcAppMenuToolsBtn(event.target.parentNode.querySelector('button'))">
               <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
               <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
-              <label role="button" title="tool Brush-1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-1'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
+              <label role="button" title="tool Brush-1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);WcHelper.setBrushcConfig('brush-1');"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
               <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></label> -->
               
               <!-- <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
               <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label> -->
-              <label role="button" title="tool Brush-2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-2'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
-              <label role="button" title="tool Brush-3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-3'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
-              <label role="button" title="tool Eraser-3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('eraser-1'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">e</small></button></label>
+              <label role="button" title="tool Brush-2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);WcHelper.setBrushcConfig('brush-2');"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
+              <label role="button" title="tool Brush-3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);WcHelper.setBrushcConfig('brush-3');"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
+              <label role="button" title="tool Eraser-1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);WcHelper.setBrushcConfig('eraser-1');"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-eraser"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></label>
+              <label role="button" title="tool Eraser-2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);WcHelper.setBrushcConfig('eraser-2');"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-eraser"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
 
-              <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
+              <!-- <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label> -->
 
               <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square-fill"></i></button></label>
 
@@ -1717,7 +1719,7 @@
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content brush-config-container">
           <div class="modal-header">
-            <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush config</span></h2>
+            <h2 class="modal-title fs-4"><i class="bi bi-brush"></i> <i class="bi bi-sliders"></i> <span class="modal-config-title">Brush config</span><span class="modal-config-brush-key ms-1"></span></h2>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body brush-preview border-bottom p-0" style="flex:0 0 auto;">
@@ -1783,24 +1785,24 @@
                   <div class="brush-nav-tab" data-brush-tab="brush">
                     <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
                       <header> <h4 class="m-0">Basic brush</h4> </header>
-                      <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
-                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-pen"></i> Pen</button>
-                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softPen(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-pen"></i> Soft Pen</button>
-                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-brush"></i> Brush</button>
-                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softBrush(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-brush"></i> Soft Brush</button>
+                      <button type="button" class="btn text-start btn-warning btn-reset-config btn-brush-configurator" onclick="Wc.BrushConfigurator.reset(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.pen(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pen"></i> Pen</button>
+                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softPen(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pen"></i> Soft Pen</button>
+                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Brush</button>
+                      <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softBrush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Soft Brush</button>
 
-                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-eraser"></i> Eraser</button>
-                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-eraser"></i> Soft Eraser</button>
+                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-eraser"></i> Eraser</button>
+                      <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-eraser"></i> Soft Eraser</button>
 
                       <hr class="my-1">
                       <header> <h4 class="m-0">Art brush</h4> </header>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-highlighter"></i> Highlighter</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.ballpen(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-pen"></i> Ball Pen</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.pencil(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-pencil"></i></i> Pencil</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.dipPen(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-vector-pen"></i> Dip pen</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.inkBrush(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-brush"></i> Ink Brush</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.airbrush(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-brush"></i> Air Brush</button>
-                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.crayon(WcHelper.getBrushCanvas(this));Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);"><i class="bi bi-pencil-fill"></i> Crayon</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-highlighter"></i> Highlighter</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.ballpen(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pen"></i> Ball Pen</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.pencil(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pencil"></i></i> Pencil</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.dipPen(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-vector-pen"></i> Dip pen</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.inkBrush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Ink Brush</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.airbrush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Air Brush</button>
+                      <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.crayon(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pencil-fill"></i> Crayon</button>
                     </div>
                   </div>
                   <div class="brush-nav-tab" data-brush-tab="config">
@@ -2078,7 +2080,7 @@
         </div>
       </div>
     </div>
-    <div class="modal modal-xl fade" id="modal-brush1-config"  aria-hidden="true">
+    <!-- <div class="modal modal-xl fade" id="modal-brush1-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content brush-config-container">
           <div class="modal-header">
@@ -2099,8 +2101,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal modal-xl fade" id="modal-brush2-config"  aria-hidden="true">
+    </div> -->
+    <!-- <div class="modal modal-xl fade" id="modal-brush2-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content brush-config-container">
           <div class="modal-header">
@@ -2121,8 +2123,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal modal-xl fade" id="modal-brush3-config"  aria-hidden="true">
+    </div> -->
+    <!-- <div class="modal modal-xl fade" id="modal-brush3-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content brush-config-container">
           <div class="modal-header">
@@ -2143,8 +2145,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="modal modal-xl fade" id="modal-eraser-config"  aria-hidden="true">
+    </div> -->
+    <!-- <div class="modal modal-xl fade" id="modal-eraser-config"  aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content brush-config-container">
           <div class="modal-header">
@@ -2165,13 +2167,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <script>
       {
         // 브러시(지우개용 브러시 포함) 설정용 form 의 내용을 복사한다.
         // WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush2Config);
         // WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush3Config);
-        WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
+        // WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
         window.addEventListener('load',(event)=>{
           setTimeout(()=>{
 
@@ -2201,17 +2203,21 @@
             editor.brush.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush) })
             // editor.brush2.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush2) })
             // editor.brush3.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush3) })
-            editor.eraser.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.eraser,true) })
-            editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush) }); })
+            // editor.eraser.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.eraser,true) })
+            editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ 
+              document.querySelector('.modal-config-brush-key').textContent = `(${Wc.BrushConfigStore.lastKey})`
+              
+              requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush) }); 
+            })
             // editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush2) }); })
             // editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush3) }); })
-            editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.eraser,true) }); })
+            // editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.eraser,true) }); })
 
             window.addEventListener('resize', (event)=>{
               previewAndSyncForm(editor.brush);
               // previewAndSyncForm(editor.brush2);
               // previewAndSyncForm(editor.brush3);
-              previewAndSyncForm(editor.eraser,true);
+              // previewAndSyncForm(editor.eraser,true);
             })
 
             // 안보일 때 그려봤자 의미가 없네.

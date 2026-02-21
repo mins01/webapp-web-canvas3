@@ -8,7 +8,7 @@ export default class WcSyncHandler{
   addEventListener(){
     window.addEventListener('show.bs.modal',(event)=>{
       this.sync(event.target);
-      console.log(event);
+      // console.log(event);
       
     })
   }

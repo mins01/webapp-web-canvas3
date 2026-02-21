@@ -103,6 +103,7 @@ class WcHelper{
     document.history.save('new document');
   }
 
+  // isEraser @deprecated
   static syncModalBrushPreviewCanvas(f,isEraser=false){
     const modal = f.closest('.modal');
     const preview = modal.querySelector('.brush-preview-canvas');
@@ -113,6 +114,7 @@ class WcHelper{
     this.drawBrushPreviewCanvas(brush,preview,isEraser)
 
   }
+  // isEraser @deprecated
   static drawBrushPreviewCanvas(brush,preview,isEraser=false){
     const size = brush.brushConfig.size
     const spacing = brush.brushConfig.spacing
@@ -238,5 +240,24 @@ class WcHelper{
   }
 
 
+
+
+
+  static setBrushcConfig(key){
+    editor.brush.setBrushConfig(Wc.BrushConfigStore.load(key));
+    editor.brush.flush();
+    wcApp.dataset.brushKey = key;
+  }
+  static saveBrushcConfig(){
+    Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);
+  }
+  
+  static setWcAppMenuToolsBtn(btn){
+    const wcAppMenuToolsBtn = document.querySelector('#wc-app-menu-tools-btn');
+    // wcAppMenuToolsBtn.replaceChildren(...btn.children);    
+    console.log(btn,btn.innerHTML);
+    
+    wcAppMenuToolsBtn.innerHTML = btn.innerHTML
+  }
 
 }

@@ -101,7 +101,7 @@ export default class Editor{
         // this.brush1.loadBrushConfig();this.brush1.flush();
         // this.brush2.loadBrushConfig();this.brush2.flush();
         // this.brush3.loadBrushConfig();this.brush3.flush();
-        this.eraser.loadBrushConfig();this.eraser.flush();
+        // this.eraser.loadBrushConfig();this.eraser.flush();
     }
 
     setEditorConfig(conf){
