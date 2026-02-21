@@ -118,11 +118,14 @@ class WcHelper{
     const spacing = brush.brushConfig.spacing
     const usedSizeControl = brush.brushConfig.sizeControl != 'off';
 
+    if(brush.brushConfig.compositeOperation === 'destination-out'){isEraser = true;}
+
     preview.ctx.save()
     preview.clear();
     
     
     
+
     if(isEraser){
       preview.fill('#ffffff')
       // preview.ctx.globalCompositeOperation = 'destination-out';
