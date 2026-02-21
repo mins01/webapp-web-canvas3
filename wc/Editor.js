@@ -21,9 +21,9 @@ import Context2dUtil from "./lib/Context2dUtil.js";
 
 export default class Editor{
     brush = null;
-    brush1 = null;
-    brush2 = null;
-    brush3 = null;
+    // brush1 = null;
+    // brush2 = null;
+    // brush3 = null;
     eraser = null;
     editorConfig = null;
     modalHandler = null;
@@ -99,8 +99,8 @@ export default class Editor{
 
         this.brush.loadBrushConfig();this.brush.flush();
         // this.brush1.loadBrushConfig();this.brush1.flush();
-        this.brush2.loadBrushConfig();this.brush2.flush();
-        this.brush3.loadBrushConfig();this.brush3.flush();
+        // this.brush2.loadBrushConfig();this.brush2.flush();
+        // this.brush3.loadBrushConfig();this.brush3.flush();
         this.eraser.loadBrushConfig();this.eraser.flush();
     }
 

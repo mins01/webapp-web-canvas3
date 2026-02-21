@@ -325,13 +325,13 @@
             <div class="wc-app-menu-content  gap-1 px-1 py-1 x-d-flex flex-wrap x-justify-content-between mx-auto border border-1 mt-1 " onclick="wcApp.classList.remove('show-wc-app-menu-tools');">
               <!-- <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);" checked><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-slash-lg"></i></button></label>
               <label role="button" title="tool Pen" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Pen" onclick="editor.tools.select('Pen')"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pen"></i></button></label> -->
-              <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
+              <label role="button" title="tool Brush" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-1'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-brush"></i></button></label>
               <!-- <label role="button" title="tool Brush1" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush1" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></label> -->
               
-              <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
-              <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
-              <label role="button" title="tool Brush for Test" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-t'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">t</small></button></label>
-              <label role="button" title="tool Brush for Test" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-t2'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">t2</small></button></label>
+              <!-- <label role="button" title="tool Brush2" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush2" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
+              <label role="button" title="tool Brush3" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush3" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label> -->
+              <label role="button" title="tool Brush for Test" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-2'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></label>
+              <label role="button" title="tool Brush for Test" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Brush" onclick="editor.tools.select(this.value);editor.brush.setBrushConfig(Wc.BrushConfigStore.load('brush-3'));editor.brush.flush();"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></label>
 
               <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label>
 
@@ -2168,8 +2168,8 @@
     <script>
       {
         // 브러시(지우개용 브러시 포함) 설정용 form 의 내용을 복사한다.
-        WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush2Config);
-        WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush3Config);
+        // WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush2Config);
+        // WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formBrush3Config);
         WcHelper.cloneModalBrushConfigForm(document.formBrushConfig,document.formEraserConfig);
         window.addEventListener('load',(event)=>{
           setTimeout(()=>{
@@ -2178,7 +2178,9 @@
             const formToBrush = (f)=>{
               const brush = WcHelper.getBrushCanvas(f);
               brush.setBrushConfig(Wc.HtmlUtil.formToObject(f));
-              brush.saveBrushConfig();
+              // brush.saveBrushConfig();
+              Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig)
+
               brush.flush();
             }
             document.querySelectorAll('.form-brush-config').forEach((f)=>{
@@ -2195,22 +2197,19 @@
               container.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{ UiInputStepper.syncDataValue(input); })
             }
             // 브러시가 draw 하면 미리보기를 다시 그린다.
-            editor.brush.addEventListener('draw',(event)=>{ 
-              previewAndSyncForm(editor.brush) 
-              Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig)
-            })
-            editor.brush2.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush2) })
-            editor.brush3.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush3) })
+            editor.brush.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush) })
+            // editor.brush2.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush2) })
+            // editor.brush3.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.brush3) })
             editor.eraser.addEventListener('draw',(event)=>{ previewAndSyncForm(editor.eraser,true) })
             editor.brush.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush) }); })
-            editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush2) }); })
-            editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush3) }); })
+            // editor.brush2.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush2) }); })
+            // editor.brush3.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.brush3) }); })
             editor.eraser.closest('.modal').addEventListener('shown.bs.modal', (event)=>{ requestAnimationFrame(()=>{ previewAndSyncForm(editor.eraser,true) }); })
 
             window.addEventListener('resize', (event)=>{
               previewAndSyncForm(editor.brush);
-              previewAndSyncForm(editor.brush2);
-              previewAndSyncForm(editor.brush3);
+              // previewAndSyncForm(editor.brush2);
+              // previewAndSyncForm(editor.brush3);
               previewAndSyncForm(editor.eraser,true);
             })
 

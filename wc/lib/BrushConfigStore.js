@@ -5,7 +5,7 @@ class BrushConfigStore{
   static storageKeyPrefix = 'wc-brushconfigstore-'
   static load(key){
     if(key===null) key = this.lastKey
-    console.log('BrushConfigStore.load',key);
+    // console.log('BrushConfigStore.load',key);
     this.lastKey = key;
     const storageKey = `${this.storageKeyPrefix}${key}`;
     let value = localStorage.getItem(storageKey);
@@ -28,7 +28,7 @@ class BrushConfigStore{
     return this.save(this.lastKey,brushConfig);
   }
   static save(key,brushConfig){
-    console.log('BrushConfigStore.save',key,brushConfig);
+    // console.log('BrushConfigStore.save',key,brushConfig);
     const storageKey = `${this.storageKeyPrefix}${key}`;
     localStorage.setItem(storageKey, JSON.stringify(brushConfig));
     return brushConfig;

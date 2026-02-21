@@ -42,7 +42,9 @@ export default class Brush extends Canvas{
   
 
   // 로컬 스토리지에 설정 저장
+  // @deprecated // BrushConfigStore 에서 한다.
   saveBrushConfig(){
+    return false;
     if(!this.dataset.brushKey){
       console.warn('Attribute [data-brush-key] does not exist');
       return false;
