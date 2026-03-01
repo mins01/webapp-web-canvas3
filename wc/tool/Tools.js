@@ -2,9 +2,6 @@
 // import Rectangle from "./Rectangle.js";
 import SelectableMap from "../lib/SelectableMap.js";
 import Brush from "./Brush.js";
-import Brush1 from "./Brush1.js";
-import Brush2 from "./Brush2.js";
-import Brush3 from "./Brush3.js";
 import Eraser from "./Eraser.js";
 import Transform from "./Transform.js";
 
@@ -15,9 +12,6 @@ export default class Tools extends SelectableMap{
         this.toolName = '';
         
         this.set(Brush, new Brush(this.editor));
-        this.set(Brush1, new Brush1(this.editor));
-        this.set(Brush2, new Brush2(this.editor));
-        this.set(Brush3, new Brush3(this.editor));
         this.set(Eraser, new Eraser(this.editor));
         this.set(Transform, new Transform(this.editor));
 
