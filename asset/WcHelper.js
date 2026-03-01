@@ -254,9 +254,6 @@ class WcHelper{
   
   static setWcAppMenuToolsBtn(btn){
     const wcAppMenuToolsBtn = document.querySelector('#wc-app-menu-tools-btn');
-    // wcAppMenuToolsBtn.replaceChildren(...btn.children);    
-    console.log(btn,btn.innerHTML);
-    
     wcAppMenuToolsBtn.innerHTML = btn.innerHTML
   }
 
