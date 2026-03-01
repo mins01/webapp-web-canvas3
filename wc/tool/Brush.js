@@ -14,6 +14,8 @@ export default class Brush extends BaseTool{
     targetLayer = null
     // orignalSnapshot = null // @deprecated
     originalLayer = null
+    overrideCompositeOperation = null; // composite 동작 고정용. 지우개용
+    
     constructor(editor){
         super(editor);
         this.name = 'Brush';
@@ -120,7 +122,7 @@ export default class Brush extends BaseTool{
         const ctx = to.ctx;
         
         ctx.save();
-        ctx.globalCompositeOperation = this.brush.brushConfig.compositeOperation;        
+        ctx.globalCompositeOperation = this.overrideCompositeOperation??this.brush.brushConfig.compositeOperation;        
         ctx.globalAlpha = from.alpha
         ctx.drawImage(from,0,0);
         ctx.restore(); 

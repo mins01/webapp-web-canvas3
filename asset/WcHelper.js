@@ -121,6 +121,7 @@ class WcHelper{
     const usedSizeControl = brush.brushConfig.sizeControl != 'off';
 
     if(brush.brushConfig.compositeOperation === 'destination-out'){isEraser = true;}
+    if(editor?.tool?.overrideCompositeOperation === 'destination-out'){isEraser = true;} // 툴에서 강제
 
     preview.ctx.save()
     preview.clear();
@@ -129,11 +130,12 @@ class WcHelper{
     
 
     if(isEraser){
-      preview.fill('#ffffff')
+      preview.fill('#808080')
+      // preview.fill('#ffffff')
       // preview.ctx.globalCompositeOperation = 'destination-out';
     }
 
-    preview.ctx.globalCompositeOperation = brush.brushConfig.compositeOperation=='destination-out'?'destination-out':'source-over';
+    preview.ctx.globalCompositeOperation = isEraser?'destination-out':'source-over';
     // console.log(brush.brushConfig.compositeOperation);
 
 
@@ -163,6 +165,13 @@ class WcHelper{
       // console.log({rm});
       
       p = p1;
+    }
+
+    if(isEraser){
+      preview.ctx.globalCompositeOperation = 'destination-over';
+      preview.ctx.globalAlpha = 1-brush.brushConfig.opacity
+      preview.fill('#808080')
+      
     }
     preview.ctx.restore()
   }
@@ -245,11 +254,14 @@ class WcHelper{
 
   static setBrushcConfig(key){
     editor.brush.setBrushConfig(Wc.BrushConfigStore.load(key));
+    if(editor?.tool?.overrideCompositeOperation) editor.brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
     editor.brush.flush();
-    wcApp.dataset.brushKey = key;
+    wcApp.dataset.brushKey = key;    
   }
-  static saveBrushcConfig(){
-    Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig);
+  static saveBrushcConfig(brush = null){
+    if(!brush) brush = editor.brush
+    if(editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
+    Wc.BrushConfigStore.saveToLastKey(brush.brushConfig);
   }
   
   static setWcAppMenuToolsBtn(btn){

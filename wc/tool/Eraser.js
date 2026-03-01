@@ -2,52 +2,17 @@
 import Brush from './Brush.js';
 
 export default class Eraser extends Brush{
-    remainInterval = 0;
+    // remainInterval = 0;
+    overrideCompositeOperation = 'destination-out';
     constructor(editor){
         super(editor);
         // this.x0 = null;
         // this.y0 = null;
         this.name = 'Eraser';
-        this.brush = this.editor.eraser;
-        if(this.brush) this.brush.brushConfig.compositeOperation = 'destination-out';
+        // this.brush = this.editor.eraser;
+        this.brush = this.editor.brush;
+        if(this.brush) this.brush.brushConfig.compositeOperation = this.overrideCompositeOperation;
+        
     }
 
-    // start(){
-    //     super.start();
-    //     this.brush.ready();
-    //     this.ready();
-    // }
-
-    // draw(x0,y0,x1,y1){
-    //     const ctx = this.layer.ctx;
-    //     ctx.save();
-    //     ctx.globalCompositeOperation = 'destination-out';
-    //     super.draw(x0,y0,x1,y1)
-    //     ctx.restore();
-    // }
-
-    // drawForDown(x0,y0){      
-    //     // console.log(this.brush );
-    //     const ctx = this.layer.ctx;
-    //     ctx.save();
-    //     ctx.globalCompositeOperation = 'destination-out';
-    //     super.drawForDown(x0,y0)
-    //     ctx.restore();
-    // }
-
-
-    // mergeFromWorkingLayer(){
-    //     const from = this.workingLayer;
-    //     const to = this.targetLayer;
-    //     const ctx = to.ctx;
-    //     // to.clear()
-    //     this.targetLayer.import(this.orignalSnapshot);
-    //     // ctx.drawImage(this.layer,0,0);
-    //     ctx.save();
-    //     ctx.globalCompositeOperation = 'destination-out';
-    //     ctx.globalAlpha = from.alpha
-    //     ctx.drawImage(from,0,0);
-    //     ctx.restore(); 
-    //     to.flush();
-    // }
 }

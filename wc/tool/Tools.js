@@ -27,10 +27,10 @@ export default class Tools extends SelectableMap{
 
 
     
-    select(toolName){
+    async select(toolName){
         if(this.tool){ this.tool.inactivate(); }
         if(!this.has(toolName)){
-            this.load(toolName).then(()=>{
+            await this.load(toolName).then(()=>{
                 
                 this.toolName = toolName;
                 super.select(toolName);
@@ -45,8 +45,9 @@ export default class Tools extends SelectableMap{
             if(this.tool){
                 this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                 this.tool.activate();
-            } 
+            }
         }
+        return this.tool;
     }
     async load(toolName){       
         let module = await import(`./${toolName}.js`);

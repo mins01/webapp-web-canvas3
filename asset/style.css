@@ -78,7 +78,7 @@
 .wc-app-menu-content{
   background-color: #ffffffff;
   width: max-content;
-  max-width: 90vw;
+  max-width: 100%;
   border-radius: 5px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(42px, 1fr));
@@ -417,6 +417,7 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 .brush-preview-canvas{
   width: 100%;
   height: 100%;
+  opacity: 1 !important;
 }
 
 
