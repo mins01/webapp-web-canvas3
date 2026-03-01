@@ -171,7 +171,7 @@ class WcHelper{
       preview.ctx.globalCompositeOperation = 'destination-over';
       preview.ctx.globalAlpha = 1-brush.brushConfig.opacity
       preview.fill('#808080')
-      
+
     }
     preview.ctx.restore()
   }
