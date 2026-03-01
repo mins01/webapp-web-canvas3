@@ -49,7 +49,7 @@ class BrushConfig extends BaseConfig{
     scatterCountJitter = 0; // 산란 수 jitter
 
     // 기타
-    flattenOpacity = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
+    flattenToSolidColor = false; //색이 있는 부분을 픽셀화 함. alpha 값이 0 아니면 255가 됨
 
     // build up
     buildUpInterval = 0;
@@ -58,7 +58,7 @@ class BrushConfig extends BaseConfig{
     constructor(){
         const proxyConfig = {
             number:['size','angle','roundness','scaleX','sacleY','hardness','spacing','sizeJitter','mininumSizeRatio','angleJitter','roundnessJitter','mininumRoundness','opacity','opacityJitter','flow','flowJitter','hueJitter','saturationJitter','brightnessJitter','scatterAmount','scatterCount','scatterCountJitter','buildUpInterval'],
-            boolean:['flipX','flipY','flattenOpacity',],
+            boolean:['flipX','flipY','flattenToSolidColor',],
         }
         const proxy = super(proxyConfig);
         this.reset();

@@ -29,7 +29,11 @@ export default class Context2dUtil{
     * @param {number} [a=255] alpha
     * @param {number} [minAlpha=1] 
     */
+    
     static flattenOpacity(ctx,r,g,b,a=255,minAlpha=1){
+        return this.flattenToSolidColor(ctx, r, g, b, a, minAlpha);
+    }
+    static flattenToSolidColor(ctx,r,g,b,a=255,minAlpha=1){
         // console.log('a',a,'minAlpha',minAlpha);
         
         const c = ctx.canvas

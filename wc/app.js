@@ -115,29 +115,8 @@ globalThis.window.addEventListener('load',(event)=>{
         brush0.contextConfig.foreColor="#f00"
         brush0.size = 10
         brush0.flush();
-        // const brush1 = globalThis.brush1 = document.querySelector('#brush1');
-        // brush1.contextConfig.foreColor="#f00"
-        // brush1.size = 10
-        // brush1.flush();
-        // const brush2 = globalThis.brush2 = document.querySelector('#brush2');
-        // brush2.contextConfig.foreColor="#f00"
-        // brush2.size = 10
-        // brush2.flush();
-        // const brush3 = globalThis.brush3 = document.querySelector('#brush3');
-        // brush3.contextConfig.foreColor="#f00"
-        // brush3.size = 10
-        // brush3.flush();
-        // const eraser = globalThis.eraser = document.querySelector('#eraser');
-        // eraser.contextConfig.foreColor="#f00"
-        // eraser.size = 10
-        // eraser.flush();
         
-        editor.brush = globalThis.brush0 =  brush0
-        // editor.brush1 = brush1
-        // editor.brush2 = brush2
-        // editor.brush3 = brush3
-        // editor.eraser = globalThis.eraser = eraser
-        
+        editor.brush = globalThis.brush0 =  brush0        
 
         // ui-transform-tool
         editor.utt = document.querySelector('#utt01');

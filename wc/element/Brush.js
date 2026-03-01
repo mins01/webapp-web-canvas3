@@ -203,10 +203,10 @@ export default class Brush extends Canvas{
     // console.log(shape,0,0,shape.width,shape.height,dx,dy,dw,dh);
     ctx.restore();
     
-    if(brushConfig.flattenOpacity){
+    if(brushConfig.flattenToSolidColor){
       const c = jsColor.Color.from(ctx.fillStyle);
       const o = Math.round(brushConfig.flow*255);
-      Context2dUtil.flattenOpacity(ctx,c.r,c.g,c.b,o,o/10)
+      Context2dUtil.flattenToSolidColor(ctx,c.r,c.g,c.b,o,o/10)
     }
     // this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) );
     super.draw();

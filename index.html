@@ -279,43 +279,16 @@
           <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-menu-main"><i class="bi bi-menu-app"></i></button>
           <div onclick="wcApp.classList.toggle('show-wc-app-menu-tools'); this.blur();">
             <div class=""><button type="button" class="btn btn-lg btn-outline-light position-relative" id="wc-app-menu-tools-btn" ><i class="bi bi-x-circle"></i></button></div>
-            <!-- <div class="only-shown only-shown-tool-Brush"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i></button></div> -->
-            <!-- <div class="only-shown only-shown-tool-Brush1 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">1</small></button></div> -->
-            <!-- <div class="only-shown only-shown-tool-Brush2 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">2</small></button></div>
-            <div class="only-shown only-shown-tool-Brush3 position-relative"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-brush"></i><small class="position-absolute bottom-0" style="right:0.5em">3</small></button></div>
-            <div class="only-shown only-shown-tool-Eraser"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eraser"></i></button></div>
-            <div class="only-shown only-shown-tool-Rectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-square-fill"></i></button></div>
-            <div class="only-shown only-shown-tool-Polygon"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-pentagon-fill"></i></button></div>
-            <div class="only-shown only-shown-tool-Star"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-star-fill"></i></button></div>
-
-            <div class="only-shown only-shown-tool-SelectionRectangle"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-plus-square-dotted"></i></button></div>
-
-            <div class="only-shown only-shown-tool-Text"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-alphabet-uppercase"></i></button></div>
-            <div class="only-shown only-shown-tool-Spuit"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-eyedropper"></i></button></div>
-            <div class="only-shown only-shown-tool-Transform"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-bounding-box"></i></button></div>
-            <div class="only-shown only-shown-tool-Move"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-arrows-move"></i></button></div>
-            <div class="only-shown only-shown-tool-Hand"><button type="button" class="btn btn-lg btn-outline-light" ><i class="bi bi-hand-index"></i></button></div> -->
           </div>
           <div class="group-only-enable-tool-enable">
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
-            <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush1" data-bs-toggle="modal" data-bs-target="#modal-brush1-config"><i class="bi bi-sliders"></i></button> -->
-            <!-- <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush2" data-bs-toggle="modal" data-bs-target="#modal-brush2-config"><i class="bi bi-sliders"></i></button>
-            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Brush3" data-bs-toggle="modal" data-bs-target="#modal-brush3-config"><i class="bi bi-sliders"></i></button>
-            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-eraser-config"><i class="bi bi-sliders"></i></button> -->
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Eraser" data-bs-toggle="modal" data-bs-target="#modal-brush-config"><i class="bi bi-sliders"></i></button>
-
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Text"  data-bs-toggle="modal" data-bs-target="#modal-text-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Rectangle"  data-bs-toggle="modal" data-bs-target="#modal-rectangle-config"><i class="bi bi-sliders"></i></i></button>
-
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Polygon"  data-bs-toggle="modal" data-bs-target="#modal-polygon-config"><i class="bi bi-sliders"></i></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Star"  data-bs-toggle="modal" data-bs-target="#modal-star-config"><i class="bi bi-sliders"></i></i></button>
-
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-SelectionRectangle"  data-bs-toggle="modal" data-bs-target="#modal-selectionrectangle-config"><i class="bi bi-sliders"></i></i></button>
-
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Spuit" disabled><i class="bi bi-sliders"></i></i></button>
-
-
-
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform"  data-bs-toggle="modal" data-bs-target="#modal-transform-config"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
@@ -1880,9 +1853,9 @@
                         </div>
                       </div>
                       <div>
-                        <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlattenOpacity(균일투명도)</div>
+                        <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlattenToSolidColor(단색 평탄화)</div>
                         <div class="input-group">
-                          <select class="form-select " name="flattenOpacity" >
+                          <select class="form-select " name="flattenToSolidColor" >
                             <option selected value="false">NO</option>
                             <option value="true">YES</option>
                           </select>

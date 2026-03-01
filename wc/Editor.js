@@ -21,10 +21,7 @@ import Context2dUtil from "./lib/Context2dUtil.js";
 
 export default class Editor{
     brush = null;
-    // brush1 = null;
-    // brush2 = null;
-    // brush3 = null;
-    eraser = null;
+    // eraser = null;
     editorConfig = null;
     modalHandler = null;
     temp = null
@@ -89,19 +86,7 @@ export default class Editor{
 
     initConfigs(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
-
-        // @deprecated
-        // this.setBrushConfig(JSON.parse(localStorage.getItem('brushConfig')??'{}'),'brush');
-        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush1Config')??'{}'),'brush1');
-        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush2Config')??'{}'),'brush2');
-        // this.setBrushConfig(JSON.parse(localStorage.getItem('brush3Config')??'{}'),'brush3');
-        // this.setBrushConfig(JSON.parse(localStorage.getItem('eraserConfig')??'{}'),'eraser');
-
         this.brush.loadBrushConfig();this.brush.flush();
-        // this.brush1.loadBrushConfig();this.brush1.flush();
-        // this.brush2.loadBrushConfig();this.brush2.flush();
-        // this.brush3.loadBrushConfig();this.brush3.flush();
-        // this.eraser.loadBrushConfig();this.eraser.flush();
     }
 
     setEditorConfig(conf){
@@ -113,7 +98,7 @@ export default class Editor{
         this.contextConfig.assignFrom(conf);
         this.document?.setContextConfig(this.contextConfig.toObject());
 
-        [this?.brush,this?.brush1,this?.brush2,this?.brush3].forEach(brush=>{
+        [this?.brush].forEach(brush=>{
             if(brush){
                 brush.contextConfig.foreColor =this.contextConfig.foreColor;
                 brush.contextConfig.backColor =this.contextConfig.backColor;
