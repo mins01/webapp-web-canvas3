@@ -134,6 +134,7 @@ export default class Layer extends Canvas{
         const ctx = this.ctx;
         ctx.save();
         ctx.globalCompositeOperation = targetLayer.compositeOperation
+         
         ctx.globalAlpha = targetLayer.alpha
         // ctx.translate(targetLayer.left, targetLayer.top)
         const tranLeft = targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left)

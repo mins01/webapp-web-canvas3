@@ -15,17 +15,18 @@ export default class Layers extends SelectableArray{
     }
     ready(){
         console.log('Layers.ready()')
+        this.document?.flush();
         this.document?.editor?.ready()
+        this?.document?.editor?.tool?.activate()
     }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){
             this?.document?.editor?.tool?.inactivate()
             const r = super.select(index);
+            this.ready();
             if(!withoutHistory){
-                this.ready();
                 this.document.history.save('Layers.select',true);
             }
-            this?.document?.editor?.tool?.activate()
             this?.document?.editor?.dispatchEvent('wc.document.layers.select', {layers:this,layer:this.selected} );
         }
     }
@@ -52,18 +53,12 @@ export default class Layers extends SelectableArray{
         const newLayer = layer.clone(true);
         this?.document?.editor?.tool?.inactivate()
         this.add(newLayer,withoutHistory);
-        // newLayer.flush();
     }
     add(layer,withoutHistory=false){
         const document = this.document
         layer.parent = document;
-        // if(!noPostionCenterCenter){ layer.postionCenterCenter(); }
         const r = super.add(layer);
-        // document.syncDrawingLayer(layer);
         document?.editor?.onselectLayer(document.layer);
-        // layer.flush();
-        this?.document?.editor?.tool?.activate()
-        // document.flush();
         this.ready();
         if(!withoutHistory){
             this.document.history.save('Layers.add');
@@ -75,8 +70,6 @@ export default class Layers extends SelectableArray{
         this?.document?.editor?.tool?.inactivate()
         const document = this.document
         super.remove();
-        // document.flush();
-        this?.document?.editor?.tool?.activate()
         this.ready();
         this.document.history.save('Layers.remove');
         return true;
@@ -85,7 +78,6 @@ export default class Layers extends SelectableArray{
         const document = this.document
         const r = super.move(index);
         if(r===-1){return false}
-        // document.flush();
         document?.editor?.onselectLayer(document.layer);
         this.ready();
         this.document.history.save('Layers.move');
@@ -109,23 +101,22 @@ export default class Layers extends SelectableArray{
         const selectedIndex = this.selectedIndex
         const fromLayer = this[this.selectedIndex];
         const toLayer = this[this.selectedIndex-1];
-        console.log(fromLayer,toLayer);
+        console.log('mergeDown',fromLayer,'=>',toLayer);
         if(toLayer.kind !== LayerKind.NORMAL){
             alert('Merge Down is only available on NORMAL layer.');
             return false;
         }
+        const newToLayer = toLayer.clone();
         
-        
-        toLayer.drawLayer(fromLayer);
+        newToLayer.drawLayer(fromLayer);
+        //-- 갱신        
+        newToLayer.flush();
+        this[this.selectedIndex-1] = newToLayer; //레이어 교체
         // toLayer.flush();
         //-- 삭제처리
-        const document = this.document
         super.remove();
-        // document.flush();
-        this?.document?.editor?.tool?.activate()
 
-        this.ready();
-        
+        this.ready();        
         this.document.history.save('Layers.mergeDown');
         return true;
 
@@ -139,10 +130,8 @@ export default class Layers extends SelectableArray{
         if(index<0){ throw new Error("Not exists layer"); }
         const newLayer = Layer.clone(layer,layer.name);
         newLayer.parent = document;
-        this[index] = newLayer;
-        
+        this[index] = newLayer;       
         newLayer.flush();
-        this?.document?.editor?.tool?.activate();
         this.ready();
         this.document.history.save('Layers.convertToLayer');
     }
@@ -222,14 +211,13 @@ export default class Layers extends SelectableArray{
         let elements = null;
         if(!withoutElements){
             elements = []
-            this.forEach(element=>{
+            this.forEach((element,idx)=>{               
                 if(lastUpdatedAt <= element.updatedAt ){ // lastUpdatedAt 보다 크거가 같다면 변경된 것으로 보고 clone 한다.
-                    elements.push(element.clone()); 
-                    // console.log('element.clone(O)',element);
-                    
+                    // console.log(idx,element.updatedAt,'CLONE');
+                    elements.push(element.clone());                    
                 }else{ // 아니다면 원본 Canvas를 유지한다.
+                    // console.log(idx,element.updatedAt,'ORG');
                     elements.push(element);
-                    // console.log('element.clone(x)',element);
                 }
                 
             })

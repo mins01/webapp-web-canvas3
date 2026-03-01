@@ -1138,13 +1138,13 @@
 
                 <button type="button" class="btn btn-primary" title="Clear" onclick="editor?.document?.layer.clear();editor?.document?.history.save('layer.clear');editor?.document?.flush();editor.ready();"><i class="bi bi-eraser-fill"></i></button>
 
-                <button type="button" class="btn btn-primary" title="Merge down" onclick="edialog.confirm('Merge down?').then((r)=>{ if(!r){ return; }   editor?.document.layers.mergeDown();editor?.document?.flush();editor.ready(); })"><i class="bi bi-union"></i></button>
+                <button type="button" class="btn btn-primary" title="Merge down" onclick="edialog.confirm('Merge down?').then((r)=>{ if(!r){ return; }   editor?.document.layers.mergeDown(); })"><i class="bi bi-union"></i></button>
 
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-secondary" title="Move layer up" onclick="editor?.document?.layers?.moveUp();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-forward"></i></button>
                   <button type="button" class="btn btn-secondary" title="Move layer down" onclick="editor?.document.layers?.moveDown();editor?.document?.flush();editor.ready();"><i class="bi bi-layer-backward"></i></button>
                 </div>
-                <button type="button" class="btn btn-danger" title="Delete layer" onclick="edialog.confirm('Delete layer?').then((r)=>{if(!r){ return; }  editor?.document?.layers.remove();editor?.document?.flush();editor.ready();})"><i class="bi bi-trash"></i></button>
+                <button type="button" class="btn btn-danger" title="Delete layer" onclick="edialog.confirm('Delete layer?').then((r)=>{if(!r){ return; }  editor?.document?.layers.remove();})"><i class="bi bi-trash"></i></button>
 
 
               </div>

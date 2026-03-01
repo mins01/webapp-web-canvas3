@@ -120,10 +120,8 @@ class Canvas extends HTMLCanvasElement{
     draw(){ // 따로 그리기 동작이 있을 경우.
         this.updatedAt = Date.now();
         return this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) ); // 이벤트 버블
-        // console.log('CustomEvent("draw")',this);
     }
     flush(){
-        // console.log('flush',this.id,this.updatedAt);
         this.draw();
         this.sync();
         return this.dispatchEvent( new CustomEvent("flush", {bubbles:true,cancelable:true}) );

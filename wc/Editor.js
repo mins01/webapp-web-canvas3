@@ -619,7 +619,7 @@ export default class Editor{
             const id = `layer-box-wrap-${index}`;
             layerBoxWrap.id = id;
 
-            console.log('dom: '+id);
+            // console.log('dom: '+id);
             
 
             const html = templater1.interpolate({layer,index,selectedIndex});
@@ -636,6 +636,7 @@ export default class Editor{
                 layer.visible = !layer.visible;
                 layer.flush();
                 // layer?.parent?.ready();
+                layer?.parent?.layers.ready(); //레이어 다시 준비 하기
                 layer?.parent?.history.save('layer.visible')
                 this.ready();
             }
