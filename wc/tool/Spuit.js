@@ -13,7 +13,8 @@ export default class Spuit extends BaseTool{
     }
 
     activate(cb=null){
-        this.buffer = this.document.ctx.getImageData(0,0,this.document.width,this.document.height);
+        if(this.document) this.buffer = this.document.ctx.getImageData(0,0,this.document.width,this.document.height);
+        else this.buffer = null
 		super.activate(cb);
 	}
     inactivate(cb=null){
@@ -59,7 +60,11 @@ export default class Spuit extends BaseTool{
         super.draw(...arguments);
         const document = this.document;
 
-        const [lx0,ly0] = this.getXyInDocument(x0,y0)
+        let [lx0,ly0] = this.getXyInDocument(x0,y0); // 소수점이 나올 수 있다.
+        lx0 = Math.floor(lx0); 
+        ly0 = Math.floor(ly0);
+        // console.log(x0,y0,lx0,ly0);
+        
 
 
         // console.log(this.buffer);
