@@ -119,29 +119,30 @@ export default class Document extends Layer{
         this.flush();
     }
 
-    syncDrawingLayer(layer=null){
-        return false; // 더 이상 쓰지 말자
-        if(!layer) layer = this.layer
-        if(!layer) return;
-        this.drawingLayer.alpha = layer.alpha;
-        this.drawingLayer.left = layer.left;
-        this.drawingLayer.top = layer.top;
-        this.drawingLayer.width = layer.width;
-        this.drawingLayer.height = layer.height;
-        this.drawingLayer.zoom = layer.zoom;
-        this.drawingLayer.angle = layer.angle;
-    }
-
-
     ready(){
         console.log('Document.ready()');
         // ready 할 동작이 있다면 이곳에 적자.
     }
     
-    flush(){
+    scheduled = false;
+    flush() {
+        if (this.scheduled) return;
+        this.scheduled = true;
+
+        queueMicrotask(() => { // document.flush는 tick 동안 최종 한번만 flush 하게한다.
+            this.scheduledFlush();
+        });
+    }
+
+    scheduledFlush() {
+        this.scheduled = false;
+
         this?.editor?.onchangeDocument(this);
         super.flush();
+        console.log('document.scheduledFlush');
     }
+
+
     draw(){
         // console.log('Document.draw()'); //너무 많이 나온다.
         const ctx = this.ctx;
@@ -183,8 +184,8 @@ export default class Document extends Layer{
         this.width = width;
         this.height = height;
         this.flush();
-        this.selectionLayer.resize(this.width,this.height)
-        this.selectionLayer.flush();
+        this?.selectionLayer.resize(this.width,this.height)
+        this?.selectionLayer.flush();
         this.history.save();
     }
 
