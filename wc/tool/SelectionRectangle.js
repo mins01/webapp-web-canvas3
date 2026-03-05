@@ -73,7 +73,6 @@ export default class SelectionRectangle extends BaseTool{
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
         this.selectionLayerOrg = this.selectionLayer.clone();
-        this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         if(this.draw(this.x0,this.y0,this.x1,this.y1)){

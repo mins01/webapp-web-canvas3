@@ -8,8 +8,8 @@ export default class Brush extends BaseTool{
     remainInterval = 0;
     brush = null;
     workingLayer = null;
-    pointerEvent = null;
-    lastPointerEvent = null;
+    pointerEvent = null; // 실제 PointerEvent 는 아니고 event.detail?.pointer??event; 으로 받아온다.
+    lastPointerEvent = null; // 실제 PointerEvent 는 아니고 event.detail?.pointer??event; 으로 받아온다.
     tmBuildUp = null;
     targetLayer = null
     // orignalSnapshot = null // @deprecated
@@ -67,7 +67,8 @@ export default class Brush extends BaseTool{
         this.drawCount = 0; // 0으로 초기화
         this.moveCount = 0; // 0으로 초기화
         this.brush.ready();
-        this.pointerEvent = new PointerEvent(event.type, event)
+        // this.pointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = event;
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.remainInterval = 0;
@@ -84,7 +85,8 @@ export default class Brush extends BaseTool{
         this.moveCount++;
 
 
-        this.pointerEvent = new PointerEvent(event.type, event)
+        // this.pointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = event;
         const [x,y] = this.getXyFromEvent(event);
         this.x1 = x; this.y1 = y;
         if(this.draw(this.x0,this.y0,this.x1,this.y1)){
@@ -100,10 +102,12 @@ export default class Brush extends BaseTool{
         }
 
         this.stopBuildUp();
-        this.pointerEvent = new PointerEvent(event.type, event)
+        // this.pointerEvent = new PointerEvent(event.type, event)
+        this.pointerEvent = event;
         this.mergeFromWorkingLayer();
         this.workingLayer.clear();
         this.drawCount = 0; // 0으로 초기화
+        this.lastPointerEvent = this.pointerEvent;
         return;
     }
 

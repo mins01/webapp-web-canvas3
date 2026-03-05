@@ -55,7 +55,6 @@ export default class Star extends BaseTool{
     onpointerdown(event){
         if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
         if(super.onpointerdown(event)===false){return false;}
-        this.pointerEvent = new PointerEvent(event.type, event)
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         return;
