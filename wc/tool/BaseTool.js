@@ -189,11 +189,13 @@ export default class BaseTool {
 		
 		let x = inX;
 		let y = inY;
-		
-		[x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, -doc.angle)
-
+		// [x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, -doc.angle) // Layer.drawLayer() 에서 처리한다. 좌표에선 각도 체크 안한다!
 		x = inX - (docCenterX - doc.width*zoom/2);
 		y = inY - (docCenterY - doc.height*zoom/2);	
+
+		
+
+		
 		
 		
 
@@ -236,23 +238,23 @@ export default class BaseTool {
 
 
 	rotatePoint(x, y, cx, cy, angleDegrees) {
-    const angleRadians = (Math.PI / 180) * angleDegrees; // 각도를 라디안으로 변환
+		const angleRadians = (Math.PI / 180) * angleDegrees; // 각도를 라디안으로 변환
 
-    // 원점을 중심으로 좌표 이동
-    const xShifted = x - cx;
-    const yShifted = y - cy;
+		// 원점을 중심으로 좌표 이동
+		const xShifted = x - cx;
+		const yShifted = y - cy;
 
-    // 회전 변환
-    const xRotated = xShifted * Math.cos(angleRadians) - yShifted * Math.sin(angleRadians);
-    const yRotated = xShifted * Math.sin(angleRadians) + yShifted * Math.cos(angleRadians);
+		// 회전 변환
+		const xRotated = xShifted * Math.cos(angleRadians) - yShifted * Math.sin(angleRadians);
+		const yRotated = xShifted * Math.sin(angleRadians) + yShifted * Math.cos(angleRadians);
 
-    // 원래 위치로 복귀
-    const xNew = xRotated + cx;
-    const yNew = yRotated + cy;
+		// 원래 위치로 복귀
+		const xNew = xRotated + cx;
+		const yNew = yRotated + cy;
 
-    // return { x: xNew, y: yNew };
-    return [xNew,yNew]
-}
+		// return { x: xNew, y: yNew };
+		return [xNew,yNew]
+	}
 
 	//  scrollbar 및 postion relative와 absolute 가 있을 경우, 그리고 zoom 사용
 	// getXyInDocument(inX,inY){

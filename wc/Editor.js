@@ -111,7 +111,7 @@ export default class Editor{
         })
     }
     setTextConfig(conf){
-        if(this.document.layer.kind != LayerKind.TEXT){
+        if(this.document?.layer?.kind != LayerKind.TEXT){
             return;
         }
         // Object.assign(this.textConfig,conf);        
@@ -326,7 +326,7 @@ export default class Editor{
     saveDocument(type='wc3.json',basename=null,quality=0.5){
         if(!this.document){return false;}
         if(basename===null){ basename = this.document.name }
-        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>\|]/g,''); //OS 금지 글자 제거
         if(basename.length==0) basename = Date.now();
         if(basename != this.document.name){ this.document.name = basename; }
 
@@ -373,7 +373,7 @@ export default class Editor{
     async uploadDocument(type='wc3.json',basename=null,quality=0.5){
         if(!this.document){return false;}
         if(basename===null){ basename = this.document.name }
-        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>]|/g,''); //OS 금지 글자 제거
+        basename = basename.trim().replace(/[\\\/\:\*\?\"\<\>\|]/g,''); //OS 금지 글자 제거
         if(basename.length==0) basename = Date.now();
         if(basename != this.document.name){ this.document.name = basename; }
 

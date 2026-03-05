@@ -110,33 +110,6 @@ export default class SelectionLayer extends Layer{
     // @deprecated
     blurLayer(layer,size=2){
         return this.filterLayer(layer,'blur',size);
-        console.log('blurLayer',size);
-        
-        const supported = "filter" in layer.ctx;
-        if(!supported){
-            throw new Error("Canvas filter is not supported in this environment");
-        }
-
-        // 레이어 복제 후 selection으로 마스크 처리
-        const workingLayer = layer.clone();
-        {
-            const ctx = workingLayer.ctx;
-            ctx.save();
-            ctx.globalCompositeOperation = "destination-in"; /// 기존 그림과 겹치는 않은 부분만 남김
-            // ctx.filter = `blur(${length})`;
-            ctx.drawImage(this,-layer.left,-layer.top);
-            ctx.restore();
-        }
-        {
-            const ctx=  layer.ctx;
-            ctx.save();
-            // ctx.globalCompositeOperation = "destination-out"; /// 기존 그림과 겹치는 않은 부분만 남김
-            ctx.filter = `blur(${size}px)`;
-            console.log(ctx);
-            
-            ctx.drawImage(workingLayer,0,0);
-            ctx.restore();
-        }
     }
 
     mosaicLayer(layer,size=10){

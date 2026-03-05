@@ -217,7 +217,11 @@ class Canvas extends HTMLCanvasElement{
         r.__class__ = obj.constructor.name;
         r.__content_type__ = contentType;
         if(contentType=='dataurl'){ r.__content__ = obj.toDataURL('image/png'); }
-        else if(contentType=='snapshot'){ r.__content__ = obj.ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height); }
+        else if(contentType=='snapshot'){ 
+            if(!obj?.ctx) throw new Error("Invaild ctx.");
+
+            r.__content__ = obj.ctx.getImageData(0, 0, obj.ctx.canvas.width, obj.ctx.canvas.height); 
+        }
         else if(contentType=='file'){
             // obj.toBlob((blob)=>{ console.log('obj.toBlob');r.__content__ = new File([blob],`${obj.id}.png`,{ type: blob.type, lastModified: Date.now() }) },'image/png'); //비동기라서 밑에 프로미스로
             // r.__content__ = await new Promise((resolve,reject) => {

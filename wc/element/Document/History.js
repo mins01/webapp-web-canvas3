@@ -58,7 +58,7 @@ export default class History extends LimitedHistory{
         layers.import(snapshot);
         this.document.flush();
         this.document.editor?.tool?.activate()
-        setTimeout(()=>{
+        setTimeout(()=>{ // 즉시 동작 시 이슈가 있을 수 있어서 한번 더 그린다. for sarafi
             this.document.flush();
             this.document.editor?.tool?.activate()
         },20)

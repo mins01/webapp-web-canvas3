@@ -184,8 +184,8 @@ export default class Document extends Layer{
         this.width = width;
         this.height = height;
         this.flush();
-        this?.selectionLayer.resize(this.width,this.height)
-        this?.selectionLayer.flush();
+        this?.selectionLayer?.resize(this.width,this.height)
+        this?.selectionLayer?.flush();
         this.history.save();
     }
 
