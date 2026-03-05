@@ -173,6 +173,7 @@ globalThis.window.addEventListener('load',(event)=>{
             }
         }
 
+        editor.dispatchEvent((new CustomEvent("wc.editor.load",{bubbles:true,composed:true})));
     },500)
 
 
