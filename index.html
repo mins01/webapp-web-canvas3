@@ -267,8 +267,10 @@
       window.addEventListener('paste',WcHelper.onpaste)
       window.addEventListener('resize',WcHelper.onresize)
     })
-
-
+    window.addEventListener('wc.editor.load',event=>{
+      WcHelper.brush = editor.brush;
+    });
+    
   </script>
 </head>
 <body>
@@ -1711,43 +1713,43 @@
           <div class="modal-body brush-config">
             <form name="formBrushConfig" class="form-brush-config" data-brush-key="brush" action="" onsubmit="return false">
               <div class="div-brush-config grid-auto-fill grid-auto-fill-260px gap-3">
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
-                <select name="shape" class="form-select shape">
-                  <option value="circle">circle(원)</option>
-                  <option value="square">square(정사각형)</option>
-                </select>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size(크기,지름)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                    <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="400" step="1"  value="5">
-                  </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                <div>
+                  <div class="form-label mb-0"><i class="bi bi-brush"></i> Shape(모양)</div>
+                  <select name="shape" class="form-select shape">
+                    <option value="circle">circle(원)</option>
+                    <option value="square">square(정사각형)</option>
+                  </select>
                 </div>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                    <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                <div>
+                  <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size(크기,지름)</div>
+                  <div class="input-group ui-input-stepper">
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
+                      <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="400" step="1"  value="5">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                   </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
-              </div>
-              <div>
-                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
-                    <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
+                <div>
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
+                  <div class="input-group ui-input-stepper">
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                      <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                    </div>
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                   </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                 </div>
-              </div>
+                <div>
+                  <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
+                  <div class="input-group ui-input-stepper">
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                    <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" >
+                      <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
+                    </div>
+                    <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                  </div>
+                </div>
               </div>
               <hr>
               <div class="brush-nav-container mt-3" data-brush-tab="brush">
@@ -1768,10 +1770,10 @@
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softPen(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-pen"></i> Soft Pen</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.brush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Brush</button>
                       <button type="button" class="btn text-start btn-primary btn-brush-configurator" onclick="Wc.BrushConfigurator.softBrush(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-brush"></i> Soft Brush</button>
-
+                      
                       <!-- <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.eraser(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-eraser"></i> Eraser</button>
                       <button type="button" class="btn text-start btn-secondary btn-brush-configurator" onclick="Wc.BrushConfigurator.softEraser(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-eraser"></i> Soft Eraser</button> -->
-
+                      
                       <hr class="my-1">
                       <header> <h4 class="m-0">Art brush</h4> </header>
                       <button type="button" class="btn text-start btn-info btn-brush-configurator" onclick="Wc.BrushConfigurator.highlighter(WcHelper.getBrushCanvas(this));WcHelper.saveBrushcConfig();"><i class="bi bi-highlighter"></i> Highlighter</button>
@@ -1800,7 +1802,7 @@
                           <!-- 나머지 모드들은 무시한다. -->
                         </select>
                       </div>
-
+                      
                       <div>
                         <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
                         <div class="input-group ui-input-stepper">
@@ -1841,7 +1843,7 @@
                           <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                         </div>
                       </div>
-
+                      
                       <div>
                         <div class="form-label mb-0"><i class="bi bi-border-style"></i> Spacing(간격)</div>
                         <div class="input-group ui-input-stepper">
@@ -1921,7 +1923,7 @@
                           <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                         </div>
                       </div>
-
+                      
                       <hr class="my-1">
                       <header> <h4 class="m-0">Angle control (via stylus pen)</h4> </header>
                       <div>
@@ -1935,7 +1937,7 @@
                       </div>
                       <hr class="my-1">
                       <header> <h4 class="m-0">Jitters</h4> </header>
-
+                      
                       <div>
                         <div class="form-label mb-0"><i class="bi bi-palette"></i> HueJitter (Not supported <i class="bi bi-browser-safari"></i>)</div>
                         <div class="input-group ui-input-stepper">
@@ -2048,7 +2050,7 @@
                           <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
                         </div>
                       </div>
-
+                      
                     </div>
                   </div>
                 </div>
@@ -2066,7 +2068,7 @@
             const formToBrush = (f)=>{
               const brush = WcHelper.getBrushCanvas(f);
               brush.setBrushConfig(Wc.HtmlUtil.formToObject(f));
-              if(editor?.tool?.overrideCompositeOperation) editor.brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
+              if(window.editor && editor?.tool?.overrideCompositeOperation) editor.brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
 
               // brush.saveBrushConfig();
               Wc.BrushConfigStore.saveToLastKey(editor.brush.brushConfig)

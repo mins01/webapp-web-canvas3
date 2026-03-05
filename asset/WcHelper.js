@@ -1,4 +1,5 @@
 class WcHelper{
+  static brush = null
   static cloneModalBrushConfigForm(from,to){
     to.innerHTML = '';
     [...from.children].forEach((child)=>{
@@ -121,7 +122,7 @@ class WcHelper{
     const usedSizeControl = brush.brushConfig.sizeControl != 'off';
 
     if(brush.brushConfig.compositeOperation === 'destination-out'){isEraser = true;}
-    if(editor?.tool?.overrideCompositeOperation === 'destination-out'){isEraser = true;} // 툴에서 강제
+    if(window?.editor && editor?.tool?.overrideCompositeOperation === 'destination-out'){isEraser = true;} // 툴에서 강제
 
     preview.ctx.save()
     preview.clear();
@@ -253,14 +254,15 @@ class WcHelper{
 
 
   static setBrushcConfig(key){
-    editor.brush.setBrushConfig(Wc.BrushConfigStore.load(key));
-    if(editor?.tool?.overrideCompositeOperation) editor.brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
-    editor.brush.flush();
+    const brush = this.brush??editor.brush
+    brush.setBrushConfig(Wc.BrushConfigStore.load(key));
+    if(window?.editor && editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
+    brush.flush();
     wcApp.dataset.brushKey = key;    
   }
   static saveBrushcConfig(brush = null){
-    if(!brush) brush = editor.brush
-    if(editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
+    if(!brush) brush = this.brush??editor.brush
+    if(window?.editor && editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
     Wc.BrushConfigStore.saveToLastKey(brush.brushConfig);
   }
   
