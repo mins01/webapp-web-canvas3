@@ -29,8 +29,7 @@ export default class Rectangle extends BaseTool{
         if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
-        // this.layer = this.document.layer;
-        this.orignalSnapshot = this.layer?.snapshot()??null
+        this.orignalSnapshot = this.layer?.clone()??null
 	}
 
     /** 
@@ -99,9 +98,8 @@ export default class Rectangle extends BaseTool{
     
     end(){
         if(super.end()===false){return false;}
-        // this.document.history.save(`Tool.${this.constructor.name}`);
-        this.orignalSnapshot = this.layer.snapshot()
         this.document.history.save(`Tool.${this.constructor.name}`);
+        this.orignalSnapshot = this.layer?.clone()??null
         this.ready();
     }
     cancel(){
