@@ -1,7 +1,7 @@
 class BrushConfigurator{
 
   static #save(brush){
-    WcHelper.saveBrushcConfig(brush);
+    WcHelper.saveBrushConfig(brush);
   }
 
   static reset(brush){

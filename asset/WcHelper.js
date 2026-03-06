@@ -11,7 +11,7 @@ class WcHelper{
   static wcAppZoomFit(type='auto'){
     const document = editor.document;
     const rectBody = wcApp.body.getBoundingClientRect();
-    console.log(rectBody);
+    // console.log(rectBody);
     
     const rectHeader = wcApp.header.getBoundingClientRect();
     const rectFooter = wcApp.footer.getBoundingClientRect();
@@ -35,12 +35,9 @@ class WcHelper{
     document.flush();
   }
 
-
-
-
   static onpaste = (event)=>{
     let target = event.target;
-    if(target.value??false){ return; } // 이벤트 발생 부분이 form control 종류면 무시
+    if(target.value !== undefined || target.isContentEditable){ return; } // 이벤트 발생 부분이 form control 종류면 무시
     // console.log(event);
     const clipboardData = event.clipboardData
     if(clipboardData.files[0] && clipboardData.files[0].type.startsWith('image/')){ // 첨부파일이 있고 이미지 형식이면
@@ -52,7 +49,7 @@ class WcHelper{
       }
       
     }else{
-
+      // 그외
     }    
   }
 
@@ -62,7 +59,7 @@ class WcHelper{
   }
 
 
-
+  // 테스트용 캔버스 생성하기
   static newForTest(editor){
     const document = editor.newDocument(300,400);
     let layer = new Wc.Layer(60,80);
@@ -79,6 +76,7 @@ class WcHelper{
     document.history.save('new document');
   }
 
+  // 테스트용 캔버스 생성하기2
   static newForTest2(editor){
     const document = editor.newDocument(300,400);
     let layer = new Wc.Layer(60,80);
@@ -227,7 +225,8 @@ class WcHelper{
 
 
 
-
+  // 사용하는 곳 없음
+  // @deperecated
   static forceFontLoad(textConfig, text = "A") {
     
     const span = document.createElement('span');
@@ -253,14 +252,14 @@ class WcHelper{
 
 
 
-  static setBrushcConfig(key){
+  static setBrushConfig(key){
     const brush = this.brush??editor.brush
     brush.setBrushConfig(Wc.BrushConfigStore.load(key));
     if(window?.editor && editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
     brush.flush();
     wcApp.dataset.brushKey = key;    
   }
-  static saveBrushcConfig(brush = null){
+  static saveBrushConfig(brush = null){
     if(!brush) brush = this.brush??editor.brush
     if(window?.editor && editor?.tool?.overrideCompositeOperation) brush.brushConfig.compositeOperation = editor.tool.overrideCompositeOperation; // 강제 덮어 씌기
     Wc.BrushConfigStore.saveToLastKey(brush.brushConfig);
