@@ -1,4 +1,4 @@
-import BaseConfig from "../lib/BaseConfig.js";
+// import BaseConfig from "../lib/BaseConfig.js";
 import Context2dConfig from "../lib/Context2dConfig.js";
 import Context2dUtil from "../lib/Context2dUtil.js";
 import HtmlUtil from "../lib/HtmlUtil.js";
@@ -24,9 +24,9 @@ class Canvas extends HTMLCanvasElement{
     static defineCustomElements(name='wc-canvas'){
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
-        console.log('defineCustomElements',name);
+        console.log('defineCustomElements',name); // defineCustomElements 등록 동작을 위한 로그.
     }
-    static getDefaultName(prefix){
+    static getRandName(prefix){
         const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
         return `${prefix}-${rand}`;
     }
@@ -42,16 +42,13 @@ class Canvas extends HTMLCanvasElement{
 
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
 
-        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
-        if(this.id === undefined || this.id === '') this.id =  'wc-'+this.constructor.name.toLocaleLowerCase()+'-'+this.constructor.getIdCounter()+'-'+rand;
+        
+        if(this.id === undefined || this.id === '') this.id =  this.constructor.getRandName('wc-'+this.constructor.name.toLocaleLowerCase());
         
         const d = new Date();
-        // this.name = [ d.getFullYear(), d.getMonth()+1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), ].map(v=>{return v.toString().padStart(2,0)}).join('')+'-'+rand;
-        // this.name = `Canvas-${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`;
-        this.name = this.constructor.getDefaultName(this.constructor.name);
+        this.name = this.constructor.getRandName(this.constructor.name);
 
-
-        this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/,'');
+        this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/g,'');
         this.contextConfig = new Context2dConfig();
 
         Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
@@ -61,29 +58,23 @@ class Canvas extends HTMLCanvasElement{
         this.updatedAt = this.createdAt = Date.now();
         this.setContext2d();
 
-        this.width = w?w:this.width;
-        this.height = h?h:this.height;
+        this.width = w??this.width;
+        this.height = h??this.height;
     }
 
 
+    // connectedCallback(){
 
+    // }
+    // disconnectedCallback(){
 
+    // }
+    // adoptedCallback(){
 
-
-
-    connectedCallback(){
-
-    }
-    disconnectedCallback(){
-
-    }
-    adoptedCallback(){
-
-    }
-    attributeChangedCallback(name, oldValue, newValue){
-        // console.log(...arguments);
-        // this.flush()
-    }
+    // }
+    // attributeChangedCallback(name, oldValue, newValue){
+        
+    // }
 
     setContext2d(options=Canvas.context2dOptions){
         this.ctx = this.getContext2d(options)
@@ -106,7 +97,7 @@ class Canvas extends HTMLCanvasElement{
     ctxCommand(){
         let inArgs = [...arguments];
         const method = inArgs[0]??null;
-        const args = (inArgs??[]).slice(1);
+        const args = inArgs.slice(1);
         // console.log(method,args,this);
         if (typeof this.ctx[method] === "function") {
             this.ctx[method].apply(this.ctx,args);
@@ -148,7 +139,7 @@ class Canvas extends HTMLCanvasElement{
         ctx.lineWidth = lineWidth;
         this.ctx.strokeRect(0,0,this.width,this.height);
         this.ctx.restore();
-        console.log('stroke',color,lineWidth);
+        // console.log('stroke',color,lineWidth);
         
     }
     clear(){
@@ -162,9 +153,9 @@ class Canvas extends HTMLCanvasElement{
         newCanvas.import(obj)
 
         if(name===true){ // auto append cloned
-            newCanvas.name = newCanvas.name.substr(0,40)+' cloned';
+            newCanvas.name = newCanvas.name.substring(0,40)+' cloned';
         }else if(name){
-            newCanvas.name = name.substr(0,40)
+            newCanvas.name = name.substring(0,40)
         }
 
         return newCanvas;
@@ -174,7 +165,7 @@ class Canvas extends HTMLCanvasElement{
         return this.constructor.clone(this,name);
     }
     resize(width,height,imageSmoothingEnabled=null){
-        if(this.width != width || this.height != height){
+        if(this.width !== width || this.height !== height){
             const cloned = this.clone();
             this.width = width;
             this.height = height;
@@ -218,7 +209,7 @@ class Canvas extends HTMLCanvasElement{
         r.__content_type__ = contentType;
         if(contentType=='dataurl'){ r.__content__ = obj.toDataURL('image/png'); }
         else if(contentType=='snapshot'){ 
-            if(!obj?.ctx) throw new Error("Invaild ctx.");
+            if(!obj?.ctx) throw new Error("Invalid ctx.");
 
             r.__content__ = obj.ctx.getImageData(0, 0, obj.ctx.canvas.width, obj.ctx.canvas.height); 
         }
@@ -232,7 +223,7 @@ class Canvas extends HTMLCanvasElement{
             //     }
                 
             // });
-            console.log('export start',r.name);
+            // console.log('export start',r.name);
             
             r.__content__ = await new Promise((resolve, reject) => {
                 super.toBlob(
@@ -243,7 +234,7 @@ class Canvas extends HTMLCanvasElement{
                         return;
                         }
 
-                        console.log('obj.toBlob');
+                        // console.log('obj.toBlob');
 
                         const file = new File(
                         [blob],
@@ -263,7 +254,7 @@ class Canvas extends HTMLCanvasElement{
                 );
             });
 
-            console.log('export end',r.name);
+            // console.log('export end',r.name);
         }
         return r;
     }
@@ -332,14 +323,14 @@ class Canvas extends HTMLCanvasElement{
                     obj.ctx.drawImage(img,0,0);
                     // obj.flush();
                 }).catch((event)=>{
-                    console.log(event)
+                    console.error(event)
                 })
             }else if(conf.__content_type__==='dataurl'){
                 HtmlUtil.loadImageUrl(conf.__content__).then((img)=>{
                     obj.ctx.drawImage(img,0,0);
                     // obj.flush();
                 }).catch((event)=>{
-                    console.log(event)
+                    console.error(event)
                 })
             }else if(conf.__content_type__==='snapshot'){
                 obj.ctx.putImageData(conf?.__content__, 0, 0);
@@ -353,7 +344,7 @@ class Canvas extends HTMLCanvasElement{
                 obj.ctx.drawImage(img,0,0);
                 // obj.flush();
             }).catch((event)=>{
-                console.log(event)
+                console.error(event)
             })
         }else if(conf instanceof Canvas){ // Canvas 객체를 가져와서 내용을 그대로 그림.
             obj.ctx.save();
@@ -467,9 +458,9 @@ class Canvas extends HTMLCanvasElement{
     }
     // @deprecated
     // @see asyncToBlob
-    toBlobAsync(type = 'image/png', quality = 1.0) {
-        return this.asyncToBlob(type,quality)
-    }
+    // toBlobAsync(type = 'image/png', quality = 1.0) {
+    //     return this.asyncToBlob(type,quality)
+    // }
 }
 
 
