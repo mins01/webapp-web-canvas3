@@ -169,7 +169,7 @@ export default class BaseTool {
 		return [x,y];
 	}
 
-	// 아무 scrollbar 및 postion relative와 absolute 가 없을 경우, 그리고 transform: translate()  rotate() scale()
+	// 아무 scrollbar 및 position relative와 absolute 가 없을 경우, 그리고 transform: translate()  rotate() scale()
 	/**
 	 * 좌표 x,y 에 대해서 document 속의 x,y로 변경한다. zoom 영향을 무시해서 계산한다. 회전에 대해서는 getXYForLayer 에서 처리한다.
 	 *
@@ -256,7 +256,7 @@ export default class BaseTool {
 		return [xNew,yNew]
 	}
 
-	//  scrollbar 및 postion relative와 absolute 가 있을 경우, 그리고 zoom 사용
+	//  scrollbar 및 position relative와 absolute 가 있을 경우, 그리고 zoom 사용
 	// getXyInDocument(inX,inY){
 	// 	const doc = this.document;
 	// 	const zoom = doc.zoom;

@@ -68,12 +68,12 @@ export default class Layer extends Canvas{
         }
     }
 
-    postion(left,top){
+    position(left,top){
         this.left = left;
         this.top = top;
     }
 
-    postionCenterCenter(){
+    positionCenterCenter(){
         if(!this?.parent) return false;
         const left = (this.parent.width - this.width*this.zoom) / 2
         this.left = left;

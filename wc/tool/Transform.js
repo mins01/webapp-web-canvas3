@@ -84,7 +84,7 @@ export default class Transform extends BaseTool{
 
     center(){
         super.ready();
-        this.targetLayer.postionCenterCenter();
+        this.targetLayer.positionCenterCenter();
         this.confirm();
         this.readyUtt();       
         this.draw();
