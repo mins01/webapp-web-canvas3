@@ -15,7 +15,7 @@ export default class Document extends Layer{
     kind = LayerKind.GROUP;
     layers = null;
     history = null;
-    drawingLayer = null;
+    drawingLayer = null; // 부가적인 내용을 그리는 레이어. 20260307 현재 사용 안되는 듯.
     editor = null;
     stage = null;
     wrapper = null;
