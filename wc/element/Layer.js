@@ -54,10 +54,10 @@ export default class Layer extends Canvas{
     set top(v){ this.#top = parseFloat(v); this.setAttribute('top',this.#top) }
     get zoom(){ return this.#zoom; }
     set zoom(v){ this.#zoom = parseFloat(v); this.setAttribute('zoom',this.#zoom) }
-    get flipX(){ return this.#flipX; }
-    set flipX(v){ this.#flipX = parseFloat(v); this.setAttribute('flipX',this.#flipX) }
-    get flipY(){ return this.#flipY; }
-    set flipY(v){ this.#flipY = parseFloat(v); this.setAttribute('flipY',this.#flipY) }
+    get flipX(){ return this.#flipX; } // 1 or -1
+    set flipX(v){ this.#flipX = parseFloat(v); this.setAttribute('flip-x',this.#flipX) }
+    get flipY(){ return this.#flipY; } // 1 or -1
+    set flipY(v){ this.#flipY = parseFloat(v); this.setAttribute('flip-x',this.#flipY) }
     get visible(){ return this.#visible; }
     set visible(v){ 
         this.#visible = v==='true'?true:(v==='false')?false:(!!v);
@@ -83,8 +83,8 @@ export default class Layer extends Canvas{
 
     
     /**
-     * resize 후 위치정보(left,top) 기반으로 이미지를 붙임
-     *
+     * 현재의 내용을 가만히 놔두면서 레이어를 부모에 맞추는 효과
+     * 부모 기준으로 레이어 너비를 바꾸고,현재의 left,top 기준으로 내용을 옮기고, left,top을 0으로 바꾼다.
      * @param {*} width 
      * @param {*} height 
      */
@@ -97,15 +97,25 @@ export default class Layer extends Canvas{
         this.top = 0;
     }
 
-    merge(canvas){
-        const xmin = Math.min(this.left,canvas.left)
-        const ymin = Math.min(this.top,canvas.top)
-        const xmax = Math.max(this.left+this.width,canvas.left+canvas.width)
-        const ymax = Math.max(this.top+this.height,canvas.top+canvas.height)
+    
+    /**
+     * 현재 레이어와 타겟 레이어를 합친다.
+     * 현재 레이어의 크기가 커질 수 있다. !이 부분이 특징임
+     * 현재 실제 사용처가 없는데.. 지울지 고민해보자.
+     * drawLayer(targetLayer) 와 차이가 없네. 이걸 대신 사용하자
+     *
+     * @param {*} canvas 
+     */
+    merge(targetLayer){
+        const xmin = Math.min(this.left,targetLayer.left)
+        const ymin = Math.min(this.top,targetLayer.top)
+        const xmax = Math.max(this.left+this.width,targetLayer.left+targetLayer.width)
+        const ymax = Math.max(this.top+this.height,targetLayer.top+targetLayer.height)
         const w = xmax-xmin;
         const h = ymax-ymin;
 
-        const imageData = this.ctx.getImageData(0,0,this.width,this.height);
+        // const imageData = this.ctx.getImageData(0,0,this.width,this.height);
+        const cloned = this.clone();
         let dx = this.left-xmin;
         let dy = this.top-ymin;
 
@@ -115,14 +125,24 @@ export default class Layer extends Canvas{
         this.height = h;
         // this.stroke('#00ee0033');
 
-        this.ctx.putImageData(imageData,dx,dy);
+        // this.ctx.putImageData(imageData,dx,dy);
+        this.ctx.drawImage(cloned, dx, dy);
 
-        dx = canvas.left-xmin;
-        dy = canvas.top-ymin;
-        this.ctx.drawImage(canvas, dx, dy, canvas.width, canvas.height);
+        dx = targetLayer.left-xmin;
+        dy = targetLayer.top-ymin;
+        this.ctx.drawImage(targetLayer, dx, dy, targetLayer.width, targetLayer.height);
 
         // this.flush();
     }
+
+    
+    /**
+     * 현재 레이어에 타겟 레이어를 그린다.
+     * merge 효과와 같다.
+     * 
+     * @param {*} targetLayer 
+     * @returns {boolean} 
+     */
     drawLayer(targetLayer){
         if( !targetLayer
             || !targetLayer.visible 
@@ -136,7 +156,6 @@ export default class Layer extends Canvas{
         ctx.globalCompositeOperation = targetLayer.compositeOperation
          
         ctx.globalAlpha = targetLayer.alpha
-        // ctx.translate(targetLayer.left, targetLayer.top)
         const tranLeft = targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left)
         const tranTop = targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top)
         ctx.translate(tranLeft, tranTop)
@@ -145,9 +164,7 @@ export default class Layer extends Canvas{
         ctx.scale(targetLayer.flipX,targetLayer.flipY);
         if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
         ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
-        // ctx.translate(targetLayer.left-this.left, targetLayer.top-this.top);
         ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
-        // ctx.translate(-targetLayer.left, -targetLayer.top)
         ctx.translate(-tranLeft, -tranTop)
         ctx.restore()
     }
