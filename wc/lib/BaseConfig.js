@@ -20,14 +20,10 @@ export default class BaseConfig{
         if(config?.number || config?.boolean){
             handler.set = function(target, prop, value){
                 if( config?.number && (config.number??[]) .includes(prop)){ // 숫자?
-                    value = parseFloat(value);
-                    if(Number.isNaN(value)){
-                        return false;
-                    }
+                    value = Number(value);
+                    if(Number.isNaN(value)) return false;
                 }else if( config?.boolean && (config.boolean??[]).includes(prop)){ // boolean
-                    if(value==='true'){ value = true;}
-                    else if(value==='false'){ value = false;}
-                    else{ value = !!value; }
+                    value = value === true || value === 'true' || value === 1 || value === '1';
                 }
                 target[prop] = value;
                 return true;
@@ -39,7 +35,8 @@ export default class BaseConfig{
                 return prop in target
             }
             handler.ownKeys = function(target){
-                return config.keys;
+                return [...new Set([...Reflect.ownKeys(target), ...config.keys])];
+                // return config.keys;
                 // return Reflect.ownKeys(target);
             }
         }
@@ -48,35 +45,20 @@ export default class BaseConfig{
     }
 
     toObject(){
-        const robj = {}
-        for(let k in this){
-            robj[k] = this[k];
-        }
-        return robj;
+        return {...this}
     }
     toJSON(){
         return this.toObject();
     }
-    // assign(context){
-    //     // for(let k in this){
-    //     //     if(context?.[k] !== undefined){
-    //     //         context[k] = this[k];                
-    //     //     }
-    //     // }
-    // }
     assignTo(context){
-        for(let k in this){
-            if(context?.[k] !== undefined){
-                context[k] = this[k];                
-            }
+        for (const k in this) {
+            if (k in context) context[k] = this[k]
         }
     }
 
     assignFrom(context){
-        for(let k in context){
-            if(this?.[k] !== undefined){
-                this[k] = context[k];
-            }
+        for (const k in context) {
+            if (k in this) this[k] = context[k];
         }
     }
     

@@ -17,17 +17,18 @@ class Canvas extends HTMLCanvasElement{
     }
     // static get observedAttributes() { return ['width', 'height']; }
 
-    static getIdCounter(){
-        if(Canvas._idCounter === undefined){ Canvas._idCounter = 0;}
-        return ++ Canvas._idCounter;
-    }
+    // @deprecated
+    // static getIdCounter(){
+    //     if(Canvas._idCounter === undefined){ Canvas._idCounter = 0;}
+    //     return ++ Canvas._idCounter;
+    // }
     static defineCustomElements(name='wc-canvas'){
         if(!globalThis.window){return;}
         window.customElements.define(name, this,{ extends: "canvas" });
         console.log('defineCustomElements',name); // defineCustomElements 등록 동작을 위한 로그.
     }
-    static getRandName(prefix){
-        const rand = (Math.floor(Math.random()*1000000)).toString().padStart(6,'0');
+    static getRandName(prefix,length=6){
+        const rand = (Math.floor(Math.random()*Math.pow(10,length))).toString().padStart(length,'0');
         return `${prefix}-${rand}`;
     }
 
@@ -35,19 +36,16 @@ class Canvas extends HTMLCanvasElement{
     name = null;
     ctx = null;
     drawable = true;
-    // #left;
-    // #top;
     constructor(w=null,h=null){
         super();
 
         this.drawable = true; // 그리기 가능한가? 그리기 툴에서 체크.
 
         
-        if(this.id === undefined || this.id === '') this.id =  this.constructor.getRandName('wc-'+this.constructor.name.toLocaleLowerCase());
+        if(this.id === undefined || this.id === '') this.id =  this.constructor.getRandName('wc-'+this.constructor.name.toLocaleLowerCase(),10);
+        this.name = this.constructor.getRandName(this.constructor.name,10);
         
         const d = new Date();
-        this.name = this.constructor.getRandName(this.constructor.name);
-
         this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/g,'');
         this.contextConfig = new Context2dConfig();
 
@@ -55,11 +53,10 @@ class Canvas extends HTMLCanvasElement{
         Object.defineProperty(this, 'parent', { enumerable: false, configurable: true, writable: true, value: null, })
         // this.parent = null
 
-        this.updatedAt = this.createdAt = Date.now();
         this.setContext2d();
-
         this.width = w??this.width;
         this.height = h??this.height;
+        this.updatedAt = this.createdAt = Date.now();
     }
 
 
@@ -84,29 +81,30 @@ class Canvas extends HTMLCanvasElement{
         return this.getContext('2d',options)
     }
 
-    getContextConfig(){
-        return this.contextConfig.toObject();
-    }
+    // @deprecated 
+    // 사용하는 곳 없음
+    // getContextConfig(){
+    //     return this.contextConfig.toObject();
+    // }
     setContextConfig(conf){
         this.contextConfig.assignFrom(conf);
     }
 
-    /**
-     * @deprecated
-     */
-    ctxCommand(){
-        let inArgs = [...arguments];
-        const method = inArgs[0]??null;
-        const args = inArgs.slice(1);
-        // console.log(method,args,this);
-        if (typeof this.ctx[method] === "function") {
-            this.ctx[method].apply(this.ctx,args);
-        }else{
-            console.error('error: ctxCommand',inArgs);
-        }
-        // console.log(method);
-
-    }
+    // /**
+    //  * @deprecated
+    //  */
+    // ctxCommand(){
+    //     let inArgs = [...arguments];
+    //     const method = inArgs[0]??null;
+    //     const args = inArgs.slice(1);
+    //     // console.log(method,args,this);
+    //     if (typeof this.ctx[method] === "function") {
+    //         this.ctx[method].apply(this.ctx,args);
+    //     }else{
+    //         console.error('error: ctxCommand',inArgs);
+    //     }
+    //     // console.log(method);
+    // }
 
     draw(){ // 따로 그리기 동작이 있을 경우.
         this.updatedAt = Date.now();
@@ -125,6 +123,10 @@ class Canvas extends HTMLCanvasElement{
         this?.parent?.flush();
     }
 
+    /**
+     * Fill the canvas with a color
+     * @param {string} color - The color to fill the canvas with
+     */
     fill(color){
         const ctx = this.ctx;
         this.ctx.save();
@@ -132,6 +134,7 @@ class Canvas extends HTMLCanvasElement{
         this.ctx.fillRect(0,0,this.width,this.height);
         this.ctx.restore();
     }
+    //@deprecated
     stroke(color,lineWidth=1){
         const ctx = this.ctx;
         this.ctx.save();
@@ -144,6 +147,7 @@ class Canvas extends HTMLCanvasElement{
     }
     clear(){
         this.ctx.save();
+        this.ctx.setTransform(1,0,0,1,0,0);
         this.ctx.clearRect(0,0,this.width,this.height);
         this.ctx.restore();
     }
@@ -186,10 +190,10 @@ class Canvas extends HTMLCanvasElement{
 
 
     toObject(){
-        const r = {}
-        this.constructor.keys.forEach((k)=>{
-            r[k] = this[k];
-        })
+        const r = {};
+        for (const k of this.constructor.keys) {
+            r[k] = this[k]?.toObject?this[k]?.toObject():this[k];
+        }
         return r;
     }
     toJSON(){
@@ -291,9 +295,11 @@ class Canvas extends HTMLCanvasElement{
     static snapshot(obj){
         const ctx = obj.ctx;
         const r = obj.toObject();
-        for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다.
-            if(r[k]?.toObject){r[k] = r[k].toObject()}
-        }
+        console.log('snapshot r[k]?.toObject',r);
+        
+        // for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다. //20260307 이부분 의미가 있나?. 이거 해야한다. contextConfig, imageData 등에 영항있다. toObject에서 처리하자
+        //     if(r[k]?.toObject){r[k] = r[k].toObject()}
+        // }
         r.snapshotVersion = '20250116';
         r.__class__ = obj.constructor.name;
         r.imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -313,7 +319,7 @@ class Canvas extends HTMLCanvasElement{
         })
     }
 
-    // async 비동기로 하지 말자. dataUrl이 있는 경우는 wc3.json으로 저장했을 때 뿐이다. 즉, 그 때 빼고는 전부 동기로 가능하다.
+    // async 적용할지 고민하자.
     static import(obj,conf){
         this.importProperties(obj,conf)
 
@@ -380,8 +386,6 @@ class Canvas extends HTMLCanvasElement{
     }
 
     static importFrom(conf){
-        // console.log('---------------',conf);
-        
         const c = new this()
         c.import(conf)
         return c;
