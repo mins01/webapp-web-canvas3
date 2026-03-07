@@ -267,8 +267,10 @@
       window.addEventListener('paste',WcHelper.onpaste)
       window.addEventListener('resize',WcHelper.onresize)
     })
-    window.addEventListener('wc.editor.load',event=>{
+    window.addEventListener('wc.editor.start',event=>{
+      document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
       WcHelper.brush = editor.brush;
+
     });
     
   </script>

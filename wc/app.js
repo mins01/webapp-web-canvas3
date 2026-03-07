@@ -127,11 +127,6 @@ globalThis.window.addEventListener('load',(event)=>{
         const obj = {'foreColor':foreColor}
         editor.setContextConfig(obj)
         
-        editor.initConfigs();
-
-        globalThis.document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
-
-
 
         //-- 폰트 목록 동기화
         // console.log(HtmlUtil.getFontMap());
@@ -173,7 +168,8 @@ globalThis.window.addEventListener('load',(event)=>{
             }
         }
 
-        editor.dispatchEvent((new CustomEvent("wc.editor.load",{bubbles:true,composed:true})));
+        editor.start(); // dispatchEvent wc.editor.start
+        // editor.dispatchEvent((new CustomEvent("wc.editor.load",{bubbles:true,composed:true})));
     },500)
 
 

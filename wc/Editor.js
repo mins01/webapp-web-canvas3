@@ -1,23 +1,14 @@
-// import NamedSelectableArray from "./lib/NamedSelectableArray.js";
-// import SelectableArray from "./lib/SelectableArray.js";
-// import PointerEventHandler from "./lib/PointerEventHandler.js";
 import PointerEventHandler from "../third_party/js-pointer-event-handler/PointerEventHandler.esm.js";
-
 import Context2dConfig from "./lib/Context2dConfig.js";
 import Context2dTextConfig from "./lib/Context2dTextConfig.js";
-
 import Documents from "./element/Editor/Documents.js";
-
-// import jsColor from "./lib/jsColor.js";
-import Tools from "./tool/Tools.js";
 import HtmlUtil from "./lib/HtmlUtil.js";
-
 import Document from "./element/Document.js";
-
 import EditorConfig from "./lib/EditorConfig.js";
 import Layer from "./element/Layer.js";
 import LayerKind from "./lib/LayerKind.js";
-import Context2dUtil from "./lib/Context2dUtil.js";
+import Tools from "./tool/Tools.js";
+
 
 export default class Editor{
     brush = null;
@@ -28,6 +19,7 @@ export default class Editor{
     
     utt = null;
     autoSave = null;
+    tools = null;
 
     constructor(target){
         this.temp = {}
@@ -47,23 +39,12 @@ export default class Editor{
         target.addEventListener('multipointerdown.peh',this.onmultipointerdown)
         target.addEventListener('multipointermove.peh',this.onmultipointermove)
         target.addEventListener('multipointerup.peh',this.onmultipointerup)
-        
-        
-        // this.peh.onpointerdown = this.onpointerdown;
-        // this.peh.onpointermove = this.onpointermove;
-        // this.peh.onpointerup = this.onpointerup;
-        // this.peh.addEventListener(target)
-
-        // this.tool = null;
-        this.tools = new Tools(this);
-        // this.tools.select('Rectangle');
-        // this.tools.active('line');
-        // this.tool = new Line(this);
-
-        // this.documents.documentIndex = 0;
 
         this.contextConfig = new Context2dConfig();
         this.textConfig = new Context2dTextConfig();
+
+        // this.tool = null;
+        // this.tools = new Tools(this); // start 에서 처리한다.
     }
 
     get tool(){ return this?.tools?.tool; }
@@ -76,18 +57,25 @@ export default class Editor{
      */
     get document(){ return this?.documents?.selected??null; }
 
-    // get contextConf(){
-    //     return {
-    //         strokeStyle:this.strokeStyleColor.toHex(),
-    //         fillStyle :this.fillStyleColor.toHex(),
-    //     }
-    // }
-
-
+    /** 
+     * 
+    */
     initConfigs(){
+
+    }
+
+    // 
+    /** 
+     * editor의 최종 호출
+     */
+    start(){
         this.setEditorConfig(JSON.parse(localStorage.getItem('editorConfig')??'{}'));
         this.brush.loadBrushConfig();this.brush.flush();
+
+        this.tools = new Tools(this);
+        this.dispatchEvent((new CustomEvent("wc.editor.start",{bubbles:true,composed:true})));
     }
+    
 
     setEditorConfig(conf){
         this.editorConfig.assignFrom(conf);
