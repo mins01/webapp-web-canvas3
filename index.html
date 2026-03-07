@@ -296,6 +296,7 @@
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Transform"  data-bs-toggle="modal" data-bs-target="#modal-transform-config"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Move" x-data-bs-toggle="modal" x-data-bs-target="#modal-layer-config" onclick="editor.showModalLayerProperty(editor.document.layer)"><i class="bi bi-sliders"></i></button>
             <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Hand" data-bs-toggle="modal" data-bs-target="#modal-document-config"><i class="bi bi-sliders"></i></button>
+            <button type="button" class="btn btn-lg btn-outline-success only-shown only-shown-tool-Line" data-bs-toggle="modal" data-bs-target="#modal-line-config"><i class="bi bi-sliders"></i></button>
 
           </div>
           <div class="only-hidden-tool-Text">
@@ -320,10 +321,8 @@
 
               <!-- <label role="button" title="tool Eraser" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Eraser" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-eraser"></i></button></label> -->
 
+              <label role="button" title="tool Line" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Line" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-slash-lg"></i><small class="position-absolute bottom-0" hidden style="right:0.5em">Line</small></button></label>
               <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square-fill"></i></button></label>
-
-
-
               <label role="button" title="tool Polygon" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Polygon" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-pentagon-fill"></i></button></label>
               <label role="button" title="tool Star" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Star" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-star-fill"></i></button></label>
 
@@ -340,10 +339,10 @@
 
               <label role="button" title="tool SelectionRectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="SelectionRectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-plus-square-dotted"></i></button></label>
 
-              <!-- <label role="button" title="tool Rectangle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Rectangle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-square-fill"></i></button></label> -->
-              <!-- <label role="button" title="tool Circle" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Circle" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-circle"></i></button></label> -->
-              <!-- <label role="button" title="tool Text" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="Text" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none"><i class="bi bi-body-text"></i></button></label> -->
-              <!-- <label role="button" title="tool Text commit" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  onclick="editor.tool.commit()"><button type="button" class="btn btn-md btn-outline-success pe-none" ><i class="bi bi-body-text"></i><i class="bi bi-bandaid"></i></button></label> -->
+
+              <label role="button" title="tool TestDot" ><input hidden class="btn-check position-absolute checkbox-tool" type="radio" name="tool"  value="TestDot" onclick="editor.tools.select(this.value);"><button type="button" class="btn btn-md btn-outline-success pe-none position-relative"><i class="bi bi-dot"></i><small class="position-absolute bottom-0" style="right:0.5em">Test</small></button></label>
+
+              
             </div>
           </div>
         </div>
@@ -2336,6 +2335,91 @@
                   <option value="center" selected>CENTER</option>
                 </select>
               </div>
+              
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-line-config"  aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-4"><i class="bi bi-slash-lg"></i> line</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" >
+            <form class="d-flex flex-column gap-3" action="" data-wc-sync-form="editor.tool" onsubmit="return false;" onchange="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))" onclick="Object.assign(editor.tool,Wc.HtmlUtil.formToObject(this))" >
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> lineWidth(선 너비)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value="3">
+                    <input type="range" class="form-range d-block" name="lineWidth" placeholder="lineWidth" min="1" max="100" step="1" value="10">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> lineCap(선 끝 모양)</div>
+                  <div class="input-group">
+                  <select class="form-select" name="lineCap">
+                    <option value="butt">butt</option>
+                    <option value="round">round</option>
+                    <option value="square">square</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> lineDash (점선 패턴)</div>
+                <div class="d-flex gap-3">
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> dash (점선 선)</div>
+                    <div class="input-group ui-input-stepper">
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                      <div class="form-control ui-input-stepper-data-value" >
+                        <input type="range" class="form-range d-block" name="lineDashDash" placeholder="lineDashDash" min="5" max="100" step="1" value="1">
+                      </div>
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> gap (점선 갭)</div>
+                    <div class="input-group ui-input-stepper">
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                      <div class="form-control ui-input-stepper-data-value" >
+                        <input type="range" class="form-range d-block" name="lineDashGap" placeholder="lineDashGap" min="0" max="100" step="1" value="0">
+                      </div>
+                      <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-slash-lg"></i> lineDashOffset(점선 패턴 시작 위치)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" >
+                    <input type="range" class="form-range d-block" name="lineDashOffset" placeholder="lineDashOffset" min="-100" max="100" step="1" value="0">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              
+              <hr class="m-0">
+              <div>
+                <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(불투명도)</div>
+                <div class="input-group ui-input-stepper">
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
+                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multipler="100" data-value-to-fixed="0" data-value="100">
+                    <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1">
+                  </div>
+                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
+                </div>
+              </div>
+              
               
             </form>
           </div>

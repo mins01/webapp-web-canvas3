@@ -124,6 +124,7 @@
 .wc-app[data-tool="Polygon"] .only-shown-tool-Polygon{display: block;}
 .wc-app[data-tool="Star"] .only-shown-tool-Star{display: block;}
 .wc-app[data-tool="SelectionRectangle"] .only-shown-tool-SelectionRectangle{display: block;}
+.wc-app[data-tool="Line"] .only-shown-tool-Line{display: block;}
 
 
 body[data-fullscreen="true"] .only-shown-fullscreen-true{display: block;}
@@ -512,4 +513,22 @@ body[data-bs-theme='dark'] .show-data-bs-theme-dark{
 }
 body[data-bs-theme='light'] .show-data-bs-theme-light{
   display: block;
+}
+
+
+
+
+.text-icon{
+    display: inline-block;
+    font-family: monospace !important;
+    font-style: normal;
+    font-weight: 400 !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 1em;
+    text-align: center;
 }
