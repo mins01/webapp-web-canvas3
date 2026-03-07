@@ -49,7 +49,7 @@ class Canvas extends HTMLCanvasElement{
         this.label = "created at "+(d).toLocaleString(['ko'],{dateStyle:'medium',timeStyle:'medium',hourCycle:'h24'}).replace(/[^\d]/g,'');
         this.contextConfig = new Context2dConfig();
 
-        Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
+        // Object.defineProperty(this,'ctx',{ enumerable: false, configurable: true, writable: true, value: null, })
         Object.defineProperty(this, 'parent', { enumerable: false, configurable: true, writable: true, value: null, })
         // this.parent = null
 
@@ -72,7 +72,12 @@ class Canvas extends HTMLCanvasElement{
     // attributeChangedCallback(name, oldValue, newValue){
         
     // }
+    #ctx = null;
+    get ctx(){
+        return this.#ctx ??= this.getContext2d();
+    }
 
+    // @deprecated
     setContext2d(options=Canvas.context2dOptions){
         this.ctx = this.getContext2d(options)
         return this.ctx;
