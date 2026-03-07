@@ -1,8 +1,5 @@
-import ShapePath2D from '../draw/ShapePath2D.js';
-import Layer from '../element/Layer.js';
-import LayerKind from '../lib/LayerKind.js';
-// import BaseTool from './BaseTool.js';
 import BaseDrawTool from './BaseDrawTool.js';
+
 export default class Line extends BaseDrawTool {
 
     lineWidth = 3;
