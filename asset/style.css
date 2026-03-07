@@ -532,3 +532,9 @@ body[data-bs-theme='light'] .show-data-bs-theme-light{
     width: 1em;
     text-align: center;
 }
+
+
+/* 스텝퍼 버튼크기 조절 */
+.ui-input-stepper .btn[data-stepper]{
+    width: 2.4em;
+}
