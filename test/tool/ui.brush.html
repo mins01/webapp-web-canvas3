@@ -58,6 +58,24 @@
   </script>
 
   <style>
+    ui-input-stepper .btn[data-action]{
+      min-width: 2.4em;
+      user-select: none;
+      touch-action: none;
+    }
+  </style>   
+  <script src="../../third_party/ui-input-stepper/UiInputStepperElement.js"></script>
+  <script>
+    window.addEventListener('load',(event)=>{
+      UiInputStepperElement.defineCustomElement();
+
+      document.querySelectorAll('ui-input-stepper[data-format="%"]').forEach((element)=>{
+        element.formattedOutput = function(value){ return (value*100).toFixed(0)+"%"}
+      })
+    })
+  </script>
+
+  <style>
     canvas{
       outline: 1px dashed #aabbcc99;
     }
@@ -214,6 +232,8 @@
       const f = container.querySelector('.form-brush-config')
       Wc.HtmlUtil.objectToForm(brush.brushConfig,f)
       container.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{ UiInputStepper.syncDataValue(input); })
+
+      container.querySelectorAll('ui-input-stepper')?.forEach((el)=>{ el.syncValue() })
     }
 
   </script>
@@ -287,33 +307,36 @@
               </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-border-width"></i> Size(크기,지름)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="px" >
-                    <input type="range" class="form-range d-block" name="size" placeholder="size" min="1" max="400" step="1"  value="5">
+                <ui-input-stepper class="input-group" formatted-output="{value}px">
+                  <button type="button" class="btn btn-primary" data-action="down">-</button>
+                  <div class="form-control position-relative">
+                      <input class="form-range h-100" type="range" name="size"  min="1" max="400" step="1"  value="5">
+                      <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                   </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                </div>
+                  <button type="button" class="btn btn-primary" data-action="up">+</button>
+                </ui-input-stepper>
               </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-transparency"></i> Opacity(스트로크 불투명도)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                    <input type="range" class="form-range d-block" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                <ui-input-stepper class="input-group" data-format="%">
+                  <button type="button" class="btn btn-primary" data-action="down">-</button>
+                  <div class="form-control position-relative">
+                      <input class="form-range h-100" type="range" name="opacity" placeholder="opacity" step="0.01" min="0" max="1" value="1" >
+                      <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                   </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                </div>
+                  <button type="button" class="btn btn-primary" data-action="up">+</button>
+                </ui-input-stepper>
               </div>
               <div>
                 <div class="form-label mb-0"><i class="bi bi-transparency"></i> Flow(브러시 자국 불투명도)</div>
-                <div class="input-group ui-input-stepper">
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                  <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                    <input type="range" class="form-range d-block" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
+                <ui-input-stepper class="input-group" data-format="%">
+                  <button type="button" class="btn btn-primary" data-action="down">-</button>
+                  <div class="form-control position-relative">
+                      <input class="form-range h-100" type="range" name="flow" placeholder="flow" step="0.01" min="0" max="1" value="1" >
+                      <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                   </div>
-                  <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                </div>
+                  <button type="button" class="btn btn-primary" data-action="up">+</button>
+                </ui-input-stepper>
               </div>
             </div>
             <hr>
@@ -371,54 +394,59 @@
                     
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-arrows-collapse-vertical"></i> SacleX(너비 배율)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="scaleX" placeholder="scaleX" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="scaleX" placeholder="scaleX" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-arrows-collapse"></i> SacleY(높이 배율)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="scaleY" placeholder="scaleY" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="scaleY" placeholder="scaleY" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
-                      <div class="form-label mb-0"><i class="bi bi-radar"></i> Angle(각도)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="°"  >
-                          <input type="range" class="form-range d-block" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                      <div class="form-label mb-0"><i class="bi bi-radar"></i> Angle(각도)</div>                  
+                      <ui-input-stepper class="input-group" formatted-output="{value}°">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="angle" placeholder="angle" step="1" min="-180" max="180" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-vignette"></i> Hardness(경도)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0">
-                          <input type="range" class="form-range d-block" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="hardness" placeholder="hardness" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-border-style"></i> Spacing(간격)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="spacing" placeholder="spacing" step="0.05" min="0.05" max="4" value="0.25" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlattenToSolidColor(단색 평탄화)</div>
@@ -440,13 +468,14 @@
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-border-width"></i> MininumSizeRatio</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="mininumSizeRatio" placeholder="mininumSizeRatio" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <hr class="my-1">
                     <header> <h4 class="m-0">Flow control (via stylus pen)</h4> </header>
@@ -459,13 +488,14 @@
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-transparency"></i> MininumFlow</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="mininumFlow" placeholder="mininumFlow" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="mininumFlow" placeholder="mininumFlow" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <hr class="my-1">
                     <header> <h4 class="m-0">Height control (via stylus pen)</h4> </header>
@@ -481,13 +511,14 @@
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-arrows-vertical"></i> MninumScaleY</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="mninumScaleY" placeholder="mninumScaleY" step="0.01" min="0" max="1" value="1" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="mninumScaleY" placeholder="mninumScaleY" step="0.01" min="0" max="1" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     
                     <hr class="my-1">
@@ -506,75 +537,82 @@
                     
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-palette"></i> HueJitter (Not supported <i class="bi bi-browser-safari"></i>)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="hueJitter" placeholder="hueJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="hueJitter" placeholder="hueJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-brightness-alt-high"></i> SaturationJitter (Not supported <i class="bi bi-browser-safari"></i>)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="saturationJitter" placeholder="saturationJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="saturationJitter" placeholder="saturationJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-brightness-high"></i> BrightnessJitter (Not supported <i class="bi bi-browser-safari"></i>)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="brightnessJitter" placeholder="brightnessJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="brightnessJitter" placeholder="brightnessJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-border-width"></i> SizeJitter</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="sizeJitter" placeholder="sizeJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="sizeJitter" placeholder="sizeJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-transparency"></i> FlowJitter</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="flowJitter" placeholder="flowJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="flowJitter" placeholder="flowJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-radar"></i> AngleJitter</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="angleJitter" placeholder="angleJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="angleJitter" placeholder="angleJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <hr class="my-1">
                     <header> <h4 class="m-0">Scattering (산란)</h4> </header>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-shuffle"></i> ScatterAmount (퍼지는 정도)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="scatterAmount" placeholder="scatterAmount" step="0.01" min="0" max="5" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="scatterAmount" placeholder="scatterAmount" step="0.01" min="0" max="5" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Axes (양축 스캐터링)</div>
@@ -586,35 +624,38 @@
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Count (한번에 그리는 수)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" >
-                          <input type="range" class="form-range d-block" name="scatterCount" placeholder="scatterCount" step="1" min="1" max="10" value="1" >
+                      <ui-input-stepper class="input-group">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="scatterCount" placeholder="scatterCount" step="1" min="1" max="10" value="1" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-shuffle"></i> CountJitter (Count 수 변동)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="%" data-value-multiplier="100" data-value-to-fixed="0" >
-                          <input type="range" class="form-range d-block" name="scatterCountJitter" placeholder="scatterCountJitter" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" data-format="%">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="scatterCountJitter" placeholder="scatterCountJitter" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     <hr class="my-1">
                     <header> <h4 class="m-0">Build Up Effect (누적효과)</h4> </header>
                     <div>
                       <div class="form-label mb-0"><i class="bi bi-shuffle"></i> Build Up (누적효과 인터벌 타임)</div>
-                      <div class="input-group ui-input-stepper">
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="down">-</button>
-                        <div class="form-control ui-input-stepper-data-value" data-value-suffix="sec"  data-value-to-fixed="2" >
-                          <input type="range" class="form-range d-block" name="buildUpInterval" placeholder="buildUpInterval" step="0.01" min="0" max="1" value="0" >
+                      <ui-input-stepper class="input-group" formatted-output="{value}sec">
+                        <button type="button" class="btn btn-primary" data-action="down">-</button>
+                        <div class="form-control position-relative">
+                            <input class="form-range h-100" type="range" name="buildUpInterval" placeholder="buildUpInterval" step="0.01" min="0" max="1" value="0" >
+                            <output class="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center pe-none" ></output>
                         </div>
-                        <button type="button" class="btn btn-primary btn-stepper" data-stepper="up">+</button>
-                      </div>
+                        <button type="button" class="btn btn-primary" data-action="up">+</button>
+                      </ui-input-stepper>
                     </div>
                     
                   </div>
