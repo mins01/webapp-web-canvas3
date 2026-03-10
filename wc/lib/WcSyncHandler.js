@@ -24,9 +24,12 @@ export default class WcSyncHandler{
       this.syncForm(form);
     });
 
-    target.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{
-      UiInputStepper.syncDataValue(input);
-    })
+    // target.querySelectorAll('.ui-input-stepper input')?.forEach((input)=>{
+    //   UiInputStepper.syncDataValue(input);
+    // })
+    target.querySelectorAll('ui-input-stepper')?.forEach((el)=>{ el.syncValue() })
+
+    
   }
 
   /**
