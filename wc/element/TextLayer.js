@@ -27,12 +27,11 @@ export default class TextLayer extends Layer{
     // DOM 으로 연결되면
     #isConnectedCallback = false;  // 최초 한번만 실행한다!
     connectedCallback(){
-        if(this.#isConnectedCallback){return}
+        if(this.#isConnectedCallback){return}       
         this.#isConnectedCallback = true;
-        super.connectedCallback();
         this.initFromAttributes()
         this.flush();
-        // console.log('connectedCallback',this.text);
+        console.debug('connectedCallback',this);
     }
 
     initFromAttributes(){

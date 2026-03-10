@@ -60,15 +60,15 @@ class Canvas extends HTMLCanvasElement{
     }
 
 
-    // connectedCallback(){
-
-    // }
-    // disconnectedCallback(){
-
-    // }
-    // adoptedCallback(){
-
-    // }
+    connectedCallback(){
+        console.debug('connectedCallback',this);
+    }
+    disconnectedCallback(){
+        console.debug('disconnectedCallback',this);
+    }
+    adoptedCallback(){
+        console.debug('adoptedCallback',this);
+    }
     // attributeChangedCallback(name, oldValue, newValue){
         
     // }
