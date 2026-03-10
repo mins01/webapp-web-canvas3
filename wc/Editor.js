@@ -648,7 +648,8 @@ export default class Editor{
         if(this?.document?.layer){
             const layerAlpha = window.document.querySelector('#layer-alpha')
             layerAlpha.value = this?.document?.layer.alpha
-            // UiInputStepper.syncDataValue(layerAlpha) //여기서 안해도 된다.
+            UiInputStepperElement.syncValue(layerAlpha)
+            // UiInputStepper.syncDataValue(layerAlpha) 
             const layerCompositeOperation = window.document.querySelector('#layer-composite-operation')
             layerCompositeOperation.value = this?.document?.layer.compositeOperation
             // UiInputStepper.syncDataValue(layerCompositeOperation) // 이거 필요가 없는데?

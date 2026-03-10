@@ -379,11 +379,34 @@ body[data-fullscreen="false"] .only-shown-fullscreen-false{display: block;}
 
 
 /* ui-input-stepper */
-.btn-stepper{ width: 2.5em;}
+ui-input-stepper .btn[data-action]{
+  min-width: 2.4em;
+  user-select: none;
+  touch-action: none;
+}
+ui-input-stepper output{
+  text-shadow: -1px -1px 0 var(--bs-border-color,#666), 1px -1px 0 var(--bs-border-color,#666), -1px 1px 0 var(--bs-border-color,#666), 1px 1px 0 var(--bs-border-color,#666);
+}
+
+
+/* .btn-stepper{ width: 2.5em;}
 .ui-input-stepper.ui-input-stepper-data-value::before, .ui-input-stepper .ui-input-stepper-data-value::before{
   text-shadow: -1px -1px 0 var(--bs-border-color,#666), 1px -1px 0 var(--bs-border-color,#666), -1px 1px 0 var(--bs-border-color,#666), 1px 1px 0 var(--bs-border-color,#666);
 
-}
+} */
+/* 스텝퍼 버튼크기 조절 */
+/* .ui-input-stepper .btn[data-stepper]{
+    width: 2.4em;
+} */
+
+
+
+
+
+
+
+
+
 
 .wc-app[data-tool-enable="true"] .only-enable-tool-enable,
 .wc-app[data-tool-enable="true"] .group-only-enable-tool-enable > *{
@@ -534,7 +557,3 @@ body[data-bs-theme='light'] .show-data-bs-theme-light{
 }
 
 
-/* 스텝퍼 버튼크기 조절 */
-.ui-input-stepper .btn[data-stepper]{
-    width: 2.4em;
-}
