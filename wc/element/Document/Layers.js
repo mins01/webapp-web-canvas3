@@ -107,20 +107,20 @@ export default class Layers extends SelectableArray{
             return false;
         }
         const newToLayer = toLayer.clone();
-        
+
         newToLayer.drawLayer(fromLayer);
-        //-- 갱신        
+        //-- 갱신
         newToLayer.flush();
         this[this.selectedIndex-1] = newToLayer; //레이어 교체
         // toLayer.flush();
         //-- 삭제처리
         super.remove();
 
-        this.ready();        
+        this.ready();
         this.document.history.save('Layers.mergeDown');
         return true;
 
-        
+
     }
 
     convertToLayer(layer=null){
@@ -130,7 +130,7 @@ export default class Layers extends SelectableArray{
         if(index<0){ throw new Error("Not exists layer"); }
         const newLayer = Layer.clone(layer,layer.name);
         newLayer.parent = document;
-        this[index] = newLayer;       
+        this[index] = newLayer;
         newLayer.flush();
         this.ready();
         this.document.history.save('Layers.convertToLayer');
@@ -141,13 +141,13 @@ export default class Layers extends SelectableArray{
 
 
     import(conf){
-        
+
         if(conf.elements === null){ //레이어의 변화가 없는 경우
 
         }else{
             this.clear();
             conf.elements.forEach(layerConf => {
-                if(layerConf instanceof Canvas){ // 객체. 
+                if(layerConf instanceof Canvas){ // 객체.
                     const layer = layerConf.clone()
                     this.add(layer,true);
                 }else{ // snapshot 기준으로 동작할 때. @deprecated
@@ -155,13 +155,12 @@ export default class Layers extends SelectableArray{
                     let module = Wc?.[layerConf.__class__]
                     if(!module){ throw new Error(`Module is not exists. - ${layerConf.__class__}`); }
                     const layer = module.importFrom(layerConf);
-                    console.log(layerConf);
-                    
+                    // console.log(layerConf);
                     // this.document.add(layer);
                     this.add(layer,true);
                 }
 
-                
+
             });
         }
         if(conf?.selectedIndex !== undefined) this.select(conf.selectedIndex,true)
@@ -186,7 +185,7 @@ export default class Layers extends SelectableArray{
 
     clone(withoutElements=false){
         console.log('layers.clone');
-        
+
         let elements = null;
         if(!withoutElements){
             elements = []
@@ -211,16 +210,17 @@ export default class Layers extends SelectableArray{
         let elements = null;
         if(!withoutElements){
             elements = []
-            this.forEach((element,idx)=>{               
+            this.forEach((element,idx)=>{
                 if(lastUpdatedAt <= element.updatedAt ){ // lastUpdatedAt 보다 크거가 같다면 변경된 것으로 보고 clone 한다.
                     // console.log(idx,element.updatedAt,'CLONE');
-                    elements.push(element.clone());                    
+                    elements.push(element.clone());
                 }else{ // 아니다면 원본 Canvas를 유지한다.
                     // console.log(idx,element.updatedAt,'ORG');
                     elements.push(element);
                 }
-                
             })
+        }else{
+            // elements = [...this]
         }
         return {
             lastUpdatedAt: this.lastUpdatedAt,
@@ -251,5 +251,5 @@ export default class Layers extends SelectableArray{
             selectedIndex:this.selectedIndex,
             elements:elements,
         }
-    }    
+    }
 }

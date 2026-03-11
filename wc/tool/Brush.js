@@ -46,6 +46,7 @@ export default class Brush extends BaseTool{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
                 console.warn(`Only normal layer are supported. (${this?.layer?.kind})`);
                 this.enable = false;
+                this.originalLayer = null;
             }else{
                 this.enable = true;
                 this.originalLayer = this.layer?.clone()??null
