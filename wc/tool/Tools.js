@@ -54,21 +54,20 @@ export default class Tools extends SelectableMap{
         if(this.tool){ this.tool.deactivate(); }
         if(!this.has(toolName)){
             return await this.load(toolName).then(()=>{
-
                 this.toolName = toolName;
-                super.select(toolName);
                 this.editor.dispatchEvent('wc.tools.load', { toolName:toolName, tool:this.tool } );
+                super.select(toolName);
                 if(this.tool){
-                    this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                     this.tool.activate();
+                    this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                 }
                 return this.tool;
             }).catch(e=>{console.error(e)});
         }else{
             super.select(toolName);
             if(this.tool){
-                this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
                 this.tool.activate();
+                this.editor.dispatchEvent('wc.tools.select', { toolName:toolName, tool:this.tool } );
             }
         }
         return this.tool;

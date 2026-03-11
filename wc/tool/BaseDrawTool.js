@@ -13,10 +13,11 @@ export default class BaseDrawTool extends BaseTool{
         this.workingLayer = new Layer(100,100);
     }
 
-    start(){
-        this.ready()
-        super.start();
-    }
+    // 별로 필요 없어 보인다.
+    // start(){
+    //     // this.ready()
+    //     super.start();
+    // }
 
     ready(){
 		super.ready();

@@ -24,19 +24,17 @@ export default class Brush extends BaseTool{
         this.drawCount = 0;
     }
 
-    start(){
-        super.start();
-        this.brush.ready()        
-        this.ready()
-    }
+    // start(){
+    //     super.start();
+    // }
 
     ready(){
 		super.ready();
+        this.brush.ready()
         if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
         this.stopBuildUp();
-        
 	}
 
     /** 

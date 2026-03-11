@@ -23,84 +23,26 @@ export default class BaseTool {
 
 		this.init();
 	}
+	
+	get document(){ return this?.editor?.document??null; }
+	get layer(){ return this?.editor?.document?.layer??null; }
+	get drawingLayer(){ return this?.editor?.document?.drawingLayer??null; }
+	get selectionLayer(){ return this?.editor?.document?.selectionLayer??null; }
 
 	init(){
 		console.log(`BaseTool::init() - ${this.constructor.name}`);
-		
-		this.peh = this.editor.peh
-
+		this.peh = this.editor.peh; // 사용안하나?
 		this.pointerType = null
 		this.downAt = null;
-
-		// this.document = this.editor?.document; // to getter
-		// this.layer = this?.document?.layer; // to getter
-		// this.drawingLayer = this?.document?.drawingLayer; // to getter
-		// console.log(this.document);
-		
-
 		this.x0 = null;
 		this.y0 = null;
 		this.x1 = null;
 		this.y1 = null;
 	}
 
-	get document(){ return this?.editor?.document??null; }
-	get layer(){ return this?.editor?.document?.layer??null; }
-	get drawingLayer(){ return this?.editor?.document?.drawingLayer??null; }
-	get selectionLayer(){ return this?.editor?.document?.selectionLayer??null; }
-
-
-
-	/** 
-	 * 활성화 : 툴이 선택 되면
-	 */
-	activate(cb=null){
-		if(!this.document){
-			this.enable = false;
-			return false;
-		}
-		this.init();
-		this.ready();
-		if(cb){ cb(); }
-		// this?.document?.flush();
-		this.editor.dispatchEvent('wc.tool.activate', { toolName:this.name, tool:this } );
-		console.log('tool-activate:',this.name);
-	}
-
-	/** 
-	 * 비활성화 : 다른 툴이 활성화 되면
-	 */
-	deactivate(cb=null){
-		if(cb){ cb(); }
-		this.editor.dispatchEvent('wc.tool.deactivate', { toolName:this.name, tool:this } );
-		console.log('tool-deactivate',this.name);
-
-	}
-
-	/** 추가적인 확정 동작이 필요할 경우 호출 */
-	confirm(cb=null){
-		if(cb){ cb(); }
-		this.editor.dispatchEvent('wc.tool.confirm', { toolName:this.name, tool:this } );
-		console.log('tool-confirm',this.name);
-	}
-
-	/** 동작 취소가 필요할 경우 호출. 초기화 시킨다. */
-	cancel(cb=null){
-		if(cb){ cb(); }
-		this.downAt = null;
-		this.editor.dispatchEvent('wc.tool.cancel', { toolName:this.name, tool:this } );
-		console.log('tool-cancel',this.name);
-	}
-
-
-
-
-
-
-
-
 	/**
 	 * 툴을 사용할 수 있도록 준비 시킴.
+	 * 변수 초기화
 	 */
 	ready(){
 		this.x0 = null;
@@ -115,42 +57,103 @@ export default class BaseTool {
 
 
 
-
-
-
-	/** 이벤트 처리 시작 */
-	start(){
+	/** 
+	 * 활성화 : 툴이 선택 되면
+	 */
+	activate(cb=null){
+		if(!this.document){
+			this.enable = false;
+			return false;
+		}
+		// this.init();
+		this.ready();
+		if(cb){ cb(); }
+		// this?.document?.flush();
+		this.editor.dispatchEvent('wc.tool.activate', { toolName:this.name, tool:this } );
+		console.info('tool-activate:',this.name);
 	}
 
+	/** 
+	 * 비활성화 : 다른 툴이 활성화 되면
+	 */
+	deactivate(cb=null){
+		if(cb){ cb(); }
+		this.editor.dispatchEvent('wc.tool.deactivate', { toolName:this.name, tool:this } );
+		console.info('tool-deactivate',this.name);
+
+	}
+
+	/** 추가적인 확정 동작이 필요할 경우 호출 */
+	confirm(cb=null){
+		if(cb){ cb(); }
+		this.editor.dispatchEvent('wc.tool.confirm', { toolName:this.name, tool:this } );
+		// console.log('tool-confirm',this.name);
+	}
+
+	/** 동작 취소가 필요할 경우 호출. 초기화 시킨다. */
+	cancel(cb=null){
+		this.downAt = null;
+		if(cb){ cb(); }
+		this.editor.dispatchEvent('wc.tool.cancel', { toolName:this.name, tool:this } );
+		// console.log('tool-cancel',this.name);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/** 이벤트 처리 후킹용 */
+	start(){
+		// console.debug('tool-start',this.name);
+		return true;
+	}
+	update(){
+		// console.debug('tool-update',this.name);
+		return true;
+	}
+	end(){
+		// console.debug('tool-end',this.name);
+		if(this.downAt){ this.downAt = null; return true }
+		return false;
+	}
+	
+	/** 이벤트 처리 시작 */
 	onpointerdown(pointer){
 		if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
 		this.pointerType = pointer.pointerType??null;
 		if(!this.downAt) this.downAt = Date.now();
 		if(!this.downAt) return false;
+		return this.start();
 	}
 
 	onpointermove(pointer){
 		if(!this.downAt) return false;
+		return this.update();
 	}
 
 	onpointerup(pointer){
 		if(!this.downAt) return false;
+		return this.end();
 	}
 
 	
-	/**
-	 * 이벤트 처리에 대한 최종 종료
-	 *
-	 * @returns {boolean} 정상종료시 true, 아니면 false
-	 */
-	end(){
-		if(this.downAt){ this.downAt = null; return true }
-		return false;
-	}
+
 
 	
 	draw(){
-
+		// console.debug('tool-draw',this.name);
 	}
 
 

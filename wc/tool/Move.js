@@ -11,14 +11,16 @@ export default class Move extends BaseTool{
         this.layerTop0 = null;
     }
 
-    start(){
-        super.start();
-        this.ready()
-        this.layerLeft0 = this.layer.left;
-        this.layerTop0 = this.layer.top;
-    }
+    // start(){
+    //     super.start();
+    //     this.ready()
+        
+    // }
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
+        this.layerLeft0 = this.layer.left;
+        this.layerTop0 = this.layer.top;
+
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);

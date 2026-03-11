@@ -35,19 +35,19 @@ export default class SelectionRectangle extends BaseTool{
 
 
 
-    start(){
-        super.start();
-        this.ready()
-    }
+    // start(){
+    //     super.start();
+    //     this.ready()
+    // }
 
     ready(){
 		super.ready();
         if(!this.selectionLayer || !this.editor?.document){ return false; }
         if(this.selectionLayer.width != this.document.width || this.selectionLayer.height != this.document.height)
-            {
-                this.selectionLayer.width = this.document.width;
-                this.selectionLayer.height = this.document.height;
-            } 
+        {
+            this.selectionLayer.width = this.document.width;
+            this.selectionLayer.height = this.document.height;
+        } 
 	}
 
     /** 

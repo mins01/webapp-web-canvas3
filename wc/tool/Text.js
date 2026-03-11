@@ -18,10 +18,10 @@ export default class Text extends BaseTool{
     }
 
 
-    start(){
-        super.start();
-        this.ready();
-    }
+    // start(){
+    //     super.start();
+    //     this.ready();
+    // }
 
     ready(){
         const textColor = this?.layer?.textConfig?.textColor??'#000000'

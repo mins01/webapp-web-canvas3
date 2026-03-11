@@ -194,7 +194,7 @@ export default class Editor{
         this.target.dataset.pointerEventType = event.type;
         if(peh.maxActivePointers===1 ){
             if(!this.checkInputMode(pointer)) return;
-            this.tool.start();
+            // this.tool.start(); // this.tool.onpointerdown(pointer); 이 속에 넣는다.
             this.tool.onpointerdown(pointer);
         }else if(peh.maxActivePointers >= 2){
             if(this.tool.downAt){
@@ -232,7 +232,7 @@ export default class Editor{
         if(peh.maxActivePointers===1 ){
             if(!this.checkInputMode(pointer)) return;
             this.tool.onpointerup(pointer);
-            this.tool.end();
+            // this.tool.end(); // this.tool.onpointerup(pointer); 이 속에 넣는다.
         }else if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
             
         }

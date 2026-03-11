@@ -11,14 +11,16 @@ export default class Hand extends BaseTool{
         this.top0 = null;
     }
 
-    start(){
-        super.start();
-        this.ready()
-        this.left0 = this.document.left;
-        this.top0 = this.document.top;
-    }
+    // start(){
+    //     // super.start();
+    //     // this.ready()
+        
+    // }
     onpointerdown(event){
         if(super.onpointerdown(event)===false){return false;}
+        this.left0 = this.document.left;
+        this.top0 = this.document.top;
+
         const [x,y] = this.getXyFromEvent(event);
         this.x0 = x; this.y0 = y; this.x1 = x; this.y1 = y;
         this.draw(this.x0,this.y0,this.x1,this.y1);
