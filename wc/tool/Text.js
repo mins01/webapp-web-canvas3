@@ -34,7 +34,7 @@ export default class Text extends BaseTool{
         if(disabled){ return false;}
         super.ready();
         this.targetLayer = this.document.layer;
-        this.orignalSnapshot = this.targetLayer.snapshot()
+        
         this.readyUtt();
         this.draw();
         
@@ -48,8 +48,10 @@ export default class Text extends BaseTool{
             if(!this.layer || this.layer.kind != LayerKind.TEXT){
                 console.warn(`Only text layer are supported. (${this.layer.kind})`);
                 this.enable = false;
+                this.orignalSnapshot = null;
             }else{
                 this.enable = true;
+                this.orignalSnapshot = this.targetLayer.snapshot()
             }
             if(cb) cb();
         });

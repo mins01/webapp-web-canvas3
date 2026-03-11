@@ -3,7 +3,7 @@ import LayerKind from '../lib/LayerKind.js';
 import BaseTool from './BaseTool.js';
 
 export default class BaseDrawTool extends BaseTool{
-    originalSnapshot = null
+    originalLayer = null
     workingLayer = null;
     opacity = 1;
 
@@ -23,7 +23,6 @@ export default class BaseDrawTool extends BaseTool{
         if(!this.layer || !this.editor?.document){ return false; }
         this.workingLayer.width = this.layer.width;
         this.workingLayer.height = this.layer.height;
-        this.originalSnapshot = this.layer?.clone()??null
 	}
 
     /** 
@@ -34,8 +33,10 @@ export default class BaseDrawTool extends BaseTool{
             if(!this.layer || this.layer.kind != LayerKind.NORMAL){
                 console.warn(`Only normal layer are supported. (${this?.layer?.kind})`);
                 this.enable = false;
+                this.originalLayer = null;
             }else{
                 this.enable = true;
+                this.originalLayer = this.layer?.clone()??null
             }
             if(cb) cb();
         });
@@ -43,8 +44,8 @@ export default class BaseDrawTool extends BaseTool{
 
     inactivate(){
         super.inactivate();
-        if(this.layer && this.originalSnapshot) this.layer.import(this.originalSnapshot); // 되돌린다.
-        this.originalSnapshot = null;
+        if(this.layer && this.originalLayer) this.layer.import(this.originalLayer); // 되돌린다.
+        this.originalLayer = null;
     }
 
     onpointerdown(event){
@@ -77,7 +78,7 @@ export default class BaseDrawTool extends BaseTool{
         
         this.maksingLayer(from,selectionLayer,-to.left,-to.top);
         
-        if(this.originalSnapshot) to.import(this.originalSnapshot);
+        if(this.originalLayer) to.import(this.originalLayer);
         
         const ctx = to.ctx;        
         ctx.save();
@@ -91,7 +92,7 @@ export default class BaseDrawTool extends BaseTool{
     end(){
         if(super.end()===false){return false;}
         this.document.history.save(`Tool.${this.constructor.name}`);
-        this.originalSnapshot = this.layer?.clone()??null
+        this.originalLayer = this.layer?.clone()??null
         this.ready();
     }
     cancel(){
