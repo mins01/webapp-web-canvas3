@@ -42,8 +42,8 @@ export default class BaseDrawTool extends BaseTool{
         });
     }
 
-    inactivate(){
-        super.inactivate();
+    deactivate(){
+        super.deactivate();
         if(this.layer && this.originalLayer) this.layer.import(this.originalLayer); // 되돌린다.
         this.originalLayer = null;
     }

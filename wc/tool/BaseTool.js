@@ -70,10 +70,10 @@ export default class BaseTool {
 	/** 
 	 * 비활성화 : 다른 툴이 활성화 되면
 	 */
-	inactivate(cb=null){
+	deactivate(cb=null){
 		if(cb){ cb(); }
-		this.editor.dispatchEvent('wc.tool.inactivate', { toolName:this.name, tool:this } );
-		console.log('tool-inactivate',this.name);
+		this.editor.dispatchEvent('wc.tool.deactivate', { toolName:this.name, tool:this } );
+		console.log('tool-deactivate',this.name);
 
 	}
 

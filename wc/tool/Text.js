@@ -56,8 +56,8 @@ export default class Text extends BaseTool{
             if(cb) cb();
         });
 	}
-    inactivate(cb=null){
-        super.inactivate(()=>{
+    deactivate(cb=null){
+        super.deactivate(()=>{
             if(this.enable){
                 this.targetLayer.import(this.orignalSnapshot); // 되돌린다.
             }

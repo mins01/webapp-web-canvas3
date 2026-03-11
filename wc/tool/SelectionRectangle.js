@@ -65,8 +65,8 @@ export default class SelectionRectangle extends BaseTool{
         });
     }
 
-    inactivate(){
-        super.inactivate();
+    deactivate(){
+        super.deactivate();
     }
 
     onpointerdown(event){

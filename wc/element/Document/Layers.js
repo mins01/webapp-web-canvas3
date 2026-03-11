@@ -21,7 +21,7 @@ export default class Layers extends SelectableArray{
     }
     select(index,withoutHistory=false){
         if(this.selectedIndex != index){
-            this?.document?.editor?.tool?.inactivate()
+            this?.document?.editor?.tool?.deactivate()
             const r = super.select(index);
             this.ready();
             if(!withoutHistory){
@@ -42,7 +42,7 @@ export default class Layers extends SelectableArray{
         if(!layer){
             throw new Error("지정된 레이어 클래스가 없습니다.");
         }
-        this?.document?.editor?.tool?.inactivate()
+        this?.document?.editor?.tool?.deactivate()
         this.add(layer,withoutHistory);
         // layer.flush();
         return layer;
@@ -51,7 +51,7 @@ export default class Layers extends SelectableArray{
         const document = this.document
         if(!layer) layer = document.layer;
         const newLayer = layer.clone(true);
-        this?.document?.editor?.tool?.inactivate()
+        this?.document?.editor?.tool?.deactivate()
         this.add(newLayer,withoutHistory);
     }
     add(layer,withoutHistory=false){
@@ -67,7 +67,7 @@ export default class Layers extends SelectableArray{
     }
     remove(){
         if(this.length===1){ throw new Error("Must be at least one layer."); }
-        this?.document?.editor?.tool?.inactivate()
+        this?.document?.editor?.tool?.deactivate()
         const document = this.document
         super.remove();
         this.ready();
@@ -96,7 +96,7 @@ export default class Layers extends SelectableArray{
             alert('No layers available to merge down.');
             return false;
         }
-        this?.document?.editor?.tool?.inactivate()
+        this?.document?.editor?.tool?.deactivate()
 
         const selectedIndex = this.selectedIndex
         const fromLayer = this[this.selectedIndex];

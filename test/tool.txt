@@ -14,6 +14,25 @@ pointerup() // draw()
 
 confirm() // with ready(), 동작을 적용시킴
 cancel() // with ready(), 동작이 취소되면
-inactivate() // 툴이 다른 툴로 바뀔 경우
+deactivate() // 툴이 다른 툴로 바뀔 경우
 
 draw() // 페인팅 동작
+---------=-----------
+다시
+
+# 툴 선택시
+onselect() -> activate() -> start() & ready()
+# 레이어 등의 변경시
+activate() -> start() & ready()
+
+# 마우스 이동
+pointerdown() // draw()
+pointermove() // draw()
+pointerup() // draw()
+
+# 적용과 취소가 있을 경우
+confirm()/cancel()
+
+# 툴이 선택이 취소될 경우
+deactivate() // 내용 복구.
+

@@ -17,9 +17,9 @@ export default class Spuit extends BaseTool{
         else this.buffer = null
 		super.activate(cb);
 	}
-    inactivate(cb=null){
+    deactivate(cb=null){
 		this.buffer = null
-		super.inactivate(cb);
+		super.deactivate(cb);
 	}
 
     onpointerdown(event){

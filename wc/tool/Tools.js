@@ -51,7 +51,7 @@ export default class Tools extends SelectableMap{
      * @returns {unknown} 
      */
     async select(toolName){
-        if(this.tool){ this.tool.inactivate(); }
+        if(this.tool){ this.tool.deactivate(); }
         if(!this.has(toolName)){
             return await this.load(toolName).then(()=>{
 
