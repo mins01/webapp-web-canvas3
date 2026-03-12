@@ -216,7 +216,7 @@
       UiInputStepper.initDataValue()
     })
   </script> -->
-  <script src="./third_party/ui-input-stepper/UiInputStepperElement.js"></script>
+  <!-- <script src="./third_party/ui-input-stepper/UiInputStepperElement.js"></script>
   <script>
     window.addEventListener('load',(event)=>{
       UiInputStepperElement.defineCustomElement();
@@ -225,7 +225,17 @@
         element.formattedOutput = function(value){ return (value*100).toFixed(0)+"%"}
       })
     })
-  </script>
+  </script> -->
+    <script type="module">
+      import UiInputStepperElement from './third_party/ui-input-stepper/UiInputStepperElement.esm.js'
+      UiInputStepperElement.defineCustomElement();
+      window.UiInputStepperElement = UiInputStepperElement;
+      window.addEventListener('load',(event)=>{
+        document.querySelectorAll('ui-input-stepper[data-format="%"]').forEach((element)=>{
+          element.formattedOutput = function(value){ return (value*100).toFixed(0)+"%"}
+        })
+      })
+    </script>
   <!-- //ui-input-stepper -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
