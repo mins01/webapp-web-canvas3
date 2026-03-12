@@ -76,7 +76,7 @@ export default class BaseDrawTool extends BaseTool{
         const to = this.layer;
         const selectionLayer = this.selectionLayer;
         
-        this.maksingLayer(from,selectionLayer,-to.left,-to.top);
+        this.maskingLayer(from,selectionLayer,-to.left,-to.top);
         
         if(this.originalLayer) to.import(this.originalLayer);
         

@@ -66,7 +66,6 @@ export default class BaseTool {
 			return false;
 		}
 		// this.init();
-		this.ready();
 		if(cb){ cb(); }
 		// this?.document?.flush();
 		this.editor.dispatchEvent('wc.tool.activate', { toolName:this.name, tool:this } );
@@ -132,9 +131,9 @@ export default class BaseTool {
 	/** 이벤트 처리 시작 */
 	onpointerdown(pointer){
 		if(!this.enable){console.warn('툴을 사용할 수 없습니다.');return false;}
+		this.ready();
 		this.pointerType = pointer.pointerType??null;
 		if(!this.downAt) this.downAt = Date.now();
-		if(!this.downAt) return false;
 		return this.start();
 	}
 
@@ -346,7 +345,7 @@ export default class BaseTool {
 
 
 	// targetLayer 에 selectionLayer 를 기준으로 겹치는 부분만 보이게 한다.
-	maksingLayer(targetLayer,selectionLayer,left=0,top=0){
+	maskingLayer(targetLayer,selectionLayer,left=0,top=0){
 		if(selectionLayer && !selectionLayer.isEmpty){ // 선택영역을 마스크로 동작
 				targetLayer.ctx.save();
 				targetLayer.ctx.globalCompositeOperation = "destination-in"; // 기존 그림과 겹치는 부분만 남김
