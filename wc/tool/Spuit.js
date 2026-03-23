@@ -1,5 +1,7 @@
 import BaseTool from './BaseTool.js';
-import Color from '../../third_party/js-color/lib/Color.js';
+// import Color from '../../third_party/js-color/lib/Color.js';
+import {Color} from "../lib/jsColor.js";
+
 
 export default class Spuit extends BaseTool{
     remainInterval = 0;
