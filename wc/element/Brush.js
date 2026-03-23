@@ -1,6 +1,7 @@
 // import Layer from "./Layer.js";
 import PathShape from "../draw/PathShape.js";
-import jsColor from "../lib/jsColor.js";
+// import jsColor from "../lib/jsColor.js";
+import {Color} from "../lib/jsColor.js";
 import Canvas from "./Canvas.js";
 
 import BrushConfig from "../lib/BrushConfig.js";
@@ -66,12 +67,12 @@ export default class Brush extends Canvas{
     // const ctx = this.ctx;
     const brushConfig = this.brushConfig;
     const gradient = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-    const c = jsColor.Color.from(ctx.fillStyle);
+    const c = Color.from(ctx.fillStyle);
     c.a = 0;
     gradient.addColorStop(0, ctx.fillStyle);
     if(brushConfig.hardness < 1){
       gradient.addColorStop(brushConfig.hardness, ctx.fillStyle);
-      gradient.addColorStop(1, c.toRgba());
+      gradient.addColorStop(1, c.toRgbaString());
     }else{
       gradient.addColorStop(1, ctx.fillStyle);
     }

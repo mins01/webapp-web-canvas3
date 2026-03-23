@@ -41,7 +41,7 @@ export default class Spuit extends BaseTool{
     }
     onpointerup(event){
         globalThis.modalHandler.get('modal-color-palette').show()
-        globalThis.cpForeColor.setPreview(this.color.toHex())
+        globalThis.cpForeColor.setPreview(this.color.toHexString())
 
         return super.onpointerup(event);
     }
