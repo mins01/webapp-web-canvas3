@@ -33,11 +33,11 @@ export default class Editor{
         this.activeTool = null;
         this.peh = new PointerEventHandler(target);
         target.addEventListener('pointerdown.peh',this.onpointerdown)
-        target.addEventListener('pointermove.peh',this.onpointermove)
+        // target.addEventListener('pointermove.peh',this.onpointermove)
         target.addEventListener('pointerup.peh',this.onpointerup)
         target.addEventListener('pinch.peh',this.onpinch)
         target.addEventListener('multipointerdown.peh',this.onmultipointerdown)
-        target.addEventListener('multipointermove.peh',this.onmultipointermove)
+        // target.addEventListener('multipointermove.peh',this.onmultipointermove)
         target.addEventListener('multipointerup.peh',this.onmultipointerup)
 
         this.contextConfig = new Context2dConfig();
@@ -207,8 +207,8 @@ export default class Editor{
                 this.temp.document_zoom = this.document.zoom;
             }
         }
-        
-        
+
+        event.target.addEventListener('pointermove.peh',this.onpointermove)
     }
     onpointermove=(event)=>{
         const detail = event?.detail;
@@ -236,6 +236,7 @@ export default class Editor{
         }else if(peh.maxActivePointers>=2 && peh.pointers.size===2 ){
             
         }
+        event.target.removeEventListener('pointermove.peh',this.onpointermove)
     }
     onpinch=(event)=>{
         const detail = event?.detail;
@@ -263,6 +264,7 @@ export default class Editor{
             this.temp.document_left = this.document.left;
             this.temp.document_top = this.document.top;
         }
+        event.target.addEventListener('multipointermove.peh',this.onmultipointermove)
     }
     onmultipointermove = (event)=>{
         const detail = event?.detail;
@@ -283,6 +285,7 @@ export default class Editor{
             this.document.top = 0
             this.document.flush();
         }
+        event.target.removeEventListener('multipointermove.peh',this.onmultipointermove)
     }
     
     // document가 변경되면 불러야한다.
