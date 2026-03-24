@@ -19,3 +19,6 @@
 [submodule "third_party/js-pointer-event-handler"]
 	path = third_party/js-pointer-event-handler
 	url = https://github.com/mins01/js-pointer-event-handler.git
+[submodule "third_party/ui-color-picker"]
+	path = third_party/ui-color-picker
+	url = https://github.com/mins01/ui-color-picker.git
