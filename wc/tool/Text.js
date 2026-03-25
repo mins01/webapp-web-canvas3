@@ -51,7 +51,7 @@ export default class Text extends BaseTool{
                 this.orignalSnapshot = null;
             }else{
                 this.enable = true;
-                this.orignalSnapshot = this.targetLayer.snapshot()
+                this.orignalSnapshot = this.targetLayer?.clone()
             }
             if(cb) cb();
         });
@@ -59,7 +59,7 @@ export default class Text extends BaseTool{
     deactivate(cb=null){
         super.deactivate(()=>{
             if(this.enable){
-                this.targetLayer.import(this.orignalSnapshot); // 되돌린다.
+                if(this?.orignalSnapshot) this.targetLayer.import(this?.orignalSnapshot); // 되돌린다.
             }
             if(cb) cb();
         });
