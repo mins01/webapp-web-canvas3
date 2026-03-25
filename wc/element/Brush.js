@@ -205,7 +205,7 @@ export default class Brush extends Canvas{
     ctx.restore();
     
     if(brushConfig.flattenToSolidColor){
-      const c = jsColor.Color.from(ctx.fillStyle);
+      const c = Color.from(ctx.fillStyle);
       const o = Math.round(brushConfig.flow*255);
       Context2dUtil.flattenToSolidColor(ctx,c.r,c.g,c.b,o,o/10)
     }
