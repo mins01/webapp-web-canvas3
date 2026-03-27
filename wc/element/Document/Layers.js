@@ -185,16 +185,12 @@ export default class Layers extends SelectableArray{
     }
 
     clone(withoutElements=false){
-        console.log('layers.clone');
-
+        console.log('layers.clone',withoutElements);
         let elements = null;
         if(!withoutElements){
             elements = []
             this.forEach(element=>{
-                // elements.push(element.clone(performance.now().toString()));
-                const c = element.clone(performance.now().toString());
-                elements.push(c);
-                // globalThis.document.body.appendChild(c);
+                elements.push(element.clone());
             })
         }
         return {
