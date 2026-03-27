@@ -92,6 +92,8 @@ class Canvas extends HTMLCanvasElement{
 
     // updatedAt 갱신
     touch(){
+        // console.log('touch',this);
+        
         this.updatedAt = Date.now();
         return this.updatedAt;
     }
