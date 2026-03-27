@@ -25,7 +25,8 @@ export default class Layers extends SelectableArray{
             const r = super.select(index);
             this.ready();
             if(!withoutHistory){
-                this.document.history.save('Layers.select',true);
+                // this.document.history.save('Layers.select',true);
+                this.document.history.save('Layers.select',false);
             }
             this?.document?.editor?.dispatchEvent('wc.document.layers.select', {layers:this,layer:this.selected} );
         }

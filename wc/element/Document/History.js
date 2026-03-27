@@ -27,12 +27,12 @@ export default class History extends LimitedHistory{
         
         const layers = this.document.layers;
         // const snapshot = layers.snapshot(withoutElements); // @deprecated // 20260122 우선 이걸로 롤백. clone 동작이 이상해서
-        // const snapshot = layers.clone(withoutElements);
-        const snapshot = layers.cloneOnlyUpdated(withoutElements,lastUpdatedAt); 
+        const snapshot = layers.clone(withoutElements);
+        // const snapshot = layers.cloneOnlyUpdated(withoutElements,lastUpdatedAt); // 레이어 순서 등이 바뀔 때 문제가 된다.
         snapshot.title = title
         // snapshot.updatedAt = snapshot.elements.map(el=>el.updatedAt).reduce((a, b) => Math.max(a, b), 0)??0;
         super.save(snapshot);
-        console.log('History:save();',title,`idx:${this.currentIndex},len:${this.length}`);
+        console.log('History:save();',title,withoutElements,`idx:${this.currentIndex},len:${this.length}`);
         this.debugHistoryLayers();
     }
     undo(){
