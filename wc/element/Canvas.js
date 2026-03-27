@@ -86,33 +86,18 @@ class Canvas extends HTMLCanvasElement{
         return this.getContext('2d',options)
     }
 
-    // @deprecated 
-    // 사용하는 곳 없음
-    // getContextConfig(){
-    //     return this.contextConfig.toObject();
-    // }
     setContextConfig(conf){
         this.contextConfig.assignFrom(conf);
     }
 
-    // /**
-    //  * @deprecated
-    //  */
-    // ctxCommand(){
-    //     let inArgs = [...arguments];
-    //     const method = inArgs[0]??null;
-    //     const args = inArgs.slice(1);
-    //     // console.log(method,args,this);
-    //     if (typeof this.ctx[method] === "function") {
-    //         this.ctx[method].apply(this.ctx,args);
-    //     }else{
-    //         console.error('error: ctxCommand',inArgs);
-    //     }
-    //     // console.log(method);
-    // }
+    // updatedAt 갱신
+    touch(){
+        this.updatedAt = Date.now();
+        return this.updatedAt;
+    }
 
     draw(){ // 따로 그리기 동작이 있을 경우.
-        this.updatedAt = Date.now();
+        this.touch();
         return this.dispatchEvent( new CustomEvent("draw", {bubbles:true,cancelable:true}) ); // 이벤트 버블
     }
     flush(){

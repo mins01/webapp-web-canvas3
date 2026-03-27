@@ -75,10 +75,13 @@ export default class Layers extends SelectableArray{
         this.document.history.save('Layers.remove');
         return true;
     }
-    move(index){
+    move(newIndex){
         const document = this.document
-        const r = super.move(index);
+        const oldIndex  = this.selectedIndex;
+        const r = super.move(newIndex);
         if(r===-1){return false}
+        this[newIndex].touch(); //레이어의 updatedAt 갱신
+        this[oldIndex].touch(); //레이어의 updatedAt 갱신
         document?.editor?.onselectLayer(document.layer);
         this.ready();
         this.document.history.save('Layers.move');
