@@ -2544,12 +2544,10 @@
           <div class="modal-body d-flex p-0">
             <ui-color-picker id="colorPicker1" class="d-flex flex-column user-select-none gap-2 p-3" style="width: 100%;" value="#33ff00">
               <div class="d-flex gap-3" style="width: 100%;height: auto;  ">
-                  <div class="wheel-group">
-                      <ui-color-wheel-hue class="sync-part-color" style="aspect-ratio: 1/1;"></ui-color-wheel-hue>
-                      <div class="inner-plane-wrap" style=" inset: 10%;">
-                          <ui-color-plane-sb slot="inner-circle" class="sync-hue sync-part-color" style="flex: 0 0 auto; width:calc(70% - 8px); aspect-ratio: 1/1;"></ui-color-plane-sb>
-                      </div>
-                  </div>
+                <div class="wheel-group" >
+                  <ui-color-wheel-hue class="sync-part-color" style="aspect-ratio: 1/1;"></ui-color-wheel-hue>
+                  <ui-color-plane-sb  class="sync-hue sync-part-color inner-circle-position" ></ui-color-plane-sb>
+                </div>
               </div>
               <div class="d-flex flex-wrap gap-2 user-select-all">
                 <!-- <input name="toHslString" data-to-string-type="hsl" data-set-color="pendingColor" class="sync-pending-color col form-control form-control-sm" style="flex: 1 0 8em;"> -->
