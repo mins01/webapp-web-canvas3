@@ -67,61 +67,34 @@
     <script src="../../third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>
     <link rel="stylesheet" href="../../third_party/ui_ColorPalette/ColorPalette.css">
     <script src="../../third_party/ui_ColorPalette/ColorPalette.js"></script>
+
+
+    <!-- ui-color-picker -->
+    <link rel="stylesheet" href="../../third_party/ui-color-picker/src/ui-color-picker.css">
+    <script type="module" src="../../third_party/ui-color-picker/src/ui-color-picker.js"></script>
+
     <script>
       window.addEventListener('load',(evnet)=>{
-          const foreColor = localStorage.getItem('foreColor')??'#000000';
-          const bookmark = ["#000000","#ffffff","#c00000","#ff0000","#ffc000","#ffff00","#92d050","#00b050","#00b0f0","#0070c0","#002060","#7030a0"]
+      const foreColor = localStorage.getItem('foreColor')??'#000000';
+      colorPicker1.value = foreColor;
 
-          const cpForeColor = globalThis.cpForeColor = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cpForeColor"});
-          InputRangeBox.autoInit(cpForeColor);
-
-          document.getElementById('box-color-palette').appendChild(cpForeColor);
-          cpForeColor.addEventListener('input',function(evt){
-              // const wcTargetColor = event?.target?.closest('.modal')?.dataset?.wcTargetColor??'foreColor';
-
-              // if(wcTargetColor=='foreColor'){
-              //     const obj = {'foreColor':this.toString()}
-              //     editor.setContextConfig(obj);
-              // }
-          })
-          cpForeColor.addEventListener('change',function(evt){
-              // const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-              // modal.hide();
-          })
-          cpForeColor.addEventListener('confirm',function(evt){
-              const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-              modal.hide();
-              const wcTargetColor = event?.target?.closest('.modal')?.dataset?.wcTargetColor??'foreColor';
-               if(wcTargetColor=='textColor'){
-                  const obj = {'textColor':this.toString()}
-                  textlayer.textConfig.assignFrom(obj);textlayer.draw();
-                  localStorage.setItem('foreColor',this.toString())
-                  document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
-                    el.style.backgroundColor = obj.textColor
-                  })
-                  document.form_textConfig.textColor.value = obj.textColor;
-              }
-              if(wcTargetColor=='foreColor'){
-                  const obj = {'foreColor':this.toString()}
-                  localStorage.setItem('foreColor',this.toString())
-                  document.querySelectorAll('.wc-bg-foreColor').forEach(el=>{
-                    el.style.backgroundColor = obj.foreColor
-                  })
-              }
-          })
-          cpForeColor.addEventListener('cancel',function(evt){
-              const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-              modal.hide();
-          })
-          cpForeColor.addEventListener('setselectedcolor',function(evt){
-              // console.log(evt.type,this.getSelectedColor())
-          })
-          
-
-          document.querySelector('#modal-color-palette').addEventListener('show.bs.modal', event => {
-              event.target.dataset.wcTargetColor = event?.relatedTarget?.dataset.wcTargetColor??'foreColor';
-          })
+      const obj = {'textColor':colorPicker1.toString('hex')}
+      document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
+        el.style.backgroundColor = obj.textColor
       })
+   
+
+      
+
+      // 부트스트랩 모달 aria-hidden 워닝 없도록 처리
+      document.querySelectorAll('.modal').forEach(modalEl=>{
+        modalEl.addEventListener('hide.bs.modal', () => {
+          modalEl.querySelectorAll(':focus').forEach(el => el.blur());
+        });
+      })
+      
+
+    })
     </script>
 
 
@@ -167,7 +140,7 @@
         Wc.HtmlUtil.applyStyleObject(document.querySelector('#text-frame-content'),textlayer.textConfig.exportToStyleObject())
 
         
-        UiInputStepper.initDataValue()
+        // UiInputStepper.initDataValue()
 
 
         //-- 폰트 목록 동기화
@@ -200,8 +173,8 @@
     <h1>ui TextLayer</h1>
     <div class="my-3">
 
-      <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
-      <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
+      <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
+      <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker"  style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
     </div>
 
     <div class="my-3">
@@ -260,7 +233,7 @@
                 <div class="form-label mb-0"><i class="bi bi-palette"></i> Color</div>
                 <label class="input-group" role="button" for="btn-palette-textColor">
                   <input type="color" readonly class="form-control form-control-color pe-none" name="textColor" value="#000000">
-                  <button type="button" class="btn btn-outline-light wc-bg-textColor pe-none" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
+                  <button type="button" class="btn btn-outline-light wc-bg-textColor pe-none" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
                 </label>
               </div>
 
@@ -497,18 +470,118 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modal-color-palette"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title fs-4"><i class="bi bi-palette"></i> Color palette</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body brush-config" id="box-color-palette">
-            </div>
+
+  
+  <div class="modal fade" id="modal-color-picker"  aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-4"><i class="bi bi-palette"></i> Color</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body d-flex p-0">
+          <ui-color-picker id="colorPicker1" class="d-flex flex-column user-select-none gap-2 p-3" style="width: 100%;" value="#33ff00">
+            <!-- <div class="d-flex gap-3" style="width: 100%;height: auto;  ">
+              <div class="wheel-group" >
+                <ui-color-wheel-hue class="sync-part-color" style="aspect-ratio: 1/1;"></ui-color-wheel-hue>
+                <ui-color-plane-sb  class="sync-hue sync-part-color inner-circle-position" ></ui-color-plane-sb>
+              </div>
+            </div> -->
+            <div class="d-flex gap-3" >
+              <ui-color-plane-sb class="sync-hue sync-part-color" style="flex: 1 0 auto; aspect-ratio: 1/1;"></ui-color-plane-sb>
+              <ui-color-bar-hue class="sync-part-color" style="flex: 0 0 30px;"></ui-color-bar-hue>
+            </div>
+            <div class="d-flex flex-wrap gap-2 user-select-all">
+              <!-- <input name="toHslString" data-to-string-type="hsl" data-set-color="pendingColor" class="sync-pending-color col form-control form-control-sm" style="flex: 1 0 8em;"> -->
+              <input name="toHsbString" data-to-string-type="hsb" data-set-color="pendingColor" class="sync-pending-color col form-control form-control-sm" style="flex: 1 0 8em;">
+              <input name="toRgbString" data-to-string-type="rgb" data-set-color="pendingColor" class="sync-pending-color col form-control form-control-sm" style="flex: 1 0 8em;">
+              <input name="toHexString" data-to-string-type="hex" data-set-color="pendingColor" class="sync-pending-color col form-control form-control-sm" style="flex: 0 1 6em;">
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <div class="input-group col">
+                <ui-color data-target-color="selectColor" class="sync-selected-color sync-hue rounded-start-pill border d-flex justify-content-center align-items-center user-select-none col"><div style="text-shadow: 0px 0px 2px #000; color: #fff;">Selected</div></ui-color>
+                <ui-color data-target-color="pendingColor" class="sync-pending-color rounded-end-pill border d-flex justify-content-center align-items-center user-select-none col" value="#fff"><div style="text-shadow: 0px 0px 2px #000; color: #fff;">Pending</div></ui-color>
+              </div>
+              <div class="d-flex gap-1 col">
+                <button type="button" class="btn btn-primary btn-sm col" data-picker-action="confirm" data-bs-dismiss="modal" >Confirm</button>
+                <button type="button" class="btn btn-secondary btn-sm col" data-picker-action="cancel" data-bs-dismiss="modal" >Cancel</button>
+              </div>
+            </div>
+            <ui-color-swatches 
+            maxlength="40"
+            storage-key="wc-canvas-color-picker-swatches"
+            auto-save="1"
+            auto-load="1"
+            toggle-pin-on-dblclick
+            class="sync-selected-color swatches overflow-auto py-1" 
+            >
+            <ui-color-swatch class="swatch locked" value="#000000"></ui-color-swatch> <!-- black -->
+            <ui-color-swatch class="swatch locked" value="#FFFFFF"></ui-color-swatch> <!-- white -->
+            
+            <ui-color-swatch class="swatch locked" value="#FF0000"></ui-color-swatch> <!-- red -->
+            <ui-color-swatch class="swatch locked" value="#00FF00"></ui-color-swatch> <!-- green -->
+            <ui-color-swatch class="swatch locked" value="#0000FF"></ui-color-swatch> <!-- blue -->
+            
+            <ui-color-swatch class="swatch locked" value="#FFFF00"></ui-color-swatch> <!-- yellow -->
+            <ui-color-swatch class="swatch locked" value="#00FFFF"></ui-color-swatch> <!-- cyan -->
+            <ui-color-swatch class="swatch locked" value="#FF00FF"></ui-color-swatch> <!-- magenta -->
+            
+          </ui-color-swatches>
+        </ui-color-picker>
+        </div>
+      </div>
     </div>
   </div>
+  <script>
+    const colorPicker1 = document.querySelector('#colorPicker1');
+    document.querySelector('#modal-color-picker').addEventListener('show.bs.modal', event => {
+      // const toolName = editor.tool?.name;
+      const toolName = 'Text';
+      if(toolName=='Text'){
+        // colorPicker1.value = editor?.document?.layer?.textConfig?.textColor??'#000000'
+
+        colorPicker1.value = document.form_textConfig.textColor.value
+
+      }else{
+        colorPicker1.value = editor.contextConfig.foreColor??'#000000'
+      }
+    })      
+    colorPicker1.addEventListener('confirm-color-picker', (event) => {
+        const target = event.target
+        // alert(editor.tool.name);
+        // const toolName = editor.tool?.name;
+        const toolName = 'Text';
+        if(toolName==='Text'){
+          // const obj = {'textColor':target.toString()}
+          // editor.setTextConfig(obj);
+
+          const obj = {'textColor':colorPicker1.toString('hex')}
+          const hexString = colorPicker1.toString('hex');
+          textlayer.textConfig.assignFrom(obj);textlayer.draw();
+          localStorage.setItem('foreColor',obj.textColor)
+          document.querySelectorAll('.wc-bg-textColor').forEach(el=>{
+            el.style.backgroundColor = obj.textColor
+          })
+          document.form_textConfig.textColor.value = obj.textColor;
+
+
+        }else{
+          // const obj = {'foreColor':target.toString()}
+          // editor.setContextConfig(obj);
+          // localStorage.setItem('foreColor',target.toString())
+        }
+    })
+    colorPicker1.addEventListener('cancel-color-picker', (event) => {
+        // console.log('confirm-color-picker',event.target.value);
+        // // alert(event.type+' : '+event.target.value);
+    })
+    
+  </script>
+
+
+
+
+
   
 </body>
 </html>

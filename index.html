@@ -105,14 +105,6 @@
   <!-- <script>dayjs().format()</script> -->
   <!-- //dayjs -->
 
-  <!-- color palette -->
-  <link rel="stylesheet" href="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.css">
-  <script src="third_party/ui_ColorPalette/InputRangeBox/InputRangeBox.js"></script>
-
-  <script src="third_party/ui_ColorPalette/toDraggable/toDraggable.js"></script>
-  <link rel="stylesheet" href="third_party/ui_ColorPalette/ColorPalette.css">
-  <script src="third_party/ui_ColorPalette/ColorPalette.js"></script>
-
 
   <!-- ui-color-picker -->
   <link rel="stylesheet" href="./third_party/ui-color-picker/src/ui-color-picker.css">
@@ -123,11 +115,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
 
-  <style>
-    .colorPalette-tab-hsl {
-      max-height: 300px;
-    }
-  </style>
   <script>
     window.addEventListener('load',(evnet)=>{
       const foreColor = localStorage.getItem('foreColor')??'#000000';
@@ -136,55 +123,7 @@
 
       colorPicker1.value = foreColor;
 
-      // ================================= 구 color-palette 제거중
-      // const cpForeColor = globalThis.cpForeColor = ColorPalette({defColor:foreColor,bookmark:bookmark,maxHistory:40,localStorageHistoryKey:"cpForeColor"});
-      // InputRangeBox.autoInit(cpForeColor);
       
-
-      // document.getElementById('box-color-palette').appendChild(cpForeColor);
-      // cpForeColor.addEventListener('input',function(evt){
-      //   // const targetColor = event?.target?.closest('.modal')?.dataset?.targetColor??'foreColor';
-
-      //   // if(targetColor=='foreColor'){
-      //   //     const obj = {'foreColor':this.toString()}
-      //   //     editor.setContextConfig(obj);
-      //   // }
-      // })
-      // cpForeColor.addEventListener('change',function(evt){
-      //   // const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-      //   // modal.hide();
-      // })
-      // cpForeColor.addEventListener('confirm',function(evt){
-      //   const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-      //   modal.hide();
-      //   const wcTargetColor = event?.target?.closest('.modal')?.dataset?.wcTargetColor??'foreColor';
-      //   if(wcTargetColor=='foreColor'){
-      //     const obj = {'foreColor':this.toString()}
-      //     editor.setContextConfig(obj);
-      //     localStorage.setItem('foreColor',this.toString())
-      //   }else if(wcTargetColor=='textColor'){
-      //     const obj = {'textColor':this.toString()}
-      //     editor.setTextConfig(obj);
-      //   }
-      // })
-      // cpForeColor.addEventListener('cancel',function(evt){
-      //   const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#modal-color-palette'))
-      //   modal.hide();
-      // })
-      // cpForeColor.addEventListener('setselectedcolor',function(evt){
-      //   // console.log(evt.type,this.getSelectedColor())
-      // })
-
-
-      // document.querySelector('#modal-color-palette').addEventListener('show.bs.modal', event => {
-      //   const wcTargetColor = event.target.dataset.wcTargetColor = event?.relatedTarget?.dataset.wcTargetColor??'foreColor';
-      //   if(wcTargetColor=='foreColor'){
-      //     cpForeColor.setPreview(editor.contextConfig.foreColor??'#000000')
-      //   }else if(wcTargetColor=='textColor'){
-      //     cpForeColor.setPreview(editor?.document?.layer?.textConfig?.textColor??'#000000')
-      //   }
-      // })
-      // ================================= 구 color-palette 제거중
 
       // 부트스트랩 모달 aria-hidden 워닝 없도록 처리
       document.querySelectorAll('.modal').forEach(modalEl=>{
@@ -332,12 +271,10 @@
 
           </div>
           <div class="only-hidden-tool-Text">
-            <!-- <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button> -->
             <button type="button" class="btn btn-lg btn-outline-light wc-bg-foreColor" data-wc-target-color="foreColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
             
           </div>
           <div class="only-shown only-shown-tool-Text">
-            <!-- <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor position-relative" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i><div class="position-absolute bottom-0" style="left:0;right:0;"><i class="bi bi-alphabet-uppercase" style="color: #fff;"></i></div></button> -->
             <button type="button" class="btn btn-lg btn-outline-light wc-bg-textColor position-relative" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker"  style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i><div class="position-absolute bottom-0" style="left:0;right:0;"><i class="bi bi-alphabet-uppercase" style="color: #fff;"></i></div></button>
           </div>
           <button type="button" class="btn btn-lg btn-outline-light" data-bs-toggle="modal" data-bs-target="#modal-layers"><i class="bi bi-layers"></i></button>
@@ -964,7 +901,6 @@
                   <div class="form-label mb-0"><i class="bi bi-palette"></i> Color</div>
                   <label class="input-group" role="button" for="btn-palette-textColor">
                     <input type="color" readonly class="form-control form-control-color pe-none" name="textColor" value="#000000">
-                    <!-- <button type="button" class="btn btn-outline-light wc-bg-textColor pe-none" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-palette" id="btn-palette-textColor" style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button> -->
                     <button type="button" class="btn btn-outline-light wc-bg-textColor pe-none" data-wc-target-color="textColor" data-bs-toggle="modal" data-bs-target="#modal-color-picker"  style="text-shadow: 1px 0px 1px black;"><i class="bi bi-palette" style="color: #fff;"></i></button>
                   </label>
                 </div>
@@ -2513,22 +2449,6 @@
             </form>
           </div>
 
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="modal fade" id="modal-color-palette"  aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title fs-4"><i class="bi bi-palette"></i> Color palette</h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body brush-config d-flex" id="box-color-palette">
-          </div>
         </div>
       </div>
     </div>
