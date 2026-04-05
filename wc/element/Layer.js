@@ -27,7 +27,7 @@ export default class Layer extends Canvas{
     angle = null;
     #left;
     #top;
-    #zoom;
+    #zoom;  // @deprecated. 사용하지 말자. 별 의미가 없다. 처리도 힘들고.
     #flipX;
     #flipY;
     #visible;
