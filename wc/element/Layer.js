@@ -102,7 +102,7 @@ export default class Layer extends Canvas{
      * 현재 레이어와 타겟 레이어를 합친다.
      * 현재 레이어의 크기가 커질 수 있다. !이 부분이 특징임
      * 현재 실제 사용처가 없는데.. 지울지 고민해보자.
-     * drawLayer(targetLayer) 와 차이가 없네. 이걸 대신 사용하자
+     * drawLayerTo(targetLayer) 와 차이가 없네. 이걸 대신 사용하자
      *
      * @param {*} canvas 
      */
@@ -143,7 +143,7 @@ export default class Layer extends Canvas{
      * @param {*} targetLayer 
      * @returns {boolean} 
      */
-    drawLayer(targetLayer){
+    drawLayerTo(targetLayer){
         if( !targetLayer
             || !targetLayer.visible 
             // || !targetLayer.visibleByTool 
@@ -156,8 +156,8 @@ export default class Layer extends Canvas{
         ctx.globalCompositeOperation = targetLayer.compositeOperation
          
         ctx.globalAlpha = targetLayer.alpha
-        const tranLeft = targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left)
-        const tranTop = targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top)
+        const tranLeft = Math.round(targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left))
+        const tranTop = Math.round(targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top));
         ctx.translate(tranLeft, tranTop)
         if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
         ctx.translate(targetLayer.width/2, targetLayer.height/2)

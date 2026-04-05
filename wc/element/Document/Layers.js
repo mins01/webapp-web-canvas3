@@ -113,7 +113,7 @@ export default class Layers extends SelectableArray{
         }
         const newToLayer = toLayer.clone();
 
-        newToLayer.drawLayer(fromLayer);
+        newToLayer.drawLayerTo(fromLayer);
         //-- 갱신
         newToLayer.flush();
         this[this.selectedIndex-1] = newToLayer; //레이어 교체

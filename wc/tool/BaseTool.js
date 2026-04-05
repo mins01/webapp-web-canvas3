@@ -191,7 +191,7 @@ export default class BaseTool {
 		
 		let x = inX;
 		let y = inY;
-		// [x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, -doc.angle) // Layer.drawLayer() 에서 처리한다. 좌표에선 각도 체크 안한다!
+		// [x,y] = this.rotatePoint(x, y, doc.width/2, doc.height/2, -doc.angle) // Layer.drawLayerTo() 에서 처리한다. 좌표에선 각도 체크 안한다!
 		x = inX - (docCenterX - doc.width*zoom/2);
 		y = inY - (docCenterY - doc.height*zoom/2);	
 

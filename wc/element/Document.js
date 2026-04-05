@@ -155,13 +155,13 @@ export default class Document extends Layer{
             const targetLayer = layer
 
             if(targetLayer.visibleByTool){
-                this.drawLayer(targetLayer);
+                this.drawLayerTo(targetLayer);
             }
 
             if(index == this.layers.selectedIndex){
                 const targetLayer = drawingLayer
                 if(targetLayer.visibleByTool){
-                    this.drawLayer(targetLayer);
+                    this.drawLayerTo(targetLayer);
                 }    
             }
 
