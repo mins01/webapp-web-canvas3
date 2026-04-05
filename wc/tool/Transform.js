@@ -145,9 +145,13 @@ export default class Transform extends BaseTool{
         let top =  topLC - height/2;
 
         this.targetLayer.import(this.orignalSnapshot);
-        this.targetLayer.resize(Math.ceil(width),Math.ceil(height))
-        targetLayer.left = Math.ceil(left); //반올림 하면 오차가 나네...뭐지?
-        targetLayer.top = Math.ceil(top);
+        // this.targetLayer.resize(Math.ceil(width),Math.ceil(height))
+        // targetLayer.left = Math.ceil(left); //반올림 하면 오차가 나네...뭐지?
+        // targetLayer.top = Math.ceil(top);
+
+        this.targetLayer.resize((width),(height))
+        targetLayer.left = (left); //반올림 하면 오차가 나네...뭐지?
+        targetLayer.top = (top);
         
 
         targetLayer.flush();
