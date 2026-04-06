@@ -34,7 +34,7 @@ class Canvas extends HTMLCanvasElement{
 
 
     name = null;
-    ctx = null;
+    // ctx = null;
     drawable = true;
     constructor(w=null,h=null){
         super();
@@ -79,7 +79,7 @@ class Canvas extends HTMLCanvasElement{
 
     // @deprecated
     setContext2d(options=Canvas.context2dOptions){
-        this.ctx = this.getContext2d(options)
+        // this.ctx = this.getContext2d(options)
         return this.ctx;
     }
     getContext2d(options=Canvas.context2dOptions){
