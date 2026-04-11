@@ -7,7 +7,7 @@ import Context2dUtil from "../lib/Context2dUtil.js";
 export default class Layer extends Canvas{
 
     static get keys(){
-        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','zoom','visible','flipX','flipY'])
+        return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','rotation','zoom','visible','flipX','flipY'])
     }
     static defineCustomElements(name='wc-layer'){
         super.defineCustomElements(name);
@@ -24,7 +24,8 @@ export default class Layer extends Canvas{
     compositeOperation = null;
     alpha = null;
     // zoom = null;
-    angle = null;
+    rotation = null;
+    // angle = null; // rotation의 별칭
     #left;
     #top;
     #zoom;  // @deprecated. 사용하지 말자. 별 의미가 없다. 처리도 힘들고.
@@ -67,6 +68,8 @@ export default class Layer extends Canvas{
             this.removeAttribute('visible') 
         }
     }
+    get angle(){ return this.rotation; }
+    set angle(v){ this.rotation = v; }
 
 
     // getLocalRect(){ return {left:0,top:0,width:this.width,height:this.height} }
