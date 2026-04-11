@@ -45,12 +45,29 @@ export default class Document extends Layer{
     static defineCustomElements(name='wc-document'){
         super.defineCustomElements(name);
     }
-    // get left(){ return super.left; }
-    // get top(){ return super.top; }
-    // // set left(v){ super.left = v; this.style.left=`${this.left}px` }
-    // // set top(v){ super.top = v;  this.style.top=`${this.top}px` }
-    // set left(v){ super.left = v; }
-    // set top(v){ super.top = v; }
+    
+    getLocalRect() {  return new DOMRect( this.left, this.top, this.width, this.height) }
+    getViewportRect() { 
+        const rect = this.getBoundingClientRect();
+        const bounds = {
+            left:rect.left + rect.width / 2 - this.width / 2,
+            top:rect.top + rect.height / 2 - this.height / 2,
+            width:this.width,
+            height:this.height,
+        }
+        return new DOMRect( bounds.left , bounds.top, bounds.width, bounds.height);
+    }
+    getPageRect() { 
+        const rect = this.getBoundingClientRect();
+        const bounds = {
+            left:rect.left + rect.width / 2 - this.width / 2,
+            top:rect.top + rect.height / 2 - this.height / 2,
+            width:this.width,
+            height:this.height,
+        }
+        return new DOMRect( bounds.left + window.scrollX , bounds.top + window.scrollY, bounds.width, bounds.height);
+    }
+
 
     init(){
         this.classList.add('wc-document')

@@ -68,6 +68,20 @@ export default class Layer extends Canvas{
         }
     }
 
+
+    // getLocalRect(){ return {left:0,top:0,width:this.width,height:this.height} }
+    getLocalRect() {  return new DOMRect( this.left, this.top, this.width, this.height) }
+    getViewportRect() { 
+        const parent = this.parent.getViewportRect();
+        return new DOMRect( this.left + parent.left, this.top + parent.top, this.width, this.height)
+    }
+    getPageRect() { 
+        const parent = this.parent.getPageRect();
+        return new DOMRect( this.left + parent.left, this.top + parent.top, this.width, this.height)
+    }
+
+
+
     position(left,top){
         this.left = left;
         this.top = top;
