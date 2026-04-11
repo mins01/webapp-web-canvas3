@@ -18,6 +18,8 @@ export default class Editor{
     temp = null
     
     utt = null;
+    uttBroundary = null;
+
     autoSave = null;
     tools = null;
 

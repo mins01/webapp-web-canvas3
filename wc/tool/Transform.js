@@ -2,12 +2,14 @@ import BaseTool from './BaseTool.js';
 
 export default class Transform extends BaseTool{
     utt = null;
+    uttBroundary = null;
     targetLayer = null;
     orignalSnapshot = null
     constructor(editor){
         super(editor);
         this.name = 'Transform';
         this.utt = editor.utt;
+        this.uttBroundary = editor.uttBroundary
     }
 
     activate(){
@@ -39,20 +41,18 @@ export default class Transform extends BaseTool{
         const targetLayer = this.targetLayer;
         const mul = document.zoom*targetLayer.zoom
 
-        // let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
-       
-        // this.utt.left = Math.ceil(leftC - targetLayer.width/2*mul); //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
-        // this.utt.top = Math.ceil(topC - targetLayer.height/2*mul);
+        {
+            const {left,top,width,height} = document.getViewportRect();    
+            this.uttBroundary.setRect(left,top,width,height,0);    
+        }
+        {
+            const {left,top,width,height} = targetLayer.getLocalRect();
+            const rotation = targetLayer.rotation;
+            this.utt.setRect(left,top,width,height,rotation)
+        }
+        
 
-        // this.utt.left = leftC - targetLayer.width/2*mul; //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
-        // this.utt.top = topC - targetLayer.height/2*mul;
-        // this.utt.width = targetLayer.width*mul
-        // this.utt.height = targetLayer.height*mul
 
-        // const viewportRect = targetLayer.getViewportRect();
-        const {left,top,width,height} = targetLayer.getViewportRect();
-        const rotation = targetLayer.rotation;
-        this.utt.setRect(left,top,width,height,rotation)
 
     }
 
@@ -132,19 +132,7 @@ export default class Transform extends BaseTool{
         const targetLayer = this.targetLayer
         const mul = document.zoom / targetLayer.zoom
         
-        // transform-bounddary 적용하면 다시 보자.
-        const uttViewportRect = utt.getViewportRect();
-        const targetViewportRect = targetLayer.getViewportRect();
-        const targetLocalRect = targetLayer.getLocalRect();
-        // console.log(uttViewportRect,targetViewportRect,targetLocalRect);
-        // to local
-        let left = targetLocalRect.left + uttViewportRect.left - targetViewportRect.left;
-        let top = targetLocalRect.top + uttViewportRect.top - targetViewportRect.top;
-        let width = uttViewportRect.width;
-        let height = uttViewportRect.height;
-        // console.log(left,top,width,height);
-        
-        // targetLayer.setRect(left,top,width,height);
+        const {left,top,width,height} = utt.getLocalRect();
         this.targetLayer.import(this.orignalSnapshot);
         this.targetLayer.resize((width),(height))
         targetLayer.left = (left); //반올림 하면 오차가 나네...뭐지?

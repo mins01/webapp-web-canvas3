@@ -120,6 +120,7 @@ globalThis.window.addEventListener('load',(event)=>{
 
         // ui-transform-tool
         editor.utt = document.querySelector('#utt01');
+        editor.uttBroundary = window.document.querySelector('#utt01Broundary');
         
         // let divForDebug = document.querySelector('#div-for-debug');
         
