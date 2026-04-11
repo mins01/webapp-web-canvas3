@@ -2,7 +2,7 @@ import SelectableArray from "../../lib/SelectableArray.js";
 import Document from "../Document.js";
 // import Layer from "../Layer.js"
 import SelectionLayer from "../SelectionLayer.js";
-SelectionLayer.defineCustomElements();
+SelectionLayer.register();
 
 export default class Documents extends SelectableArray{
   editor = null;

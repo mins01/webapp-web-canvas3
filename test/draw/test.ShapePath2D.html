@@ -48,7 +48,7 @@
     <script type="module">
         import ShapePath2D from "../../wc/draw/ShapePath2D.js"
         import Canvas from "../../wc/element/Canvas.js";
-        Canvas.defineCustomElements();
+        Canvas.register();
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         

@@ -11,8 +11,8 @@ import Canvas from "./Canvas.js";
 
 export default class Eraser extends Brush{
   
-  static defineCustomElements(name='wc-eraser'){    
-    super.defineCustomElements(name);
+  static register(name='wc-eraser'){    
+    super.register(name);
   }
   constructor(w=null,h=null){
     super(w,h);

@@ -136,10 +136,10 @@
     import Brush from "../../wc/element/Brush.js";
     import Context2dUtil from "../../wc/lib/Context2dUtil.js";
 
-    Canvas.defineCustomElements();
-    Layer.defineCustomElements();
-    Document.defineCustomElements();
-    Brush.defineCustomElements();
+    Canvas.register();
+    Layer.register();
+    Document.register();
+    Brush.register();
 
     if(globalThis.Wc===undefined) globalThis.Wc = {}
     globalThis.Wc.Canvas = Canvas;

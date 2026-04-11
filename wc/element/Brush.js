@@ -20,8 +20,8 @@ export default class Brush extends Canvas{
     super(w,h);
     this.init();    
   }
-  static defineCustomElements(name='wc-brush'){
-    super.defineCustomElements(name);
+  static register(name='wc-brush'){
+    super.register(name);
   }
   
   init(){

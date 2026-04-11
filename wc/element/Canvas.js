@@ -15,18 +15,18 @@ class Canvas extends HTMLCanvasElement{
     static get keys(){
         return ['name', 'width', 'height', 'drawable', 'label', 'contextConfig', 'createdAt','updatedAt',];
     }
-    // static get observedAttributes() { return ['width', 'height']; }
 
     // @deprecated
-    // static getIdCounter(){
-    //     if(Canvas._idCounter === undefined){ Canvas._idCounter = 0;}
-    //     return ++ Canvas._idCounter;
-    // }
+    // @alias register
     static defineCustomElements(tagName='wc-canvas'){
+        return this.register(tagName);
+    }
+    // 웹 커스텀 엘레멘트 등록
+    static register(tagName='wc-canvas'){
         if(!globalThis.window){return;}
         if (!customElements.get(tagName)) {
             customElements.define(tagName, this,{ extends: "canvas" });
-            console.log('defineCustomElement', tagName);
+            console.log('register', tagName);
         }        
     }
     static getRandName(prefix,length=6){
@@ -36,7 +36,6 @@ class Canvas extends HTMLCanvasElement{
 
 
     name = null;
-    // ctx = null;
     drawable = true;
     constructor(w=null,h=null){
         super();

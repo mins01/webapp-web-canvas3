@@ -45,9 +45,9 @@
   <script type="module">
     import Layer from '../../wc/element/Layer.js';
     globalThis.Layer = Layer;
-    Layer.defineCustomElements();
+    Layer.register();
     import ShapePath2DLayer from '../../wc/element/ShapePath2DLayer.js';
-    ShapePath2DLayer.defineCustomElements();
+    ShapePath2DLayer.register();
     globalThis.ShapePath2DLayer = ShapePath2DLayer;
 
     import Context2dUtil from '../../wc/lib/Context2dUtil.js';

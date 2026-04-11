@@ -42,8 +42,8 @@ export default class Document extends Layer{
 
         this.init();
     }
-    static defineCustomElements(name='wc-document'){
-        super.defineCustomElements(name);
+    static register(name='wc-document'){
+        super.register(name);
     }
     
     getLocalRect() {  return new DOMRect( this.left, this.top, this.width, this.height) }

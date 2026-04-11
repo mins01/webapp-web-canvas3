@@ -9,8 +9,8 @@ export default class Layer extends Canvas{
     static get keys(){
         return super.keys.concat(['left', 'top','compositeOperation','alpha','angle','rotation','zoom','visible','flipX','flipY'])
     }
-    static defineCustomElements(name='wc-layer'){
-        super.defineCustomElements(name);
+    static register(name='wc-layer'){
+        super.register(name);
     }
 
     
@@ -24,7 +24,7 @@ export default class Layer extends Canvas{
     compositeOperation = null;
     alpha = null;
     // zoom = null;
-    rotation = null;
+    #rotation = 0;
     // angle = null; // rotation의 별칭
     #left;
     #top;
@@ -69,7 +69,9 @@ export default class Layer extends Canvas{
         }
     }
     get angle(){ return this.rotation; }
-    set angle(v){ this.rotation = v; }
+    set angle(v){ this.rotation = Number(v); }
+    get rotation(){ return this.#rotation; }
+    set rotation(v){ this.#rotation = Number(v); }
 
 
     // getLocalRect(){ return {left:0,top:0,width:this.width,height:this.height} }

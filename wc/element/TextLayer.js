@@ -63,8 +63,8 @@ export default class TextLayer extends Layer{
 
     }
 
-    static defineCustomElements(name='wc-textlayer'){
-        super.defineCustomElements(name);
+    static register(name='wc-textlayer'){
+        super.register(name);
     }
 
     setContextConfig(conf){

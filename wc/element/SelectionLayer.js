@@ -18,8 +18,8 @@ export default class SelectionLayer extends Layer{
     static get keys(){
         return super.keys.concat(['isEmpty'])
     }
-    static defineCustomElements(name='wc-selectionlayer'){
-        super.defineCustomElements(name);
+    static register(name='wc-selectionlayer'){
+        super.register(name);
     }
 
     constructor(w=null,h=null){

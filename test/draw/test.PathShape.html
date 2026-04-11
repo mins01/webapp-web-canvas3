@@ -48,7 +48,7 @@
     <script type="module">
         import PathShape from "../../wc/draw/PathShape.js"
         import Canvas from "../../wc/element/Canvas.js";
-        Canvas.defineCustomElements();
+        Canvas.register();
         if(!globalThis.Wc) globalThis.Wc = {}
         globalThis.Wc.Canvas = Canvas;
         

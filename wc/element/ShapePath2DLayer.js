@@ -48,8 +48,8 @@ export default class ShapePath2DLayer extends Layer{
         }
     }
 
-    static defineCustomElements(name='wc-shapepath2dlayer'){
-        super.defineCustomElements(name);
+    static register(name='wc-shapepath2dlayer'){
+        super.register(name);
     }
 
 

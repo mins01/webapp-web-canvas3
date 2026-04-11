@@ -39,16 +39,20 @@ export default class Transform extends BaseTool{
         const targetLayer = this.targetLayer;
         const mul = document.zoom*targetLayer.zoom
 
-        let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
-        
+        // let [leftC,topC] =this.getPageXyFromDocumentXy(targetLayer.left+targetLayer.width/2,targetLayer.top+targetLayer.height/2)
+       
         // this.utt.left = Math.ceil(leftC - targetLayer.width/2*mul); //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
         // this.utt.top = Math.ceil(topC - targetLayer.height/2*mul);
 
-        this.utt.left = leftC - targetLayer.width/2*mul; //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
-        this.utt.top = topC - targetLayer.height/2*mul;
-        
-        this.utt.width = targetLayer.width*mul
-        this.utt.height = targetLayer.height*mul
+        // this.utt.left = leftC - targetLayer.width/2*mul; //왜인지 모르겠지만, 올림으로 해야 오차가 안생긴다.
+        // this.utt.top = topC - targetLayer.height/2*mul;
+        // this.utt.width = targetLayer.width*mul
+        // this.utt.height = targetLayer.height*mul
+
+        // const viewportRect = targetLayer.getViewportRect();
+        const {left,top,width,height} = targetLayer.getViewportRect();
+        const rotation = targetLayer.rotation;
+        this.utt.setRect(left,top,width,height,rotation)
 
     }
 
@@ -71,7 +75,7 @@ export default class Transform extends BaseTool{
 
     confirm(){
         super.confirm();
-        const layer = this.document.layer
+        // const layer = this.document.layer
         this.orignalSnapshot = this.targetLayer.snapshot()        
         this.document.history.save(`Tool.${this.constructor.name}`);
         this.ready();
@@ -115,7 +119,46 @@ export default class Transform extends BaseTool{
         this.draw()
         this.confirm();
     }
+    onutttransformupdate(){
+        this.draw()
+    }
+    onutttransformend(){
+        this.draw()
+        this.confirm();
+    }
     draw(){
+        const utt = this.utt;
+        const document = this.document
+        const targetLayer = this.targetLayer
+        const mul = document.zoom / targetLayer.zoom
+        
+        // transform-bounddary 적용하면 다시 보자.
+        const uttViewportRect = utt.getViewportRect();
+        const targetViewportRect = targetLayer.getViewportRect();
+        const targetLocalRect = targetLayer.getLocalRect();
+        // console.log(uttViewportRect,targetViewportRect,targetLocalRect);
+        // to local
+        let left = targetLocalRect.left + uttViewportRect.left - targetViewportRect.left;
+        let top = targetLocalRect.top + uttViewportRect.top - targetViewportRect.top;
+        let width = uttViewportRect.width;
+        let height = uttViewportRect.height;
+        // console.log(left,top,width,height);
+        
+        // targetLayer.setRect(left,top,width,height);
+        this.targetLayer.import(this.orignalSnapshot);
+        this.targetLayer.resize((width),(height))
+        targetLayer.left = (left); //반올림 하면 오차가 나네...뭐지?
+        targetLayer.top = (top);
+        targetLayer.rotation = utt.rotation;
+
+        
+        targetLayer.flush();
+        
+
+    }
+
+    // @deprecated
+    draw_old(){
         const utt = this.utt;
         const document = this.document
         const documentRect = this.documentRect;

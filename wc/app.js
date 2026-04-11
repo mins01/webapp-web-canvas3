@@ -21,14 +21,14 @@ import EllipseLayer from "./element/EllipseLayer.js";
 import Brush from "./element/Brush.js";
 import Eraser from "./element/Eraser.js";
 
-Canvas.defineCustomElements();
-Layer.defineCustomElements();
-Document.defineCustomElements();
-TextLayer.defineCustomElements();
-RectangleLayer.defineCustomElements();
-EllipseLayer.defineCustomElements();
-Brush.defineCustomElements();
-Eraser.defineCustomElements();
+Canvas.register();
+Layer.register();
+Document.register();
+TextLayer.register();
+RectangleLayer.register();
+EllipseLayer.register();
+Brush.register();
+Eraser.register();
 
 Wc.Canvas = Canvas;
 Wc.Layer = Layer;

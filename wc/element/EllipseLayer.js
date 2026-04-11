@@ -10,8 +10,8 @@ export default class EllipseLayer extends Layer{
         super(w,h);
         this.drawable = false; // 그리기 가능한가? 그리기 툴에서 체크. 설정값으로만 처리된다.
     }
-    static defineCustomElements(name='wc-ellipselayer'){
-        super.defineCustomElements(name);
+    static register(name='wc-ellipselayer'){
+        super.register(name);
     }
 
     setContextConfig(conf){
