@@ -53,8 +53,15 @@
   pointer-events: none;
   overflow: hidden;
 }
+.wc-app-footer *{
+  pointer-events: none;
+}
+.wc-app-footer  .wc-app-menu > * {
+  pointer-events: none;
+}
 .wc-app-footer button{
   pointer-events:all;
+  touch-action: auto;
 }
 
 
