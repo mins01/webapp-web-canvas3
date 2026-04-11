@@ -22,10 +22,12 @@ class Canvas extends HTMLCanvasElement{
     //     if(Canvas._idCounter === undefined){ Canvas._idCounter = 0;}
     //     return ++ Canvas._idCounter;
     // }
-    static defineCustomElements(name='wc-canvas'){
+    static defineCustomElements(tagName='wc-canvas'){
         if(!globalThis.window){return;}
-        window.customElements.define(name, this,{ extends: "canvas" });
-        console.log('defineCustomElements',name); // defineCustomElements 등록 동작을 위한 로그.
+        if (!customElements.get(tagName)) {
+            customElements.define(tagName, this,{ extends: "canvas" });
+            console.log('defineCustomElement', tagName);
+        }        
     }
     static getRandName(prefix,length=6){
         const rand = (Math.floor(Math.random()*Math.pow(10,length))).toString().padStart(length,'0');
