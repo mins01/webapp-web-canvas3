@@ -39,16 +39,18 @@ export default class Transform extends BaseTool{
     readyUtt(){
         const document = this.document
         const targetLayer = this.targetLayer;
-        const mul = document.zoom*targetLayer.zoom
-
+        const dz = document.zoom
         {
-            const {left,top,width,height} = document.getViewportRect();    
-            this.uttBroundary.setRect(left,top,width,height,0);    
+            const {left,top,width,height} = document.getViewportRect();
+            const cx = left + width/2;
+            const cy = top + height/2;
+            this.uttBroundary.setRect(cx - width/2 * dz ,cy - height/2 * dz,width * dz,height * dz,0);    
         }
         {
             const {left,top,width,height} = targetLayer.getLocalRect();
             const rotation = targetLayer.rotation;
-            this.utt.setRect(left,top,width,height,rotation)
+            const z = targetLayer.zoom
+            this.utt.setRect(left *  dz,top *  dz,width *  dz,height *  dz, rotation, z)
         }
         
 
@@ -131,13 +133,17 @@ export default class Transform extends BaseTool{
         const document = this.document
         const targetLayer = this.targetLayer
         const mul = document.zoom / targetLayer.zoom
-        
+        const dz = document.zoom
+
         const {left,top,width,height} = utt.getLocalRect();
         this.targetLayer.import(this.orignalSnapshot);
-        this.targetLayer.resize((width),(height))
-        targetLayer.left = (left); //반올림 하면 오차가 나네...뭐지?
-        targetLayer.top = (top);
+        this.targetLayer.resize((width/dz),(height/dz))
+        targetLayer.left = (left) / dz;
+        targetLayer.top = (top) / dz;
         targetLayer.rotation = utt.rotation;
+        // targetLayer.flipX = utt.scaleX < 0 ? -1 : 1; // 우선 적용하지 말자. 상태 유지에 신경을 써야하네.
+        // targetLayer.flipY = utt.scaleX < 0 ? -1 : 1;
+        // targetLayer.zoom = utt.zoom; // 줌은 적용 안한다!!! 일반통행으로 처리.(zoom용 control이 ui-transform-tool에 없다.)
 
         
         targetLayer.flush();

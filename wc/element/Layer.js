@@ -71,7 +71,9 @@ export default class Layer extends Canvas{
     get angle(){ return this.rotation; }
     set angle(v){ this.rotation = Number(v); }
     get rotation(){ return this.#rotation; }
-    set rotation(v){ this.#rotation = Number(v); }
+    // -180 ~ 180
+    set rotation(v){  this.#rotation = ((Number(v) + 180) % 360 + 360) % 360 - 180; }
+
 
 
     // getLocalRect(){ return {left:0,top:0,width:this.width,height:this.height} }
@@ -178,9 +180,11 @@ export default class Layer extends Canvas{
         const tranLeft = Math.round(targetLayer.left-(this.kind===LayerKind.GROUP?0:this.left))
         const tranTop = Math.round(targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top));
         ctx.translate(tranLeft, tranTop)
-        if(targetLayer.zoom !== 1){ ctx.scale(targetLayer.zoom,targetLayer.zoom); }
         ctx.translate(targetLayer.width/2, targetLayer.height/2)
         ctx.scale(targetLayer.flipX,targetLayer.flipY);
+        if(targetLayer.zoom !== 1){ 
+            ctx.scale(targetLayer.zoom,targetLayer.zoom); 
+        }
         if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
         ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
         ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
