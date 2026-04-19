@@ -5,6 +5,8 @@ if(!globalThis.Wc) globalThis.Wc = Wc
 
 import HtmlUtil from "./lib/HtmlUtil.js";
 Wc.HtmlUtil = HtmlUtil;
+import ShortcutManager from "./lib/ShortcutManager.js";
+Wc.ShortcutManager = ShortcutManager;
 import BrushConfigurator from "./lib/BrushConfigurator.js";
 Wc.BrushConfigurator = BrushConfigurator;
 import BrushConfigStore from "./lib/BrushConfigStore.js";
@@ -177,4 +179,3 @@ globalThis.window.addEventListener('load',(event)=>{
     window.document.body.dataset.bsTheme = globalThis.localStorage.getItem('data-bs-theme')??'light';
     
 })
-

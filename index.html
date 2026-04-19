@@ -221,6 +221,21 @@
       wcApp.footer = wcApp.querySelector('.wc-app-footer')
       
       // document.querySelector('.checkbox-tool[value="Brush"]').click(); // 최초 선택 툴
+
+
+      // 단축키
+      const shortcutManager = new Wc.ShortcutManager({target:window});
+      shortcutManager.register('Ctrl+Z',function(){
+        console.log('Ctrl+Z');
+        editor?.document.history.undo()
+      })
+      shortcutManager.register('Ctrl+Shift+Z',function(){
+        console.log('Ctrl+Shift+Z');
+        editor?.document.history.redo()
+      })
+      
+
+
     })
     window.addEventListener('wc.tools.load',event=>{ console.log(event.type,event.detail); })
     window.addEventListener('wc.tools.select',event=>{ console.log(event.type,event.detail); })
