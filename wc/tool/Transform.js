@@ -14,15 +14,11 @@ export default class Transform extends BaseTool{
 
     activate(){
         super.activate();
-        // if(this.layer) this.layer.visibleByTool = false;
         this.ready();
-        this.draw();
     }
     deactivate(){
-        this.targetLayer.import(this.orignalSnapshot);
+        if(this.orignalSnapshot) this.targetLayer.import(this.orignalSnapshot);
         super.deactivate();
-        // if(this.layer) this.layer.visibleByTool = true;
-
     }
 
     ready(){

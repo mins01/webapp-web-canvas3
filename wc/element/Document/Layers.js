@@ -114,6 +114,7 @@ export default class Layers extends SelectableArray{
         const newToLayer = toLayer.clone();
 
         newToLayer.drawLayerTo(fromLayer);
+        newToLayer.parent = fromLayer.parent; // 이건 clone 때 안 따라온다.
         //-- 갱신
         newToLayer.flush();
         this[this.selectedIndex-1] = newToLayer; //레이어 교체
