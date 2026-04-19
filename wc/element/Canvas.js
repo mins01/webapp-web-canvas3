@@ -288,7 +288,7 @@ class Canvas extends HTMLCanvasElement{
     static snapshot(obj){
         const ctx = obj.ctx;
         const r = obj.toObject();
-        console.log('snapshot r[k]?.toObject',r);
+        // console.log('snapshot r[k]?.toObject',r);
         
         // for(let k in r){ // 히스토리용이기 때문에 참고 값을 끊는 작업을 한다. //20260307 이부분 의미가 있나?. 이거 해야한다. contextConfig, imageData 등에 영항있다. toObject에서 처리하자
         //     if(r[k]?.toObject){r[k] = r[k].toObject()}

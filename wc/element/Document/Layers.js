@@ -206,7 +206,7 @@ export default class Layers extends SelectableArray{
 
     // 최종 수정 된 것만 복제한다. 메모리 아껴보자. 개선 더 해야한다.
     cloneOnlyUpdated(withoutElements=false,lastUpdatedAt=0){
-        console.log('layers.cloneOnlyUpdated',withoutElements,lastUpdatedAt);
+        // console.log('layers.cloneOnlyUpdated',withoutElements,lastUpdatedAt);
         // console.log('cloneOnlyUpdated.lastUpdatedAt',lastUpdatedAt);
 
         let elements = null;
