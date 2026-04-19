@@ -1589,13 +1589,9 @@
                 })
               "><i class="bi bi-card-image"></i> Load last save: <span id="autosave-updatedat"></span></button>
               <button class="btn btn-primary" id="btn-autosave-save" type="button" onclick="
-                edialog.confirm(`현재 데이터로 임시 저장할까요?`).then((r)=>{
-                  if(r){
-                    editor.autoSave.save();
-                    editor.modalHandler.hideAll();
-                    edialog.alert(`현재 데이터로 임시 저장하였습니다.`);
-                  };
-                })
+                editor.autoSave.save();
+                editor.modalHandler.hideAll();
+                edialog.alert(`현재 데이터로 임시 저장하였습니다.`);
               "><i class="bi bi-floppy"></i> Save now</button>
               <button class="btn btn-primary btn-autosave-is-disabled" id="btn-autosave-clear" type="button" onclick="
                 edialog.confirm(`자동 저장 데이터를 삭제할까요?`).then((r)=>{
