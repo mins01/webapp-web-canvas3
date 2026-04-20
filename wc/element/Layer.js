@@ -181,11 +181,12 @@ export default class Layer extends Canvas{
         const tranTop = Math.round(targetLayer.top-(this.kind===LayerKind.GROUP?0:this.top));
         ctx.translate(tranLeft, tranTop)
         ctx.translate(targetLayer.width/2, targetLayer.height/2)
+        if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
         ctx.scale(targetLayer.flipX,targetLayer.flipY);
         if(targetLayer.zoom !== 1){ 
             ctx.scale(targetLayer.zoom,targetLayer.zoom); 
         }
-        if(targetLayer.angle !== 0){ ctx.rotate(targetLayer.angle * Math.PI / 180); }
+        
         ctx.translate(-targetLayer.width/2, -targetLayer.height/2)
         ctx.drawImage(targetLayer, 0, 0, targetLayer.width, targetLayer.height);
         ctx.translate(-tranLeft, -tranTop)

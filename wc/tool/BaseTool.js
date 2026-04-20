@@ -322,25 +322,23 @@ export default class BaseTool {
 		const layer = this.document.layer;	
 
 
-		// layer.angle 적용
+		// layer.rotation 적용
 		ctx.translate(layer.width / 2,layer.height / 2);
-		if(layer.angle !== 0){ ctx.rotate(-layer.angle * (Math.PI / 180)); }
+		if(layer.rotation !== 0){ ctx.rotate(-layer.rotation * (Math.PI / 180)); }
 		ctx.scale(layer.flipX,layer.flipY);
-		ctx.translate(-layer.width / 2,-layer.height / 2);
-		// console.log('layer.angle',layer.angle);
-		
-		// layer 적용 크기 변경
 		ctx.scale(1/layer.zoom,1/layer.zoom)
+		ctx.translate(-layer.width / 2,-layer.height / 2);
+		ctx.translate(-layer.left,-layer.top);
+
 
 		// // doc.angle 적용
-		if(doc.angle !== 0){
-			ctx.translate(doc.width / 2 - layer.left ,doc.height / 2 - layer.top);
-			ctx.rotate(-doc.angle * (Math.PI / 180));
-			ctx.translate(-(doc.width / 2 - layer.left) ,-(doc.height / 2 - layer.top));
+		if(doc.rotation){
+			ctx.translate(doc.width / 2 ,doc.height / 2);
+			ctx.rotate(-doc.rotation * (Math.PI / 180));
+			// ctx.scale(doc.flipX,doc.flipY);
+			// ctx.scale(1/doc.zoom,1/doc.zoom) // scale 은 적용하지 않는다. doc 가 최외각이므로 zoom에 상관 없어야한다.
+			ctx.translate(-(doc.width / 2) ,-(doc.height / 2));
 		}
-
-		// 좌표 오차 변경		
-		ctx.translate(-layer.left,-layer.top);
 	}
 
 
