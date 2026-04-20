@@ -38,9 +38,14 @@ export default class Transform extends BaseTool{
         const dz = document.zoom
         {
             const {left,top,width,height} = document.getViewportRect();
+            const rotation = document.rotation;
+            const z = document.zoom
+            console.log('rotation',rotation);
+            
+
             const cx = left + width/2;
             const cy = top + height/2;
-            this.uttBroundary.setRect(cx - width/2 * dz ,cy - height/2 * dz,width * dz,height * dz,0);    
+            this.uttBroundary.setRect(cx - width/2 * dz ,cy - height/2 * dz,width * dz,height * dz,rotation,z);    
         }
         {
             const {left,top,width,height} = targetLayer.getLocalRect();
