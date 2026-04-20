@@ -35,7 +35,7 @@ export default class Transform extends BaseTool{
     readyUtt(){
         const document = this.document
         const targetLayer = this.targetLayer;
-        const dz = document.zoom
+        // const dz = document.zoom //dz 적용 안한다.
         {
             const {left,top,width,height} = document.getViewportRect();
             const rotation = document.rotation;
@@ -45,13 +45,15 @@ export default class Transform extends BaseTool{
 
             const cx = left + width/2;
             const cy = top + height/2;
-            this.uttBroundary.setRect(cx - width/2 * dz ,cy - height/2 * dz,width * dz,height * dz,rotation,z);    
+            this.uttBroundary.setRect(left ,top,width,height,rotation,z);
         }
         {
             const {left,top,width,height} = targetLayer.getLocalRect();
+            console.log( {left,top,width,height});
+            
             const rotation = targetLayer.rotation;
             const z = targetLayer.zoom
-            this.utt.setRect(left *  dz,top *  dz,width *  dz,height *  dz, rotation, z)
+            this.utt.setRect(left ,top ,width ,height , rotation, z)
         }
         
 
@@ -134,8 +136,8 @@ export default class Transform extends BaseTool{
         const document = this.document
         const targetLayer = this.targetLayer
         const mul = document.zoom / targetLayer.zoom
-        const dz = document.zoom
-
+        // const dz = document.zoom
+        const dz = 1; // dz 적용 안한다.
         const {left,top,width,height} = utt.getLocalRect();
         this.targetLayer.import(this.orignalSnapshot);
         this.targetLayer.resize((width/dz),(height/dz))
