@@ -598,9 +598,9 @@
               <div class="form-label m-0"><i class="bi bi-pc-display"></i>/<i class="bi bi-phone"></i> From device</div>
               <form action="" onsubmit="if(this.openfile.files.length){ editor.loadDocument(this.openfile.files[0]).then((r)=>{console.log('loadDocument 완료'); }); this.reset() }else{ edialog.alert('Select a file(*.wc3.json | image file )')}; return false;" >
                 <div class="input-group input-group-lg">
-                  <input type="file" class="form-control" name="openfile" accept=".json,.zip,image/*">
+                  <input type="file" class="form-control" name="openfile" accept=".json,.zip,.wc3z,image/*">
                 </div>
-                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip 파일이 지원됩니다.</div>
+                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip, .wc3z 파일이 지원됩니다.</div>
                 <div class="text-end my-1">
                   <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
                 </div>
@@ -612,7 +612,7 @@
                 <div class="input-group input-group-lg">
                   <input type="text" class="form-control" name="openfile" placeholder="https://-- or /--">
                 </div>
-                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip 파일이 지원됩니다.</div>
+                <div class="form-text text-end"><i class="bi bi-info-circle"></i> image 파일과 .wc3.json , .wc3.zip, .wc3z 파일이 지원됩니다.</div>
                 <div class="form-text text-end"><i class="bi bi-info-circle"></i> 같은 도메인의 URL만 지원합니다.</div>
                 <div class="text-end my-1">
                   <button type="submit" class="btn btn-primary" ><i class="bi bi-file-earmark-arrow-up"></i> OPEN</button>
@@ -714,9 +714,14 @@
                       <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
                     </div>
                     <div>
+                      <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='wc3z';"> <i class="bi bi-file-earmark-zip"></i> .wc3z</button>
+                      <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+                    </div>
+                    <div>
                       <button type="submit" class="w-100 btn btn-lg btn-primary" onclick="this.form.type.value='wc3.zip';"> <i class="bi bi-file-earmark-zip"></i> .wc3.zip</button>
                       <div class="form-text mt-0 mb-0"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
                     </div>
+                    
                   </div>
                 </div>
               </form>
@@ -758,6 +763,15 @@
                   <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
                   <input type="text" class="form-control filename" name="filename" value="" required>
                   <span class="input-group-text">.wc3.zip</span>
+                  <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
+                </div>
+                <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>
+              </form>
+              <form action="" onsubmit="edialog.alert(`업로드를 시작합니다.\n(시간이 걸릴 수 있습니다.)`); editor.uploadDocument('wc3z',this.filename.value).then(()=>{ console.log('uploadDocument 완료'); }).catch((e)=>{console.error('uploadDocument 실패',e); edialog.closeAll(); edialog.alert(e.message); });return false;">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-filetype-json"></i></span>
+                  <input type="text" class="form-control filename" name="filename" value="" required>
+                  <span class="input-group-text">.wc3z</span>
                   <button type="submit" class="btn btn-lg btn-primary"> UPLOAD </button>
                 </div>
                 <div class="form-text text-end mt-0 mb-2"><i class="bi bi-info-circle"></i> 레이어 정보가 같이 저장됩니다.</div>

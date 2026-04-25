@@ -343,6 +343,9 @@ export default class Editor{
         }else if(type==='wc3.zip'){
             ext = 'wc3.zip';
             mimetype = 'application/zip';            
+        }else if(type==='wc3z'){
+            ext = 'wc3z';
+            mimetype = 'application/zip';            
         }
         if(mimetype){
             const filename = basename+'.'+ext
@@ -389,6 +392,9 @@ export default class Editor{
         }else if(type==='wc3.zip'){
             ext = 'wc3.zip';
             mimetype = 'application/zip';            
+        }else if(type==='wc3z'){
+            ext = 'wc3z';
+            mimetype = 'application/zip';            
         }
         if(mimetype){
             const filename = basename+'.'+ext
@@ -428,7 +434,7 @@ export default class Editor{
                 this.closeDocument();
                 this.loadJson(conf);
             })
-        }if(file.name.match(/\.zip$/)){
+        }else if(file.name.match(/\.zip$/) || file.name.match(/\.wc3z$/)){
             return HtmlUtil.loadZipFile(file).then((conf)=>{
                 this.closeDocument();
                 this.loadJson(conf);
@@ -454,7 +460,7 @@ export default class Editor{
                 console.warn(e);
                 throw e;
             });
-        }else if(url.match(/\.zip/)){ // JSON 형식인가?
+        }else if(url.match(/\.zip/) || url.match(/\.wc3z/)){ // JSON 형식인가?
             return HtmlUtil.loadBinUrl(url).then(async (file)=>{
                 await HtmlUtil.loadZipFile(file).then((conf)=>{
                     if(!conf?.exportVersion){
@@ -495,6 +501,8 @@ export default class Editor{
         this.documents.add(document);
         return document;
     }
+
+    // @deprecated
     loadDocumentZip(zip){
         
     }
