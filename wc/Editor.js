@@ -331,6 +331,9 @@ export default class Editor{
         if(type==='wc3.json'){
             ext = 'wc3.json';
             mimetype = 'application/json';            
+        }else if(type==='wc3j'){
+            ext = 'wc3j';
+            mimetype = 'application/json';            
         }else if(type==='png'){
             ext = 'png';
             mimetype = 'image/png';
@@ -379,6 +382,9 @@ export default class Editor{
         let mimetype = null;
         if(type==='wc3.json'){
             ext = 'wc3.json';
+            mimetype = 'application/json';            
+        }else if(type==='wc3j'){
+            ext = 'wc3j';
             mimetype = 'application/json';            
         }else if(type==='png'){
             ext = 'png';
@@ -429,7 +435,7 @@ export default class Editor{
     }
     async loadDocumentByFile(file){
         // console.log(file);
-        if(file.name.match(/\.json$/)){
+        if(file.name.match(/\.json$/) || file.name.match(/\.wc3j$/)){
             return HtmlUtil.loadJsonFile(file).then((conf)=>{
                 this.closeDocument();
                 this.loadJson(conf);
@@ -451,7 +457,7 @@ export default class Editor{
     }
     async loadDocumentByUrl(url){
         // console.log(file);
-        if(url.match(/\.json/)){ // JSON 형식인가?
+        if(url.match(/\.json/) || url.match(/\.wc3j/)){ // JSON 형식인가?
             return HtmlUtil.loadJsonUrl(url).then((conf)=>{
                 this.closeDocument();
                 this.loadJson(conf);
