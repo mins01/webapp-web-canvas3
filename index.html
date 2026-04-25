@@ -2543,6 +2543,7 @@
     </div>
     <script>
       const colorPicker1 = document.querySelector('#colorPicker1');
+      window.colorPicker1 = colorPicker1
       document.querySelector('#modal-color-picker').addEventListener('show.bs.modal', event => {
         const toolName = editor.tool?.name;
         if(toolName=='Text'){

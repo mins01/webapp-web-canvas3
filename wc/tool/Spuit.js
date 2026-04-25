@@ -40,8 +40,15 @@ export default class Spuit extends BaseTool{
         return;
     }
     onpointerup(event){
-        globalThis.modalHandler.get('modal-color-palette').show()
-        globalThis.cpForeColor.setPreview(this.color.toHexString())
+        // globalThis.modalHandler.get('modal-color-palette').show()
+        // globalThis.cpForeColor.setPreview(this.color.toHexString())
+
+        // window.colorPicker1.pendingColor.value = this.color.toHexString()
+        const modal  = window.colorPicker1.closest('.modal');
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.show()
+        window.colorPicker1.setPendingColor(this.color);
+        
 
         return super.onpointerup(event);
     }
